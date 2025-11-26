@@ -1315,6 +1315,7 @@
         <form class="contact-form" id="contactForm" 
       action="https://formspree.io/f/mblwgzve" 
       method="POST">
+
           <div class="form-group">
             <label for="name">Nom complet</label>
             <input type="text" id="name" name="name" required placeholder="Jean Dupont" autocomplete="name">
@@ -1558,23 +1559,6 @@
         closePopupFunc();
       }
     });
-
-    // Formspree gère tout automatiquement, pas besoin de JS !
-      const submitBtn = e.target.querySelector('.submit-button');
-      const originalText = submitBtn.textContent;
-      submitBtn.textContent = 'Envoi en cours...';
-      submitBtn.disabled = true;
-      setTimeout(() => {
-        submitBtn.textContent = '✓ Message envoyé !';
-        submitBtn.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
-        setTimeout(() => {
-          e.target.reset();
-          submitBtn.textContent = originalText;
-          submitBtn.disabled = false;
-          submitBtn.style.background = '';
-        }, 3000);
-      }, 1500);
-    ;
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
