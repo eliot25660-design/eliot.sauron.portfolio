@@ -1559,8 +1559,7 @@
       }
     });
 
-    document.getElementById('contactForm')?.addEventListener('submit', (e) => {
-      e.preventDefault();
+    // Formspree gère tout automatiquement, pas besoin de JS !
       const submitBtn = e.target.querySelector('.submit-button');
       const originalText = submitBtn.textContent;
       submitBtn.textContent = 'Envoi en cours...';
@@ -1575,7 +1574,7 @@
           submitBtn.style.background = '';
         }, 3000);
       }, 1500);
-    });
+    ;
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
