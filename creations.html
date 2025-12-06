@@ -100,12 +100,24 @@
 
     .category-badge { display: inline-block; padding: 5px 12px; background: rgba(242, 161, 140, 0.2); color: var(--peach); border-radius: 20px; font-size: 12px; font-weight: 700; margin-bottom: 15px; text-transform: uppercase; }
 
-    .image-carousel { position: relative; width: 100%; height: 350px; border-radius: 12px; overflow: hidden; margin-bottom: 20px; cursor: zoom-in; }
+    .image-carousel { position: relative; width: 100%; height: 450px; /* Un peu plus haut pour le format vertical */ border-radius: 12px; overflow: hidden; margin-bottom: 20px; cursor: zoom-in; }
     .carousel-track { display: flex; height: 100%; transition: transform 0.5s ease; touch-action: pan-y; }
+    
     .carousel-image { min-width: 100%; height: 100%; object-fit: cover; }
     
-    /* Style pour l'iframe YouTube */
-    iframe.carousel-image { width: 100%; height: 100%; border: none; }
+    /* SPECIAL YOUTUBE SHORT CONTAINER */
+    .video-slide-container {
+      min-width: 100%; height: 100%;
+      background: #000; /* Fond noir style cinéma */
+      display: flex; justify-content: center; align-items: center;
+    }
+    .video-slide-container iframe {
+      height: 100%;
+      width: auto;
+      aspect-ratio: 9/16; /* Force le format vertical */
+      max-width: 100%;
+      border: none;
+    }
 
     .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.9); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; opacity: 0; transition: 0.3s; z-index: 10; }
     .prev { left: 10px; } .next { right: 10px; }
@@ -125,7 +137,7 @@
 
     @media (max-width: 768px) {
       .gallery-container { grid-template-columns: minmax(0, 1fr); }
-      .image-carousel { height: 250px; }
+      .image-carousel { height: 350px; }
       .carousel-arrow { opacity: 1; }
       .gallery-hero { padding-top: 130px; }
       .ambient-blob { opacity: 0.4; }
@@ -190,13 +202,15 @@
       <span class="category-badge">Communication / Vidéo</span>
       <div class="image-carousel">
         <div class="carousel-track">
-          <iframe class="carousel-image" 
-                  src="https://www.youtube.com/embed/aoIdUVLWA-I" 
-                  title="Interview Andréa" 
-                  frameborder="0" 
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                  allowfullscreen>
-          </iframe>
+          
+          <div class="carousel-image video-slide-container">
+            <iframe 
+              src="https://www.youtube.com/embed/aoIdUVLWA-I" 
+              title="Interview Andréa" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowfullscreen>
+            </iframe>
+          </div>
           
           <img src="img/radio-1.jpg" class="carousel-image lightbox-trigger" loading="lazy" alt="Radio Campus 1">
           <img src="img/radio-4.jpg" class="carousel-image lightbox-trigger" loading="lazy" alt="Radio Campus Portrait">
@@ -288,7 +302,7 @@
 
     document.querySelectorAll('.creation-card').forEach(card => {
       const track = card.querySelector('.carousel-track');
-      const slides = card.querySelectorAll('.carousel-image');
+      const slides = card.querySelectorAll('.carousel-image'); // Sélectionne aussi le conteneur vidéo
       if(slides.length <= 1) {
         card.querySelectorAll('.carousel-arrow').forEach(a => a.style.display='none');
         return;
