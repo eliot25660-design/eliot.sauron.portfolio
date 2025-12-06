@@ -83,8 +83,15 @@
     .page-loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
     .loader-logo {
-      font-size: 56px;
+      /* CORRECTION : Taille fluide qui s'adapte au mobile (min 30px, max 56px) */
+      font-size: clamp(30px, 8vw, 56px);
       font-weight: 800;
+      /* CORRECTION : Centre le texte s'il passe sur deux lignes */
+      text-align: center;
+      line-height: 1.1;
+      /* CORRECTION : Ajoute des marges pour ne pas toucher les bords */
+      padding: 0 20px;
+      
       background: linear-gradient(135deg, var(--blue), var(--peach));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
