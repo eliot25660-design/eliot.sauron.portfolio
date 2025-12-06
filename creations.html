@@ -14,11 +14,13 @@
   <style>
     :root {
       --peach: #F2A18C;
+      --peach-glow: rgba(242, 161, 140, 0.5);
       --blue: #7FA6C6;
+      --blue-glow: rgba(127, 166, 198, 0.5);
       --bg-body: #FDFBF9;
       --text-main: #2C2C2C;
       --text-muted: #666666;
-      --glass-bg: rgba(255, 255, 255, 0.65);
+      --glass-bg: rgba(255, 255, 255, 0.7);
       --glass-border: rgba(255, 255, 255, 0.8);
       --radius: 20px;
     }
@@ -40,14 +42,24 @@
       transition: 0.5s;
       min-height: 100vh;
       overflow-x: hidden;
+      position: relative;
     }
 
     /* FOND ANIMÉ */
-    .background-shapes { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
-    .shape { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.5; animation: float 20s infinite alternate; }
-    .shape-1 { top: -20%; right: -10%; width: 60vw; height: 60vw; background: rgba(242, 161, 140, 0.3); }
-    .shape-2 { bottom: -20%; left: -10%; width: 70vw; height: 70vw; background: rgba(127, 166, 198, 0.3); }
+    .background-shapes { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+    .shape-wrapper { position: absolute; transition: transform 0.1s linear; will-change: transform; }
+    .shape { border-radius: 50%; filter: blur(90px); opacity: 0.6; animation: float 20s infinite alternate; }
+    
+    .wrap-1 { top: -20%; right: -10%; }
+    .shape-1 { width: 60vw; height: 60vw; background: var(--peach-glow); }
+    
+    .wrap-2 { bottom: -20%; left: -10%; }
+    .shape-2 { width: 70vw; height: 70vw; background: var(--blue-glow); }
+    
     @keyframes float { 0% { transform: translate(0,0); } 100% { transform: translate(-50px, 50px); } }
+
+    /* Contenu au premier plan */
+    header, section, footer, .theme-toggle-fixed, .lightbox { position: relative; z-index: 1; }
 
     /* LOADER */
     .page-loader {
@@ -67,19 +79,19 @@
       padding: 10px 30px; z-index: 1000;
       display: flex; justify-content: space-between; align-items: center;
     }
-    .logo-container { width: 70px; height: 35px; }
+    .logo-container { width: 60px; height: 40px; }
     .signature-path { 
       fill: none; stroke: var(--text-main); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
-      stroke-dasharray: 300; stroke-dashoffset: 300;
-      animation: signLoop 5s ease-in-out infinite;
+      stroke-dasharray: 400; stroke-dashoffset: 400;
+      animation: signLoop 6s ease-in-out infinite;
     }
     @keyframes signLoop {
-      0% { stroke-dashoffset: 300; opacity: 0; }
-      10% { opacity: 1; }
+      0% { stroke-dashoffset: 400; opacity: 0; }
+      15% { opacity: 1; }
       40% { stroke-dashoffset: 0; }
       70% { stroke-dashoffset: 0; opacity: 1; }
       90% { stroke-dashoffset: 0; opacity: 0; }
-      100% { stroke-dashoffset: 300; opacity: 0; }
+      100% { stroke-dashoffset: 400; opacity: 0; }
     }
     
     .nav-link { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 14px; }
@@ -113,11 +125,10 @@
     }
     .filter-btn.active, .filter-btn:hover { background: var(--text-main); color: var(--bg-body); }
 
-    /* GALERIE MOBILE CORRIGÉE (minmax 280px) */
+    /* GALERIE */
     .gallery-container {
       max-width: 1200px; margin: 0 auto 80px; padding: 0 20px;
       display: grid;
-      /* C'est cette ligne qui empêche le débordement mobile */
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
       gap: 40px;
     }
@@ -125,8 +136,7 @@
     .creation-card {
       background: var(--glass-bg); border: 1px solid var(--glass-border);
       border-radius: var(--radius); padding: 20px; transition: 0.4s;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.02);
-      min-width: 0; /* Sécurité CSS Grid */
+      box-shadow: 0 5px 20px rgba(0,0,0,0.02); min-width: 0;
     }
     .creation-card:hover { transform: translateY(-5px); border-color: var(--peach); }
     .creation-card.hidden { display: none; }
@@ -177,10 +187,7 @@
 
     /* RESPONSIVE MOBILE */
     @media (max-width: 768px) {
-      .gallery-container { 
-        grid-template-columns: minmax(0, 1fr); /* Force 1 colonne propre */
-        gap: 30px; 
-      }
+      .gallery-container { grid-template-columns: minmax(0, 1fr); }
       .image-carousel { height: 220px; }
       .carousel-arrow { opacity: 1; }
       .gallery-hero { padding-top: 130px; }
@@ -190,8 +197,12 @@
 <body>
 
   <div class="background-shapes">
-    <div class="shape shape-1"></div>
-    <div class="shape shape-2"></div>
+    <div class="shape-wrapper wrap-1" data-speed="0.05">
+      <div class="shape shape-1"></div>
+    </div>
+    <div class="shape-wrapper wrap-2" data-speed="-0.05">
+      <div class="shape shape-2"></div>
+    </div>
   </div>
 
   <div class="page-loader" id="pageLoader">
@@ -207,8 +218,8 @@
 
   <header>
     <a href="index.html" class="logo-container">
-      <svg class="signature-svg" viewBox="0 0 100 60">
-        <path class="signature-path" d="M20,35 C15,35 10,25 20,15 C30,5 40,35 25,45 C15,55 45,45 55,25 C60,15 70,15 75,25 C80,35 65,45 60,35 C55,25 80,15 90,20" stroke="currentColor" fill="none" stroke-linecap="round" />
+      <svg class="signature-svg" viewBox="0 0 100 50">
+        <path class="signature-path" d="M20,40 C10,40 10,20 20,10 C35,0 35,25 20,25 C15,25 25,25 35,25 L45,25 C50,25 50,15 60,15 C70,15 70,35 60,35 C50,35 50,45 60,45 L80,45" fill="none" stroke-linecap="round" stroke-linejoin="round" />
       </svg>
     </a>
     <a href="index.html" class="nav-link">Retour Accueil</a>
@@ -294,6 +305,17 @@
     themeBtn.addEventListener('click', () => {
       isDark = !isDark;
       updateTheme();
+    });
+
+    // PARALLAXE SOURIS
+    const shapes = document.querySelectorAll('.shape-wrapper');
+    document.addEventListener('mousemove', (e) => {
+      const x = (e.clientX - window.innerWidth / 2);
+      const y = (e.clientY - window.innerHeight / 2);
+      shapes.forEach(shape => {
+        const speed = shape.getAttribute('data-speed');
+        shape.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+      });
     });
 
     const btns = document.querySelectorAll('.filter-btn');

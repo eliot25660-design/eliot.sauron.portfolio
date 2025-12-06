@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Eliot SAURON - Portfolio Créatif | Besançon</title>
-  <meta name="description" content="Portfolio d'Eliot SAURON, étudiant en Info-Com à Besançon. Photographie, création graphique et design visuel.">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,9 +14,9 @@
   <style>
     :root {
       --peach: #F2A18C;
-      --peach-glow: rgba(242, 161, 140, 0.4);
+      --peach-glow: rgba(242, 161, 140, 0.5);
       --blue: #7FA6C6;
-      --blue-glow: rgba(127, 166, 198, 0.4);
+      --blue-glow: rgba(127, 166, 198, 0.5);
       --bg-body: #FDFBF9;
       --text-main: #2C2C2C;
       --text-muted: #666666;
@@ -46,25 +45,42 @@
       overflow-x: hidden;
       transition: background 0.5s ease, color 0.5s ease;
       min-height: 100vh;
+      position: relative;
     }
 
-    /* BACKGROUND ANIMÉ */
+    /* BACKGROUND ANIMÉ + PARALLAXE */
     .background-shapes {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      z-index: -1; pointer-events: none; overflow: hidden;
+      z-index: 0; pointer-events: none; overflow: hidden;
     }
+    
+    /* Conteneur qui reçoit le mouvement de la souris */
+    .shape-wrapper {
+      position: absolute;
+      transition: transform 0.1s linear; /* Mouvement fluide souris */
+      will-change: transform;
+    }
+
+    /* La bulle elle-même qui flotte */
     .shape {
-      position: absolute; border-radius: 50%;
+      border-radius: 50%;
       filter: blur(80px); opacity: 0.6;
       animation: float 20s infinite alternate;
     }
-    .shape-1 { top: -10%; left: -10%; width: 60vw; height: 60vw; background: var(--peach-glow); animation-duration: 25s; }
-    .shape-2 { bottom: -10%; right: -10%; width: 70vw; height: 70vw; background: var(--blue-glow); animation-duration: 30s; }
+
+    /* Positionnement */
+    .wrap-1 { top: -10%; left: -10%; }
+    .shape-1 { width: 60vw; height: 60vw; background: var(--peach-glow); animation-duration: 25s; }
     
+    .wrap-2 { bottom: -10%; right: -10%; }
+    .shape-2 { width: 70vw; height: 70vw; background: var(--blue-glow); animation-duration: 30s; }
+
     @keyframes float {
       0% { transform: translate(0, 0) rotate(0deg); }
       100% { transform: translate(50px, 30px) rotate(10deg); }
     }
+
+    header, section, footer, .theme-toggle-fixed { position: relative; z-index: 1; }
 
     /* LOADER */
     .page-loader {
@@ -83,7 +99,7 @@
     header {
       position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
       width: 90%; max-width: 1200px;
-      background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      background: var(--glass-bg); backdrop-filter: blur(12px);
       border: 1px solid var(--glass-border); border-radius: 100px;
       padding: 12px 30px; z-index: 1000;
       display: flex; justify-content: space-between; align-items: center;
@@ -97,23 +113,22 @@
     }
     .nav-links a:hover { color: var(--peach); }
 
-    /* LOGO SIGNATURE INFINI */
+    /* LOGO SIGNATURE */
     .logo-container { width: 70px; height: 45px; display: flex; align-items: center; justify-content: center; }
     .signature-svg { width: 100%; height: 100%; overflow: visible; }
     .signature-path {
       fill: none; stroke: var(--text-main); stroke-width: 2.5;
       stroke-linecap: round; stroke-linejoin: round;
-      stroke-dasharray: 300; stroke-dashoffset: 300;
-      /* Animation infinie : Dessine (2s), Pause (1s), Efface (1s), Pause (0.5s) */
-      animation: signLoop 5s ease-in-out infinite;
+      stroke-dasharray: 400; stroke-dashoffset: 400;
+      animation: signLoop 6s ease-in-out infinite;
     }
     @keyframes signLoop {
-      0% { stroke-dashoffset: 300; opacity: 0; }
-      10% { opacity: 1; }
-      40% { stroke-dashoffset: 0; } /* Dessiné */
-      70% { stroke-dashoffset: 0; opacity: 1; } /* Reste affiché */
-      90% { stroke-dashoffset: 0; opacity: 0; } /* Disparait doucement */
-      100% { stroke-dashoffset: 300; opacity: 0; } /* Reset */
+      0% { stroke-dashoffset: 400; opacity: 0; }
+      15% { opacity: 1; }
+      40% { stroke-dashoffset: 0; }
+      70% { stroke-dashoffset: 0; opacity: 1; }
+      90% { stroke-dashoffset: 0; opacity: 0; }
+      100% { stroke-dashoffset: 400; opacity: 0; }
     }
 
     .menu-btn { display: none; background: none; border: none; font-size: 26px; cursor: pointer; color: var(--text-main); }
@@ -186,7 +201,7 @@
     }
     .btn-secondary:hover { background: var(--text-main); color: var(--bg-body); }
 
-    /* === NOUVELLE SECTION EXPERTISE (Remplace Compétences) === */
+    /* EXPERTISE */
     .about { padding: 120px 20px; max-width: 1100px; margin: 0 auto; text-align: center; }
     .about h2 { font-size: 40px; margin-bottom: 20px; color: var(--text-main); }
     .about-subtitle { font-size: 18px; color: var(--text-muted); margin-bottom: 60px; max-width: 600px; margin-left: auto; margin-right: auto; }
@@ -207,12 +222,13 @@
     .expertise-title { font-size: 20px; font-weight: 700; color: var(--text-main); margin-bottom: 10px; }
     .expertise-desc { font-size: 15px; color: var(--text-muted); line-height: 1.6; }
 
-    /* CONTACT (TEXTURE + FIX) */
+    /* CONTACT AVEC GRAIN */
     .contact { padding: 100px 20px; max-width: 700px; margin: 0 auto; }
+    
     .contact-card {
-      background-color: var(--bg-body); /* Couleur de fond de base */
-      /* TEXTURE GRAIN PAR DESSUS */
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+      /* TEXTURE GRAIN */
+      background-color: var(--bg-body);
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
       backdrop-filter: blur(20px);
       padding: 50px; border-radius: 30px; border: 1px solid var(--glass-border);
       box-shadow: var(--card-shadow);
@@ -223,14 +239,18 @@
     .form-group { margin-bottom: 24px; position: relative; z-index: 1; }
     .form-group label { display: block; margin-bottom: 8px; font-weight: 700; color: var(--text-muted); font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
     
+    /* INPUTS SANS GRAIN (Fond uni) */
     .form-group input, .form-group textarea {
       width: 100%; padding: 18px; border-radius: 12px;
-      border: 2px solid transparent; background: rgba(127, 166, 198, 0.08);
+      border: 2px solid transparent; 
+      background-color: rgba(255, 255, 255, 0.8); /* Fond clair */
       color: var(--text-main); font-family: inherit; font-size: 16px;
       transition: 0.3s;
-      resize: vertical; /* FIX : Seulement vertical */
+      resize: vertical;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
     }
-    .form-group input:focus, .form-group textarea:focus { outline: none; background: var(--bg-body); border-color: var(--peach); }
+    [data-theme="dark"] .form-group input, [data-theme="dark"] .form-group textarea { background-color: rgba(30, 30, 30, 0.8); }
+    .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--peach); box-shadow: 0 4px 15px rgba(242, 161, 140, 0.2); }
 
     .send-btn {
       width: 100%; padding: 20px; border-radius: 12px; border: none;
@@ -242,8 +262,7 @@
     .send-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(242, 161, 140, 0.5); }
     .send-btn:disabled { opacity: 0.7; cursor: not-allowed; }
 
-    /* Message de succès/erreur */
-    #form-status { margin-top: 20px; text-align: center; font-weight: 600; min-height: 24px; }
+    #form-status { margin-top: 20px; text-align: center; font-weight: 600; min-height: 24px; position: relative; z-index: 1; }
     .status-success { color: #27ae60; }
     .status-error { color: #e74c3c; }
 
@@ -267,17 +286,19 @@
       .hero { padding-top: 160px; }
       .contact-card { padding: 30px 20px; }
       .blob-container { width: 220px; height: 220px; }
-      
-      /* Ajustement Expertise Mobile */
       .expertise-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-  <div class="background-shapes">
-    <div class="shape shape-1"></div>
-    <div class="shape shape-2"></div>
+  <div class="background-shapes" id="bgShapes">
+    <div class="shape-wrapper wrap-1" data-speed="0.05">
+      <div class="shape shape-1"></div>
+    </div>
+    <div class="shape-wrapper wrap-2" data-speed="-0.05">
+      <div class="shape shape-2"></div>
+    </div>
   </div>
 
   <div class="page-loader" id="pageLoader">
@@ -288,8 +309,8 @@
 
   <header>
     <a href="index.html" class="logo-container" aria-label="Accueil">
-      <svg class="signature-svg" viewBox="0 0 100 60">
-        <path class="signature-path" d="M20,35 C15,35 10,25 20,15 C30,5 40,35 25,45 C15,55 45,45 55,25 C60,15 70,15 75,25 C80,35 65,45 60,35 C55,25 80,15 90,20" stroke="currentColor" fill="none" stroke-linecap="round" />
+      <svg class="signature-svg" viewBox="0 0 100 50">
+        <path class="signature-path" d="M20,40 C10,40 10,20 20,10 C35,0 35,25 20,25 C15,25 25,25 35,25 L45,25 C50,25 50,15 60,15 C70,15 70,35 60,35 C50,35 50,45 60,45 L80,45" fill="none" stroke-linecap="round" stroke-linejoin="round" />
       </svg>
     </a>
 
@@ -318,28 +339,28 @@
 
   <section class="about" id="about">
     <h2>Mon Expertise</h2>
-    <p class="about-subtitle">Au-delà des logiciels, c'est une vision créative et technique que je mets au service de chaque projet.</p>
+    <p class="about-subtitle">Une vision créative et technique au service de chaque projet.</p>
     
     <div class="expertise-grid">
       <div class="expertise-card">
         <span class="expertise-icon">📸</span>
         <h3 class="expertise-title">Photographie</h3>
-        <p class="expertise-desc">Shooting événementiel, portrait studio et retouche avancée sur Lightroom.</p>
+        <p class="expertise-desc">Portraits, événements et retouche photo professionnelle.</p>
       </div>
       <div class="expertise-card">
         <span class="expertise-icon">🎨</span>
         <h3 class="expertise-title">Design Graphique</h3>
-        <p class="expertise-desc">Identité visuelle, création de logos et supports de communication print/web.</p>
+        <p class="expertise-desc">Identité visuelle, logotypes et supports de communication.</p>
       </div>
       <div class="expertise-card">
         <span class="expertise-icon">💻</span>
-        <h3 class="expertise-title">Web & Outils</h3>
-        <p class="expertise-desc">Maîtrise de la suite Adobe, Figma et intégration web moderne (HTML/CSS).</p>
+        <h3 class="expertise-title">Intégration Web</h3>
+        <p class="expertise-desc">Création de sites vitrines modernes et responsive.</p>
       </div>
       <div class="expertise-card">
         <span class="expertise-icon">🎥</span>
-        <h3 class="expertise-title">Création Vidéo</h3>
-        <p class="expertise-desc">Montage dynamique, étalonnage et storytelling vidéo pour les réseaux.</p>
+        <h3 class="expertise-title">Vidéo & Motion</h3>
+        <p class="expertise-desc">Montage dynamique et animation de contenus.</p>
       </div>
     </div>
   </section>
@@ -376,6 +397,7 @@
   </footer>
 
   <script>
+    // LOADER
     window.addEventListener('load', () => {
       setTimeout(() => {
         document.getElementById('pageLoader').style.opacity = '0';
@@ -383,6 +405,7 @@
       }, 1000);
     });
 
+    // MENU MOBILE
     const menuBtn = document.getElementById('menuBtn');
     const navLinks = document.getElementById('navLinks');
     menuBtn.addEventListener('click', () => {
@@ -396,6 +419,7 @@
       });
     });
 
+    // DARK MODE
     const themeBtn = document.getElementById('themeToggle');
     const html = document.documentElement;
     let isDark = localStorage.getItem('theme') === 'dark';
@@ -410,7 +434,21 @@
       updateTheme();
     });
 
-    // GESTION FORMULAIRE AJAX
+    // PARALLAXE SOURIS (SIMPLE ET FLUIDE)
+    const shapes = document.querySelectorAll('.shape-wrapper');
+    document.addEventListener('mousemove', (e) => {
+      const x = (e.clientX - window.innerWidth / 2);
+      const y = (e.clientY - window.innerHeight / 2);
+      
+      shapes.forEach(shape => {
+        const speed = shape.getAttribute('data-speed');
+        const xOffset = x * speed;
+        const yOffset = y * speed;
+        shape.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+      });
+    });
+
+    // AJAX FORM
     const form = document.querySelector('.contact-form');
     const status = document.getElementById('form-status');
     
