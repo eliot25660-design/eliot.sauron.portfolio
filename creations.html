@@ -51,6 +51,7 @@
 
     :focus-visible { outline: 3px solid var(--peach); outline-offset: 4px; border-radius: 4px; }
 
+    /* BARRE DE PROGRESSION FLUIDE */
     .scroll-progress {
       position: fixed;
       top: 0;
@@ -59,15 +60,16 @@
       height: 3px;
       background: linear-gradient(90deg, var(--peach), var(--blue));
       z-index: 100001;
-      transition: width 0.1s ease;
+      /* Pas de transition pour une fluidité max */
     }
 
+    /* LOADER MOBILE CORRIGÉ */
     .page-loader {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      height: 100vh; 
+      height: 100vh;
       height: 100dvh;
       background: linear-gradient(135deg, var(--peach-light), var(--blue-light));
       display: flex;
@@ -274,12 +276,12 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
 
-    /* CORRECTION SCROLL MOBILE : touch-action */
+    /* FIX TACTILE MOBILE */
     .carousel-track {
       display: flex;
       transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
       height: 100%;
-      touch-action: pan-y; /* Important pour le confort mobile */
+      touch-action: pan-y;
     }
 
     .carousel-image {
@@ -447,7 +449,7 @@
         transition: right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         z-index: 10000;
         list-style: none;
-        overflow-y: auto; /* Permet le scroll interne */
+        overflow-y: auto;
       }
 
       .nav-links.active { right: 0; }
@@ -645,13 +647,20 @@
       }, 1000);
     });
 
-    // SCROLL PROGRESS
+    // SCROLL BAR FLUIDE + OPTIMISATIONS
+    let ticking = false;
     window.addEventListener('scroll', () => {
-      const scrollProgress = document.getElementById('scrollProgress');
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scrollPercent = (scrollTop / scrollHeight) * 100;
-      scrollProgress.style.width = scrollPercent + '%';
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollProgress = document.getElementById('scrollProgress');
+          const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+          const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+          const scrollPercent = (scrollTop / scrollHeight) * 100;
+          if(scrollProgress) scrollProgress.style.width = scrollPercent + '%';
+          ticking = false;
+        });
+        ticking = true;
+      }
     });
 
     // MENU MOBILE

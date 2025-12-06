@@ -15,7 +15,8 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Eliot SAURON - Photographe Créatif & Designer Visuel">
   <meta property="og:description" content="Portfolio professionnel - Photographie événementielle, branding et création graphique à Besançon">
-  <meta property="og:image" content="img/profil_og.jpg"> <meta property="og:url" content="https://www.eliotsauron.com/">
+  <meta property="og:image" content="img/profil_og.jpg">
+  <meta property="og:url" content="https://www.eliotsauron.com/">
   <meta property="og:site_name" content="Eliot SAURON Portfolio">
   
   <meta name="twitter:card" content="summary_large_image">
@@ -55,7 +56,7 @@
       --blue-dark: #5A8AB5;
       --blue-light: #F6F9FC;
       --gray-dark: #2C2C2C;
-      --gray-medium: #555555; /* Contrast légèrement augmenté pour la lisibilité */
+      --gray-medium: #555555;
       --white: #FFFFFF;
       --radius: 16px;
     }
@@ -80,7 +81,6 @@
       position: relative;
     }
 
-    /* Amélioration Accessibilité Focus */
     :focus-visible {
       outline: 3px solid var(--peach);
       outline-offset: 4px;
@@ -137,6 +137,7 @@
       75% { transform: translate(20px, 30px) rotate(270deg); }
     }
 
+    /* BARRE DE PROGRESSION FLUIDE (Sans transition CSS) */
     .scroll-progress {
       position: fixed;
       top: 0;
@@ -145,19 +146,18 @@
       height: 3px;
       background: linear-gradient(90deg, var(--peach), var(--blue));
       z-index: 100001;
-      transition: width 0.1s ease;
+      /* Suppression de transition pour fluidité JS */
     }
 
-    /* CORRECTION MOBILE : 100dvh pour le loader */
+    /* LOADER MOBILE CORRIGÉ */
     .page-loader {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      height: 100vh; /* Sécurité pour vieux navigateurs */
-      height: 100dvh; /* LA CORRECTION : hauteur dynamique mobile */
+      height: 100vh; /* Fallback */
+      height: 100dvh; /* Hauteur dynamique mobile */
       background: linear-gradient(135deg, var(--peach-light), var(--blue-light));
-      /* ... reste inchangé ... */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -461,7 +461,6 @@
       z-index: 1;
     }
 
-    /* DESIGN: Glassmorphism amélioré */
     .about-container {
       max-width: 1200px;
       margin: 0 auto;
@@ -470,13 +469,13 @@
       gap: 80px;
       background: rgba(255,255,255,0.7);
       backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.6); /* Bordure subtile */
+      border: 1px solid rgba(255, 255, 255, 0.6);
       padding: 80px;
       border-radius: 16px;
       box-shadow: 0 8px 24px rgba(0,0,0,0.12);
     }
 
-    /* STYLE DE LA VIDÉO / PROFIL */
+    /* FORME ORGANIQUE POUR VIDÉO/PHOTO */
     .profile-media-container {
       width: 100%;
       aspect-ratio: 1;
@@ -883,7 +882,7 @@
       .logo-svg { width: 80px; height: 56px; }
       .menu-toggle { display: flex; align-items: center; justify-content: center; }
 
-      /* CORRECTION MENU MOBILE : S'assurer que ça ne déborde pas */
+      /* CORRECTION MENU MOBILE AVEC SCROLL */
       .nav-links {
         position: fixed;
         top: 80px;
@@ -895,12 +894,12 @@
         background: rgba(255,255,255,0.98);
         backdrop-filter: blur(25px);
         flex-direction: column;
-        padding: 40px 48px 100px; /* Plus d'espace en bas */
+        padding: 40px 48px 100px;
         box-shadow: -6px 0 30px rgba(0,0,0,0.15);
         transition: right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         z-index: 10000;
         list-style: none;
-        overflow-y: auto; /* Permet le scroll SI le menu est trop grand */
+        overflow-y: auto; /* IMPORTANT */
       }
 
       .nav-links.active { right: 0; }
@@ -1157,7 +1156,6 @@
         setTimeout(() => loader.remove(), 600);
       }, 1200);
 
-      // Lazy load manuel pour compatibilité accrue
       document.querySelectorAll('img[loading="lazy"]').forEach(img => {
         if (img.complete) {
           img.classList.add('loaded');
@@ -1167,21 +1165,32 @@
       });
     });
 
+    // SCROLL BAR FLUIDE + OPTIMISATIONS
+    let ticking = false;
     window.addEventListener('scroll', () => {
-      const scrollProgress = document.getElementById('scrollProgress');
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scrollPercent = (scrollTop / scrollHeight) * 100;
-      scrollProgress.style.width = scrollPercent + '%';
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          // 1. Barre de progression
+          const scrollProgress = document.getElementById('scrollProgress');
+          const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+          const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+          const scrollPercent = (scrollTop / scrollHeight) * 100;
+          if(scrollProgress) scrollProgress.style.width = scrollPercent + '%';
 
-      const scrollBtn = document.getElementById('scrollToTop');
-      scrollBtn.classList.toggle('visible', window.scrollY > 500);
+          // 2. Bouton retour haut
+          const scrollBtn = document.getElementById('scrollToTop');
+          if(scrollBtn) scrollBtn.classList.toggle('visible', window.scrollY > 500);
 
-      const scrolled = window.scrollY;
-      const heroContent = document.querySelector('.hero-content');
-      if (heroContent && scrolled < window.innerHeight) {
-        heroContent.style.transform = `translateY(${scrolled * 0.3}px)`;
-        heroContent.style.opacity = Math.max(0, 1 - (scrolled / 800));
+          // 3. Parallaxe Hero
+          const scrolled = window.scrollY;
+          const heroContent = document.querySelector('.hero-content');
+          if (heroContent && scrolled < window.innerHeight) {
+            heroContent.style.transform = `translateY(${scrolled * 0.3}px)`;
+            heroContent.style.opacity = Math.max(0, 1 - (scrolled / 800));
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     });
 
@@ -1212,8 +1221,6 @@
         
         const isActive = navLinks.classList.toggle('active');
         menuToggle.setAttribute('aria-expanded', isActive);
-        
-        // Empêche le scroll du body quand le menu est ouvert
         document.body.style.overflow = isActive ? 'hidden' : '';
       });
     }
@@ -1232,7 +1239,6 @@
           e.preventDefault();
           window.scrollTo({ top: target.offsetTop - 100, behavior: 'smooth' });
           
-          // Fermer le menu mobile si ouvert
           const navLinks = document.querySelector('.nav-links');
           if (navLinks && navLinks.classList.contains('active')) {
             navLinks.classList.remove('active');
