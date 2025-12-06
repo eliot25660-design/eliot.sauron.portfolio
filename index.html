@@ -13,26 +13,28 @@
   
   <style>
     :root {
+      /* Couleurs */
       --peach: #F2A18C;
-      --peach-glow: rgba(242, 161, 140, 0.5);
       --blue: #7FA6C6;
-      --blue-glow: rgba(127, 166, 198, 0.5);
+      --peach-blob: rgba(242, 161, 140, 0.6); /* Plus visible */
+      --blue-blob: rgba(127, 166, 198, 0.6); /* Plus visible */
+      
       --bg-body: #FDFBF9;
       --text-main: #2C2C2C;
       --text-muted: #666666;
-      --glass-bg: rgba(255, 255, 255, 0.7);
-      --glass-border: rgba(255, 255, 255, 0.8);
-      --card-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
-      --radius: 20px;
+      --glass-bg: rgba(255, 255, 255, 0.6);
+      --glass-border: rgba(255, 255, 255, 0.9);
+      --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+      --radius: 24px;
     }
 
     [data-theme="dark"] {
       --bg-body: #0a0a0a;
       --text-main: #f0f0f0;
       --text-muted: #a0a0a0;
-      --glass-bg: rgba(20, 20, 20, 0.7);
+      --glass-bg: rgba(20, 20, 20, 0.6);
       --glass-border: rgba(255, 255, 255, 0.1);
-      --card-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+      --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -42,52 +44,56 @@
       font-family: 'Outfit', sans-serif;
       background: var(--bg-body);
       color: var(--text-main);
-      overflow-x: hidden;
       transition: background 0.5s ease, color 0.5s ease;
       min-height: 100vh;
+      overflow-x: hidden;
       position: relative;
     }
 
-    /* BACKGROUND ANIMÉ + PARALLAXE */
+    /* === BACKGROUND ANIMÉ & PARALLAXE (CORRIGÉ) === */
     .background-shapes {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      z-index: 0; pointer-events: none; overflow: hidden;
+      z-index: 0; /* Juste au dessus du fond uni */
+      pointer-events: none; overflow: hidden;
     }
     
-    /* Conteneur qui reçoit le mouvement de la souris */
     .shape-wrapper {
       position: absolute;
-      transition: transform 0.1s linear; /* Mouvement fluide souris */
+      transition: transform 0.1s linear; /* Réactivité souris */
       will-change: transform;
     }
 
-    /* La bulle elle-même qui flotte */
     .shape {
       border-radius: 50%;
-      filter: blur(80px); opacity: 0.6;
+      filter: blur(60px); /* Un peu moins flou pour être plus visible */
       animation: float 20s infinite alternate;
     }
 
-    /* Positionnement */
+    /* Forme 1 (Pêche) */
     .wrap-1 { top: -10%; left: -10%; }
-    .shape-1 { width: 60vw; height: 60vw; background: var(--peach-glow); animation-duration: 25s; }
+    .shape-1 { width: 50vw; height: 50vw; background: var(--peach-blob); animation-duration: 25s; }
     
+    /* Forme 2 (Bleue) */
     .wrap-2 { bottom: -10%; right: -10%; }
-    .shape-2 { width: 70vw; height: 70vw; background: var(--blue-glow); animation-duration: 30s; }
+    .shape-2 { width: 60vw; height: 60vw; background: var(--blue-blob); animation-duration: 30s; }
+
+    /* Forme 3 (Centre) */
+    .wrap-3 { top: 40%; left: 30%; }
+    .shape-3 { width: 30vw; height: 30vw; background: var(--peach-blob); opacity: 0.4; animation-duration: 20s; }
 
     @keyframes float {
-      0% { transform: translate(0, 0) rotate(0deg); }
-      100% { transform: translate(50px, 30px) rotate(10deg); }
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(30px, 20px) scale(1.1); }
     }
 
-    header, section, footer, .theme-toggle-fixed { position: relative; z-index: 1; }
+    /* Le contenu doit passer DEVANT les bulles */
+    header, section, footer, .theme-toggle-fixed, .page-loader { position: relative; z-index: 2; }
 
     /* LOADER */
     .page-loader {
       position: fixed; top: 0; left: 0; width: 100%; height: 100dvh;
-      background: var(--bg-body); display: flex; flex-direction: column;
-      align-items: center; justify-content: center; z-index: 99999;
-      transition: opacity 0.8s ease, visibility 0.8s;
+      background: var(--bg-body); display: flex; align-items: center; justify-content: center;
+      z-index: 99999; transition: opacity 0.6s, visibility 0.6s;
     }
     .loader-text {
       font-size: clamp(40px, 10vw, 80px); font-weight: 800;
@@ -113,26 +119,32 @@
     }
     .nav-links a:hover { color: var(--peach); }
 
-    /* LOGO SIGNATURE */
-    .logo-container { width: 70px; height: 45px; display: flex; align-items: center; justify-content: center; }
-    .signature-svg { width: 100%; height: 100%; overflow: visible; }
-    .signature-path {
-      fill: none; stroke: var(--text-main); stroke-width: 2.5;
-      stroke-linecap: round; stroke-linejoin: round;
-      stroke-dasharray: 400; stroke-dashoffset: 400;
-      animation: signLoop 6s ease-in-out infinite;
+    /* === NOUVEAU LOGO GÉOMÉTRIQUE ANIMÉ === */
+    .logo-container { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; }
+    .logo-svg { width: 100%; height: 100%; overflow: visible; }
+    
+    /* Cercle extérieur tournant */
+    .logo-ring {
+      fill: none; stroke: url(#logoGradient); stroke-width: 6;
+      stroke-linecap: round;
+      stroke-dasharray: 80 100; /* Crée l'ouverture */
+      transform-origin: center;
+      animation: spin 3s linear infinite;
     }
-    @keyframes signLoop {
-      0% { stroke-dashoffset: 400; opacity: 0; }
-      15% { opacity: 1; }
-      40% { stroke-dashoffset: 0; }
-      70% { stroke-dashoffset: 0; opacity: 1; }
-      90% { stroke-dashoffset: 0; opacity: 0; }
-      100% { stroke-dashoffset: 400; opacity: 0; }
+    
+    /* Point central qui respire */
+    .logo-dot {
+      fill: var(--text-main);
+      transform-origin: center;
+      animation: pulse-dot 2s ease-in-out infinite;
     }
+
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+    @keyframes pulse-dot { 0%, 100% { transform: scale(1); } 50% { transform: scale(0.6); } }
 
     .menu-btn { display: none; background: none; border: none; font-size: 26px; cursor: pointer; color: var(--text-main); }
     
+    /* BOUTON THEME */
     .theme-toggle-fixed {
       position: fixed; bottom: 25px; right: 25px;
       width: 50px; height: 50px; border-radius: 50%;
@@ -170,11 +182,12 @@
       width: 280px; height: 280px; margin: 0 auto 40px;
       border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
       overflow: hidden; border: 4px solid var(--bg-body);
-      box-shadow: 0 20px 50px rgba(242, 161, 140, 0.25);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
       animation: morph 8s ease-in-out infinite;
-      position: relative;
+      position: relative; background: white;
     }
     .blob-container img, .blob-container video { width: 100%; height: 100%; object-fit: cover; }
+    
     @keyframes morph {
       0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
       50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
@@ -201,28 +214,28 @@
     }
     .btn-secondary:hover { background: var(--text-main); color: var(--bg-body); }
 
-    /* EXPERTISE */
+    /* COMPÉTENCES */
     .about { padding: 120px 20px; max-width: 1100px; margin: 0 auto; text-align: center; }
     .about h2 { font-size: 40px; margin-bottom: 20px; color: var(--text-main); }
     .about-subtitle { font-size: 18px; color: var(--text-muted); margin-bottom: 60px; max-width: 600px; margin-left: auto; margin-right: auto; }
 
-    .expertise-grid {
+    .skills-grid {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 30px;
     }
 
-    .expertise-card {
+    .skill-card {
       background: var(--glass-bg); padding: 40px 30px; border-radius: var(--radius);
       border: 1px solid var(--glass-border); box-shadow: var(--card-shadow);
       transition: transform 0.3s ease; text-align: left;
     }
-    .expertise-card:hover { transform: translateY(-10px); border-color: var(--peach); }
+    .skill-card:hover { transform: translateY(-10px); border-color: var(--peach); }
     
-    .expertise-icon { font-size: 40px; margin-bottom: 20px; display: block; }
-    .expertise-title { font-size: 20px; font-weight: 700; color: var(--text-main); margin-bottom: 10px; }
-    .expertise-desc { font-size: 15px; color: var(--text-muted); line-height: 1.6; }
+    .skill-icon { font-size: 40px; margin-bottom: 20px; display: block; }
+    .skill-title { font-size: 20px; font-weight: 700; color: var(--text-main); margin-bottom: 10px; }
+    .skill-desc { font-size: 15px; color: var(--text-muted); line-height: 1.6; }
 
-    /* CONTACT AVEC GRAIN */
+    /* CONTACT (TEXTURE + FIX) */
     .contact { padding: 100px 20px; max-width: 700px; margin: 0 auto; }
     
     .contact-card {
@@ -243,13 +256,12 @@
     .form-group input, .form-group textarea {
       width: 100%; padding: 18px; border-radius: 12px;
       border: 2px solid transparent; 
-      background-color: rgba(255, 255, 255, 0.8); /* Fond clair */
+      background-color: rgba(255, 255, 255, 0.9); /* Fond uni */
       color: var(--text-main); font-family: inherit; font-size: 16px;
-      transition: 0.3s;
-      resize: vertical;
+      transition: 0.3s; resize: vertical;
       box-shadow: 0 4px 10px rgba(0,0,0,0.03);
     }
-    [data-theme="dark"] .form-group input, [data-theme="dark"] .form-group textarea { background-color: rgba(30, 30, 30, 0.8); }
+    [data-theme="dark"] .form-group input, [data-theme="dark"] .form-group textarea { background-color: rgba(40, 40, 40, 0.9); }
     .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--peach); box-shadow: 0 4px 15px rgba(242, 161, 140, 0.2); }
 
     .send-btn {
@@ -262,8 +274,9 @@
     .send-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(242, 161, 140, 0.5); }
     .send-btn:disabled { opacity: 0.7; cursor: not-allowed; }
 
-    #form-status { margin-top: 20px; text-align: center; font-weight: 600; min-height: 24px; position: relative; z-index: 1; }
-    .status-success { color: #27ae60; }
+    /* STATUS MESSAGE */
+    #form-status { margin-top: 20px; text-align: center; font-weight: 600; min-height: 24px; position: relative; z-index: 1; transition: 0.3s; }
+    .status-success { color: #27ae60; background: rgba(39, 174, 96, 0.1); padding: 10px; border-radius: 8px; display: inline-block; }
     .status-error { color: #e74c3c; }
 
     /* FOOTER */
@@ -286,18 +299,21 @@
       .hero { padding-top: 160px; }
       .contact-card { padding: 30px 20px; }
       .blob-container { width: 220px; height: 220px; }
-      .expertise-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
   <div class="background-shapes" id="bgShapes">
-    <div class="shape-wrapper wrap-1" data-speed="0.05">
+    <div class="shape-wrapper wrap-1" data-speed="0.04">
       <div class="shape shape-1"></div>
     </div>
-    <div class="shape-wrapper wrap-2" data-speed="-0.05">
+    <div class="shape-wrapper wrap-2" data-speed="-0.04">
       <div class="shape shape-2"></div>
+    </div>
+    <div class="shape-wrapper wrap-3" data-speed="0.02">
+      <div class="shape shape-3"></div>
     </div>
   </div>
 
@@ -309,15 +325,22 @@
 
   <header>
     <a href="index.html" class="logo-container" aria-label="Accueil">
-      <svg class="signature-svg" viewBox="0 0 100 50">
-        <path class="signature-path" d="M20,40 C10,40 10,20 20,10 C35,0 35,25 20,25 C15,25 25,25 35,25 L45,25 C50,25 50,15 60,15 C70,15 70,35 60,35 C50,35 50,45 60,45 L80,45" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+      <svg class="logo-svg" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:var(--blue)" />
+            <stop offset="100%" style="stop-color:var(--peach)" />
+          </linearGradient>
+        </defs>
+        <circle class="logo-ring" cx="50" cy="50" r="30" />
+        <circle class="logo-dot" cx="50" cy="50" r="10" />
       </svg>
     </a>
 
     <button class="menu-btn" id="menuBtn">☰</button>
 
     <ul class="nav-links" id="navLinks">
-      <li><a href="#about">Expertise</a></li>
+      <li><a href="#about">Mes Compétences</a></li>
       <li><a href="creations.html">Portfolio</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -338,29 +361,29 @@
   </section>
 
   <section class="about" id="about">
-    <h2>Mon Expertise</h2>
-    <p class="about-subtitle">Une vision créative et technique au service de chaque projet.</p>
+    <h2>Mes Compétences</h2>
+    <p class="about-subtitle">J'apprends chaque jour à maîtriser les outils pour servir ma vision créative.</p>
     
-    <div class="expertise-grid">
-      <div class="expertise-card">
-        <span class="expertise-icon">📸</span>
-        <h3 class="expertise-title">Photographie</h3>
-        <p class="expertise-desc">Portraits, événements et retouche photo professionnelle.</p>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <span class="skill-icon">📸</span>
+        <h3 class="skill-title">Photographie</h3>
+        <p class="skill-desc">Prise de vue studio, extérieur et retouche (Lightroom).</p>
       </div>
-      <div class="expertise-card">
-        <span class="expertise-icon">🎨</span>
-        <h3 class="expertise-title">Design Graphique</h3>
-        <p class="expertise-desc">Identité visuelle, logotypes et supports de communication.</p>
+      <div class="skill-card">
+        <span class="skill-icon">🎨</span>
+        <h3 class="skill-title">Design Graphique</h3>
+        <p class="skill-desc">Logos, affiches et supports de communication (Suite Adobe).</p>
       </div>
-      <div class="expertise-card">
-        <span class="expertise-icon">💻</span>
-        <h3 class="expertise-title">Intégration Web</h3>
-        <p class="expertise-desc">Création de sites vitrines modernes et responsive.</p>
+      <div class="skill-card">
+        <span class="skill-icon">💻</span>
+        <h3 class="skill-title">Intégration Web</h3>
+        <p class="skill-desc">Bases solides en HTML, CSS et design responsive.</p>
       </div>
-      <div class="expertise-card">
-        <span class="expertise-icon">🎥</span>
-        <h3 class="expertise-title">Vidéo & Motion</h3>
-        <p class="expertise-desc">Montage dynamique et animation de contenus.</p>
+      <div class="skill-card">
+        <span class="skill-icon">🎥</span>
+        <h3 class="skill-title">Vidéo</h3>
+        <p class="skill-desc">Montage vidéo dynamique et création de contenu réseaux sociaux.</p>
       </div>
     </div>
   </section>
@@ -434,7 +457,7 @@
       updateTheme();
     });
 
-    // PARALLAXE SOURIS (SIMPLE ET FLUIDE)
+    // PARALLAXE SOURIS (CORRIGÉ & FLUIDE)
     const shapes = document.querySelectorAll('.shape-wrapper');
     document.addEventListener('mousemove', (e) => {
       const x = (e.clientX - window.innerWidth / 2);
@@ -442,13 +465,12 @@
       
       shapes.forEach(shape => {
         const speed = shape.getAttribute('data-speed');
-        const xOffset = x * speed;
-        const yOffset = y * speed;
-        shape.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+        // Utilisation de transform pour perf max
+        shape.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
       });
     });
 
-    // AJAX FORM
+    // AJAX FORM SUBMISSION (SANS REDIRECTION)
     const form = document.querySelector('.contact-form');
     const status = document.getElementById('form-status');
     
@@ -471,11 +493,11 @@
 
         if (response.ok) {
           status.className = "status-success";
-          status.textContent = "✅ Message bien reçu ! Je vous réponds vite.";
+          status.textContent = "✅ Message envoyé avec succès !";
           form.reset();
         } else {
           status.className = "status-error";
-          status.textContent = "❌ Oups, une erreur est survenue.";
+          status.textContent = "❌ Erreur lors de l'envoi.";
         }
       } catch (error) {
         status.className = "status-error";
