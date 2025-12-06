@@ -1,838 +1,330 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mes Créations - Eliot SAURON | Portfolio</title>
-  <meta name="description" content="Découvrez mes créations en photographie, graphisme et branding. Portfolio de projets professionnels.">
-  <meta name="robots" content="index, follow">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23F2A18C'/%3E%3Ctext x='50' y='70' font-size='60' font-weight='800' text-anchor='middle' fill='white'%3EE%3C/text%3E%3C/svg%3E">
+  <title>Mes Créations - Eliot SAURON</title>
   
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
+  
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23F2A18C'/%3E%3Ctext x='50' y='70' font-size='60' font-weight='800' text-anchor='middle' fill='white'%3EE%3C/text%3E%3C/svg%3E">
+
   <style>
     :root {
       --peach: #F2A18C;
-      --peach-dark: #E08B73;
-      --peach-light: #FFF5F0;
       --blue: #7FA6C6;
-      --blue-dark: #5A8AB5;
       --blue-light: #F6F9FC;
-      --gray-dark: #2C2C2C;
-      --gray-medium: #555555;
-      --white: #FFFFFF;
+      --bg-body: #FFFFFF;
+      --text-main: #2C2C2C;
+      --text-muted: #555555;
+      --bg-card: rgba(255, 255, 255, 0.8);
+      --border-color: rgba(255, 255, 255, 0.6);
       --radius: 16px;
     }
 
+    [data-theme="dark"] {
+      --bg-body: #050505;
+      --text-main: #f0f6fc;
+      --text-muted: #8b949e;
+      --bg-card: rgba(30, 30, 30, 0.7);
+      --border-color: rgba(255, 255, 255, 0.1);
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    html { scroll-behavior: smooth; scroll-padding-top: 100px; }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
-      background: radial-gradient(ellipse 100% 70% at 40% 30%, var(--blue-light) 20%, var(--peach-light) 70%, var(--white) 100%);
-      color: var(--gray-dark);
-      line-height: 1.6;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
-        radial-gradient(circle at 20% 50%, rgba(242, 161, 140, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(127, 166, 198, 0.08) 0%, transparent 50%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    :focus-visible { outline: 3px solid var(--peach); outline-offset: 4px; border-radius: 4px; }
-
-    /* BARRE DE PROGRESSION FLUIDE */
-    .scroll-progress {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 0%;
-      height: 3px;
-      background: linear-gradient(90deg, var(--peach), var(--blue));
-      z-index: 100001;
-      /* Pas de transition pour une fluidité max */
-    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Outfit', sans-serif; background: var(--bg-body); color: var(--text-main); transition: 0.3s; }
+    h1, h2 { font-family: 'Playfair Display', serif; }
 
     /* LOADER MOBILE CORRIGÉ */
     .page-loader {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      height: 100dvh;
-      background: linear-gradient(135deg, var(--peach-light), var(--blue-light));
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 99999;
-      transition: opacity 0.6s, visibility 0.6s;
+      position: fixed; top: 0; left: 0; width: 100%; height: 100dvh;
+      background: var(--bg-body); display: flex; flex-direction: column; align-items: center; justify-content: center;
+      z-index: 99999; transition: opacity 0.6s, visibility 0.6s;
     }
-
-    .page-loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-
+    .page-loader.hidden { opacity: 0; visibility: hidden; }
     .loader-logo {
-      /* CORRECTION : Taille fluide qui s'adapte au mobile (min 30px, max 56px) */
-      font-size: clamp(30px, 8vw, 56px);
-      font-weight: 800;
-      /* CORRECTION : Centre le texte s'il passe sur deux lignes */
-      text-align: center;
-      line-height: 1.1;
-      /* CORRECTION : Ajoute des marges pour ne pas toucher les bords */
-      padding: 0 20px;
-      
-      background: linear-gradient(135deg, var(--blue), var(--peach));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: pulse 1.5s infinite;
+      font-size: clamp(32px, 10vw, 56px); font-weight: 800; text-align: center; padding: 0 20px;
+      background: linear-gradient(135deg, var(--blue), var(--peach)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      animation: pulse 1.5s infinite; font-family: 'Playfair Display', serif;
     }
+    @keyframes pulse { 0%, 100% { opacity: 0.7; transform: scale(0.98); } 50% { opacity: 1; transform: scale(1.02); } }
 
-    @keyframes pulse { 0%, 100% { opacity: 0.6; transform: scale(0.98); } 50% { opacity: 1; transform: scale(1.02); } }
+    /* HEADER */
+    header { position: sticky; top: 0; background: var(--bg-card); backdrop-filter: blur(20px); z-index: 1000; border-bottom: 1px solid var(--border-color); }
+    nav { max-width: 1400px; margin: 0 auto; padding: 16px 32px; display: flex; justify-content: space-between; align-items: center; }
+    .logo-svg { width: 80px; }
+    .nav-actions { display: flex; gap: 20px; align-items: center; }
+    .nav-actions a { text-decoration: none; color: var(--text-main); font-weight: 500; }
+    .theme-toggle { background: none; border: none; font-size: 22px; cursor: pointer; }
 
-    header {
-      position: sticky;
-      top: 0;
-      background: rgba(255,255,255,0.85);
-      backdrop-filter: blur(25px);
-      z-index: 10000;
-      box-shadow: 0 4px 30px rgba(0,0,0,0.05);
-      border-bottom: 1px solid rgba(255,255,255,0.6);
-    }
-
-    nav {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 16px 32px;
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      gap: 32px;
-    }
-
-    .nav-left, .nav-right { display: flex; gap: 16px; list-style: none; }
-    .nav-left { justify-content: flex-start; }
-    .nav-right { justify-content: flex-end; }
-
-    .logo {
-      grid-column: 2;
-      display: flex;
-      justify-content: center;
-      text-decoration: none;
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .logo:hover { transform: translateY(-2px); }
-    .logo:focus-visible { outline: 3px solid var(--peach); outline-offset: 4px; border-radius: 8px; }
-
-    .logo-svg { width: 120px; height: 80px; filter: drop-shadow(0 4px 12px rgba(242, 161, 140, 0.3)); }
-    .logo-main-circle { animation: rotate 8s linear infinite; transform-origin: center; }
-    .logo-accent { animation: pulse-accent 2s ease-in-out infinite; }
-    .logo-center { animation: glow 3s ease-in-out infinite; }
-
-    @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-    @keyframes pulse-accent { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.2); opacity: 1; } }
-    @keyframes glow { 0%, 100% { opacity: 0.8; } 50% { opacity: 1; transform: scale(1.3); } }
-
-    .nav-left a, .nav-right a {
-      color: var(--gray-medium);
-      text-decoration: none;
-      font-size: 15px;
-      font-weight: 600;
-      padding: 12px 24px;
-      border-radius: 30px;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      min-height: 48px;
-      min-width: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-
-    .nav-left a::after, .nav-right a::after {
-      content: '';
-      position: absolute;
-      bottom: 8px;
-      left: 50%;
-      transform: translateX(-50%) scaleX(0);
-      width: 60%;
-      height: 2px;
-      background: var(--peach);
-      transition: transform 0.3s ease;
-    }
-
-    .nav-left a:hover::after, .nav-right a:hover::after { transform: translateX(-50%) scaleX(1); }
-    .nav-left a:hover, .nav-right a:hover { color: var(--peach); background: rgba(242,161,140,0.1); transform: translateY(-2px); }
-
-    .menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      font-size: 28px;
-      cursor: pointer;
-      color: var(--gray-dark);
-      min-width: 48px;
-      min-height: 48px;
-      grid-column: 3;
-      justify-self: end;
-    }
-
-    .gallery-hero { text-align: center; padding: 80px 32px 60px; position: relative; z-index: 1; }
-
-    .gallery-hero h1 {
-      font-size: clamp(38px, 6vw, 56px);
-      font-weight: 800;
-      line-height: 1.1;
-      margin-bottom: 24px;
-      background: linear-gradient(135deg, var(--blue) 0%, var(--peach) 50%, var(--blue-dark) 100%);
-      background-size: 200% 200%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: -1px;
-      animation: fadeInUp 0.8s ease both, gradientShift 8s ease infinite;
-    }
-
-    @keyframes gradientShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
-    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-
-    .gallery-hero p { color: var(--gray-medium); font-size: clamp(16px, 2vw, 18px); margin-bottom: 48px; opacity: 0; animation: fadeInUp 0.8s ease 0.2s both; }
-
-    .filters { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 60px; opacity: 0; animation: fadeInUp 0.8s ease 0.4s both; }
-
+    /* HERO */
+    .gallery-hero { text-align: center; padding: 60px 20px; }
+    .gallery-hero h1 { font-size: clamp(36px, 6vw, 64px); background: linear-gradient(135deg, var(--blue), var(--peach)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 16px; }
+    
+    /* FILTERS */
+    .filters { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 40px; }
     .filter-btn {
-      padding: 12px 28px;
-      background: rgba(255,255,255,0.8);
-      backdrop-filter: blur(15px);
-      border: 2px solid rgba(242,161,140,0.2);
-      border-radius: 30px;
-      color: var(--gray-medium);
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-      min-height: 48px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+      padding: 8px 20px; border-radius: 30px; border: 1px solid var(--border-color);
+      background: var(--bg-card); color: var(--text-muted); cursor: pointer; transition: 0.3s;
     }
+    .filter-btn.active, .filter-btn:hover { background: var(--peach); color: white; border-color: var(--peach); }
 
-    .filter-btn:hover { background: rgba(242,161,140,0.15); border-color: var(--peach); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(242,161,140,0.25); }
-    .filter-btn.active { background: linear-gradient(135deg, var(--peach), var(--peach-dark)); color: white; border-color: var(--peach); box-shadow: 0 4px 16px rgba(242,161,140,0.4); }
-
+    /* GRID */
     .gallery-container {
-      max-width: 1400px;
-      margin: 0 auto 100px;
-      padding: 0 32px;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-      gap: 40px;
-      position: relative;
-      z-index: 1;
+      max-width: 1400px; margin: 0 auto 80px; padding: 0 20px;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 40px;
     }
 
+    /* CARTE PROJET */
     .creation-card {
-      background: rgba(255,255,255,0.75);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.6);
-      border-radius: var(--radius);
-      padding: 20px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      opacity: 0;
-      transform: translateY(30px);
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: var(--radius); padding: 20px; transition: 0.4s;
     }
-
-    .creation-card.visible { animation: cardFadeIn 0.6s ease forwards; }
-    @keyframes cardFadeIn { to { opacity: 1; transform: translateY(0); } }
     .creation-card.hidden { display: none; }
-    .creation-card:hover { transform: translateY(-8px); box-shadow: 0 12px 32px rgba(0,0,0,0.12); border-color: rgba(242,161,140,0.3); }
-
+    
     .category-badge {
-      display: inline-block;
-      padding: 6px 16px;
-      background: rgba(242,161,140,0.1);
-      border: 1px solid rgba(242,161,140,0.25);
-      border-radius: 20px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--peach);
-      margin-bottom: 16px;
+      display: inline-block; padding: 4px 12px; background: rgba(242,161,140,0.1);
+      color: var(--peach); border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 12px;
     }
 
+    /* CAROUSEL IMAGES - CORRECTIF MOBILE "HUGE" */
     .image-carousel {
-      position: relative;
-      width: 100%;
-      height: 320px;
-      border-radius: 12px;
-      overflow: hidden;
-      margin-bottom: 20px;
-      background: linear-gradient(135deg, #FFE5D9, #E8F1F8);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      position: relative; width: 100%; height: 300px; /* PC */
+      border-radius: 12px; overflow: hidden; margin-bottom: 16px;
+      cursor: zoom-in; /* Indique qu'on peut cliquer pour agrandir */
     }
-
-    /* FIX TACTILE MOBILE */
-    .carousel-track {
-      display: flex;
-      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      height: 100%;
-      touch-action: pan-y;
-    }
-
+    
+    .carousel-track { display: flex; height: 100%; transition: transform 0.5s ease; touch-action: pan-y; }
+    
     .carousel-image {
-      min-width: 100%;
-      height: 100%;
-      object-fit: cover;
-      cursor: pointer;
-      transition: transform 0.3s ease;
+      min-width: 100%; height: 100%; 
+      object-fit: cover; object-position: center; /* Important pour le centrage */
     }
-
-    .carousel-image:hover { transform: scale(1.03); }
 
     .carousel-nav {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      padding: 0 12px;
-      pointer-events: none;
-      z-index: 10;
+      position: absolute; top: 50%; width: 100%; transform: translateY(-50%);
+      display: flex; justify-content: space-between; padding: 0 10px; pointer-events: none;
     }
-
     .carousel-arrow {
-      background: rgba(255,255,255,0.95);
-      backdrop-filter: blur(10px);
-      border-radius: 50%;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      min-width: 44px;
-      min-height: 44px;
-      width: 44px;
-      height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      border: none;
-      cursor: pointer;
-      pointer-events: auto;
-      transition: all 0.3s ease;
-      color: var(--gray-dark);
-      opacity: 0;
+      pointer-events: auto; width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(255,255,255,0.9); border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; font-size: 20px;
+      color: #333; opacity: 0; transition: 0.3s;
     }
-
     .creation-card:hover .carousel-arrow { opacity: 1; }
-    .carousel-arrow:hover { background: var(--peach); color: white; transform: scale(1.1); }
 
-    .carousel-indicators { display: flex; gap: 8px; justify-content: center; position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%); }
+    .creation-title { font-size: 20px; margin-bottom: 8px; color: var(--text-main); }
+    .creation-desc { color: var(--text-muted); font-size: 15px; }
 
-    .indicator { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.5); transition: all 0.3s ease; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-    .indicator.active { background: white; width: 24px; border-radius: 4px; }
-
-    .creation-title { font-weight: 700; font-size: 20px; margin: 16px 0 12px; text-align: center; color: var(--gray-dark); }
-
-    .bio-toggle {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      color: var(--peach);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 15px;
-      margin: 12px 0;
-      padding: 10px;
-      transition: all 0.3s ease;
-      border-radius: 8px;
-      min-height: 44px;
+    /* LIGHTBOX (ZOOM PLEIN ÉCRAN) */
+    .lightbox {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.95); z-index: 20000;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+    }
+    .lightbox.active { opacity: 1; pointer-events: auto; }
+    .lightbox img { max-width: 90%; max-height: 90vh; border-radius: 4px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+    .lightbox-close {
+      position: absolute; top: 20px; right: 20px;
+      background: none; border: none; color: white; font-size: 40px; cursor: pointer;
     }
 
-    .bio-toggle:hover { background: rgba(242,161,140,0.1); color: var(--peach-dark); }
-
-    .bio-content {
-      max-height: 0;
-      overflow: hidden;
-      background: rgba(255,245,240,0.6);
-      backdrop-filter: blur(5px);
-      border-radius: 10px;
-      color: var(--gray-medium);
-      font-size: 15px;
-      line-height: 1.7;
-      transition: max-height 0.4s ease, padding 0.4s ease, margin 0.4s ease;
-    }
-
-    .bio-content.open { max-height: 500px; padding: 20px; margin-top: 12px; }
-
-    .cta-contact { max-width: 800px; margin: 0 auto 100px; padding: 0 32px; text-align: center; }
-
-    .cta-contact-box {
-      background: rgba(255,255,255,0.7);
-      backdrop-filter: blur(20px);
-      padding: 60px 48px;
-      border-radius: var(--radius);
-      border: 1px solid rgba(255,255,255,0.8);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-    }
-
-    .cta-contact h2 {
-      font-size: clamp(28px, 4vw, 40px);
-      margin-bottom: 20px;
-      background: linear-gradient(135deg, var(--blue), var(--peach));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      font-weight: 800;
-    }
-
-    .cta-contact p { color: var(--gray-medium); font-size: 17px; line-height: 1.7; margin-bottom: 32px; }
-
-    .cta-contact-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 18px 40px;
-      background: linear-gradient(135deg, var(--peach), var(--peach-dark));
-      color: white;
-      text-decoration: none;
-      border-radius: 50px;
-      font-weight: 700;
-      font-size: 17px;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 6px 20px rgba(242,161,140,0.4);
-      min-height: 60px;
-    }
-
-    .cta-contact-btn:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(242,161,140,0.5); }
-
-    footer {
-      padding: 40px 32px;
-      background: rgba(255,255,255,0.8);
-      backdrop-filter: blur(20px);
-      text-align: center;
-      border-top: 1px solid rgba(255,255,255,0.7);
-      position: relative;
-      z-index: 1;
-    }
-
-    footer p { color: var(--gray-medium); font-size: 15px; margin-bottom: 16px; }
-
-    .footer-legal { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-top: 16px; }
-    .footer-legal a { color: var(--gray-medium); text-decoration: none; font-size: 14px; transition: color 0.3s ease; }
-    .footer-legal a:hover { color: var(--peach); }
-
+    /* RESPONSIVE MOBILE */
     @media (max-width: 768px) {
-      nav { grid-template-columns: auto 1fr auto; }
-      .nav-left, .nav-right { display: none; }
-      .logo { grid-column: 2; }
-      .logo-svg { width: 80px; height: 56px; }
-      .menu-toggle { display: flex; align-items: center; justify-content: center; }
-
-      .nav-links {
-        position: fixed;
-        top: 80px;
-        right: -100%;
-        width: 90%;
-        max-width: 350px;
-        height: calc(100vh - 80px);
-        height: calc(100dvh - 80px); /* Correction mobile */
-        background: rgba(255,255,255,0.98);
-        backdrop-filter: blur(25px);
-        flex-direction: column;
-        padding: 40px 48px;
-        box-shadow: -6px 0 30px rgba(0,0,0,0.15);
-        transition: right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index: 10000;
-        list-style: none;
-        overflow-y: auto;
-      }
-
-      .nav-links.active { right: 0; }
-      .nav-links li { width: 100%; margin-bottom: 16px; }
-      .nav-links a { display: block; width: 100%; padding: 20px 24px; text-align: left; font-size: 18px; }
-      .gallery-container { grid-template-columns: 1fr; gap: 32px; }
-      .image-carousel { height: 280px; }
-      .carousel-arrow { opacity: 0.9; }
-      .cta-contact-box { padding: 40px 32px; }
+      .gallery-container { grid-template-columns: 1fr; }
+      
+      /* FIX IMAGE ÉNORME : Hauteur réduite sur mobile */
+      .image-carousel { height: 200px; } 
+      
+      .carousel-arrow { opacity: 1; background: rgba(255,255,255,0.7); }
+      .logo-svg { width: 60px; }
     }
   </style>
 </head>
 <body>
-  <div class="scroll-progress" id="scrollProgress"></div>
-  
+
   <div class="page-loader" id="pageLoader">
     <div class="loader-logo">ELIOT SAURON</div>
   </div>
 
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close">&times;</button>
+    <img src="" alt="Zoom" id="lightboxImg">
+  </div>
+
   <header>
     <nav>
-      <ul class="nav-left">
-        <li><a href="index.html#about">À Propos</a></li>
-        <li><a href="index.html">Accueil</a></li>
-      </ul>
-      
-      <a href="index.html" class="logo" aria-label="Retour accueil Eliot SAURON">
-        <svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 80" aria-hidden="true">
+      <a href="index.html" class="logo">
+        <svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 80">
           <defs>
             <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" style="stop-color:#7FA6C6" />
               <stop offset="100%" style="stop-color:#F2A18C" />
             </linearGradient>
           </defs>
-          <circle cx="60" cy="40" r="24" fill="url(#logoGrad)" opacity="0.9" class="logo-main-circle"/>
-          <circle cx="75" cy="28" r="6" fill="#F2A18C" opacity="0.8" class="logo-accent"/>
-          <circle cx="60" cy="40" r="3" fill="white" class="logo-center"/>
+          <circle cx="60" cy="40" r="24" fill="url(#logoGrad)" opacity="0.9"/>
+          <circle cx="75" cy="28" r="6" fill="#F2A18C" opacity="0.8"/>
         </svg>
       </a>
-
-      <ul class="nav-right">
-        <li><a href="index.html#contact">Contact</a></li>
-        <li><a href="#galerie">Galerie</a></li>
-      </ul>
-
-      <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu">☰</button>
+      <div class="nav-actions">
+        <a href="index.html">Accueil</a>
+        <button class="theme-toggle" id="themeToggle">🌙</button>
+      </div>
     </nav>
   </header>
 
-  <section class="gallery-hero" id="galerie">
+  <section class="gallery-hero">
     <h1>Mes Créations</h1>
-    <p>Explorez mes projets en photographie, graphisme et branding</p>
-    
     <div class="filters">
-      <button class="filter-btn active" data-filter="all">Tous</button>
-      <button class="filter-btn" data-filter="photo">📸 Photo</button>
-      <button class="filter-btn" data-filter="graphisme">🎨 Graphisme</button>
-      <button class="filter-btn" data-filter="reportage">📷 Reportage</button>
-      <button class="filter-btn" data-filter="branding">💼 Branding</button>
+      <button class="filter-btn active" data-filter="all">Tout</button>
+      <button class="filter-btn" data-filter="photo">Photo</button>
+      <button class="filter-btn" data-filter="branding">Branding</button>
+      <button class="filter-btn" data-filter="print">Print</button>
     </div>
   </section>
 
-  <div class="gallery-container" id="gallery">
+  <div class="gallery-container">
     
-    <article class="creation-card visible" data-category="reportage">
-      <span class="category-badge">Reportage</span>
+    <article class="creation-card" data-category="photo">
+      <span class="category-badge">Photographie</span>
       <div class="image-carousel">
         <div class="carousel-track">
-          <img src="img/creation1-1.jpg" alt="Reportage mariage - Photo 1" class="carousel-image" loading="lazy" decoding="async">
-          <img src="img/creation1-2.jpg" alt="Reportage mariage - Photo 2" class="carousel-image" loading="lazy" decoding="async">
-          <img src="img/creation1-3.jpg" alt="Reportage mariage - Photo 3" class="carousel-image" loading="lazy" decoding="async">
+          <img src="img/creation1-1.jpg" class="carousel-image lightbox-trigger" loading="lazy">
+          <img src="img/creation1-2.jpg" class="carousel-image lightbox-trigger" loading="lazy">
         </div>
         <div class="carousel-nav">
-          <button class="carousel-arrow carousel-prev" aria-label="Image précédente">‹</button>
-          <button class="carousel-arrow carousel-next" aria-label="Image suivante">›</button>
+          <button class="carousel-arrow prev">‹</button>
+          <button class="carousel-arrow next">›</button>
         </div>
-        <div class="carousel-indicators"></div>
       </div>
-      <h2 class="creation-title">Reportage • Mariage</h2>
-      <span class="bio-toggle">+ d'infos</span>
-      <div class="bio-content">
-        Reportage complet d'un mariage en Alsace. De la préparation jusqu'à la soirée, captation des émotions et des moments spontanés.
-      </div>
+      <h3 class="creation-title">Portrait Studio</h3>
+      <p class="creation-desc">Série de portraits réalisée en studio avec gestion de la lumière artificielle.</p>
     </article>
 
-    <article class="creation-card visible" data-category="photo">
-      <span class="category-badge">Photo</span>
-      <div class="image-carousel">
-        <div class="carousel-track">
-          <img src="img/creation2-1.jpg" alt="Portrait studio - Photo 1" class="carousel-image" loading="lazy" decoding="async">
-          <img src="img/creation2-2.jpg" alt="Portrait studio - Photo 2" class="carousel-image" loading="lazy" decoding="async">
-        </div>
-        <div class="carousel-nav">
-          <button class="carousel-arrow carousel-prev" aria-label="Image précédente">‹</button>
-          <button class="carousel-arrow carousel-next" aria-label="Image suivante">›</button>
-        </div>
-        <div class="carousel-indicators"></div>
-      </div>
-      <h2 class="creation-title">Portrait • Studio</h2>
-      <span class="bio-toggle">+ d'infos</span>
-      <div class="bio-content">
-        Série de portraits en studio pour un artiste local. Travail sur les jeux de lumière, création d'une atmosphère intimiste avec un éclairage doux.
-      </div>
-    </article>
-
-    <article class="creation-card visible" data-category="graphisme">
-      <span class="category-badge">Graphisme</span>
-      <div class="image-carousel">
-        <div class="carousel-track">
-          <img src="img/creation3-1.jpg" alt="Affiche événementielle" class="carousel-image" loading="lazy" decoding="async">
-          <img src="img/creation3-2.jpg" alt="Déclinaisons réseaux sociaux" class="carousel-image" loading="lazy" decoding="async">
-          <img src="img/creation3-3.jpg" alt="Mockup final" class="carousel-image" loading="lazy" decoding="async">
-        </div>
-        <div class="carousel-nav">
-          <button class="carousel-arrow carousel-prev" aria-label="Image précédente">‹</button>
-          <button class="carousel-arrow carousel-next" aria-label="Image suivante">›</button>
-        </div>
-        <div class="carousel-indicators"></div>
-      </div>
-      <h2 class="creation-title">Graphisme • Affiche</h2>
-      <span class="bio-toggle">+ d'infos</span>
-      <div class="bio-content">
-        Conception graphique d'une affiche pour un événement culturel local. Création d'une identité visuelle cohérente avec déclinaisons pour les réseaux sociaux.
-      </div>
-    </article>
-
-    <article class="creation-card visible" data-category="branding">
+    <article class="creation-card" data-category="branding">
       <span class="category-badge">Branding</span>
       <div class="image-carousel">
         <div class="carousel-track">
-          <img src="img/creation5-1.jpg" alt="Logo entreprise" class="carousel-image" loading="lazy" decoding="async">
-          <img src="img/creation5-2.jpg" alt="Charte graphique" class="carousel-image" loading="lazy" decoding="async">
-          <img src="img/creation5-3.jpg" alt="Applications" class="carousel-image" loading="lazy" decoding="async">
+          <img src="img/creation5-1.jpg" class="carousel-image lightbox-trigger" loading="lazy">
+          <img src="img/creation5-2.jpg" class="carousel-image lightbox-trigger" loading="lazy">
         </div>
         <div class="carousel-nav">
-          <button class="carousel-arrow carousel-prev" aria-label="Image précédente">‹</button>
-          <button class="carousel-arrow carousel-next" aria-label="Image suivante">›</button>
+          <button class="carousel-arrow prev">‹</button>
+          <button class="carousel-arrow next">›</button>
         </div>
-        <div class="carousel-indicators"></div>
       </div>
-      <h2 class="creation-title">Branding • Entreprise</h2>
-      <span class="bio-toggle">+ d'infos</span>
-      <div class="bio-content">
-        Création d'identité visuelle complète pour une start-up locale. Design du logo, définition de la charte graphique, et déclinaisons sur différents supports.
-      </div>
+      <h3 class="creation-title">Identité Visuelle Startup</h3>
+      <p class="creation-desc">Création complète : logo, charte graphique et déclinaisons supports.</p>
     </article>
 
-    <article class="creation-card visible" data-category="photo">
-      <span class="category-badge">Photo</span>
+    <article class="creation-card" data-category="print">
+      <span class="category-badge">Print</span>
       <div class="image-carousel">
         <div class="carousel-track">
-          <img src="img/creation6-1.jpg" alt="Série urbaine - Photo 1" class="carousel-image" loading="lazy" decoding="async">
-          <img src="img/creation6-2.jpg" alt="Série urbaine - Photo 2" class="carousel-image" loading="lazy" decoding="async">
-          <img src="img/creation6-3.jpg" alt="Série urbaine - Photo 3" class="carousel-image" loading="lazy" decoding="async">
+          <img src="img/creation3-1.jpg" class="carousel-image lightbox-trigger" loading="lazy">
         </div>
-        <div class="carousel-nav">
-          <button class="carousel-arrow carousel-prev" aria-label="Image précédente">‹</button>
-          <button class="carousel-arrow carousel-next" aria-label="Image suivante">›</button>
-        </div>
-        <div class="carousel-indicators"></div>
       </div>
-      <h2 class="creation-title">Photo • Urbain</h2>
-      <span class="bio-toggle">+ d'infos</span>
-      <div class="bio-content">
-        Exploration photographique de la ville au crépuscule. Jeu sur les lumières artificielles, les reflets et l'architecture contemporaine.
-      </div>
+      <h3 class="creation-title">Affiche Festival</h3>
+      <p class="creation-desc">Conception d'une affiche pour un événement musical local.</p>
     </article>
 
   </div>
-
-  <div class="cta-contact">
-    <div class="cta-contact-box">
-      <h2>Envie de collaborer ?</h2>
-      <p>Que ce soit pour un projet photo, une identité visuelle ou du contenu pour vos réseaux sociaux, parlons-en ensemble !</p>
-      <a href="index.html#contact" class="cta-contact-btn">Me contacter →</a>
-    </div>
-  </div>
-
-  <footer>
-    <p>&copy; 2025 Eliot SAURON - Tous droits réservés</p>
-    <p>Photographe créatif & Designer visuel à Besançon</p>
-    <div class="footer-legal">
-      <a href="mentions-legales.html">Mentions légales</a>
-      <a href="politique-confidentialite.html">Politique de confidentialité</a>
-    </div>
-  </footer>
 
   <script>
     // LOADER
     window.addEventListener('load', () => {
       const loader = document.getElementById('pageLoader');
       setTimeout(() => {
-        loader.classList.add('hidden');
+        loader.style.opacity = '0';
         setTimeout(() => loader.remove(), 600);
-      }, 1000);
+      }, 800);
     });
 
-    // SCROLL BAR FLUIDE + OPTIMISATIONS
-    let ticking = false;
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const scrollProgress = document.getElementById('scrollProgress');
-          const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-          const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-          const scrollPercent = (scrollTop / scrollHeight) * 100;
-          if(scrollProgress) scrollProgress.style.width = scrollPercent + '%';
-          ticking = false;
-        });
-        ticking = true;
-      }
+    // DARK MODE
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    html.setAttribute('data-theme', savedTheme);
+    themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+
+    themeToggle.addEventListener('click', () => {
+      const current = html.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      themeToggle.textContent = next === 'dark' ? '☀️' : '🌙';
     });
 
-    // MENU MOBILE
-    const menuToggle = document.getElementById('menuToggle');
-    const navLeft = document.querySelector('.nav-left');
-    const navRight = document.querySelector('.nav-right');
+    // FILTRES
+    const btns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.creation-card');
 
-    if (menuToggle) {
-      menuToggle.addEventListener('click', () => {
-        let navLinks = document.querySelector('.nav-links');
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelector('.filter-btn.active').classList.remove('active');
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
         
-        if (!navLinks) {
-          navLinks = document.createElement('ul');
-          navLinks.className = 'nav-links';
-          
-          navLeft.querySelectorAll('a').forEach(a => {
-            const li = document.createElement('li');
-            li.appendChild(a.cloneNode(true));
-            navLinks.appendChild(li);
-          });
-          navRight.querySelectorAll('a').forEach(a => {
-            const li = document.createElement('li');
-            li.appendChild(a.cloneNode(true));
-            navLinks.appendChild(li);
-          });
-          document.querySelector('nav').appendChild(navLinks);
-        }
-        
-        const isActive = navLinks.classList.toggle('active');
-        menuToggle.setAttribute('aria-expanded', isActive);
-        // Empêche le scroll du fond
-        document.body.style.overflow = isActive ? 'hidden' : '';
-      });
-    }
-
-    // FILTERS
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const creationCards = document.querySelectorAll('.creation-card');
-
-    filterButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const filter = button.getAttribute('data-filter');
-        
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-        
-        creationCards.forEach(card => {
-          const category = card.getAttribute('data-category');
-          
-          if (filter === 'all' || category === filter) {
+        cards.forEach(card => {
+          if (filter === 'all' || card.dataset.category === filter) {
             card.classList.remove('hidden');
-            setTimeout(() => card.classList.add('visible'), 10);
           } else {
             card.classList.add('hidden');
-            card.classList.remove('visible');
           }
         });
       });
     });
 
-    // CAROUSEL
-    function initCarousel(card) {
+    // CAROUSEL LOGIC
+    document.querySelectorAll('.creation-card').forEach(card => {
       const track = card.querySelector('.carousel-track');
-      const images = card.querySelectorAll('.carousel-image');
-      const prevBtn = card.querySelector('.carousel-prev');
-      const nextBtn = card.querySelector('.carousel-next');
-      const indicatorsContainer = card.querySelector('.carousel-indicators');
-      
-      let currentIndex = 0;
-      const totalImages = images.length;
-      
-      for (let i = 0; i < totalImages; i++) {
-        const indicator = document.createElement('span');
-        indicator.classList.add('indicator');
-        if (i === 0) indicator.classList.add('active');
-        indicator.addEventListener('click', () => goToSlide(i));
-        indicatorsContainer.appendChild(indicator);
+      const slides = card.querySelectorAll('.carousel-image');
+      if (slides.length <= 1) {
+        card.querySelector('.carousel-nav').style.display = 'none';
+        return;
       }
       
-      const indicators = card.querySelectorAll('.indicator');
-      
-      function updateCarousel() {
-        track.style.transform = `translateX(-${currentIndex * 100}%)`;
-        indicators.forEach((indicator, index) => {
-          indicator.classList.toggle('active', index === currentIndex);
-        });
-      }
-      
-      function goToSlide(index) {
-        currentIndex = index;
-        updateCarousel();
-      }
-      
-      function nextSlide() {
-        currentIndex = (currentIndex + 1) % totalImages;
-        updateCarousel();
-      }
-      
-      function prevSlide() {
-        currentIndex = (currentIndex - 1 + totalImages) % totalImages;
-        updateCarousel();
-      }
-      
-      prevBtn.addEventListener('click', prevSlide);
-      nextBtn.addEventListener('click', nextSlide);
-      
-      let touchStartX = 0;
-      let touchEndX = 0;
-      
-      // Amélioration de la gestion tactile
-      track.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-      }, {passive: true});
-      
-      track.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        if (touchEndX < touchStartX - 50) nextSlide();
-        if (touchEndX > touchStartX + 50) prevSlide();
-      }, {passive: true});
-    }
+      let index = 0;
+      const prev = card.querySelector('.prev');
+      const next = card.querySelector('.next');
 
-    // BIO TOGGLE
-    function initBioToggle(card) {
-      const toggle = card.querySelector('.bio-toggle');
-      const content = card.querySelector('.bio-content');
-      
-      toggle.addEventListener('click', () => {
-        const isOpen = content.classList.contains('open');
-        
-        if (isOpen) {
-          content.classList.remove('open');
-          toggle.textContent = '+ d\'infos';
-        } else {
-          content.classList.add('open');
-          toggle.textContent = '− Moins d\'infos';
-        }
+      const updateSlide = () => {
+        track.style.transform = `translateX(-${index * 100}%)`;
+      };
+
+      prev.addEventListener('click', (e) => {
+        e.stopPropagation(); // Empêche l'ouverture de la lightbox
+        index = (index > 0) ? index - 1 : slides.length - 1;
+        updateSlide();
       });
-    }
 
-    // INIT
-    document.addEventListener('DOMContentLoaded', () => {
-      creationCards.forEach((card, index) => {
-        initCarousel(card);
-        initBioToggle(card);
-        card.style.animationDelay = `${0.1 * index}s`;
+      next.addEventListener('click', (e) => {
+        e.stopPropagation();
+        index = (index < slides.length - 1) ? index + 1 : 0;
+        updateSlide();
       });
     });
 
-    // SMOOTH SCROLL
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        const href = this.getAttribute('href');
-        if (!href || href === '#') return;
-        
-        const target = document.querySelector(href);
-        if (target) {
-          e.preventDefault();
-          window.scrollTo({
-            top: target.offsetTop - 100,
-            behavior: 'smooth'
-          });
-        }
+    // LIGHTBOX LOGIC
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const closeBtn = document.querySelector('.lightbox-close');
+
+    document.querySelectorAll('.lightbox-trigger').forEach(img => {
+      img.addEventListener('click', () => {
+        lightboxImg.src = img.src;
+        lightbox.classList.add('active');
       });
+    });
+
+    const closeLightbox = () => lightbox.classList.remove('active');
+    closeBtn.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
     });
   </script>
-
 </body>
 </html>
