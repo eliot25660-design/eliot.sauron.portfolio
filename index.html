@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Eliot SAURON - Portfolio Créatif | Besançon</title>
-  <meta name="description" content="Portfolio d'Eliot SAURON, étudiant en Info-Com à Besançon. Photographie, création graphique et design visuel.">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,22 +15,26 @@
     :root {
       --peach: #F2A18C;
       --blue: #7FA6C6;
+      /* Couleurs des bulles plus prononcées pour qu'on les voie */
+      --peach-blob: rgba(242, 161, 140, 0.5);
+      --blue-blob: rgba(127, 166, 198, 0.5);
+      
       --bg-body: #FDFBF9;
       --text-main: #2C2C2C;
       --text-muted: #666666;
-      --glass-bg: rgba(255, 255, 255, 0.65);
-      --glass-border: rgba(255, 255, 255, 0.8);
-      --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-      --radius: 20px;
+      --glass-bg: rgba(255, 255, 255, 0.6);
+      --glass-border: rgba(255, 255, 255, 0.6);
+      --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+      --radius: 24px;
     }
 
     [data-theme="dark"] {
       --bg-body: #0a0a0a;
       --text-main: #f0f0f0;
       --text-muted: #a0a0a0;
-      --glass-bg: rgba(20, 20, 20, 0.65);
+      --glass-bg: rgba(20, 20, 20, 0.6);
       --glass-border: rgba(255, 255, 255, 0.1);
-      --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -47,17 +50,14 @@
       position: relative;
     }
 
-    /* === ARRIÈRE-PLAN PARTICULES (Optimisé) === */
-    .particles-container {
+    /* === BACKGROUND PARTICULES === */
+    #particles-js {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      z-index: 0; pointer-events: none; overflow: hidden;
+      z-index: 0; pointer-events: none;
     }
-    
     .particle {
-      position: absolute;
-      border-radius: 50%;
-      opacity: 0.6;
-      will-change: transform; /* Optimisation GPU */
+      position: absolute; border-radius: 50%; opacity: 0.6;
+      will-change: transform; /* Optimisation GPU cruciale */
     }
 
     /* Le contenu passe devant */
@@ -80,7 +80,7 @@
     header {
       position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
       width: 90%; max-width: 1200px;
-      background: var(--glass-bg); backdrop-filter: blur(12px);
+      background: var(--glass-bg); backdrop-filter: blur(16px);
       border: 1px solid var(--glass-border); border-radius: 100px;
       padding: 12px 30px; z-index: 1000;
       display: flex; justify-content: space-between; align-items: center;
@@ -94,35 +94,26 @@
     }
     .nav-links a:hover { color: var(--peach); }
 
-    /* === LOGO KINETIC (Design & Abstrait) === */
-    .logo-container { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; }
-    .logo-svg { width: 100%; height: 100%; overflow: visible; }
-    
-    /* Anneaux rotatifs */
-    .ring {
-      fill: none; stroke-width: 4; stroke-linecap: round;
-      transform-origin: 50% 50%;
+    /* LOGO SIGNATURE V3 (Calligraphie fluide) */
+    .logo-container { width: 60px; height: 40px; display: flex; align-items: center; justify-content: center; }
+    .signature-svg { width: 100%; height: 100%; overflow: visible; }
+    .signature-path {
+      fill: none; stroke: var(--text-main); stroke-width: 2;
+      stroke-linecap: round; stroke-linejoin: round;
+      stroke-dasharray: 250; stroke-dashoffset: 250;
+      animation: signLoop 5s ease-in-out infinite;
     }
-    .ring-1 {
-      stroke: var(--blue); stroke-dasharray: 60 100; r: 20;
-      animation: spin 4s linear infinite;
+    @keyframes signLoop {
+      0% { stroke-dashoffset: 250; opacity: 0; }
+      15% { opacity: 1; }
+      40% { stroke-dashoffset: 0; }
+      70% { stroke-dashoffset: 0; opacity: 1; }
+      90% { stroke-dashoffset: 0; opacity: 0; }
+      100% { stroke-dashoffset: 250; opacity: 0; }
     }
-    .ring-2 {
-      stroke: var(--peach); stroke-dasharray: 80 120; r: 14;
-      animation: spin-reverse 5s linear infinite;
-    }
-    .ring-3 {
-      stroke: var(--text-main); stroke-width: 2; r: 4;
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes spin { 100% { transform: rotate(360deg); } }
-    @keyframes spin-reverse { 100% { transform: rotate(-360deg); } }
-    @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.5); opacity: 0.5; } }
 
     .menu-btn { display: none; background: none; border: none; font-size: 26px; cursor: pointer; color: var(--text-main); }
     
-    /* BOUTON THEME */
     .theme-toggle-fixed {
       position: fixed; bottom: 25px; right: 25px;
       width: 50px; height: 50px; border-radius: 50%;
@@ -191,54 +182,59 @@
     }
     .btn-secondary:hover { background: var(--text-main); color: var(--bg-body); }
 
-    /* COMPÉTENCES */
-    .about { padding: 120px 20px; max-width: 1100px; margin: 0 auto; text-align: center; }
-    .about h2 { font-size: 40px; margin-bottom: 20px; color: var(--text-main); }
-    .about-subtitle { font-size: 18px; color: var(--text-muted); margin-bottom: 60px; max-width: 600px; margin-left: auto; margin-right: auto; }
+    /* === SECTION COMPÉTENCES REVISITÉE === */
+    .about { padding: 120px 20px; max-width: 1000px; margin: 0 auto; }
+    .about-header { text-align: center; margin-bottom: 60px; }
+    .about h2 { font-size: 40px; margin-bottom: 10px; color: var(--text-main); }
+    .about p { font-size: 18px; color: var(--text-muted); }
 
-    .skills-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 30px;
+    /* Layout asymétrique pour casser la monotonie */
+    .skills-layout {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 50px;
+      align-items: center;
     }
-
-    .skill-card {
-      background: var(--glass-bg); padding: 40px 30px; border-radius: var(--radius);
-      border: 1px solid var(--glass-border); box-shadow: var(--card-shadow);
-      transition: transform 0.3s ease; text-align: left;
-    }
-    .skill-card:hover { transform: translateY(-10px); border-color: var(--peach); }
+    .skills-text { font-size: 18px; line-height: 1.8; color: var(--text-muted); }
     
-    .skill-icon { font-size: 40px; margin-bottom: 20px; display: block; }
-    .skill-title { font-size: 20px; font-weight: 700; color: var(--text-main); margin-bottom: 10px; }
-    .skill-desc { font-size: 15px; color: var(--text-muted); line-height: 1.6; }
+    .skill-bar-container { margin-bottom: 20px; }
+    .skill-info { display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 600; color: var(--text-main); }
+    .skill-bar { height: 8px; background: rgba(0,0,0,0.05); border-radius: 4px; overflow: hidden; }
+    [data-theme="dark"] .skill-bar { background: rgba(255,255,255,0.1); }
+    .skill-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--peach), var(--blue)); width: 0; transition: width 1.5s ease; }
 
-    /* CONTACT */
+    /* CONTACT CARD AVEC TEXTURE PROPRE */
     .contact { padding: 100px 20px; max-width: 700px; margin: 0 auto; }
     
     .contact-card {
-      background-color: var(--bg-body);
-      /* Texture de grain subtile */
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
-      backdrop-filter: blur(20px);
-      padding: 50px; border-radius: 30px; border: 1px solid var(--glass-border);
-      box-shadow: var(--card-shadow);
       position: relative; overflow: hidden;
+      background-color: var(--bg-body);
+      border-radius: 30px; border: 1px solid var(--glass-border);
+      box-shadow: var(--card-shadow);
+      padding: 50px;
     }
     
-    .contact h2 { font-size: 36px; margin-bottom: 30px; text-align: center; color: var(--text-main); position: relative; z-index: 1; }
-    .form-group { margin-bottom: 24px; position: relative; z-index: 1; }
+    /* La texture Noise en overlay via CSS (plus propre que le SVG précédent) */
+    .contact-card::before {
+      content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0;
+    }
+    
+    /* Le contenu passe au dessus de la texture */
+    .contact-content { position: relative; z-index: 1; }
+
+    .contact h2 { font-size: 36px; margin-bottom: 30px; text-align: center; color: var(--text-main); }
+    .form-group { margin-bottom: 24px; }
     .form-group label { display: block; margin-bottom: 8px; font-weight: 700; color: var(--text-muted); font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
     
-    /* INPUTS CLEAN (Fond uni pour couper la texture) */
     .form-group input, .form-group textarea {
       width: 100%; padding: 18px; border-radius: 12px;
       border: 2px solid transparent; 
-      background-color: rgba(255, 255, 255, 0.9); /* Fond uni */
+      background-color: rgba(255, 255, 255, 0.8); /* Fond uni pour lisibilité */
       color: var(--text-main); font-family: inherit; font-size: 16px;
       transition: 0.3s; resize: vertical;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.02);
     }
-    [data-theme="dark"] .form-group input, [data-theme="dark"] .form-group textarea { background-color: rgba(40, 40, 40, 0.9); }
+    [data-theme="dark"] .form-group input, [data-theme="dark"] .form-group textarea { background-color: rgba(30, 30, 30, 0.8); }
     .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--peach); box-shadow: 0 4px 15px rgba(242, 161, 140, 0.2); }
 
     .send-btn {
@@ -246,12 +242,12 @@
       background: linear-gradient(135deg, var(--blue), var(--peach));
       color: white; font-weight: 800; font-size: 18px; text-transform: uppercase;
       letter-spacing: 1px; cursor: pointer; transition: 0.3s;
-      box-shadow: 0 10px 25px rgba(127, 166, 198, 0.4); position: relative; z-index: 1;
+      box-shadow: 0 10px 25px rgba(127, 166, 198, 0.4);
     }
     .send-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(242, 161, 140, 0.5); }
     .send-btn:disabled { opacity: 0.7; cursor: not-allowed; }
 
-    #form-status { margin-top: 20px; text-align: center; font-weight: 600; min-height: 24px; position: relative; z-index: 1; }
+    #form-status { margin-top: 20px; text-align: center; font-weight: 600; min-height: 24px; }
     .status-success { color: #27ae60; background: rgba(39, 174, 96, 0.1); padding: 10px; border-radius: 8px; display: inline-block; }
     .status-error { color: #e74c3c; }
 
@@ -275,13 +271,13 @@
       .hero { padding-top: 160px; }
       .contact-card { padding: 30px 20px; }
       .blob-container { width: 220px; height: 220px; }
-      .skills-grid { grid-template-columns: 1fr; }
+      .skills-layout { grid-template-columns: 1fr; gap: 40px; }
     }
   </style>
 </head>
 <body>
 
-  <div class="particles-container" id="particles"></div>
+  <div id="particles-js"></div>
 
   <div class="page-loader" id="pageLoader">
     <div class="loader-text">ES</div>
@@ -291,17 +287,15 @@
 
   <header>
     <a href="index.html" class="logo-container" aria-label="Accueil">
-      <svg class="logo-svg" viewBox="0 0 100 100">
-        <circle class="ring ring-1" cx="50" cy="50"></circle>
-        <circle class="ring ring-2" cx="50" cy="50"></circle>
-        <circle class="ring ring-3" cx="50" cy="50"></circle>
+      <svg class="signature-svg" viewBox="0 0 100 60">
+        <path class="signature-path" d="M30,35 C20,35 15,25 25,15 C35,5 45,35 30,40 C20,45 50,45 55,25 C60,15 70,15 75,25 C80,35 65,45 60,35 C55,25 80,20 90,25" fill="none" stroke-linecap="round" stroke-linejoin="round" />
       </svg>
     </a>
 
     <button class="menu-btn" id="menuBtn">☰</button>
 
     <ul class="nav-links" id="navLinks">
-      <li><a href="#about">Mes Compétences</a></li>
+      <li><a href="#about">Compétences</a></li>
       <li><a href="creations.html">Portfolio</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -322,53 +316,60 @@
   </section>
 
   <section class="about" id="about">
-    <h2>Mes Compétences</h2>
-    <p class="about-subtitle">J'apprends chaque jour à maîtriser les outils pour servir ma vision créative.</p>
+    <div class="about-header">
+      <h2>Mes Compétences</h2>
+      <p>Un équilibre entre technique et sensibilité artistique.</p>
+    </div>
     
-    <div class="skills-grid">
-      <div class="skill-card">
-        <span class="skill-icon">📸</span>
-        <h3 class="skill-title">Photographie</h3>
-        <p class="skill-desc">Prise de vue studio, extérieur et retouche (Lightroom).</p>
+    <div class="skills-layout">
+      <div class="skills-text">
+        <p>Actuellement en 2ème année d'Information-Communication, je développe une approche polyvalente. Mon objectif n'est pas seulement de maîtriser les outils, mais de comprendre comment ils peuvent servir une narration visuelle forte.</p>
+        <p style="margin-top: 20px;">Je suis particulièrement à l'aise avec la suite Adobe pour la création graphique et le traitement photo, tout en gardant un pied dans l'intégration web.</p>
       </div>
-      <div class="skill-card">
-        <span class="skill-icon">🎨</span>
-        <h3 class="skill-title">Design Graphique</h3>
-        <p class="skill-desc">Identité visuelle, logotypes et supports de communication (Suite Adobe).</p>
-      </div>
-      <div class="skill-card">
-        <span class="skill-icon">💻</span>
-        <h3 class="skill-title">Intégration Web</h3>
-        <p class="skill-desc">Bases solides en HTML, CSS et design responsive.</p>
-      </div>
-      <div class="skill-card">
-        <span class="skill-icon">🎥</span>
-        <h3 class="skill-title">Vidéo</h3>
-        <p class="skill-desc">Montage dynamique, étalonnage et storytelling vidéo.</p>
+      
+      <div class="skills-bars">
+        <div class="skill-bar-container">
+          <div class="skill-info"><span>Photographie & Retouche</span><span>85%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width: 85%"></div></div>
+        </div>
+        <div class="skill-bar-container">
+          <div class="skill-info"><span>Design Graphique (Ps, Ai, Id)</span><span>75%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width: 75%"></div></div>
+        </div>
+        <div class="skill-bar-container">
+          <div class="skill-info"><span>Intégration Web (HTML/CSS)</span><span>60%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width: 60%"></div></div>
+        </div>
+        <div class="skill-bar-container">
+          <div class="skill-info"><span>Montage Vidéo</span><span>70%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width: 70%"></div></div>
+        </div>
       </div>
     </div>
   </section>
 
   <section class="contact" id="contact">
     <div class="contact-card">
-      <h2>Me Contacter</h2>
-      
-      <form class="contact-form" action="https://formspree.io/f/mblwgzve" method="POST">
-        <div class="form-group">
-          <label>Votre Nom</label>
-          <input type="text" name="name" required placeholder="Jean Dupont">
-        </div>
-        <div class="form-group">
-          <label>Votre Email</label>
-          <input type="email" name="email" required placeholder="jean@email.com">
-        </div>
-        <div class="form-group">
-          <label>Message</label>
-          <textarea name="message" rows="5" required placeholder="Parlez-moi de votre projet..."></textarea>
-        </div>
-        <button type="submit" class="send-btn">Envoyer le message</button>
-        <div id="form-status"></div>
-      </form>
+      <div class="contact-content">
+        <h2>Me Contacter</h2>
+        
+        <form class="contact-form" action="https://formspree.io/f/mblwgzve" method="POST">
+          <div class="form-group">
+            <label>Votre Nom</label>
+            <input type="text" name="name" required placeholder="Jean Dupont">
+          </div>
+          <div class="form-group">
+            <label>Votre Email</label>
+            <input type="email" name="email" required placeholder="jean@email.com">
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea name="message" rows="5" required placeholder="Parlez-moi de votre projet..."></textarea>
+          </div>
+          <button type="submit" class="send-btn">Envoyer le message</button>
+          <div id="form-status"></div>
+        </form>
+      </div>
     </div>
   </section>
 
@@ -381,7 +382,6 @@
   </footer>
 
   <script>
-    // LOADER
     window.addEventListener('load', () => {
       setTimeout(() => {
         document.getElementById('pageLoader').style.opacity = '0';
@@ -390,7 +390,6 @@
       initParticles(); // Lance les bulles
     });
 
-    // MENU MOBILE
     const menuBtn = document.getElementById('menuBtn');
     const navLinks = document.getElementById('navLinks');
     menuBtn.addEventListener('click', () => {
@@ -404,7 +403,6 @@
       });
     });
 
-    // DARK MODE
     const themeBtn = document.getElementById('themeToggle');
     const html = document.documentElement;
     let isDark = localStorage.getItem('theme') === 'dark';
@@ -419,39 +417,33 @@
       updateTheme();
     });
 
-    // === GESTION DES PARTICULES OPTIMISÉE (Zéro Latence) ===
+    // PARTICULES OPTIMISÉES + PARALLAXE FLUIDE (LERP)
     function initParticles() {
-      const container = document.getElementById('particles');
-      const particleCount = 20; // Nombre de bulles
+      const container = document.getElementById('particles-js');
       const particles = [];
+      const particleCount = 30; // Plus de bulles
 
-      // Création des bulles
+      // Création
       for(let i=0; i<particleCount; i++) {
         const p = document.createElement('div');
         p.classList.add('particle');
-        
-        // Taille aléatoire
-        const size = Math.random() * 150 + 50;
+        const size = Math.random() * 120 + 30; // 30px à 150px
         p.style.width = `${size}px`;
         p.style.height = `${size}px`;
-        
-        // Position aléatoire
         p.style.left = `${Math.random() * 100}%`;
         p.style.top = `${Math.random() * 100}%`;
         
-        // Couleur aléatoire (Pêche ou Bleu)
         const isBlue = Math.random() > 0.5;
-        p.style.background = isBlue ? 'var(--blue-glow)' : 'var(--peach-glow)';
-        p.style.filter = `blur(${Math.random() * 40 + 20}px)`; // Flou variable
+        p.style.background = isBlue ? 'var(--blue-blob)' : 'var(--peach-blob)';
         
-        // Vitesse de parallaxe aléatoire
-        p.dataset.speed = (Math.random() - 0.5) * 0.15; // Facteur de vitesse
+        // Vitesse de parallaxe individuelle
+        p.dataset.speed = (Math.random() - 0.5) * 0.08; 
         
         container.appendChild(p);
         particles.push(p);
       }
 
-      // Suivi de la souris haute performance
+      // Parallaxe LISSE (Lerp)
       let mouseX = 0, mouseY = 0;
       let targetX = 0, targetY = 0;
 
@@ -460,25 +452,23 @@
         targetY = e.clientY - window.innerHeight / 2;
       });
 
-      // Boucle d'animation fluide
       function animate() {
-        // Interpolation pour adoucir le mouvement (effet "smooth")
-        mouseX += (targetX - mouseX) * 0.1;
-        mouseY += (targetY - mouseY) * 0.1;
+        // Interpolation : on rapproche mouseX de targetX de 5% à chaque frame
+        mouseX += (targetX - mouseX) * 0.05; 
+        mouseY += (targetY - mouseY) * 0.05;
 
         particles.forEach(p => {
           const speed = parseFloat(p.dataset.speed);
           const x = mouseX * speed;
           const y = mouseY * speed;
-          p.style.transform = `translate(${x}px, ${y}px)`;
+          p.style.transform = `translate3d(${x}px, ${y}px, 0)`; // 3D pour GPU
         });
-
         requestAnimationFrame(animate);
       }
       animate();
     }
 
-    // AJAX FORM (Sans redirection)
+    // AJAX FORM
     const form = document.querySelector('.contact-form');
     const status = document.getElementById('form-status');
     
@@ -501,11 +491,11 @@
 
         if (response.ok) {
           status.className = "status-success";
-          status.textContent = "✅ Message bien reçu ! Je vous réponds vite.";
+          status.textContent = "✅ Message envoyé !";
           form.reset();
         } else {
           status.className = "status-error";
-          status.textContent = "❌ Oups, une erreur est survenue.";
+          status.textContent = "❌ Erreur.";
         }
       } catch (error) {
         status.className = "status-error";
