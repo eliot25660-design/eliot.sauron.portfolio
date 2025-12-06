@@ -19,7 +19,7 @@
       --text-main: #2C2C2C;
       --text-muted: #666666;
       
-      /* NOUVEAU STYLE GLASS (Plus givré/Apple) */
+      /* GLASS */
       --glass-bg: rgba(255, 255, 255, 0.4);
       --glass-border: rgba(255, 255, 255, 0.4);
       --radius: 24px;
@@ -45,7 +45,7 @@
       position: relative;
     }
 
-    /* === NOUVEAU FOND : AURORA MESH GRADIENT === */
+    /* === FOND AURORA === */
     .ambient-background {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       overflow: hidden; z-index: 0; background: var(--bg-body);
@@ -55,7 +55,7 @@
     .ambient-blob {
       position: absolute;
       border-radius: 50%;
-      filter: blur(80px); /* Le secret : un flou immense */
+      filter: blur(80px);
       opacity: 0.6;
       animation: float-ambient 25s infinite ease-in-out alternate;
     }
@@ -104,38 +104,41 @@
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
 
-    /* HEADER MODERNE */
+    /* HEADER */
     header {
       position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
       width: 90%; max-width: 1200px;
-      
       background: var(--glass-bg); 
       backdrop-filter: blur(20px) saturate(180%);
       -webkit-backdrop-filter: blur(20px) saturate(180%);
-      
       border: 1px solid var(--glass-border); border-radius: 100px;
       padding: 10px 30px; z-index: 1000;
       display: flex; justify-content: space-between; align-items: center;
     }
 
-    /* NOUVEAU LOGO */
+    /* LOGO ANIME */
     .logo-container {
-      display: flex; align-items: center; gap: 12px; text-decoration: none; height: 45px;
+      display: flex; align-items: center; gap: 12px; text-decoration: none; height: 50px;
     }
     .logo-svg {
-      width: 42px; height: 42px;
-      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      width: 48px; height: 48px; overflow: visible;
     }
+    .geo-circle { transform-origin: center; animation: spin-right 20s linear infinite; }
+    .geo-square { transform-origin: center; animation: spin-left 15s linear infinite; }
+    .geo-triangle { transform-origin: center; animation: spin-right 8s linear infinite; }
+    
+    @keyframes spin-right { 100% { transform: rotate(360deg); } }
+    @keyframes spin-left { 100% { transform: rotate(-360deg); } }
+
     .logo-text {
       font-family: 'Outfit', sans-serif;
       font-weight: 800; font-size: 20px;
       color: var(--text-main); letter-spacing: -0.5px;
     }
-    .logo-container:hover .logo-svg { transform: rotate(90deg); }
     
     .nav-link { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 14px; }
 
-    /* BOUTON THEME */
+    /* THEME */
     .theme-toggle-fixed {
       position: fixed; bottom: 25px; right: 25px;
       width: 50px; height: 50px; border-radius: 50%;
@@ -155,15 +158,13 @@
       margin-bottom: 20px;
     }
 
-    /* FILTRES GLASS */
+    /* FILTRES */
     .filters { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 50px; }
     .filter-btn {
       padding: 10px 24px; border-radius: 50px; 
-      
       background: var(--glass-bg);
       backdrop-filter: blur(10px);
       border: 1px solid var(--glass-border);
-      
       color: var(--text-muted); cursor: pointer;
       font-family: 'Outfit', sans-serif; font-weight: 600; transition: 0.3s;
     }
@@ -178,11 +179,9 @@
     }
 
     .creation-card {
-      /* Effet Givré sur les cartes */
       background: var(--glass-bg);
       backdrop-filter: blur(20px) saturate(180%);
       -webkit-backdrop-filter: blur(20px) saturate(180%);
-      
       border: 1px solid var(--glass-border);
       border-radius: var(--radius); padding: 20px; transition: 0.4s;
       box-shadow: 0 5px 20px rgba(0,0,0,0.02); min-width: 0;
@@ -219,7 +218,7 @@
     /* LIGHTBOX */
     .lightbox {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); /* Flou arrière plan lightbox */
+      background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
       z-index: 20000;
       display: flex; align-items: center; justify-content: center;
       opacity: 0; pointer-events: none; transition: 0.3s;
@@ -235,7 +234,7 @@
     footer { text-align: center; padding: 40px; color: var(--text-muted); border-top: 1px solid var(--glass-border); background: var(--glass-bg); margin-top: 60px; }
     footer a { color: var(--text-main); text-decoration: none; margin: 0 10px; font-size: 14px; }
 
-    /* RESPONSIVE MOBILE */
+    /* RESPONSIVE */
     @media (max-width: 768px) {
       .gallery-container { grid-template-columns: minmax(0, 1fr); }
       .image-carousel { height: 220px; }
@@ -267,9 +266,9 @@
   <header>
     <a href="index.html" class="logo-container" aria-label="Accueil">
       <svg class="logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="50" r="45" stroke="var(--text-main)" stroke-width="6"/>
-        <rect x="28" y="35" width="44" height="8" rx="4" fill="var(--text-main)"/>
-        <rect x="28" y="57" width="28" height="8" rx="4" fill="var(--peach)"/> 
+        <circle class="geo-circle" cx="50" cy="50" r="45" stroke="var(--text-main)" stroke-width="2" stroke-dasharray="10 5" opacity="0.8"/>
+        <rect class="geo-square" x="30" y="30" width="40" height="40" stroke="var(--blue)" stroke-width="3" fill="none" rx="2" opacity="0.9"/>
+        <path class="geo-triangle" d="M50 35 L65 65 L35 65 Z" fill="var(--peach)"/>
       </svg>
       <span class="logo-text">Eliot.</span>
     </a>
