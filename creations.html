@@ -53,7 +53,7 @@
     .filter-btn.active, .filter-btn:hover { background: var(--text-main); color: var(--bg-body); }
 
     .gallery-container { max-width: 1200px; margin: 0 auto 80px; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 40px; }
-    .creation-card { background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 20px; transition: 0.4s; min-width: 0; }
+    .creation-card { background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 20px; transition: 0.4s; min-width: 0; display: flex; flex-direction: column; }
     .creation-card:hover { transform: translateY(-5px); border-color: var(--peach); }
     .creation-card.hidden { display: none; }
     .category-badge { display: inline-block; padding: 5px 12px; background: rgba(242, 161, 140, 0.2); color: var(--peach); border-radius: 20px; font-size: 12px; font-weight: 700; margin-bottom: 15px; text-transform: uppercase; }
@@ -62,26 +62,38 @@
     .image-carousel { position: relative; width: 100%; height: 550px; border-radius: 12px; overflow: hidden; margin-bottom: 20px; cursor: zoom-in; }
     .carousel-track { display: flex; height: 100%; transition: transform 0.5s ease; touch-action: pan-y; }
     .carousel-image { min-width: 100%; height: 100%; object-fit: cover; }
-    .video-slide-container { min-width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background: transparent; }
-    .video-slide-container iframe { height: 100%; width: 100%; aspect-ratio: 9/16; border: none; }
     
+    .video-slide-container { min-width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background: transparent; }
+    .video-slide-container iframe { width: 100%; height: 100%; border: none; }
+    
+    /* Styles pour différents formats vidéo */
+    .video-vertical iframe { aspect-ratio: 9/16; width: auto; }
+    .video-horizontal iframe { aspect-ratio: 16/9; width: 100%; object-fit: contain; }
+
     .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.9); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; opacity: 0; transition: 0.3s; z-index: 10; color: #000; }
     .prev { left: 10px; } .next { right: 10px; }
     .creation-card:hover .carousel-arrow { opacity: 1; }
     .creation-title { font-size: 22px; margin-bottom: 8px; font-weight: 700; }
     .creation-desc { font-size: 15px; color: var(--text-muted); line-height: 1.6; }
+    
+    /* BOUTON PDF */
+    .pdf-link { 
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-top: auto; padding: 12px 20px;
+      background: var(--text-main); color: var(--bg-body);
+      border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 14px;
+      transition: 0.3s;
+    }
+    .pdf-link:hover { background: var(--peach); color: white; transform: translateY(-2px); }
 
     /* LIGHTBOX AMÉLIORÉE */
     .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); z-index: 20000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; }
     .lightbox.active { opacity: 1; pointer-events: auto; }
     .lightbox img { max-width: 90%; max-height: 85vh; border-radius: 4px; box-shadow: 0 0 50px rgba(0,0,0,0.5); }
     .lightbox-close { position: absolute; top: 20px; right: 20px; color: white; background: none; border: none; font-size: 40px; cursor: pointer; z-index: 20002; }
-    
-    /* Flèches Lightbox */
     .lightbox-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.1); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 30px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; z-index: 20001; }
     .lightbox-nav:hover { background: rgba(255,255,255,0.3); }
-    .lightbox-prev { left: 20px; }
-    .lightbox-next { right: 20px; }
+    .lightbox-prev { left: 20px; } .lightbox-next { right: 20px; }
 
     footer { text-align: center; padding: 40px; border-top: 1px solid var(--glass-border); background: var(--glass-bg); margin-top: 60px; }
     footer a { color: var(--text-main); margin: 0 10px; font-size: 14px; text-decoration: none; }
@@ -115,18 +127,35 @@
     <div class="filters">
       <button class="filter-btn active" data-filter="all">Tout</button>
       <button class="filter-btn" data-filter="media">Média & Vidéo</button>
-      <button class="filter-btn" data-filter="photo">Photographie</button>
       <button class="filter-btn" data-filter="design">Design Graphique</button>
+      <button class="filter-btn" data-filter="photo">Photographie</button>
     </div>
   </section>
 
   <div class="gallery-container">
     
+    <article class="creation-card" data-category="design">
+      <span class="category-badge">Direction Artistique</span>
+      <div class="image-carousel">
+        <div class="carousel-track">
+          <div class="carousel-image video-slide-container video-horizontal">
+            <iframe src="https://www.youtube.com/embed/M5rh_6vJMfU?rel=0&modestbranding=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <img src="img/ajna-cover.jpg" class="carousel-image lightbox-trigger" loading="lazy" alt="Cover AJNA">
+          <img src="img/ajna-logo.jpg" class="carousel-image lightbox-trigger" loading="lazy" alt="Logo AJNA">
+        </div>
+        <button class="carousel-arrow prev">‹</button>
+        <button class="carousel-arrow next">›</button>
+      </div>
+      <h3 class="creation-title">AJNA - Rivages Invisibles</h3>
+      <p class="creation-desc">Concept d'album fictif (Rap Introspectif). Création d'un univers visuel autour du troisième œil, de la dualité lune/océan.</p>
+    </article>
+
     <article class="creation-card" data-category="media">
       <span class="category-badge">Communication / Vidéo</span>
       <div class="image-carousel">
         <div class="carousel-track">
-          <div class="carousel-image video-slide-container">
+          <div class="carousel-image video-slide-container video-vertical">
             <iframe src="https://www.youtube.com/embed/aoIdUVLWA-I?rel=0&modestbranding=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
           <img src="img/radio-1.jpg" class="carousel-image lightbox-trigger" loading="lazy" alt="Radio Campus 1">
@@ -137,37 +166,19 @@
         <button class="carousel-arrow next">›</button>
       </div>
       <h3 class="creation-title">Immersion Radio Campus</h3>
-      <p class="creation-desc">Un stage solaire au cœur de l'associatif. Interviews, ambiance festival, et création de lien humain. Apprendre à capter l'instant présent et la voix des autres.</p>
+      <p class="creation-desc">Un stage solaire au cœur de l'associatif. Interviews, ambiance festival, et création de lien humain.</p>
     </article>
 
     <article class="creation-card" data-category="photo">
-      <span class="category-badge">Photographie N&B</span>
+      <span class="category-badge">Photographie / Édition</span>
       <div class="image-carousel">
         <div class="carousel-track">
-          <img src="img/photo-nb-1.jpg" class="carousel-image lightbox-trigger" loading="lazy" alt="Portrait N&B">
-          <img src="img/photo-nb-2.jpg" class="carousel-image lightbox-trigger" loading="lazy" alt="Sourire N&B">
-          <img src="img/photo-nb-3.jpg" class="carousel-image lightbox-trigger" loading="lazy" alt="Regard N&B">
-          <img src="img/photo-nb-4.jpg" class="carousel-image lightbox-trigger" loading="lazy" alt="Portrait lunettes">
+          <img src="img/rv-cover.jpg" class="carousel-image lightbox-trigger" loading="lazy" alt="Couverture du projet Rendez-moi en ville">
         </div>
-        <button class="carousel-arrow prev">‹</button>
-        <button class="carousel-arrow next">›</button>
-      </div>
+        </div>
       <h3 class="creation-title">"Rendez-moi en ville"</h3>
-      <p class="creation-desc">Projet poétique avec Jacques Varlet. Marcher, observer les croisements, saisir ces instants où la ville devient le théâtre de l'intime.</p>
-    </article>
-
-    <article class="creation-card" data-category="design">
-      <span class="category-badge">Direction Artistique</span>
-      <div class="image-carousel">
-        <div class="carousel-track">
-          <img src="img/ajna-cover.jpg" class="carousel-image lightbox-trigger" loading="lazy" alt="Cover AJNA">
-          <img src="img/ajna-logo.jpg" class="carousel-image lightbox-trigger" loading="lazy" alt="Logo AJNA">
-        </div>
-        <button class="carousel-arrow prev">‹</button>
-        <button class="carousel-arrow next">›</button>
-      </div>
-      <h3 class="creation-title">AJNA - Rivages Invisibles</h3>
-      <p class="creation-desc">Concept d'album fictif (Rap Introspectif). Création d'un univers visuel autour du troisième œil, de la dualité lune/océan et de la fluidité émotionnelle.</p>
+      <p class="creation-desc">Projet poétique avec Jacques Varlet. Un travail d'observation et d'écriture sur les croisements urbains.</p>
+      <a href="img/rendez-moi-en-ville.pdf" target="_blank" class="pdf-link">📄 Voir le dossier complet (PDF)</a>
     </article>
 
   </div>
@@ -179,8 +190,10 @@
   </footer>
 
   <script>
-    // LOADER & THEME
+    // LOADER
     window.addEventListener('load', () => { setTimeout(() => { document.getElementById('pageLoader').style.opacity = '0'; setTimeout(() => document.getElementById('pageLoader').remove(), 800); }, 1000); });
+    
+    // THEME
     const themeBtn = document.getElementById('themeToggle'); const html = document.documentElement;
     let isDark = localStorage.getItem('theme') === 'dark';
     const updateTheme = () => { html.setAttribute('data-theme', isDark ? 'dark' : 'light'); themeBtn.textContent = isDark ? '☀️' : '🌙'; localStorage.setItem('theme', isDark ? 'dark' : 'light'); };
@@ -196,7 +209,7 @@
       });
     });
 
-    // CAROUSEL MINIATURE
+    // CAROUSEL
     document.querySelectorAll('.creation-card').forEach(card => {
       const track = card.querySelector('.carousel-track'); const slides = card.querySelectorAll('.carousel-image, .video-slide-container');
       if(slides.length <= 1) { card.querySelectorAll('.carousel-arrow').forEach(a => a.style.display='none'); return; }
@@ -206,7 +219,7 @@
       card.querySelector('.next').addEventListener('click', (e) => { e.stopPropagation(); index = (index < slides.length - 1) ? index + 1 : 0; update(); });
     });
 
-    // LIGHTBOX INTELLIGENTE AVEC NAVIGATION
+    // LIGHTBOX
     const lightbox = document.getElementById('lightbox');
     const lbImg = document.getElementById('lightboxImg');
     const lbPrev = document.querySelector('.lightbox-prev');
@@ -216,35 +229,18 @@
 
     document.querySelectorAll('.lightbox-trigger').forEach(trigger => {
       trigger.addEventListener('click', (e) => {
-        // Récupérer toutes les images du MÊME projet (carte parente)
         const parentCard = trigger.closest('.creation-card');
-        // On sélectionne uniquement les images qui sont des triggers (pas les vidéos)
         const allImagesInCard = Array.from(parentCard.querySelectorAll('.lightbox-trigger'));
-        
         currentGroupImages = allImagesInCard.map(img => img.src);
         currentLbIndex = allImagesInCard.indexOf(trigger);
-        
         updateLightboxImage();
         lightbox.classList.add('active');
       });
     });
 
-    function updateLightboxImage() {
-      lbImg.src = currentGroupImages[currentLbIndex];
-    }
-
-    lbPrev.addEventListener('click', (e) => {
-      e.stopPropagation();
-      currentLbIndex = (currentLbIndex > 0) ? currentLbIndex - 1 : currentGroupImages.length - 1;
-      updateLightboxImage();
-    });
-
-    lbNext.addEventListener('click', (e) => {
-      e.stopPropagation();
-      currentLbIndex = (currentLbIndex < currentGroupImages.length - 1) ? currentLbIndex + 1 : 0;
-      updateLightboxImage();
-    });
-
+    function updateLightboxImage() { lbImg.src = currentGroupImages[currentLbIndex]; }
+    lbPrev.addEventListener('click', (e) => { e.stopPropagation(); currentLbIndex = (currentLbIndex > 0) ? currentLbIndex - 1 : currentGroupImages.length - 1; updateLightboxImage(); });
+    lbNext.addEventListener('click', (e) => { e.stopPropagation(); currentLbIndex = (currentLbIndex < currentGroupImages.length - 1) ? currentLbIndex + 1 : 0; updateLightboxImage(); });
     document.querySelector('.lightbox-close').addEventListener('click', () => lightbox.classList.remove('active'));
     lightbox.addEventListener('click', (e) => { if(e.target === lightbox) lightbox.classList.remove('active'); });
   </script>
