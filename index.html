@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Eliot SAURON - Portfolio Créatif | Besançon</title>
-  <meta name="description" content="Portfolio d'Eliot SAURON, étudiant en Info-Com à Besançon. Photographie, création graphique et design visuel.">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,7 +20,7 @@
       --bg-body: #FDFBF9;
       --text-main: #2C2C2C;
       --text-muted: #666666;
-      --glass-bg: rgba(255, 255, 255, 0.7);
+      --glass-bg: rgba(255, 255, 255, 0.75);
       --glass-border: rgba(255, 255, 255, 0.8);
       --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
     }
@@ -30,7 +29,7 @@
       --bg-body: #0a0a0a;
       --text-main: #f0f0f0;
       --text-muted: #a0a0a0;
-      --glass-bg: rgba(20, 20, 20, 0.7);
+      --glass-bg: rgba(20, 20, 20, 0.75);
       --glass-border: rgba(255, 255, 255, 0.1);
       --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     }
@@ -59,7 +58,11 @@
     }
     .shape-1 { top: -10%; left: -10%; width: 60vw; height: 60vw; background: var(--peach-glow); animation-duration: 25s; }
     .shape-2 { bottom: -10%; right: -10%; width: 70vw; height: 70vw; background: var(--blue-glow); animation-duration: 30s; }
-    @keyframes float { 0% { transform: translate(0, 0) rotate(0deg); } 100% { transform: translate(50px, 30px) rotate(10deg); } }
+    
+    @keyframes float {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      100% { transform: translate(50px, 30px) rotate(10deg); }
+    }
 
     /* LOADER */
     .page-loader {
@@ -78,7 +81,7 @@
     header {
       position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
       width: 90%; max-width: 1200px;
-      background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      background: var(--glass-bg); backdrop-filter: blur(12px);
       border: 1px solid var(--glass-border); border-radius: 100px;
       padding: 12px 30px; z-index: 1000;
       display: flex; justify-content: space-between; align-items: center;
@@ -92,21 +95,19 @@
     }
     .nav-links a:hover { color: var(--peach); }
 
-    /* LOGO SIGNATURE "ES" ANIMÉ */
-    .logo-container { width: 70px; height: 45px; display: flex; align-items: center; justify-content: center; }
+    /* LOGO ES LISIBLE */
+    .logo-container { width: 60px; height: 40px; display: flex; align-items: center; justify-content: center; }
     .signature-svg { width: 100%; height: 100%; overflow: visible; }
     .signature-path {
       fill: none; stroke: var(--text-main); stroke-width: 3;
       stroke-linecap: round; stroke-linejoin: round;
-      /* L'animation */
-      stroke-dasharray: 600; stroke-dashoffset: 600;
-      animation: sign 3s cubic-bezier(0.5, 0, 0.5, 1) forwards 0.5s;
+      stroke-dasharray: 200; stroke-dashoffset: 200;
+      animation: sign 2s cubic-bezier(0.5, 0, 0.5, 1) forwards 0.5s;
     }
     @keyframes sign { to { stroke-dashoffset: 0; } }
 
     .menu-btn { display: none; background: none; border: none; font-size: 26px; cursor: pointer; color: var(--text-main); }
     
-    /* BOUTON THEME FIXE */
     .theme-toggle-fixed {
       position: fixed; bottom: 25px; right: 25px;
       width: 50px; height: 50px; border-radius: 50%;
@@ -139,7 +140,7 @@
       max-width: 600px; margin-bottom: 50px; line-height: 1.6;
     }
 
-    /* BLOB ORGANIQUE */
+    /* BLOB */
     .blob-container {
       width: 280px; height: 280px; margin: 0 auto 40px;
       border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
@@ -148,7 +149,8 @@
       animation: morph 8s ease-in-out infinite;
       position: relative;
     }
-    .blob-container img, .blob-container video { width: 100%; height: 100%; object-fit: cover; }
+    .blob-container img { width: 100%; height: 100%; object-fit: cover; }
+    
     @keyframes morph {
       0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
       50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
@@ -157,6 +159,7 @@
 
     /* BOUTONS */
     .cta-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+    
     .btn-primary {
       padding: 16px 36px; border-radius: 50px;
       background: linear-gradient(135deg, var(--peach), var(--blue));
@@ -165,6 +168,7 @@
       transition: transform 0.3s; border: none; font-size: 18px;
     }
     .btn-primary:hover { transform: translateY(-4px); box-shadow: 0 15px 40px rgba(127, 166, 198, 0.5); }
+
     .btn-secondary {
       padding: 16px 36px; border-radius: 50px;
       background: transparent; border: 2px solid var(--text-main);
@@ -177,6 +181,7 @@
     .about { padding: 100px 20px; max-width: 900px; margin: 0 auto; text-align: center; }
     .about h2 { font-size: 40px; margin-bottom: 20px; color: var(--text-main); }
     .about p { font-size: 18px; color: var(--text-muted); margin-bottom: 40px; line-height: 1.8; }
+
     .skills-grid { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; }
     .skill-btn {
       padding: 14px 28px; border-radius: 12px;
@@ -220,7 +225,7 @@
       border: 2px solid transparent; background: rgba(255, 255, 255, 0.5);
       color: var(--text-main); font-family: inherit; font-size: 16px;
       transition: 0.3s;
-      resize: vertical; /* FIX : Redimensionnement vertical uniquement */
+      resize: vertical;
     }
     [data-theme="dark"] .form-group input, [data-theme="dark"] .form-group textarea { background: rgba(0, 0, 0, 0.3); }
     .form-group input:focus, .form-group textarea:focus { outline: none; background: var(--bg-body); border-color: var(--peach); }
@@ -271,9 +276,10 @@
   <button class="theme-toggle-fixed" id="themeToggle">🌙</button>
 
   <header>
-    <a href="#" class="logo-container" aria-label="Accueil">
-      <svg class="signature-svg" viewBox="0 0 100 60">
-        <path class="signature-path" d="M30,20 C15,20 15,40 30,40 C45,40 35,25 50,25 C65,25 65,45 50,45 L70,45" />
+    <a href="index.html" class="logo-container" aria-label="Accueil">
+      <svg class="signature-svg" viewBox="0 0 80 50">
+        <path class="signature-path" d="M25 15 L15 15 L15 35 L25 35 M15 25 L22 25" stroke-linecap="round" stroke-linejoin="round" />
+        <path class="signature-path" d="M45 15 L40 15 Q35 15 35 20 Q35 25 40 25 L45 25 Q50 25 50 30 Q50 35 45 35 L40 35" stroke-linecap="round" stroke-linejoin="round" />
       </svg>
     </a>
 

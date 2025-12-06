@@ -68,11 +68,10 @@
       display: flex; justify-content: space-between; align-items: center;
     }
     .logo-container { width: 60px; height: 35px; }
-    /* Animation ajoutée ici aussi */
     .signature-path { 
-      fill: none; stroke: var(--text-main); stroke-width: 3; stroke-linecap: round;
-      stroke-dasharray: 600; stroke-dashoffset: 600;
-      animation: sign 3s cubic-bezier(0.5, 0, 0.5, 1) forwards 0.5s;
+      fill: none; stroke: var(--text-main); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+      stroke-dasharray: 200; stroke-dashoffset: 200;
+      animation: sign 2s cubic-bezier(0.5, 0, 0.5, 1) forwards 0.5s;
     }
     @keyframes sign { to { stroke-dashoffset: 0; } }
     
@@ -89,7 +88,7 @@
       cursor: pointer; z-index: 9999; font-size: 22px;
     }
 
-    /* CONTENU - MARGE HAUTE AUGMENTÉE */
+    /* CONTENU - MARGE HAUTE AUGMENTÉE POUR RESPIRATION */
     .gallery-hero { text-align: center; padding: 140px 20px 40px; }
     .gallery-hero h1 {
       font-size: clamp(36px, 8vw, 60px); font-weight: 800;
@@ -107,11 +106,12 @@
     }
     .filter-btn.active, .filter-btn:hover { background: var(--text-main); color: var(--bg-body); }
 
-    /* GALERIE (GRID CORRIGÉE POUR MOBILE) */
+    /* GALERIE (GRID CORRIGÉE - LE FIX IMPORTANT) */
     .gallery-container {
       max-width: 1200px; margin: 0 auto 80px; padding: 0 20px;
-      /* La carte prend au minimum 280px, sinon 100% de l'espace */
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+      display: grid;
+      /* minmax(0, 1fr) permet aux éléments de rétrécir si besoin */
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
       gap: 40px;
     }
 
@@ -119,6 +119,7 @@
       background: var(--glass-bg); border: 1px solid var(--glass-border);
       border-radius: var(--radius); padding: 20px; transition: 0.4s;
       box-shadow: 0 5px 20px rgba(0,0,0,0.02);
+      min-width: 0; /* Important pour le grid */
     }
     .creation-card:hover { transform: translateY(-5px); border-color: var(--peach); }
     .creation-card.hidden { display: none; }
@@ -169,10 +170,11 @@
 
     /* RESPONSIVE MOBILE */
     @media (max-width: 768px) {
-      .gallery-container { grid-template-columns: 1fr; } /* Force 1 colonne */
+      /* Force 1 colonne qui prend toute la place mais sans déborder */
+      .gallery-container { grid-template-columns: minmax(0, 1fr); padding: 0 20px; }
       .image-carousel { height: 220px; }
       .carousel-arrow { opacity: 1; }
-      .gallery-hero { padding-top: 130px; } /* Espace pour le menu */
+      .gallery-hero { padding-top: 130px; }
     }
   </style>
 </head>
@@ -196,8 +198,9 @@
 
   <header>
     <a href="index.html" class="logo-container">
-      <svg viewBox="0 0 100 60" width="60" height="35">
-        <path class="signature-path" d="M30,20 C15,20 15,40 30,40 C45,40 35,25 50,25 C65,25 65,45 50,45 L70,45" />
+      <svg viewBox="0 0 80 50" width="60" height="35">
+        <path class="signature-path" d="M25 15 L15 15 L15 35 L25 35 M15 25 L22 25" stroke-linecap="round" stroke-linejoin="round" />
+        <path class="signature-path" d="M45 15 L40 15 Q35 15 35 20 Q35 25 40 25 L45 25 Q50 25 50 30 Q50 35 45 35 L40 35" stroke-linecap="round" stroke-linejoin="round" />
       </svg>
     </a>
     <a href="index.html" class="nav-link">Retour Accueil</a>
@@ -264,32 +267,27 @@
   </footer>
 
   <script>
-    // LOADER
     window.addEventListener('load', () => {
       setTimeout(() => {
         document.getElementById('pageLoader').style.opacity = '0';
-        setTimeout(() => document.getElementById('pageLoader').remove(), 600);
-      }, 800);
+        setTimeout(() => document.getElementById('pageLoader').remove(), 800);
+      }, 1000);
     });
 
-    // DARK MODE
     const themeBtn = document.getElementById('themeToggle');
     const html = document.documentElement;
     let isDark = localStorage.getItem('theme') === 'dark';
-    
     const updateTheme = () => {
       html.setAttribute('data-theme', isDark ? 'dark' : 'light');
       themeBtn.textContent = isDark ? '☀️' : '🌙';
       localStorage.setItem('theme', isDark ? 'dark' : 'light');
     };
     updateTheme();
-
     themeBtn.addEventListener('click', () => {
       isDark = !isDark;
       updateTheme();
     });
 
-    // FILTRES
     const btns = document.querySelectorAll('.filter-btn');
     const cards = document.querySelectorAll('.creation-card');
     btns.forEach(btn => {
@@ -304,7 +302,6 @@
       });
     });
 
-    // CAROUSEL
     document.querySelectorAll('.creation-card').forEach(card => {
       const track = card.querySelector('.carousel-track');
       const slides = card.querySelectorAll('.carousel-image');
@@ -313,22 +310,15 @@
         return;
       }
       let index = 0;
-      
       const update = () => track.style.transform = `translateX(-${index * 100}%)`;
-      
       card.querySelector('.prev').addEventListener('click', (e) => {
-        e.stopPropagation();
-        index = (index > 0) ? index - 1 : slides.length - 1;
-        update();
+        e.stopPropagation(); index = (index > 0) ? index - 1 : slides.length - 1; update();
       });
       card.querySelector('.next').addEventListener('click', (e) => {
-        e.stopPropagation();
-        index = (index < slides.length - 1) ? index + 1 : 0;
-        update();
+        e.stopPropagation(); index = (index < slides.length - 1) ? index + 1 : 0; update();
       });
     });
 
-    // LIGHTBOX
     const lightbox = document.getElementById('lightbox');
     const img = document.getElementById('lightboxImg');
     document.querySelectorAll('.lightbox-trigger').forEach(el => {
