@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Eliot SAURON - Portfolio Créatif | Besançon</title>
+  <title>Eliot SAURON - Créateur d'Univers | Besançon</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,7 +12,7 @@
   <meta property="og:image" content="img/profil.jpeg">
   
   <style>
-    /* Import de la police élégante pour le logo */
+    /* Police du Logo */
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,600&display=swap');
 
     :root {
@@ -21,8 +21,6 @@
       --bg-body: #FDFBF9;
       --text-main: #2C2C2C;
       --text-muted: #666666;
-      
-      /* GLASS & UI */
       --glass-bg: rgba(255, 255, 255, 0.4);
       --glass-border: rgba(255, 255, 255, 0.4);
       --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
@@ -51,51 +49,26 @@
       position: relative;
     }
 
-    /* === FOND AURORA (Style Apple) === */
+    /* === FOND AURORA === */
     .ambient-background {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       overflow: hidden; z-index: 0; background: var(--bg-body);
       pointer-events: none;
     }
-
     .ambient-blob {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.6;
+      position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.6;
       animation: float-ambient 25s infinite ease-in-out alternate;
     }
-
-    .blob-1 {
-      width: 60vw; height: 60vw;
-      background: var(--peach);
-      top: -15%; left: -15%;
-      animation-delay: 0s;
-    }
-
-    .blob-2 {
-      width: 70vw; height: 70vw;
-      background: var(--blue);
-      bottom: -15%; right: -15%;
-      animation-delay: -5s;
-    }
-
-    .blob-3 {
-      width: 40vw; height: 40vw;
-      background: rgba(255, 255, 255, 0.5);
-      top: 40%; left: 40%;
-      animation-delay: -10s;
-    }
+    .blob-1 { width: 60vw; height: 60vw; background: var(--peach); top: -15%; left: -15%; animation-delay: 0s; }
+    .blob-2 { width: 70vw; height: 70vw; background: var(--blue); bottom: -15%; right: -15%; animation-delay: -5s; }
+    .blob-3 { width: 40vw; height: 40vw; background: rgba(255, 255, 255, 0.5); top: 40%; left: 40%; animation-delay: -10s; }
     [data-theme="dark"] .blob-3 { background: rgba(255, 255, 255, 0.05); }
 
     @keyframes float-ambient {
       0% { transform: translate(0, 0) scale(1); }
-      33% { transform: translate(30px, -50px) scale(1.1); }
-      66% { transform: translate(-20px, 20px) scale(0.9); }
-      100% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(0, 0) scale(1.1); }
     }
 
-    /* Le contenu passe devant */
     header, section, footer, .theme-toggle-fixed, .page-loader { position: relative; z-index: 2; }
 
     /* LOADER */
@@ -105,55 +78,28 @@
       z-index: 99999; transition: opacity 0.6s, visibility 0.6s;
     }
     .page-loader.hidden { opacity: 0; visibility: hidden; }
-    .loader-text {
-      font-size: clamp(40px, 10vw, 80px); font-weight: 800;
-      background: linear-gradient(135deg, var(--blue), var(--peach));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
+    .loader-text { font-size: clamp(40px, 10vw, 80px); font-weight: 800; background: linear-gradient(135deg, var(--blue), var(--peach)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
     /* HEADER */
     header {
       position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
       width: 90%; max-width: 1200px;
-      
-      /* Glassmorphism */
-      background: var(--glass-bg); 
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      
+      background: var(--glass-bg); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%);
       border: 1px solid var(--glass-border); border-radius: 100px;
-      padding: 8px 30px; /* Ajusté pour le logo */
-      z-index: 1000;
+      padding: 8px 30px; z-index: 1000;
       display: flex; justify-content: space-between; align-items: center;
       box-shadow: var(--card-shadow);
     }
 
     .nav-links { display: flex; gap: 30px; list-style: none; }
-    .nav-links a {
-      text-decoration: none; color: var(--text-muted); font-weight: 600;
-      transition: 0.3s; font-size: 16px;
-    }
+    .nav-links a { text-decoration: none; color: var(--text-muted); font-weight: 600; transition: 0.3s; font-size: 16px; }
     .nav-links a:hover { color: var(--peach); }
 
-    /* === STYLE DU NOUVEAU LOGO NUAGE === */
-    .logo-container {
-      display: flex; align-items: center; text-decoration: none;
-      height: 60px; overflow: visible;
-    }
-    .logo-svg {
-      width: 160px; height: 100%; overflow: visible;
-    }
-    .logo-text-elem {
-      font-family: 'Playfair Display', serif;
-      font-weight: 700; font-style: italic; font-size: 32px;
-      fill: var(--text-main); letter-spacing: 1px;
-    }
-    /* Animation du nuage */
-    .cloud-path {
-      stroke-dasharray: 500;
-      stroke-dashoffset: 500;
-      animation: drawCloud 8s ease-in-out infinite;
-    }
+    /* LOGO NUAGE */
+    .logo-container { display: flex; align-items: center; text-decoration: none; height: 60px; overflow: visible; }
+    .logo-svg { width: 160px; height: 100%; overflow: visible; }
+    .logo-text-elem { font-family: 'Playfair Display', serif; font-weight: 700; font-style: italic; font-size: 32px; fill: var(--text-main); letter-spacing: 1px; }
+    .cloud-path { stroke-dasharray: 500; stroke-dashoffset: 500; animation: drawCloud 8s ease-in-out infinite; }
     @keyframes drawCloud {
       0% { stroke-dashoffset: 500; opacity: 0; }
       15% { opacity: 1; }
@@ -168,11 +114,9 @@
       position: fixed; bottom: 25px; right: 25px;
       width: 50px; height: 50px; border-radius: 50%;
       background: var(--glass-bg); backdrop-filter: blur(10px);
-      border: 1px solid var(--glass-border);
-      box-shadow: var(--card-shadow);
+      border: 1px solid var(--glass-border); box-shadow: var(--card-shadow);
       display: flex; align-items: center; justify-content: center;
-      cursor: pointer; z-index: 9999; font-size: 22px;
-      transition: transform 0.3s ease;
+      cursor: pointer; z-index: 9999; font-size: 22px; transition: transform 0.3s ease;
     }
     .theme-toggle-fixed:hover { transform: scale(1.1) rotate(15deg); }
 
@@ -182,30 +126,24 @@
       justify-content: center; align-items: center; text-align: center;
       padding: 140px 20px 60px;
     }
-
     .hero h1 {
-      font-size: clamp(40px, 12vw, 90px);
-      font-weight: 800; line-height: 1.1; margin-bottom: 20px;
-      background: linear-gradient(90deg, var(--blue), var(--peach));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      letter-spacing: -2px;
+      font-size: clamp(40px, 12vw, 90px); font-weight: 800; line-height: 1.1; margin-bottom: 20px;
+      background: linear-gradient(90deg, var(--blue), var(--peach)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -2px;
     }
-
     .hero p {
       font-size: clamp(18px, 4vw, 24px); color: var(--text-muted);
-      max-width: 600px; margin-bottom: 50px; line-height: 1.6;
+      max-width: 700px; margin-bottom: 50px; line-height: 1.6;
     }
 
-    /* BLOB */
+    /* BLOB & IMG */
     .blob-container {
       width: 280px; height: 280px; margin: 0 auto 40px;
       border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
       overflow: hidden; border: 4px solid var(--bg-body);
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
-      animation: morph 8s ease-in-out infinite;
-      position: relative;
+      animation: morph 8s ease-in-out infinite; position: relative;
     }
-    .blob-container img, .blob-container video { width: 100%; height: 100%; object-fit: cover; }
+    .blob-container img { width: 100%; height: 100%; object-fit: cover; }
     @keyframes morph {
       0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
       50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
@@ -214,34 +152,27 @@
 
     /* BOUTONS */
     .cta-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
-    
     .btn-primary {
       padding: 16px 36px; border-radius: 50px;
       background: linear-gradient(135deg, var(--peach), var(--blue));
       color: white; font-weight: 700; text-decoration: none;
-      box-shadow: 0 10px 30px rgba(242, 161, 140, 0.4);
-      transition: transform 0.3s; border: none; font-size: 18px;
+      box-shadow: 0 10px 30px rgba(242, 161, 140, 0.4); transition: transform 0.3s; border: none; font-size: 18px;
     }
     .btn-primary:hover { transform: translateY(-4px); box-shadow: 0 15px 40px rgba(127, 166, 198, 0.5); }
-
     .btn-secondary {
       padding: 16px 36px; border-radius: 50px;
       background: transparent; border: 2px solid var(--text-main);
-      color: var(--text-main); font-weight: 700; text-decoration: none;
-      transition: 0.3s; font-size: 18px;
+      color: var(--text-main); font-weight: 700; text-decoration: none; transition: 0.3s; font-size: 18px;
     }
     .btn-secondary:hover { background: var(--text-main); color: var(--bg-body); }
 
-    /* SECTION ABOUT */
+    /* ABOUT */
     .about { padding: 120px 20px; max-width: 1000px; margin: 0 auto; }
     .about-header { text-align: center; margin-bottom: 60px; }
     .about h2 { font-size: 40px; margin-bottom: 10px; color: var(--text-main); }
     .about p { font-size: 18px; color: var(--text-muted); }
 
-    .skills-layout {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 50px;
-      align-items: center;
-    }
+    .skills-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
     .skills-text { font-size: 18px; line-height: 1.8; color: var(--text-muted); }
     
     .skill-bar-container { margin-bottom: 20px; }
@@ -250,25 +181,19 @@
     [data-theme="dark"] .skill-bar { background: rgba(255,255,255,0.1); }
     .skill-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--peach), var(--blue)); width: 0; transition: width 1.5s ease; }
 
-    /* CONTACT CARD */
+    /* CONTACT */
     .contact { padding: 100px 20px; max-width: 700px; margin: 0 auto; }
-    
     .contact-card {
       position: relative; overflow: hidden;
-      background: var(--glass-bg);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      background: var(--glass-bg); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%);
       border-radius: 30px; border: 1px solid var(--glass-border);
-      box-shadow: var(--card-shadow);
-      padding: 50px;
+      box-shadow: var(--card-shadow); padding: 50px;
     }
-    
     .contact-card::before {
       content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
       pointer-events: none; z-index: 0;
     }
-    
     .contact-content { position: relative; z-index: 1; }
     .contact h2 { font-size: 36px; margin-bottom: 30px; text-align: center; color: var(--text-main); }
     .form-group { margin-bottom: 24px; }
@@ -277,22 +202,16 @@
     .form-group input, .form-group textarea {
       width: 100%; padding: 18px; border-radius: 12px;
       border: 2px solid transparent; 
-      
-      background-color: rgba(255, 255, 255, 0.5); 
-      color: var(--text-main); 
-      
-      font-family: inherit; font-size: 16px;
-      transition: 0.3s; resize: vertical;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+      background-color: rgba(255, 255, 255, 0.5); color: var(--text-main); 
+      font-family: inherit; font-size: 16px; transition: 0.3s; resize: vertical; box-shadow: 0 2px 10px rgba(0,0,0,0.02);
     }
-
-    /* === CORRECTION DARK MODE === */
+    
+    /* FIX DARK MODE INPUTS */
     [data-theme="dark"] .form-group input, 
     [data-theme="dark"] .form-group textarea { 
       background-color: rgba(30, 30, 30, 0.6); 
-      color: #ffffff !important; /* Force le blanc */
+      color: #ffffff !important; 
     }
-    
     .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--peach); box-shadow: 0 4px 15px rgba(242, 161, 140, 0.2); background-color: rgba(255, 255, 255, 0.9); }
     [data-theme="dark"] .form-group input:focus, [data-theme="dark"] .form-group textarea:focus { background-color: rgba(60, 60, 60, 0.9); }
 
@@ -304,18 +223,13 @@
       box-shadow: 0 10px 25px rgba(127, 166, 198, 0.4);
     }
     .send-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(242, 161, 140, 0.5); }
-    .send-btn:disabled { opacity: 0.7; cursor: not-allowed; }
-
-    #form-status { margin-top: 20px; text-align: center; font-weight: 600; min-height: 24px; }
-    .status-success { color: #27ae60; background: rgba(39, 174, 96, 0.1); padding: 10px; border-radius: 8px; display: inline-block; }
-    .status-error { color: #e74c3c; }
 
     /* FOOTER */
     footer { text-align: center; padding: 60px 20px; color: var(--text-muted); border-top: 1px solid var(--glass-border); background: var(--glass-bg); margin-top: 60px; }
     .legal-links { display: flex; justify-content: center; gap: 20px; margin-bottom: 20px; flex-wrap: wrap; }
     .legal-links a { color: var(--text-main); text-decoration: none; font-size: 14px; font-weight: 600; }
 
-    /* MOBILE RESPONSIVE */
+    /* MOBILE */
     @media (max-width: 768px) {
       .menu-btn { display: block; }
       .nav-links {
@@ -326,7 +240,6 @@
       }
       .nav-links.active { right: 0; }
       .nav-links a { font-size: 24px; margin: 10px 0; }
-      
       .hero { padding-top: 160px; }
       .contact-card { padding: 30px 20px; }
       .blob-container { width: 220px; height: 220px; }
@@ -363,26 +276,17 @@
             <stop offset="100%" style="stop-color:var(--blue);stop-opacity:0.8" />
           </linearGradient>
         </defs>
-
         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="logo-text-elem">Eliot</text>
-
         <path class="cloud-path" 
               d="M20,40 C20,20 50,-10 100,10 C150,30 180,20 180,40 C180,60 150,90 100,70 C50,50 20,60 20,40"
-              stroke="url(#cloud-gradient)" 
-              stroke-width="8"
-              fill="none" 
-              stroke-linecap="round"
-              filter="url(#cloud-blur)"
-        />
+              stroke="url(#cloud-gradient)" stroke-width="8" fill="none" stroke-linecap="round" filter="url(#cloud-blur)" />
       </svg>
     </a>
-
     <button class="menu-btn" id="menuBtn">☰</button>
-
     <ul class="nav-links" id="navLinks">
-      <li><a href="#about">Compétences</a></li>
-      <li><a href="creations.html">Portfolio</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#about">Philosophie</a></li>
+      <li><a href="creations.html">Projets</a></li>
+      <li><a href="#contact">Me parler</a></li>
     </ul>
   </header>
 
@@ -392,42 +296,46 @@
     </div>
 
     <h1>Eliot SAURON</h1>
-    <p>Étudiant Créatif. Photographe. Designer. <br>Je transforme vos idées en expériences visuelles.</p>
+    <p>Je ne capture pas seulement des images, je construis des univers. <br>Avec peu, j'imagine le tout. Une texture, une image, une émotion.</p>
     
     <div class="cta-container">
-      <a href="creations.html" class="btn-primary">Voir mes créations</a>
-      <a href="#contact" class="btn-secondary">Me contacter</a>
+      <a href="creations.html" class="btn-primary">Découvrir mon univers</a>
+      <a href="#contact" class="btn-secondary">Échanger</a>
     </div>
   </section>
 
   <section class="about" id="about">
     <div class="about-header">
-      <h2>Mes Compétences</h2>
-      <p>Un équilibre entre technique et sensibilité artistique.</p>
+      <h2>Ma Vision</h2>
+      <p>L'humilité face à la technique, la passion face à la création.</p>
     </div>
     
     <div class="skills-layout">
       <div class="skills-text">
-        <p>Actuellement en 2ème année d'Information-Communication, je développe une approche polyvalente. Mon objectif n'est pas seulement de maîtriser les outils, mais de comprendre comment ils peuvent servir une narration visuelle forte.</p>
-        <p style="margin-top: 20px;">Je suis particulièrement à l'aise avec la suite Adobe pour la création graphique et le traitement photo, tout en gardant un pied dans l'intégration web.</p>
+        <p>Mon approche n'est pas de prétendre tout savoir, mais de tout vouloir comprendre. Ce qui a du sens pour moi, c'est le processus global : de la première idée à l'affiche finale, du déclenchement de l'appareil au montage vidéo.</p>
+        <p style="margin-top: 20px;">Je crée des schémas mentaux où une simple image devient une texture, une ambiance. J'aime partir de "peu" pour construire un univers complet et transmettre une émotion brute. Ma plus grande force ? La soif d'apprendre et l'envie sincère de connecter avec les gens.</p>
       </div>
       
       <div class="skills-bars">
         <div class="skill-bar-container">
-          <div class="skill-info"><span>Photographie & Retouche</span><span>85%</span></div>
-          <div class="skill-bar"><div class="skill-fill" style="width: 85%"></div></div>
-        </div>
-        <div class="skill-bar-container">
-          <div class="skill-info"><span>Design Graphique (Ps, Ai, Id)</span><span>75%</span></div>
-          <div class="skill-bar"><div class="skill-fill" style="width: 75%"></div></div>
-        </div>
-        <div class="skill-bar-container">
-          <div class="skill-info"><span>Intégration Web (HTML/CSS)</span><span>60%</span></div>
+          <div class="skill-info"><span>Relations Humaines & Curiosité</span><span>60%</span></div>
           <div class="skill-bar"><div class="skill-fill" style="width: 60%"></div></div>
         </div>
         <div class="skill-bar-container">
-          <div class="skill-info"><span>Montage Vidéo</span><span>70%</span></div>
-          <div class="skill-bar"><div class="skill-fill" style="width: 70%"></div></div>
+          <div class="skill-info"><span>Intégration Web (HTML/CSS)</span><span>50%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width: 50%"></div></div>
+        </div>
+        <div class="skill-bar-container">
+          <div class="skill-info"><span>Photographie (Cadrage & Texture)</span><span>40%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width: 40%"></div></div>
+        </div>
+        <div class="skill-bar-container">
+          <div class="skill-info"><span>Design Graphique (Univers Visuel)</span><span>35%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width: 35%"></div></div>
+        </div>
+        <div class="skill-bar-container">
+          <div class="skill-info"><span>Vidéo & Montage</span><span>30%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width: 30%"></div></div>
         </div>
       </div>
     </div>
@@ -436,7 +344,7 @@
   <section class="contact" id="contact">
     <div class="contact-card">
       <div class="contact-content">
-        <h2>Me Contacter</h2>
+        <h2>Parlons Passion</h2>
         
         <form class="contact-form" action="https://formspree.io/f/mblwgzve" method="POST">
           <div class="form-group">
@@ -449,7 +357,7 @@
           </div>
           <div class="form-group">
             <label>Message</label>
-            <textarea name="message" rows="5" required placeholder="Parlez-moi de votre projet..."></textarea>
+            <textarea name="message" rows="5" required placeholder="Une idée ? Un projet ? Ou juste envie de discuter création..."></textarea>
           </div>
           <button type="submit" class="send-btn">Envoyer le message</button>
           <div id="form-status"></div>
@@ -501,7 +409,6 @@
       updateTheme();
     });
 
-    // AJAX FORM
     const form = document.querySelector('.contact-form');
     const status = document.getElementById('form-status');
     
@@ -509,34 +416,13 @@
       e.preventDefault();
       const btn = form.querySelector('.send-btn');
       const originalText = btn.textContent;
-      
-      btn.disabled = true;
-      btn.textContent = "Envoi en cours...";
-      status.className = "";
-      status.textContent = "";
-
+      btn.disabled = true; btn.textContent = "Envoi..."; status.className = ""; status.textContent = "";
       try {
-        const response = await fetch(form.action, {
-          method: 'POST',
-          body: new FormData(form),
-          headers: { 'Accept': 'application/json' }
-        });
-
-        if (response.ok) {
-          status.className = "status-success";
-          status.textContent = "✅ Message envoyé !";
-          form.reset();
-        } else {
-          status.className = "status-error";
-          status.textContent = "❌ Erreur.";
-        }
-      } catch (error) {
-        status.className = "status-error";
-        status.textContent = "❌ Erreur de connexion.";
-      }
-      
-      btn.disabled = false;
-      btn.textContent = originalText;
+        const response = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
+        if (response.ok) { status.className = "status-success"; status.textContent = "✅ Bien reçu !"; form.reset(); } 
+        else { status.className = "status-error"; status.textContent = "❌ Oups, erreur."; }
+      } catch (error) { status.className = "status-error"; status.textContent = "❌ Erreur réseau."; }
+      btn.disabled = false; btn.textContent = originalText;
     });
   </script>
 </body>
