@@ -15,15 +15,13 @@
     :root {
       --peach: #F2A18C;
       --blue: #7FA6C6;
-      /* Couleurs des bulles plus prononcées pour qu'on les voie */
-      --peach-blob: rgba(242, 161, 140, 0.5);
-      --blue-blob: rgba(127, 166, 198, 0.5);
-      
       --bg-body: #FDFBF9;
       --text-main: #2C2C2C;
       --text-muted: #666666;
-      --glass-bg: rgba(255, 255, 255, 0.6);
-      --glass-border: rgba(255, 255, 255, 0.6);
+      
+      /* NOUVEAU STYLE GLASS (Plus givré/Apple) */
+      --glass-bg: rgba(255, 255, 255, 0.4);
+      --glass-border: rgba(255, 255, 255, 0.4);
       --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
       --radius: 24px;
     }
@@ -32,7 +30,7 @@
       --bg-body: #0a0a0a;
       --text-main: #f0f0f0;
       --text-muted: #a0a0a0;
-      --glass-bg: rgba(20, 20, 20, 0.6);
+      --glass-bg: rgba(20, 20, 20, 0.4);
       --glass-border: rgba(255, 255, 255, 0.1);
       --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
     }
@@ -50,14 +48,51 @@
       position: relative;
     }
 
-    /* === BACKGROUND PARTICULES === */
-    #particles-js {
+    /* === NOUVEAU FOND : AURORA MESH GRADIENT (Style Apple) === */
+    .ambient-background {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      z-index: 0; pointer-events: none;
+      overflow: hidden; z-index: 0; background: var(--bg-body);
+      pointer-events: none;
     }
-    .particle {
-      position: absolute; border-radius: 50%; opacity: 0.6;
-      will-change: transform; /* Optimisation GPU cruciale */
+
+    .ambient-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px); /* Le secret : un flou immense pour la douceur */
+      opacity: 0.6;
+      animation: float-ambient 25s infinite ease-in-out alternate;
+    }
+
+    /* Blob 1 : Pêche */
+    .blob-1 {
+      width: 60vw; height: 60vw;
+      background: var(--peach);
+      top: -15%; left: -15%;
+      animation-delay: 0s;
+    }
+
+    /* Blob 2 : Bleu */
+    .blob-2 {
+      width: 70vw; height: 70vw;
+      background: var(--blue);
+      bottom: -15%; right: -15%;
+      animation-delay: -5s;
+    }
+
+    /* Blob 3 : Lumière pour la profondeur */
+    .blob-3 {
+      width: 40vw; height: 40vw;
+      background: rgba(255, 255, 255, 0.5);
+      top: 40%; left: 40%;
+      animation-delay: -10s;
+    }
+    [data-theme="dark"] .blob-3 { background: rgba(255, 255, 255, 0.05); }
+
+    @keyframes float-ambient {
+      0% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -50px) scale(1.1); }
+      66% { transform: translate(-20px, 20px) scale(0.9); }
+      100% { transform: translate(0, 0) scale(1); }
     }
 
     /* Le contenu passe devant */
@@ -76,11 +111,16 @@
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
 
-    /* HEADER */
+    /* HEADER MODERNE (Glassmorphism renforcé) */
     header {
       position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
       width: 90%; max-width: 1200px;
-      background: var(--glass-bg); backdrop-filter: blur(16px);
+      
+      /* Effet Verre Apple */
+      background: var(--glass-bg); 
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      
       border: 1px solid var(--glass-border); border-radius: 100px;
       padding: 12px 30px; z-index: 1000;
       display: flex; justify-content: space-between; align-items: center;
@@ -94,23 +134,21 @@
     }
     .nav-links a:hover { color: var(--peach); }
 
-    /* LOGO SIGNATURE V3 (Calligraphie fluide) */
-    .logo-container { width: 60px; height: 40px; display: flex; align-items: center; justify-content: center; }
-    .signature-svg { width: 100%; height: 100%; overflow: visible; }
-    .signature-path {
-      fill: none; stroke: var(--text-main); stroke-width: 2;
-      stroke-linecap: round; stroke-linejoin: round;
-      stroke-dasharray: 250; stroke-dashoffset: 250;
-      animation: signLoop 5s ease-in-out infinite;
+    /* NOUVEAU LOGO GÉOMÉTRIQUE */
+    .logo-container {
+      display: flex; align-items: center; gap: 12px; text-decoration: none;
+      height: 45px;
     }
-    @keyframes signLoop {
-      0% { stroke-dashoffset: 250; opacity: 0; }
-      15% { opacity: 1; }
-      40% { stroke-dashoffset: 0; }
-      70% { stroke-dashoffset: 0; opacity: 1; }
-      90% { stroke-dashoffset: 0; opacity: 0; }
-      100% { stroke-dashoffset: 250; opacity: 0; }
+    .logo-svg {
+      width: 42px; height: 42px;
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
+    .logo-text {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800; font-size: 20px;
+      color: var(--text-main); letter-spacing: -0.5px;
+    }
+    .logo-container:hover .logo-svg { transform: rotate(90deg); }
 
     .menu-btn { display: none; background: none; border: none; font-size: 26px; cursor: pointer; color: var(--text-main); }
     
@@ -146,7 +184,7 @@
       max-width: 600px; margin-bottom: 50px; line-height: 1.6;
     }
 
-    /* BLOB */
+    /* BLOB IMAGE CONTAINER */
     .blob-container {
       width: 280px; height: 280px; margin: 0 auto 40px;
       border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
@@ -182,13 +220,12 @@
     }
     .btn-secondary:hover { background: var(--text-main); color: var(--bg-body); }
 
-    /* === SECTION COMPÉTENCES REVISITÉE === */
+    /* === SECTION COMPÉTENCES === */
     .about { padding: 120px 20px; max-width: 1000px; margin: 0 auto; }
     .about-header { text-align: center; margin-bottom: 60px; }
     .about h2 { font-size: 40px; margin-bottom: 10px; color: var(--text-main); }
     .about p { font-size: 18px; color: var(--text-muted); }
 
-    /* Layout asymétrique pour casser la monotonie */
     .skills-layout {
       display: grid; grid-template-columns: 1fr 1fr; gap: 50px;
       align-items: center;
@@ -201,25 +238,29 @@
     [data-theme="dark"] .skill-bar { background: rgba(255,255,255,0.1); }
     .skill-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--peach), var(--blue)); width: 0; transition: width 1.5s ease; }
 
-    /* CONTACT CARD AVEC TEXTURE PROPRE */
+    /* CONTACT CARD STYLE APPLE */
     .contact { padding: 100px 20px; max-width: 700px; margin: 0 auto; }
     
     .contact-card {
       position: relative; overflow: hidden;
-      background-color: var(--bg-body);
+      
+      /* Glassmorphism amélioré */
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      
       border-radius: 30px; border: 1px solid var(--glass-border);
       box-shadow: var(--card-shadow);
       padding: 50px;
     }
     
-    /* La texture Noise en overlay via CSS (plus propre que le SVG précédent) */
+    /* Texture Noise subtile */
     .contact-card::before {
       content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
       pointer-events: none; z-index: 0;
     }
     
-    /* Le contenu passe au dessus de la texture */
     .contact-content { position: relative; z-index: 1; }
 
     .contact h2 { font-size: 36px; margin-bottom: 30px; text-align: center; color: var(--text-main); }
@@ -229,13 +270,13 @@
     .form-group input, .form-group textarea {
       width: 100%; padding: 18px; border-radius: 12px;
       border: 2px solid transparent; 
-      background-color: rgba(255, 255, 255, 0.8); /* Fond uni pour lisibilité */
+      background-color: rgba(255, 255, 255, 0.5); /* Plus transparent */
       color: var(--text-main); font-family: inherit; font-size: 16px;
       transition: 0.3s; resize: vertical;
       box-shadow: 0 2px 10px rgba(0,0,0,0.02);
     }
-    [data-theme="dark"] .form-group input, [data-theme="dark"] .form-group textarea { background-color: rgba(30, 30, 30, 0.8); }
-    .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--peach); box-shadow: 0 4px 15px rgba(242, 161, 140, 0.2); }
+    [data-theme="dark"] .form-group input, [data-theme="dark"] .form-group textarea { background-color: rgba(30, 30, 30, 0.5); }
+    .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--peach); box-shadow: 0 4px 15px rgba(242, 161, 140, 0.2); background-color: rgba(255, 255, 255, 0.9); }
 
     .send-btn {
       width: 100%; padding: 20px; border-radius: 12px; border: none;
@@ -272,12 +313,18 @@
       .contact-card { padding: 30px 20px; }
       .blob-container { width: 220px; height: 220px; }
       .skills-layout { grid-template-columns: 1fr; gap: 40px; }
+      
+      .ambient-blob { opacity: 0.4; } /* Moins intense sur mobile pour performance */
     }
   </style>
 </head>
 <body>
 
-  <div id="particles-js"></div>
+  <div class="ambient-background">
+    <div class="ambient-blob blob-1"></div>
+    <div class="ambient-blob blob-2"></div>
+    <div class="ambient-blob blob-3"></div>
+  </div>
 
   <div class="page-loader" id="pageLoader">
     <div class="loader-text">ES</div>
@@ -287,9 +334,12 @@
 
   <header>
     <a href="index.html" class="logo-container" aria-label="Accueil">
-      <svg class="signature-svg" viewBox="0 0 100 60">
-        <path class="signature-path" d="M30,35 C20,35 15,25 25,15 C35,5 45,35 30,40 C20,45 50,45 55,25 C60,15 70,15 75,25 C80,35 65,45 60,35 C55,25 80,20 90,25" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+      <svg class="logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="45" stroke="var(--text-main)" stroke-width="6"/>
+        <rect x="28" y="35" width="44" height="8" rx="4" fill="var(--text-main)"/>
+        <rect x="28" y="57" width="28" height="8" rx="4" fill="var(--peach)"/> 
       </svg>
+      <span class="logo-text">Eliot.</span>
     </a>
 
     <button class="menu-btn" id="menuBtn">☰</button>
@@ -387,7 +437,7 @@
         document.getElementById('pageLoader').style.opacity = '0';
         setTimeout(() => document.getElementById('pageLoader').remove(), 800);
       }, 1000);
-      initParticles(); // Lance les bulles
+      // initParticles() supprimé car remplacé par du CSS pur (plus fluide)
     });
 
     const menuBtn = document.getElementById('menuBtn');
@@ -416,57 +466,6 @@
       isDark = !isDark;
       updateTheme();
     });
-
-    // PARTICULES OPTIMISÉES + PARALLAXE FLUIDE (LERP)
-    function initParticles() {
-      const container = document.getElementById('particles-js');
-      const particles = [];
-      const particleCount = 30; // Plus de bulles
-
-      // Création
-      for(let i=0; i<particleCount; i++) {
-        const p = document.createElement('div');
-        p.classList.add('particle');
-        const size = Math.random() * 120 + 30; // 30px à 150px
-        p.style.width = `${size}px`;
-        p.style.height = `${size}px`;
-        p.style.left = `${Math.random() * 100}%`;
-        p.style.top = `${Math.random() * 100}%`;
-        
-        const isBlue = Math.random() > 0.5;
-        p.style.background = isBlue ? 'var(--blue-blob)' : 'var(--peach-blob)';
-        
-        // Vitesse de parallaxe individuelle
-        p.dataset.speed = (Math.random() - 0.5) * 0.08; 
-        
-        container.appendChild(p);
-        particles.push(p);
-      }
-
-      // Parallaxe LISSE (Lerp)
-      let mouseX = 0, mouseY = 0;
-      let targetX = 0, targetY = 0;
-
-      document.addEventListener('mousemove', (e) => {
-        targetX = e.clientX - window.innerWidth / 2;
-        targetY = e.clientY - window.innerHeight / 2;
-      });
-
-      function animate() {
-        // Interpolation : on rapproche mouseX de targetX de 5% à chaque frame
-        mouseX += (targetX - mouseX) * 0.05; 
-        mouseY += (targetY - mouseY) * 0.05;
-
-        particles.forEach(p => {
-          const speed = parseFloat(p.dataset.speed);
-          const x = mouseX * speed;
-          const y = mouseY * speed;
-          p.style.transform = `translate3d(${x}px, ${y}px, 0)`; // 3D pour GPU
-        });
-        requestAnimationFrame(animate);
-      }
-      animate();
-    }
 
     // AJAX FORM
     const form = document.querySelector('.contact-form');
