@@ -103,8 +103,9 @@
     .image-carousel { position: relative; width: 100%; height: 350px; border-radius: 12px; overflow: hidden; margin-bottom: 20px; cursor: zoom-in; }
     .carousel-track { display: flex; height: 100%; transition: transform 0.5s ease; touch-action: pan-y; }
     .carousel-image { min-width: 100%; height: 100%; object-fit: cover; }
-    /* Vidéo dans le carrousel */
-    video.carousel-image { object-fit: cover; }
+    
+    /* Style pour l'iframe YouTube */
+    iframe.carousel-image { width: 100%; height: 100%; border: none; }
 
     .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.9); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; opacity: 0; transition: 0.3s; z-index: 10; }
     .prev { left: 10px; } .next { right: 10px; }
@@ -189,10 +190,14 @@
       <span class="category-badge">Communication / Vidéo</span>
       <div class="image-carousel">
         <div class="carousel-track">
-          <video class="carousel-image" controls playsinline poster="img/radio-2.jpg">
-            <source src="img/video-interview.mp4" type="video/mp4">
-            Votre navigateur ne supporte pas la vidéo.
-          </video>
+          <iframe class="carousel-image" 
+                  src="https://www.youtube.com/embed/aoIdUVLWA-I" 
+                  title="Interview Andréa" 
+                  frameborder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowfullscreen>
+          </iframe>
+          
           <img src="img/radio-1.jpg" class="carousel-image lightbox-trigger" loading="lazy" alt="Radio Campus 1">
           <img src="img/radio-4.jpg" class="carousel-image lightbox-trigger" loading="lazy" alt="Radio Campus Portrait">
           <img src="img/radio-5.jpg" class="carousel-image lightbox-trigger" loading="lazy" alt="Radio Campus Mix">
