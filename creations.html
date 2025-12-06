@@ -14,14 +14,15 @@
   <style>
     :root {
       --peach: #F2A18C;
-      --peach-glow: rgba(242, 161, 140, 0.5);
       --blue: #7FA6C6;
-      --blue-glow: rgba(127, 166, 198, 0.5);
+      --peach-blob: rgba(242, 161, 140, 0.6);
+      --blue-blob: rgba(127, 166, 198, 0.6);
       --bg-body: #FDFBF9;
       --text-main: #2C2C2C;
       --text-muted: #666666;
       --glass-bg: rgba(255, 255, 255, 0.7);
       --glass-border: rgba(255, 255, 255, 0.8);
+      --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
       --radius: 20px;
     }
 
@@ -31,6 +32,7 @@
       --text-muted: #a0a0a0;
       --glass-bg: rgba(20, 20, 20, 0.7);
       --glass-border: rgba(255, 255, 255, 0.1);
+      --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -45,20 +47,11 @@
       position: relative;
     }
 
-    /* FOND ANIMÉ & PARALLAXE */
-    .background-shapes { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-    .shape-wrapper { position: absolute; transition: transform 0.1s linear; will-change: transform; }
-    .shape { border-radius: 50%; filter: blur(60px); opacity: 0.7; animation: float 20s infinite alternate; }
-    
-    .wrap-1 { top: -20%; right: -10%; }
-    .shape-1 { width: 60vw; height: 60vw; background: var(--peach-glow); }
-    
-    .wrap-2 { bottom: -20%; left: -10%; }
-    .shape-2 { width: 70vw; height: 70vw; background: var(--blue-glow); }
-    
-    @keyframes float { 0% { transform: translate(0,0); } 100% { transform: translate(-50px, 50px); } }
+    /* BACKGROUND */
+    .particles-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; overflow: hidden; }
+    .particle { position: absolute; border-radius: 50%; opacity: 0.6; will-change: transform; }
 
-    header, section, footer, .theme-toggle-fixed, .lightbox { position: relative; z-index: 1; }
+    header, section, footer, .theme-toggle-fixed, .lightbox { position: relative; z-index: 2; }
 
     /* LOADER */
     .page-loader {
@@ -186,14 +179,7 @@
 </head>
 <body>
 
-  <div class="background-shapes" id="bgShapes">
-    <div class="shape-wrapper wrap-1" data-speed="0.04">
-      <div class="shape shape-1"></div>
-    </div>
-    <div class="shape-wrapper wrap-2" data-speed="-0.04">
-      <div class="shape shape-2"></div>
-    </div>
-  </div>
+  <div class="particles-container" id="particles"></div>
 
   <div class="page-loader" id="pageLoader">
     <div class="loader-text">ES</div>
@@ -207,7 +193,7 @@
   </div>
 
   <header>
-    <a href="index.html" class="logo-container">
+    <a href="index.html" class="logo-container" aria-label="Accueil">
       <svg class="logo-svg" viewBox="0 0 100 100">
         <defs>
           <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -233,6 +219,7 @@
   </section>
 
   <div class="gallery-container">
+    
     <article class="creation-card" data-category="photo">
       <span class="category-badge">Photographie</span>
       <div class="image-carousel">
@@ -271,6 +258,7 @@
       <h3 class="creation-title">Affiche Event</h3>
       <p class="creation-desc">Poster pour un concert à Besançon.</p>
     </article>
+
   </div>
 
   <footer>
@@ -286,6 +274,7 @@
         document.getElementById('pageLoader').style.opacity = '0';
         setTimeout(() => document.getElementById('pageLoader').remove(), 800);
       }, 1000);
+      initParticles();
     });
 
     const themeBtn = document.getElementById('themeToggle');
@@ -302,17 +291,60 @@
       updateTheme();
     });
 
-    // PARALLAXE SOURIS (CORRIGÉ & FLUIDE)
-    const shapes = document.querySelectorAll('.shape-wrapper');
-    document.addEventListener('mousemove', (e) => {
-      const x = (e.clientX - window.innerWidth / 2);
-      const y = (e.clientY - window.innerHeight / 2);
+    // PARTICULES OPTIMISÉES
+    function initParticles() {
+      const container = document.getElementById('particles');
+      if(!container) {
+        // Crée le container s'il n'existe pas
+        const div = document.createElement('div');
+        div.className = 'particles-container';
+        div.id = 'particles';
+        document.body.prepend(div);
+      }
       
-      shapes.forEach(shape => {
-        const speed = shape.getAttribute('data-speed');
-        shape.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+      const particleCount = 20;
+      const particles = [];
+
+      for(let i=0; i<particleCount; i++) {
+        const p = document.createElement('div');
+        p.classList.add('particle');
+        const size = Math.random() * 150 + 50;
+        p.style.width = `${size}px`;
+        p.style.height = `${size}px`;
+        p.style.left = `${Math.random() * 100}%`;
+        p.style.top = `${Math.random() * 100}%`;
+        
+        const isBlue = Math.random() > 0.5;
+        p.style.background = isBlue ? 'var(--blue-glow)' : 'var(--peach-glow)';
+        p.style.filter = `blur(${Math.random() * 40 + 20}px)`;
+        p.dataset.speed = (Math.random() - 0.5) * 0.1;
+        
+        document.querySelector('.particles-container').appendChild(p);
+        particles.push(p);
+      }
+
+      let mouseX = 0, mouseY = 0;
+      let targetX = 0, targetY = 0;
+
+      document.addEventListener('mousemove', (e) => {
+        targetX = e.clientX - window.innerWidth / 2;
+        targetY = e.clientY - window.innerHeight / 2;
       });
-    });
+
+      function animate() {
+        mouseX += (targetX - mouseX) * 0.1;
+        mouseY += (targetY - mouseY) * 0.1;
+
+        particles.forEach(p => {
+          const speed = parseFloat(p.dataset.speed);
+          const x = mouseX * speed;
+          const y = mouseY * speed;
+          p.style.transform = `translate(${x}px, ${y}px)`;
+        });
+        requestAnimationFrame(animate);
+      }
+      animate();
+    }
 
     const btns = document.querySelectorAll('.filter-btn');
     const cards = document.querySelectorAll('.creation-card');
