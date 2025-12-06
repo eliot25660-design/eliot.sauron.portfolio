@@ -15,14 +15,13 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Eliot SAURON - Photographe Créatif & Designer Visuel">
   <meta property="og:description" content="Portfolio professionnel - Photographie événementielle, branding et création graphique à Besançon">
-  <meta property="og:image" content="https://www.eliotsauron.com/og-image.jpg">
-  <meta property="og:url" content="https://www.eliotsauron.com/">
+  <meta property="og:image" content="img/profil_og.jpg"> <meta property="og:url" content="https://www.eliotsauron.com/">
   <meta property="og:site_name" content="Eliot SAURON Portfolio">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Eliot SAURON - Photographe Créatif">
   <meta name="twitter:description" content="Portfolio professionnel - Photographie événementielle et création graphique">
-  <meta name="twitter:image" content="https://www.eliotsauron.com/og-image.jpg">
+  <meta name="twitter:image" content="img/profil_og.jpg">
   
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23F2A18C'/%3E%3Ctext x='50' y='70' font-size='60' font-weight='800' text-anchor='middle' fill='white'%3EE%3C/text%3E%3C/svg%3E">
   
@@ -56,7 +55,7 @@
       --blue-dark: #5A8AB5;
       --blue-light: #F6F9FC;
       --gray-dark: #2C2C2C;
-      --gray-medium: #666666;
+      --gray-medium: #555555; /* Contrast légèrement augmenté pour la lisibilité */
       --white: #FFFFFF;
       --radius: 16px;
     }
@@ -81,6 +80,13 @@
       position: relative;
     }
 
+    /* Amélioration Accessibilité Focus */
+    :focus-visible {
+      outline: 3px solid var(--peach);
+      outline-offset: 4px;
+      border-radius: 4px;
+    }
+
     body::before {
       content: '';
       position: fixed;
@@ -96,29 +102,9 @@
       animation: bgPulse 20s ease-in-out infinite;
     }
 
-    body::after {
-      content: '';
-      position: fixed;
-      top: -10%;
-      right: -5%;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(242, 161, 140, 0.12) 0%, transparent 70%);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 0;
-      animation: floatBlob 25s ease-in-out infinite;
-    }
-
     @keyframes bgPulse {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.7; }
-    }
-
-    @keyframes floatBlob {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      33% { transform: translate(-50px, 80px) scale(1.1); }
-      66% { transform: translate(30px, -50px) scale(0.9); }
     }
 
     .floating-shapes {
@@ -139,41 +125,10 @@
       animation: float 20s ease-in-out infinite;
     }
 
-    .shape:nth-child(1) {
-      width: 80px;
-      height: 80px;
-      background: var(--peach);
-      top: 20%;
-      left: 10%;
-      animation-delay: 0s;
-    }
-
-    .shape:nth-child(2) {
-      width: 120px;
-      height: 120px;
-      background: var(--blue);
-      top: 60%;
-      right: 15%;
-      animation-delay: -5s;
-    }
-
-    .shape:nth-child(3) {
-      width: 60px;
-      height: 60px;
-      background: var(--peach);
-      bottom: 20%;
-      left: 20%;
-      animation-delay: -10s;
-    }
-
-    .shape:nth-child(4) {
-      width: 100px;
-      height: 100px;
-      background: var(--blue);
-      top: 40%;
-      right: 30%;
-      animation-delay: -15s;
-    }
+    .shape:nth-child(1) { width: 80px; height: 80px; background: var(--peach); top: 20%; left: 10%; animation-delay: 0s; }
+    .shape:nth-child(2) { width: 120px; height: 120px; background: var(--blue); top: 60%; right: 15%; animation-delay: -5s; }
+    .shape:nth-child(3) { width: 60px; height: 60px; background: var(--peach); bottom: 20%; left: 20%; animation-delay: -10s; }
+    .shape:nth-child(4) { width: 100px; height: 100px; background: var(--blue); top: 40%; right: 30%; animation-delay: -15s; }
 
     @keyframes float {
       0%, 100% { transform: translate(0, 0) rotate(0deg); }
@@ -193,12 +148,14 @@
       transition: width 0.1s ease;
     }
 
+    /* CORRECTION MOBILE : 100dvh pour le loader */
     .page-loader {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      height: 100%;
+      height: 100vh; /* Fallback */
+      height: 100dvh; /* Mobile moderne */
       background: linear-gradient(135deg, var(--peach-light), var(--blue-light));
       display: flex;
       flex-direction: column;
@@ -222,11 +179,6 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
       animation: pulse 1.5s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 0.6; transform: scale(0.98); }
-      50% { opacity: 1; transform: scale(1.02); }
     }
 
     .loader-bar {
@@ -321,10 +273,8 @@
       transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .logo:hover { 
-      transform: translateY(-2px);
-    }
-
+    .logo:hover { transform: translateY(-2px); }
+    
     .logo:focus-visible {
       outline: 3px solid var(--peach);
       outline-offset: 4px;
@@ -337,33 +287,13 @@
       filter: drop-shadow(0 4px 12px rgba(242, 161, 140, 0.3));
     }
 
-.logo-main-circle {
-  animation: rotate 8s linear infinite;
-  transform-origin: center;
-}
+    .logo-main-circle { animation: rotate 8s linear infinite; transform-origin: center; }
+    .logo-accent { animation: pulse 2s ease-in-out infinite; }
+    .logo-center { animation: glow 3s ease-in-out infinite; }
 
-.logo-accent {
-  animation: pulse 2s ease-in-out infinite;
-}
-
-.logo-center {
-  animation: glow 3s ease-in-out infinite;
-}
-
-@keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 0.8; }
-  50% { transform: scale(1.2); opacity: 1; }
-}
-
-@keyframes glow {
-  0%, 100% { opacity: 0.8; }
-  50% { opacity: 1; transform: scale(1.3); }
-}
+    @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.2); opacity: 1; } }
+    @keyframes glow { 0%, 100% { opacity: 0.8; } 50% { opacity: 1; transform: scale(1.3); } }
 
     .nav-left a, .nav-right a {
       color: var(--gray-medium);
@@ -393,10 +323,7 @@
       transition: transform 0.3s ease;
     }
 
-    .nav-left a:hover::after, .nav-right a:hover::after {
-      transform: translateX(-50%) scaleX(1);
-    }
-
+    .nav-left a:hover::after, .nav-right a:hover::after { transform: translateX(-50%) scaleX(1); }
     .nav-left a:hover, .nav-right a:hover {
       color: var(--peach);
       background: rgba(242,161,140,0.1);
@@ -438,15 +365,8 @@
       justify-content: center;
     }
 
-    .scroll-to-top.visible {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .scroll-to-top:hover {
-      transform: scale(1.15) translateY(-4px);
-      box-shadow: 0 12px 40px rgba(242,161,140,0.6);
-    }
+    .scroll-to-top.visible { opacity: 1; visibility: visible; }
+    .scroll-to-top:hover { transform: scale(1.15) translateY(-4px); box-shadow: 0 12px 40px rgba(242,161,140,0.6); }
 
     .hero {
       min-height: 85vh;
@@ -459,9 +379,7 @@
       z-index: 1;
     }
 
-    .hero-content {
-      max-width: 900px;
-    }
+    .hero-content { max-width: 900px; }
 
     .hero-badge {
       display: inline-block;
@@ -491,15 +409,8 @@
       animation: fadeInUp 1s ease 0.3s both, gradientShift 8s ease infinite;
     }
 
-    @keyframes gradientShift {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes gradientShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
     .hero-subtitle {
       color: var(--gray-medium);
@@ -535,10 +446,7 @@
       gap: 12px;
     }
 
-    .cta-button:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 15px 40px rgba(242,161,140,0.6);
-    }
+    .cta-button:hover { transform: translateY(-6px); box-shadow: 0 15px 40px rgba(242,161,140,0.6); }
 
     .cta-button.secondary {
       background: rgba(255,255,255,0.9);
@@ -546,15 +454,13 @@
       border: 3px solid rgba(242,161,140,0.4);
     }
 
-    /* CONTINUEZ AVEC LA PARTIE 2/2 */
-    /* SUITE DE LA PARTIE 1 - Collez directement après le CSS de la partie 1 */
-
     .about {
       padding: 80px 32px;
       position: relative;
       z-index: 1;
     }
 
+    /* DESIGN: Glassmorphism amélioré */
     .about-container {
       max-width: 1200px;
       margin: 0 auto;
@@ -563,34 +469,37 @@
       gap: 80px;
       background: rgba(255,255,255,0.7);
       backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.6); /* Bordure subtile */
       padding: 80px;
       border-radius: 16px;
       box-shadow: 0 8px 24px rgba(0,0,0,0.12);
     }
 
-    .profile-image {
+    /* STYLE DE LA VIDÉO / PROFIL */
+    .profile-media-container {
       width: 100%;
       aspect-ratio: 1;
-      border-radius: 16px;
+      border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
       overflow: hidden;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      box-shadow: 0 8px 32px rgba(242, 161, 140, 0.25);
       border: 4px solid white;
       position: sticky;
       top: 120px;
+      animation: morphing 8s ease-in-out infinite;
     }
 
-    .profile-image img {
+    .profile-media-container video, 
+    .profile-media-container img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      background: linear-gradient(135deg, #FFE5D9, #E8F1F8);
-      user-select: none;
-      pointer-events: none;
-      transition: transform 0.3s ease;
+      display: block;
     }
 
-    .profile-image:hover img {
-      transform: scale(1.05);
+    @keyframes morphing {
+      0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+      50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+      100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
     }
 
     .about-content h2 {
@@ -658,10 +567,7 @@
       padding: 32px;
     }
 
-    .skill-popup.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    .skill-popup.active { opacity: 1; pointer-events: auto; }
 
     .skill-popup-content {
       background: white;
@@ -677,9 +583,7 @@
       position: relative;
     }
 
-    .skill-popup.active .skill-popup-content {
-      transform: scale(1) translateY(0);
-    }
+    .skill-popup.active .skill-popup-content { transform: scale(1) translateY(0); }
 
     .skill-popup-close {
       position: absolute;
@@ -699,11 +603,7 @@
       justify-content: center;
     }
 
-    .skill-popup-close:hover {
-      background: var(--peach);
-      color: white;
-      transform: rotate(90deg);
-    }
+    .skill-popup-close:hover { background: var(--peach); color: white; transform: rotate(90deg); }
 
     .skill-popup h3 {
       font-size: 36px;
@@ -722,27 +622,9 @@
       margin-bottom: 48px;
     }
 
-    .skill-popup ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    .skill-popup li {
-      padding: 16px 0;
-      color: var(--gray-medium);
-      font-size: 17px;
-      position: relative;
-      padding-left: 32px;
-    }
-
-    .skill-popup li::before {
-      content: '✓';
-      position: absolute;
-      left: 0;
-      color: var(--peach);
-      font-weight: bold;
-      font-size: 20px;
-    }
+    .skill-popup ul { list-style: none; padding: 0; }
+    .skill-popup li { padding: 16px 0; color: var(--gray-medium); font-size: 17px; position: relative; padding-left: 32px; }
+    .skill-popup li::before { content: '✓'; position: absolute; left: 0; color: var(--peach); font-weight: bold; font-size: 20px; }
 
     .gallery-preview {
       padding: 80px 32px;
@@ -758,7 +640,7 @@
       border-radius: 16px;
       overflow: hidden;
       box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-      border: 2px solid rgba(255,255,255,0.95);
+      border: 1px solid rgba(255,255,255,0.6);
       transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
       text-decoration: none;
@@ -784,10 +666,7 @@
       overflow: hidden;
     }
 
-    .gallery-preview-content {
-      padding: 48px;
-      text-align: center;
-    }
+    .gallery-preview-content { padding: 48px; text-align: center; }
 
     .gallery-preview-content h2 {
       font-size: 32px;
@@ -820,10 +699,7 @@
       transition: all 0.3s ease;
     }
 
-    .gallery-card:hover .gallery-preview-link {
-      background: rgba(242,161,140,0.25);
-      gap: 18px;
-    }
+    .gallery-card:hover .gallery-preview-link { background: rgba(242,161,140,0.25); gap: 18px; }
 
     .contact {
       padding: 80px 32px;
@@ -837,6 +713,7 @@
     .contact-wrapper {
       background: rgba(255,255,255,0.8);
       backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.6);
       padding: 80px;
       border-radius: 16px;
       box-shadow: 0 20px 40px rgba(0,0,0,0.15);
@@ -852,28 +729,13 @@
       font-weight: 800;
     }
 
-    .contact p {
-      color: var(--gray-medium);
-      font-size: 18px;
-      margin-bottom: 80px;
-    }
+    .contact p { color: var(--gray-medium); font-size: 18px; margin-bottom: 80px; }
 
-    .contact-form {
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-      text-align: left;
-    }
+    .contact-form { display: flex; flex-direction: column; gap: 32px; text-align: left; }
 
-    .form-group label {
-      display: block;
-      font-weight: 700;
-      margin-bottom: 8px;
-      color: var(--gray-dark);
-    }
+    .form-group label { display: block; font-weight: 700; margin-bottom: 8px; color: var(--gray-dark); }
 
-    .form-group input,
-    .form-group textarea {
+    .form-group input, .form-group textarea {
       width: 100%;
       padding: 18px 24px;
       border: 3px solid rgba(242,161,140,0.3);
@@ -885,18 +747,14 @@
       min-height: 60px;
     }
 
-    .form-group input:focus,
-    .form-group textarea:focus {
+    .form-group input:focus, .form-group textarea:focus {
       outline: none;
       border-color: var(--peach);
       box-shadow: 0 0 0 5px rgba(242,161,140,0.2);
       transform: translateY(-3px);
     }
 
-    .form-group textarea {
-      min-height: 180px;
-      resize: vertical;
-    }
+    .form-group textarea { min-height: 180px; resize: vertical; }
 
     .submit-button {
       padding: 20px 50px;
@@ -912,10 +770,7 @@
       min-height: 64px;
     }
 
-    .submit-button:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 35px rgba(242,161,140,0.6);
-    }
+    .submit-button:hover { transform: translateY(-5px); box-shadow: 0 12px 35px rgba(242,161,140,0.6); }
 
     footer {
       background: rgba(255,255,255,0.9);
@@ -943,46 +798,21 @@
       font-weight: 800;
     }
 
-    .footer-about p {
-      color: var(--gray-medium);
-      line-height: 1.8;
-      margin-bottom: 32px;
-    }
+    .footer-about p { color: var(--gray-medium); line-height: 1.8; margin-bottom: 32px; }
 
-    .footer-section h4 {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 32px;
-      color: var(--gray-dark);
-    }
+    .footer-section h4 { font-size: 18px; font-weight: 700; margin-bottom: 32px; color: var(--gray-dark); }
 
-    .footer-links {
-      list-style: none;
-      padding: 0;
-    }
-
-    .footer-links li {
-      margin-bottom: 16px;
-    }
-
+    .footer-links { list-style: none; padding: 0; }
+    .footer-links li { margin-bottom: 16px; }
     .footer-links a {
       color: var(--gray-medium);
       text-decoration: none;
       transition: all 0.3s ease;
       display: inline-block;
     }
+    .footer-links a:hover { color: var(--peach); transform: translateX(5px); }
 
-    .footer-links a:hover {
-      color: var(--peach);
-      transform: translateX(5px);
-    }
-
-    .social-links {
-      display: flex;
-      gap: 16px;
-      margin-top: 32px;
-    }
-
+    .social-links { display: flex; gap: 16px; margin-top: 32px; }
     .social-link {
       width: 52px;
       height: 52px;
@@ -1014,15 +844,8 @@
       z-index: -1;
     }
 
-    .social-link:hover::before {
-      transform: translate(-50%, -50%) scale(1);
-    }
-
-    .social-link:hover {
-      color: white;
-      transform: translateY(-5px) scale(1.1);
-      border-color: var(--peach);
-    }
+    .social-link:hover::before { transform: translate(-50%, -50%) scale(1); }
+    .social-link:hover { color: white; transform: translateY(-5px) scale(1.1); border-color: var(--peach); }
 
     .footer-signature {
       text-align: center;
@@ -1043,59 +866,23 @@
       color: var(--gray-medium);
     }
 
-    .footer-bottom p {
-      margin-bottom: 16px;
-    }
-
-    .footer-legal {
-      margin-top: 32px;
-      display: flex;
-      gap: 32px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .footer-legal a {
-      color: var(--gray-medium);
-      text-decoration: none;
-      font-size: 14px;
-      transition: color 0.3s ease;
-    }
-
-    .footer-legal a:hover {
-      color: var(--peach);
-    }
+    .footer-bottom p { margin-bottom: 16px; }
+    .footer-legal { margin-top: 32px; display: flex; gap: 32px; justify-content: center; flex-wrap: wrap; }
+    .footer-legal a { color: var(--gray-medium); text-decoration: none; font-size: 14px; transition: color 0.3s ease; }
+    .footer-legal a:hover { color: var(--peach); }
 
     @media (max-width: 1200px) {
-      .footer-content {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      .footer-content { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 768px) {
-      nav {
-        grid-template-columns: auto 1fr auto;
-      }
+      nav { grid-template-columns: auto 1fr auto; }
+      .nav-left, .nav-right { display: none; }
+      .logo { grid-column: 2; }
+      .logo-svg { width: 80px; height: 56px; }
+      .menu-toggle { display: flex; align-items: center; justify-content: center; }
 
-      .nav-left, .nav-right {
-        display: none;
-      }
-
-      .logo {
-        grid-column: 2;
-      }
-
-      .logo-svg {
-        width: 80px;
-        height: 56px;
-      }
-
-      .menu-toggle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
+      /* CORRECTION MENU MOBILE : S'assurer que ça ne déborde pas */
       .nav-links {
         position: fixed;
         top: 80px;
@@ -1103,25 +890,21 @@
         width: 90%;
         max-width: 350px;
         height: calc(100vh - 80px);
+        height: calc(100dvh - 80px); /* Mobile friendly */
         background: rgba(255,255,255,0.98);
         backdrop-filter: blur(25px);
         flex-direction: column;
-        padding: 80px 48px;
+        padding: 40px 48px 100px; /* Plus d'espace en bas */
         box-shadow: -6px 0 30px rgba(0,0,0,0.15);
         transition: right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         z-index: 10000;
         list-style: none;
+        overflow-y: auto; /* Permet le scroll SI le menu est trop grand */
       }
 
-      .nav-links.active {
-        right: 0;
-      }
-
-      .nav-links li {
-        width: 100%;
-        margin-bottom: 16px;
-      }
-
+      .nav-links.active { right: 0; }
+      .nav-links li { width: 100%; margin-bottom: 16px; }
+      
       .nav-links a {
         display: block;
         width: 100%;
@@ -1134,62 +917,19 @@
         transition: all 0.3s ease;
       }
 
-      .nav-links a:hover {
-        background: rgba(242,161,140,0.1);
-        color: var(--peach);
-      }
-
-      .about-container {
-        grid-template-columns: 1fr;
-        text-align: center;
-        padding: 48px;
-      }
-
-      .profile-image {
-        max-width: 300px;
-        margin: 0 auto 48px;
-        position: static;
-      }
-
-      .footer-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-        gap: 48px;
-      }
-
-      .social-links {
-        justify-content: center;
-      }
-
-      .contact-wrapper {
-        padding: 48px;
-      }
-
-      .skill-popup-content {
-        padding: 48px;
-      }
-
-      .gallery-preview-content {
-        padding: 32px;
-      }
-
-      .footer-legal {
-        flex-direction: column;
-        gap: 16px;
-      }
-
-      .hero-subtitle {
-        white-space: normal;
-      }
+      .nav-links a:hover { background: rgba(242,161,140,0.1); color: var(--peach); }
+      
+      .about-container { grid-template-columns: 1fr; text-align: center; padding: 48px 24px; }
+      .profile-media-container { max-width: 300px; margin: 0 auto 48px; position: static; }
+      .footer-content { grid-template-columns: 1fr; text-align: center; gap: 48px; }
+      .social-links { justify-content: center; }
+      .contact-wrapper { padding: 48px 24px; }
+      .skill-popup-content { padding: 48px 24px; }
+      .gallery-preview-content { padding: 32px 24px; }
+      .footer-legal { flex-direction: column; gap: 16px; }
+      .hero-subtitle { white-space: normal; }
     }
   </style>
-<meta property="og:image" content="https://eliot-sauron-portfolio.vercel.app/img/profil_og.jpg">
-<meta property="og:title" content="Eliot SAURON – Photographe Créatif & Designer Visuel">
-<meta property="og:description" content="Portfolio professionnel – Photographie événementielle, branding et création graphique à Besançon">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://eliot-sauron-portfolio.vercel.app">
-
-
 </head>
 <body>
   <div class="scroll-progress" id="scrollProgress"></div>
@@ -1218,41 +958,20 @@
         <li><a href="#galerie">Galerie</a></li>
       </ul>
       
-    <a href="#" class="logo" aria-label="Retour accueil Eliot SAURON">
-  <svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 80" aria-hidden="true">
-    <defs>
-      <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" style="stop-color:#7FA6C6;stop-opacity:1" />
-        <stop offset="100%" style="stop-color:#F2A18C;stop-opacity:1" />
-      </linearGradient>
-      <linearGradient id="logoGradient2" x1="100%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%" style="stop-color:#F2A18C;stop-opacity:1" />
-        <stop offset="100%" style="stop-color:#7FA6C6;stop-opacity:1" />
-      </linearGradient>
-    </defs>
-    
-    <!-- Cercle principal avec dégradé -->
-    <a href="#" class="logo" aria-label="Retour accueil Eliot SAURON">
-  <svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 80" aria-hidden="true">
-    <defs>
-      <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" style="stop-color:#7FA6C6" />
-        <stop offset="100%" style="stop-color:#F2A18C" />
-      </linearGradient>
-    </defs>
-    
-    <!-- Cercle principal -->
-    <circle cx="60" cy="40" r="24" fill="url(#logoGrad)" opacity="0.9" class="logo-main-circle"/>
-    
-    <!-- Petit cercle décoratif -->
-    <circle cx="75" cy="28" r="6" fill="#F2A18C" opacity="0.8" class="logo-accent"/>
-    
-    <!-- Point central -->
-    <circle cx="60" cy="40" r="3" fill="white" class="logo-center"/>
-  </svg>
-</a>
-  </svg>
-</a>
+      <a href="#" class="logo" aria-label="Retour accueil Eliot SAURON">
+        <svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 80" aria-hidden="true">
+          <defs>
+            <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#7FA6C6" />
+              <stop offset="100%" style="stop-color:#F2A18C" />
+            </linearGradient>
+          </defs>
+          <circle cx="60" cy="40" r="24" fill="url(#logoGrad)" opacity="0.9" class="logo-main-circle"/>
+          <circle cx="75" cy="28" r="6" fill="#F2A18C" opacity="0.8" class="logo-accent"/>
+          <circle cx="60" cy="40" r="3" fill="white" class="logo-center"/>
+        </svg>
+      </a>
+
       <ul class="nav-right">
         <li><a href="#contact">Contact</a></li>
         <li><a href="creations.html">Mes Créations</a></li>
@@ -1277,9 +996,10 @@
   <main id="main-content">
     <section class="about" id="about">
       <div class="about-container">
-        <div class="profile-image">
-          <img src="img/profil.jpeg" alt="Portrait d'Eliot SAURON, photographe créatif" loading="lazy" oncontextmenu="return false;" draggable="false">
+        <div class="profile-media-container">
+          <img src="img/profil.jpeg" alt="Portrait d'Eliot SAURON" loading="lazy">
         </div>
+
         <div class="about-content">
           <h2>À propos de moi</h2>
           <p class="bio-short">
@@ -1313,8 +1033,8 @@
         <p>Vous avez un projet en tête ? Discutons-en autour d'un café !</p>
         
         <form class="contact-form" id="contactForm" 
-      action="https://formspree.io/f/mblwgzve" 
-      method="POST">
+              action="https://formspree.io/f/mblwgzve" 
+              method="POST">
 
           <div class="form-group">
             <label for="name">Nom complet</label>
@@ -1436,6 +1156,7 @@
         setTimeout(() => loader.remove(), 600);
       }, 1200);
 
+      // Lazy load manuel pour compatibilité accrue
       document.querySelectorAll('img[loading="lazy"]').forEach(img => {
         if (img.complete) {
           img.classList.add('loaded');
@@ -1490,6 +1211,9 @@
         
         const isActive = navLinks.classList.toggle('active');
         menuToggle.setAttribute('aria-expanded', isActive);
+        
+        // Empêche le scroll du body quand le menu est ouvert
+        document.body.style.overflow = isActive ? 'hidden' : '';
       });
     }
 
@@ -1506,6 +1230,14 @@
         if (target) {
           e.preventDefault();
           window.scrollTo({ top: target.offsetTop - 100, behavior: 'smooth' });
+          
+          // Fermer le menu mobile si ouvert
+          const navLinks = document.querySelector('.nav-links');
+          if (navLinks && navLinks.classList.contains('active')) {
+            navLinks.classList.remove('active');
+            document.body.style.overflow = '';
+            menuToggle.setAttribute('aria-expanded', 'false');
+          }
         }
       });
     });
@@ -1579,7 +1311,6 @@
     console.log('%c👋 Salut recruteur curieux ! ', 'background: linear-gradient(135deg, #7FA6C6, #F2A18C); color: white; font-size: 22px; padding: 12px 24px; border-radius: 8px; font-weight: bold;');
     console.log('%cTu veux en savoir plus ? Contacte-moi sur LinkedIn ! 🚀', 'color: #F2A18C; font-size: 18px; font-weight: bold; margin-top: 10px;');
     console.log('%c🔗 https://linkedin.com/in/eliotsauron', 'color: #7FA6C6; font-size: 16px; text-decoration: underline;');
-    console.log('%c✨ Portfolio par Eliot SAURON - 2025', 'color: #666; font-size: 14px; font-style: italic;');
   </script>
 </body>
 </html>
