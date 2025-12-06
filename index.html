@@ -130,7 +130,7 @@
     
     /* CORRECTION DE L'ICÔNE ET DU CADRAGE */
     #myVideo {
-        object-position: -50% -70% !important; /* POUSSÉ À 70% VERS LE BAS POUR CENTRER PARFAITEMENT */
+        object-position: 50% 40% !important; /* RECENTRAGE : Poussé à 40% pour remonter le sujet */
     }
     #soundIcon {
         right: 40px !important; /* Décalé à gauche pour ne pas être coupé */
@@ -178,7 +178,7 @@
     }
     .contact-card::before {
       content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
       pointer-events: none; z-index: 0;
     }
     .contact-content { position: relative; z-index: 1; }
@@ -287,7 +287,7 @@
          loop 
          playsinline 
          poster="img/profil.jpg" 
-         style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit; object-position: 50% 70%;">
+         style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit; object-position: 50% 40%;">
        </video>
        <div id="soundIcon" style="position: absolute; bottom: 40px; right: 40px; background: rgba(0,0,0,0.5); color: white; padding: 5px 10px; border-radius: 20px; font-size: 12px; pointer-events: none; opacity: 0.8; font-weight: bold;">
          🔇 Muet (Cliquer)
