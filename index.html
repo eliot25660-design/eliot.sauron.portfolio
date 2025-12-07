@@ -8,7 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap" rel="stylesheet">
+  
+  <link href="https://fonts.googleapis.com/css2?family=WindSong:wght@400;500&display=swap" rel="stylesheet">
   
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23F2A18C'/%3E%3Ctext x='50' y='70' font-size='60' font-weight='800' text-anchor='middle' fill='white'%3EE%3C/text%3E%3C/svg%3E">
 
@@ -37,12 +38,11 @@
       min-height: 100vh; position: relative;
     }
 
-    /* === FOND AURORA "ARCHITECTE" (AMÉLIORÉ) === */
+    /* === FOND AURORA "ARCHITECTE" === */
     .ambient-background { 
       position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
       overflow: hidden; z-index: 0; background: var(--bg-body); 
       pointer-events: none;
-      /* Combinaison : Bruit texture + Grille subtile pour l'effet "Construction" */
       background-image: 
         linear-gradient(rgba(127, 166, 198, 0.05) 1px, transparent 1px),
         linear-gradient(90deg, rgba(127, 166, 198, 0.05) 1px, transparent 1px),
@@ -87,13 +87,13 @@
     .logo-container { display: flex; align-items: center; text-decoration: none; height: 60px; overflow: visible; }
     .logo-svg { width: 160px; height: 100%; overflow: visible; }
     
-    /* Police Glitch demandée */
+    /* Police Artistique "Signature" */
     .logo-text-elem { 
-        font-family: 'Rubik Glitch', system-ui; 
-        font-weight: 400; 
-        font-size: 34px; 
+        font-family: 'WindSong', cursive; 
+        font-weight: 500; 
+        font-size: 32px; /* Taille ajustée pour cette police */
         fill: var(--text-main); 
-        letter-spacing: 1px; 
+        letter-spacing: 0px; 
     }
 
     /* Animation du nuage : Plus douce, pas de coupure */
@@ -101,10 +101,10 @@
     
     @keyframes drawCloudSoft {
       0% { stroke-dashoffset: 600; opacity: 0; }
-      10% { opacity: 1; } /* Apparaît */
-      50% { stroke-dashoffset: 0; } /* Entièrement dessiné */
-      80% { opacity: 1; } /* Reste visible */
-      100% { stroke-dashoffset: -600; opacity: 0; } /* Disparaît en continuant le mouvement (fondu) */
+      15% { opacity: 1; }
+      50% { stroke-dashoffset: 0; } /* Le dessin est fini */
+      70% { opacity: 1; } /* Ça reste visible un moment */
+      100% { stroke-dashoffset: 0; opacity: 0; } /* Ça disparait SANS bouger */
     }
 
     .menu-btn { display: none; background: none; border: none; font-size: 26px; cursor: pointer; color: var(--text-main); }
@@ -149,10 +149,10 @@
       100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
     }
     
-    /* === CORRECTION CENTRAGE TETE STRICT === */
-    /* 15% force l'image vers le bas pour révéler le haut de la vidéo */
+    /* === CORRECTION CENTRAGE TETE === */
+    /* 35% va descendre le point focal, donc remonter ton visage dans le cercle */
     #myVideo {
-        object-position: 50% 15% !important; 
+        object-position: 50% 35% !important; 
     }
     
     #soundIcon {
