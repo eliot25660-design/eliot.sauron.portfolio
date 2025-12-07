@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23F2A18C'/%3E%3Ctext x='50' y='70' font-size='60' font-weight='800' text-anchor='middle' fill='white'%3EE%3C/text%3E%3C/svg%3E">
 
   <meta property="og:image" content="img/profil.jpg">
@@ -39,8 +39,17 @@
       min-height: 100vh; position: relative;
     }
 
-    /* === FOND AURORA === */
-    .ambient-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 0; background: var(--bg-body); pointer-events: none; }
+    /* === FOND AURORA AMÉLIORÉ avec texture bruit === */
+    .ambient-background { 
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+      overflow: hidden; z-index: 0; background: var(--bg-body); 
+      pointer-events: none;
+      /* Ajout d'une légère texture de bruit pour plus de détail */
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
+      background-size: 100% 100%;
+    }
+
+    /* Les blobs (ronds) passent au-dessus de la texture de bruit */
     .ambient-blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.6; animation: float-ambient 25s infinite ease-in-out alternate; }
     .blob-1 { width: 60vw; height: 60vw; background: var(--peach); top: -15%; left: -15%; animation-delay: 0s; }
     .blob-2 { width: 70vw; height: 70vw; background: var(--blue); bottom: -15%; right: -15%; animation-delay: -5s; }
@@ -79,21 +88,20 @@
     .logo-svg { width: 160px; height: 100%; overflow: visible; }
     /* Changement de police ici */
     .logo-text-elem { 
-        font-family: 'Pinyon Script', cursive; /* Nouvelle police plus artistique */
+        font-family: 'Michroma', sans-serif; /* Police tech/futuriste */
         font-weight: 700; 
         font-style: normal; 
-        font-size: 38px; 
+        font-size: 30px; 
         fill: var(--text-main); 
-        letter-spacing: 1px; 
+        letter-spacing: 2px; 
     }
     .cloud-path { stroke-dasharray: 500; stroke-dashoffset: 500; animation: drawCloud 4s ease-in-out infinite; }
     @keyframes drawCloud {
       0% { stroke-dashoffset: 500; opacity: 0; }
       15% { opacity: 1; }
       40% { stroke-dashoffset: 0; }
-      /* Le trait s'arrête de bouger à 65% pour rester visible plus longtemps */
-      65% { stroke-dashoffset: 0; opacity: 1; } 
-      /* Disparition plus douce */
+      /* Disparaît plus doucement */
+      80% { stroke-dashoffset: -500; opacity: 0; }
       100% { stroke-dashoffset: -500; opacity: 0; }
     }
 
@@ -139,14 +147,14 @@
       100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
     }
     
-    /* CORRECTION DU CADRAGE VIDÉO : 30% pour remonter le sujet */
+    /* CORRECTION DU CADRAGE VIDÉO : 30% pour centrer la tête */
     #myVideo {
-        object-position: 50% 30% !important; /* Décalage vers 30% pour remonter le sujet et centrer la tête */
+        object-position: 50% 30% !important; /* Centrage à 30% pour remonter le sujet */
     }
     /* CORRECTION DE L'ICÔNE ET DU CADRAGE */
     #soundIcon {
-        right: 40px !important; /* Décalé à gauche pour ne pas être coupé */
-        bottom: 40px !important; /* Remonté pour ne pas être coupé */
+        right: 40px !important; 
+        bottom: 40px !important; 
     }
 
     /* BOUTONS */
