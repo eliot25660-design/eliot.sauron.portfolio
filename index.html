@@ -8,15 +8,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap" rel="stylesheet">
+  
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23F2A18C'/%3E%3Ctext x='50' y='70' font-size='60' font-weight='800' text-anchor='middle' fill='white'%3EE%3C/text%3E%3C/svg%3E">
 
   <meta property="og:image" content="img/profil.jpg">
   
   <style>
-    /* Police du Logo */
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,600&display=swap');
-
     :root {
       --peach: #F2A18C; --blue: #7FA6C6; --bg-body: #FDFBF9;
       --text-main: #2C2C2C; --text-muted: #666666;
@@ -39,22 +37,24 @@
       min-height: 100vh; position: relative;
     }
 
-    /* === FOND AURORA AMÉLIORÉ avec texture bruit === */
+    /* === FOND AURORA "ARCHITECTE" (AMÉLIORÉ) === */
     .ambient-background { 
       position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
       overflow: hidden; z-index: 0; background: var(--bg-body); 
       pointer-events: none;
-      /* Ajout d'une légère texture de bruit pour plus de détail */
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
-      background-size: 100% 100%;
+      /* Combinaison : Bruit texture + Grille subtile pour l'effet "Construction" */
+      background-image: 
+        linear-gradient(rgba(127, 166, 198, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(127, 166, 198, 0.05) 1px, transparent 1px),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      background-size: 40px 40px, 40px 40px, 100% 100%;
     }
 
-    /* Les blobs (ronds) passent au-dessus de la texture de bruit */
-    .ambient-blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.6; animation: float-ambient 25s infinite ease-in-out alternate; }
+    .ambient-blob { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.5; animation: float-ambient 25s infinite ease-in-out alternate; }
     .blob-1 { width: 60vw; height: 60vw; background: var(--peach); top: -15%; left: -15%; animation-delay: 0s; }
     .blob-2 { width: 70vw; height: 70vw; background: var(--blue); bottom: -15%; right: -15%; animation-delay: -5s; }
-    .blob-3 { width: 40vw; height: 40vw; background: rgba(255, 255, 255, 0.5); top: 40%; left: 40%; animation-delay: -10s; }
-    [data-theme="dark"] .blob-3 { background: rgba(255, 255, 255, 0.05); }
+    .blob-3 { width: 40vw; height: 40vw; background: rgba(255, 255, 255, 0.4); top: 40%; left: 40%; animation-delay: -10s; }
+    [data-theme="dark"] .blob-3 { background: rgba(255, 255, 255, 0.03); }
 
     @keyframes float-ambient {
       0% { transform: translate(0, 0) scale(1); }
@@ -83,26 +83,28 @@
     .nav-links a { text-decoration: none; color: var(--text-muted); font-weight: 600; transition: 0.3s; font-size: 16px; }
     .nav-links a:hover { color: var(--peach); }
 
-    /* LOGO NUAGE (Vitesse d'animation réduite et police changée) */
+    /* LOGO & ANIMATION DOUCE */
     .logo-container { display: flex; align-items: center; text-decoration: none; height: 60px; overflow: visible; }
     .logo-svg { width: 160px; height: 100%; overflow: visible; }
-    /* Changement de police ici */
+    
+    /* Police Glitch demandée */
     .logo-text-elem { 
-        font-family: 'Michroma', sans-serif; /* Police tech/futuriste */
-        font-weight: 700; 
-        font-style: normal; 
-        font-size: 30px; 
+        font-family: 'Rubik Glitch', system-ui; 
+        font-weight: 400; 
+        font-size: 34px; 
         fill: var(--text-main); 
-        letter-spacing: 2px; 
+        letter-spacing: 1px; 
     }
-    .cloud-path { stroke-dasharray: 500; stroke-dashoffset: 500; animation: drawCloud 4s ease-in-out infinite; }
-    @keyframes drawCloud {
-      0% { stroke-dashoffset: 500; opacity: 0; }
-      15% { opacity: 1; }
-      40% { stroke-dashoffset: 0; }
-      /* Disparaît plus doucement */
-      80% { stroke-dashoffset: -500; opacity: 0; }
-      100% { stroke-dashoffset: -500; opacity: 0; }
+
+    /* Animation du nuage : Plus douce, pas de coupure */
+    .cloud-path { stroke-dasharray: 600; stroke-dashoffset: 600; animation: drawCloudSoft 6s ease-in-out infinite; }
+    
+    @keyframes drawCloudSoft {
+      0% { stroke-dashoffset: 600; opacity: 0; }
+      10% { opacity: 1; } /* Apparaît */
+      50% { stroke-dashoffset: 0; } /* Entièrement dessiné */
+      80% { opacity: 1; } /* Reste visible */
+      100% { stroke-dashoffset: -600; opacity: 0; } /* Disparaît en continuant le mouvement (fondu) */
     }
 
     .menu-btn { display: none; background: none; border: none; font-size: 26px; cursor: pointer; color: var(--text-main); }
@@ -139,7 +141,7 @@
       overflow: hidden; border: 4px solid var(--bg-body);
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
       animation: morph 8s ease-in-out infinite; position: relative;
-      cursor: pointer; /* Indique qu'on peut cliquer */
+      cursor: pointer;
     }
     @keyframes morph {
       0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
@@ -147,11 +149,12 @@
       100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
     }
     
-    /* CORRECTION DU CADRAGE VIDÉO : 30% pour centrer la tête */
+    /* === CORRECTION CENTRAGE TETE STRICT === */
+    /* 15% force l'image vers le bas pour révéler le haut de la vidéo */
     #myVideo {
-        object-position: 50% 30% !important; /* Centrage à 30% pour remonter le sujet */
+        object-position: 50% 15% !important; 
     }
-    /* CORRECTION DE L'ICÔNE ET DU CADRAGE */
+    
     #soundIcon {
         right: 40px !important; 
         bottom: 40px !important; 
@@ -177,7 +180,6 @@
     .about { padding: 120px 20px; max-width: 1000px; margin: 0 auto; }
     .about-header { text-align: center; margin-bottom: 60px; }
     
-    /* Nouveau titre */
     .about h2 { font-size: 40px; margin-bottom: 10px; color: var(--text-main); }
     .about p { font-size: 18px; color: var(--text-muted); }
 
@@ -185,11 +187,9 @@
     .skills-text { font-size: 18px; line-height: 1.8; color: var(--text-muted); }
     
     .skill-bar-container { margin-bottom: 20px; }
-    /* Style pour la légende qualitative */
     .skill-info { display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 600; color: var(--text-main); }
     .skill-legend { color: var(--peach); font-size: 14px; font-weight: 700; }
     
-    /* Correction de la barre blanche sur mobile */
     .skill-bar { height: 8px; background: rgba(0,0,0,0.05); border-radius: 4px; overflow: hidden; }
     [data-theme="light"] .skill-bar { background: transparent; border: 1px solid rgba(0,0,0,0.1); }
     [data-theme="dark"] .skill-bar { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); }
@@ -221,7 +221,6 @@
       font-family: inherit; font-size: 16px; transition: 0.3s; resize: vertical; box-shadow: 0 2px 10px rgba(0,0,0,0.02);
     }
     
-    /* FIX DARK MODE INPUTS */
     [data-theme="dark"] .form-group input, 
     [data-theme="dark"] .form-group textarea { 
       background-color: rgba(30, 30, 30, 0.6); 
@@ -315,7 +314,7 @@
          loop 
          playsinline 
          poster="img/profil.jpg" 
-         style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit; object-position: 50% 30%;">
+         style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;">
        </video>
        <div id="soundIcon" style="position: absolute; bottom: 40px; right: 40px; background: rgba(0,0,0,0.5); color: white; padding: 5px 10px; border-radius: 20px; font-size: 12px; pointer-events: none; opacity: 0.8; font-weight: bold;">
          🔇 Muet (Cliquer)
