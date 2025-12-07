@@ -73,11 +73,11 @@
     .nav-links a { text-decoration: none; color: var(--text-muted); font-weight: 600; transition: 0.3s; font-size: 16px; }
     .nav-links a:hover { color: var(--peach); }
 
-    /* LOGO NUAGE */
+    /* LOGO NUAGE (Vitesse d'animation réduite à 3s) */
     .logo-container { display: flex; align-items: center; text-decoration: none; height: 60px; overflow: visible; }
     .logo-svg { width: 160px; height: 100%; overflow: visible; }
     .logo-text-elem { font-family: 'Playfair Display', serif; font-weight: 700; font-style: italic; font-size: 32px; fill: var(--text-main); letter-spacing: 1px; }
-    .cloud-path { stroke-dasharray: 500; stroke-dashoffset: 500; animation: drawCloud 8s ease-in-out infinite; }
+    .cloud-path { stroke-dasharray: 500; stroke-dashoffset: 500; animation: drawCloud 3s ease-in-out infinite; }
     @keyframes drawCloud {
       0% { stroke-dashoffset: 500; opacity: 0; }
       15% { opacity: 1; }
@@ -130,11 +130,11 @@
     
     /* CORRECTION DE L'ICÔNE ET DU CADRAGE */
     #myVideo {
-        object-position: 50% 40% !important; /* RECENTRAGE : Poussé à 40% pour remonter le sujet */
+        object-position: 50% 40% !important; /* CENTRAGE FINAL de la vidéo */
     }
     #soundIcon {
-        right: 40px !important; /* Décalé à gauche pour ne pas être coupé */
-        bottom: 40px !important; /* Remonté pour ne pas être coupé */
+        right: 40px !important; 
+        bottom: 40px !important; 
     }
 
     /* BOUTONS */
@@ -156,6 +156,7 @@
     /* ABOUT */
     .about { padding: 120px 20px; max-width: 1000px; margin: 0 auto; }
     .about-header { text-align: center; margin-bottom: 60px; }
+    /* Nouveau titre */
     .about h2 { font-size: 40px; margin-bottom: 10px; color: var(--text-main); }
     .about p { font-size: 18px; color: var(--text-muted); }
 
@@ -163,10 +164,16 @@
     .skills-text { font-size: 18px; line-height: 1.8; color: var(--text-muted); }
     
     .skill-bar-container { margin-bottom: 20px; }
+    /* Style pour la légende qualitative */
     .skill-info { display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 600; color: var(--text-main); }
+    .skill-legend { color: var(--peach); font-size: 14px; font-weight: 700; }
+    
+    /* Correction de la barre blanche sur mobile : on assure que le fond de la barre vide est transparent en light mode */
     .skill-bar { height: 8px; background: rgba(0,0,0,0.05); border-radius: 4px; overflow: hidden; }
-    [data-theme="dark"] .skill-bar { background: rgba(255,255,255,0.1); }
-    .skill-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--blue), var(--peach)); width: 0; transition: width 1.5s ease; }
+    [data-theme="light"] .skill-bar { background: transparent; border: 1px solid rgba(0,0,0,0.1); }
+    [data-theme="dark"] .skill-bar { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); }
+    
+    .skill-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--peach), var(--blue)); width: 0; transition: width 1.5s ease; }
 
     /* CONTACT */
     .contact { padding: 100px 20px; max-width: 700px; margin: 0 auto; }
@@ -305,7 +312,7 @@
 
   <section class="about" id="about">
     <div class="about-header">
-      <h2>Ma Vision</h2>
+      <h2>Domaines d'Expertise & Pôles de Passion</h2>
       <p>L'humilité face à la technique, la passion face à la création.</p>
     </div>
     
@@ -316,25 +323,30 @@
       </div>
       
       <div class="skills-bars">
+        
         <div class="skill-bar-container">
-          <div class="skill-info"><span>Relations Humaines & Curiosité</span><span>60%</span></div>
-          <div class="skill-bar"><div class="skill-fill" style="width: 60%"></div></div>
+          <div class="skill-info"><span>Relations Humaines & Curiosité</span><span class="skill-legend">Maîtrise Professionnelle</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width: 80%"></div></div>
         </div>
+        
         <div class="skill-bar-container">
-          <div class="skill-info"><span>Intégration Web (HTML/CSS)</span><span>50%</span></div>
-          <div class="skill-bar"><div class="skill-fill" style="width: 50%"></div></div>
+          <div class="skill-info"><span>Intégration Web (HTML/CSS)</span><span class="skill-legend">Maîtrise Professionnelle</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width: 65%"></div></div>
         </div>
+
         <div class="skill-bar-container">
-          <div class="skill-info"><span>Photographie (Cadrage & Texture)</span><span>40%</span></div>
-          <div class="skill-bar"><div class="skill-fill" style="width: 40%"></div></div>
+          <div class="skill-info"><span>Photographie (Cadrage & Texture)</span><span class="skill-legend">Fondations solides</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width: 55%"></div></div>
         </div>
+
         <div class="skill-bar-container">
-          <div class="skill-info"><span>Design Graphique (Univers Visuel)</span><span>35%</span></div>
+          <div class="skill-info"><span>Design Graphique (Univers Visuel)</span><span class="skill-legend">Fondations solides</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width: 45%"></div></div>
+        </div>
+
+        <div class="skill-bar-container">
+          <div class="skill-info"><span>Vidéo & Montage</span><span class="skill-legend">Fondations solides</span></div>
           <div class="skill-bar"><div class="skill-fill" style="width: 35%"></div></div>
-        </div>
-        <div class="skill-bar-container">
-          <div class="skill-info"><span>Vidéo & Montage</span><span>30%</span></div>
-          <div class="skill-bar"><div class="skill-fill" style="width: 30%"></div></div>
         </div>
       </div>
     </div>
