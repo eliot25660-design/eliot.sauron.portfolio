@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23F2A18C'/%3E%3Ctext x='50' y='70' font-size='60' font-weight='800' text-anchor='middle' fill='white'%3EE%3C/text%3E%3C/svg%3E">
 
   <meta property="og:image" content="img/profil.jpg">
@@ -73,10 +74,18 @@
     .nav-links a { text-decoration: none; color: var(--text-muted); font-weight: 600; transition: 0.3s; font-size: 16px; }
     .nav-links a:hover { color: var(--peach); }
 
-    /* LOGO NUAGE (Vitesse d'animation réduite à 3s) */
+    /* LOGO NUAGE (Vitesse d'animation réduite et police changée) */
     .logo-container { display: flex; align-items: center; text-decoration: none; height: 60px; overflow: visible; }
     .logo-svg { width: 160px; height: 100%; overflow: visible; }
-    .logo-text-elem { font-family: 'Playfair Display', serif; font-weight: 700; font-style: italic; font-size: 32px; fill: var(--text-main); letter-spacing: 1px; }
+    /* Changement de police ici */
+    .logo-text-elem { 
+        font-family: 'Dancing Script', cursive; 
+        font-weight: 700; 
+        font-style: normal; 
+        font-size: 38px; /* Légèrement plus grand pour la nouvelle police */
+        fill: var(--text-main); 
+        letter-spacing: 1px; 
+    }
     .cloud-path { stroke-dasharray: 500; stroke-dashoffset: 500; animation: drawCloud 3s ease-in-out infinite; }
     @keyframes drawCloud {
       0% { stroke-dashoffset: 500; opacity: 0; }
@@ -128,10 +137,11 @@
       100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
     }
     
-    /* CORRECTION DE L'ICÔNE ET DU CADRAGE */
+    /* CORRECTION DU CADRAGE VIDÉO : 30% pour remonter le sujet et le centrer */
     #myVideo {
-        object-position: 50% 40% !important; /* CENTRAGE FINAL de la vidéo */
+        object-position: 50% 30% !important; 
     }
+    /* CORRECTION DE L'ICÔNE ET DU CADRAGE */
     #soundIcon {
         right: 40px !important; 
         bottom: 40px !important; 
@@ -156,6 +166,7 @@
     /* ABOUT */
     .about { padding: 120px 20px; max-width: 1000px; margin: 0 auto; }
     .about-header { text-align: center; margin-bottom: 60px; }
+    
     /* Nouveau titre */
     .about h2 { font-size: 40px; margin-bottom: 10px; color: var(--text-main); }
     .about p { font-size: 18px; color: var(--text-muted); }
@@ -168,12 +179,12 @@
     .skill-info { display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 600; color: var(--text-main); }
     .skill-legend { color: var(--peach); font-size: 14px; font-weight: 700; }
     
-    /* Correction de la barre blanche sur mobile : on assure que le fond de la barre vide est transparent en light mode */
+    /* Correction de la barre blanche sur mobile */
     .skill-bar { height: 8px; background: rgba(0,0,0,0.05); border-radius: 4px; overflow: hidden; }
     [data-theme="light"] .skill-bar { background: transparent; border: 1px solid rgba(0,0,0,0.1); }
     [data-theme="dark"] .skill-bar { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); }
     
-    .skill-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--peach), var(--blue)); width: 0; transition: width 1.5s ease; }
+    .skill-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--blue), var(--peach)); width: 0; transition: width 1.5s ease; }
 
     /* CONTACT */
     .contact { padding: 100px 20px; max-width: 700px; margin: 0 auto; }
@@ -325,28 +336,28 @@
       <div class="skills-bars">
         
         <div class="skill-bar-container">
-          <div class="skill-info"><span>Relations Humaines & Curiosité</span><span class="skill-legend">Maîtrise Professionnelle</span></div>
-          <div class="skill-bar"><div class="skill-fill" style="width: 80%"></div></div>
+          <div class="skill-info"><span>Soft Skills & Communication</span><span class="skill-legend">Atout Majeur</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width: 95%"></div></div>
         </div>
-        
+
+        <div class="skill-bar-container">
+          <div class="skill-info"><span>Vidéo & Montage</span><span class="skill-legend">Maîtrise Professionnelle</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width: 75%"></div></div>
+        </div>
+
+        <div class="skill-bar-container">
+          <div class="skill-info"><span>Design Graphique (Créativité)</span><span class="skill-legend">Maîtrise Professionnelle</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width: 70%"></div></div>
+        </div>
+
         <div class="skill-bar-container">
           <div class="skill-info"><span>Intégration Web (HTML/CSS)</span><span class="skill-legend">Maîtrise Professionnelle</span></div>
           <div class="skill-bar"><div class="skill-fill" style="width: 65%"></div></div>
         </div>
 
         <div class="skill-bar-container">
-          <div class="skill-info"><span>Photographie (Cadrage & Texture)</span><span class="skill-legend">Fondations solides</span></div>
-          <div class="skill-bar"><div class="skill-fill" style="width: 55%"></div></div>
-        </div>
-
-        <div class="skill-bar-container">
-          <div class="skill-info"><span>Design Graphique (Univers Visuel)</span><span class="skill-legend">Fondations solides</span></div>
-          <div class="skill-bar"><div class="skill-fill" style="width: 45%"></div></div>
-        </div>
-
-        <div class="skill-bar-container">
-          <div class="skill-info"><span>Vidéo & Montage</span><span class="skill-legend">Fondations solides</span></div>
-          <div class="skill-bar"><div class="skill-fill" style="width: 35%"></div></div>
+          <div class="skill-info"><span>Photographie (Cadrage & Texture)</span><span class="skill-legend">Fondations Solides</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width: 40%"></div></div>
         </div>
       </div>
     </div>
