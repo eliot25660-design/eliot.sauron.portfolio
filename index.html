@@ -7,60 +7,89 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23F2A18C'/%3E%3Ctext x='50' y='70' font-size='60' font-weight='800' text-anchor='middle' fill='white'%3EE%3C/text%3E%3C/svg%3E">
 
   <style>
     :root {
       --peach: #FFBEAC; --blue: #A4C8E6; 
-      --bg-body: #F0F0F5; --text-main: #1D1D1F; --text-muted: #515154;
-      --glass-bg: rgba(255, 255, 255, 0.7); 
-      --glass-border: rgba(255, 255, 255, 0.5);
-      --shadow: 0 10px 40px rgba(0,0,0,0.08);
+      --bg-body: #F5F5F7; --text-main: #1D1D1F; --text-muted: #515154;
+      --glass-bg: rgba(255, 255, 255, 0.85); 
+      --glass-border: rgba(255, 255, 255, 0.6);
+      --shadow: 0 10px 40px rgba(0,0,0,0.05);
     }
     [data-theme="dark"] {
-      --bg-body: #080808; --text-main: #F5F5F7; --text-muted: #A1A1A6;
-      --glass-bg: rgba(20, 20, 20, 0.7); --glass-border: rgba(255, 255, 255, 0.1);
+      --bg-body: #0a0a0a; --text-main: #F5F5F7; --text-muted: #A1A1A6;
+      --glass-bg: rgba(20, 20, 20, 0.85); --glass-border: rgba(255, 255, 255, 0.1);
       --shadow: 0 10px 40px rgba(0,0,0,0.5);
       --peach: #FF9E88; --blue: #7AB2E8;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Outfit', sans-serif; background: var(--bg-body); color: var(--text-main); transition: background 0.3s; overflow-x: hidden; }
 
-    /* --- EFFET "EXPERT" : GRAIN & FOND --- */
-    .noise-overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E");
-      opacity: 0.4; mix-blend-mode: overlay;
-    }
-    
-    .ambient-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; pointer-events: none; }
-    .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.6; animation: float 20s infinite ease-in-out alternate; }
-    .b1 { width: 80vw; height: 80vw; background: radial-gradient(circle, var(--peach), transparent 70%); top: -30%; left: -20%; }
-    .b2 { width: 80vw; height: 80vw; background: radial-gradient(circle, var(--blue), transparent 70%); bottom: -30%; right: -20%; animation-delay: -5s; }
-    @keyframes float { 0% { transform: rotate(0deg) translate(0,0); } 100% { transform: rotate(10deg) translate(20px, 40px); } }
+    /* FOND PROPRE (Pas de grain moche) */
+    .ambient-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; overflow: hidden; }
+    .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.5; animation: float 15s infinite ease-in-out alternate; }
+    .b1 { width: 70vw; height: 70vw; background: radial-gradient(circle, var(--peach), transparent 70%); top: -20%; left: -20%; }
+    .b2 { width: 70vw; height: 70vw; background: radial-gradient(circle, var(--blue), transparent 70%); bottom: -20%; right: -20%; animation-delay: -5s; }
+    @keyframes float { 0% { transform: translate(0,0); } 100% { transform: translate(20px, 40px); } }
 
     /* HEADER */
-    header { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 1000px; height: 60px; background: var(--glass-bg); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 100px; padding: 0 30px; z-index: 100; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow); }
-    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 24px; color: var(--text-main); text-decoration: none; }
+    header {
+      position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+      width: 90%; max-width: 1000px; height: 60px;
+      background: var(--glass-bg); backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border); border-radius: 100px; padding: 0 30px;
+      z-index: 100; display: flex; justify-content: space-between; align-items: center;
+      box-shadow: var(--shadow);
+    }
+
+    /* LOGO ANIMÉ RESTAURÉ */
+    .logo-container { display: flex; align-items: center; text-decoration: none; height: 100%; }
+    .logo-svg { width: 140px; height: 100%; overflow: visible; }
+    .logo-text-elem { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 28px; fill: var(--text-main); letter-spacing: -1px; }
+    .cloud-path { stroke-dasharray: 600; stroke-dashoffset: 600; animation: drawCloud 4s ease-in-out infinite; }
+    @keyframes drawCloud { 
+      0% { stroke-dashoffset: 600; opacity: 0; } 
+      15% { opacity: 1; } 
+      50% { stroke-dashoffset: 0; opacity: 1; } 
+      80% { opacity: 0; } 
+      100% { stroke-dashoffset: 0; opacity: 0; } 
+    }
+
     .nav { display: flex; gap: 30px; align-items: center; }
     .nav a { text-decoration: none; color: var(--text-muted); font-weight: 600; font-size: 15px; transition: 0.2s; }
     .nav a:hover { color: var(--text-main); }
-    .btn-cv { background: var(--text-main); color: var(--bg-body) !important; padding: 8px 20px; border-radius: 30px; font-weight: 700; font-size: 14px; display: inline-flex; align-items: center; gap: 8px; transition: 0.2s; }
+    
+    .btn-cv {
+      background: var(--text-main); color: var(--bg-body) !important;
+      padding: 8px 20px; border-radius: 30px; font-weight: 700; font-size: 14px;
+      display: inline-flex; align-items: center; gap: 8px; transition: 0.2s;
+    }
     .btn-cv:hover { transform: scale(1.05); }
+
     .menu-btn { display: none; background:none; border:none; font-size:24px; color:var(--text-main); cursor:pointer; }
     .theme-toggle { position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; background: var(--glass-bg); border-radius: 50%; border: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; z-index: 100; box-shadow: var(--shadow); transition: 0.2s; }
 
-    /* HERO */
+    /* HERO & VIDÉO */
     .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 120px 20px 60px; }
-    .blob-video { width: 280px; height: 280px; margin-bottom: 40px; border-radius: 45% 55% 70% 30% / 40% 50% 60% 50%; overflow: hidden; border: 4px solid var(--glass-border); box-shadow: var(--shadow); position: relative; animation: morph 10s ease-in-out infinite; cursor: pointer; }
-    @keyframes morph { 0%, 100% { border-radius: 45% 55% 70% 30% / 40% 50% 60% 50%; } 50% { border-radius: 60% 40% 30% 70% / 50% 60% 30% 60%; } }
     
-    video { width: 100%; height: 100%; object-fit: cover; object-position: 50% 35%; /* TON RÉGLAGE */ }
+    .blob-video {
+      width: 280px; height: 280px; margin-bottom: 40px;
+      border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+      overflow: hidden; border: 4px solid var(--glass-border);
+      box-shadow: var(--shadow); position: relative; animation: morph 8s ease-in-out infinite;
+      cursor: pointer;
+    }
+    @keyframes morph { 0%, 100% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; } 50% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; } }
+    
+    /* RÉGLAGE PRÉCIS : 25% pour descendre la zone visible (donc remonter le visage s'il est en haut) */
+    video { width: 100%; height: 100%; object-fit: cover; object-position: 50% 25% !important; }
 
-    h1 { font-family: 'Syne'; font-size: clamp(50px, 10vw, 100px); font-weight: 800; line-height: 0.95; margin-bottom: 15px; background: linear-gradient(135deg, var(--text-main), var(--text-muted)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    h2 { font-family: 'Syne'; font-size: clamp(18px, 4vw, 24px); color: var(--blue); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; font-weight: 700; }
-    p { font-size: clamp(18px, 4vw, 22px); color: var(--text-muted); max-width: 650px; margin-bottom: 50px; line-height: 1.6; font-weight: 400; }
+    h1 { font-family: 'Syne', sans-serif; font-size: clamp(50px, 10vw, 100px); font-weight: 800; line-height: 0.95; margin-bottom: 15px; background: linear-gradient(135deg, var(--text-main), var(--text-muted)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    h2 { font-family: 'Syne', sans-serif; font-size: clamp(18px, 4vw, 24px); color: var(--blue); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; font-weight: 700; }
+    p { font-size: clamp(18px, 4vw, 22px); color: var(--text-muted); max-width: 700px; margin-bottom: 50px; line-height: 1.6; font-weight: 400; }
 
     .btns { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
     .btn-main { padding: 18px 40px; background: var(--text-main); color: var(--bg-body); border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 18px; transition: 0.2s; }
@@ -68,23 +97,29 @@
     .btn-main:hover { transform: translateY(-3px); opacity: 0.9; }
     .btn-sec:hover { background: rgba(127,166,198,0.2); }
 
+    /* SECTION TEXTE JUSTIFIÉ ET PROPRE */
     .section { padding: 100px 20px; max-width: 1000px; margin: 0 auto; }
     .section h2 { font-family: 'Syne'; font-size: 40px; margin-bottom: 50px; text-align: center; }
     
-    .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; font-size: 18px; color: var(--text-muted); line-height: 1.8; }
+    .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .skills-text p { 
+      font-size: 18px; color: var(--text-muted); line-height: 1.8; margin-bottom: 20px; 
+      text-align: justify; /* TEXTE JUSTIFIÉ */
+    }
+    
     .bar-wrap { margin-bottom: 20px; }
     .bar-info { display: flex; justify-content: space-between; font-weight: 600; color: var(--text-main); font-size: 16px; margin-bottom: 8px; }
     .bar { height: 6px; background: rgba(127,166,198,0.15); border-radius: 10px; overflow: hidden; }
     .fill { height: 100%; background: linear-gradient(90deg, var(--peach), var(--blue)); border-radius: 10px; }
 
-    .contact-form { background: var(--glass-bg); padding: 50px; border-radius: 40px; border: 1px solid var(--glass-border); box-shadow: var(--shadow); max-width: 700px; margin: 0 auto; }
+    /* CONTACT ET FOOTER RESSERRÉS */
+    .contact { padding: 80px 20px 20px; max-width: 700px; margin: 0 auto; } /* Moins de padding en bas */
+    .contact-form { background: var(--glass-bg); padding: 50px; border-radius: 40px; border: 1px solid var(--glass-border); box-shadow: var(--shadow); }
     input, textarea { width: 100%; padding: 20px; margin-bottom: 20px; border-radius: 15px; border: 1px solid transparent; background: rgba(127,166,198,0.08); color: var(--text-main); font-family: inherit; font-size: 16px; transition: 0.3s; }
-    input:focus, textarea:focus { outline: none; border-color: var(--blue); background: var(--glass-bg); box-shadow: 0 0 0 4px rgba(127,166,198,0.1); }
+    input:focus, textarea:focus { outline: none; border-color: var(--blue); background: var(--glass-bg); }
     .submit-btn { width: 100%; padding: 22px; background: var(--text-main); color: var(--bg-body); border: none; border-radius: 15px; font-weight: 800; font-size: 18px; cursor: pointer; transition: 0.2s; }
-    .submit-btn:hover { transform: translateY(-2px); }
-
-    /* FOOTER CORRIGÉ (Espace réduit) */
-    footer { text-align: center; padding: 40px 20px 20px; color: var(--text-muted); margin-top: 40px; }
+    
+    footer { text-align: center; padding: 20px; color: var(--text-muted); margin-top: 20px; }
     .socials { display: flex; justify-content: center; gap: 25px; margin-bottom: 20px; }
     .socials a { color: var(--text-main); transition: 0.2s; }
     .socials a:hover { color: var(--blue); transform: translateY(-3px); }
@@ -103,15 +138,27 @@
 </head>
 <body>
 
-  <div class="noise-overlay"></div>
   <div class="ambient-bg"><div class="blob b1"></div><div class="blob b2"></div></div>
   <button class="theme-toggle" id="themeBtn">🌙</button>
 
   <header>
-    <a href="index.html" class="logo">Eliot</a>
+    <a href="index.html" class="logo-container">
+      <svg class="logo-svg" viewBox="0 0 200 80" fill="none">
+        <defs>
+          <filter id="cloud-blur" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="4" />
+          </filter>
+          <linearGradient id="cloud-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:var(--peach);stop-opacity:0.8" />
+            <stop offset="100%" style="stop-color:var(--blue);stop-opacity:0.9" />
+          </linearGradient>
+        </defs>
+        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="logo-text-elem">Eliot</text>
+        <path class="cloud-path" d="M20,40 C20,20 50,-10 100,10 C150,30 180,20 180,40 C180,60 150,90 100,70 C50,50 20,60 20,40" stroke="url(#cloud-gradient)" stroke-width="5" fill="none" stroke-linecap="round" />
+      </svg>
+    </a>
     <button class="menu-btn" id="menuBtn">☰</button>
     <nav class="nav" id="nav">
-      <a href="#about">À propos</a>
       <a href="creations.html">Projets</a>
       <a href="#contact">Contact</a>
       <a href="cv.html" class="btn-cv">
@@ -140,9 +187,9 @@
   <section id="about" class="section">
     <h2>Ma Vision</h2>
     <div class="skills-grid">
-      <div>
-        <p>Mon approche n'est pas de prétendre tout savoir, mais de tout vouloir comprendre. Ce qui a du sens pour moi, c'est le processus global : de la première idée à l'affiche finale.</p>
-        <p>Je crée des schémas mentaux où une simple image devient une texture, une ambiance. J'aime partir de "peu" pour construire un univers complet.</p>
+      <div class="skills-text">
+        <p>Mon approche n'est pas de prétendre tout savoir, mais de tout vouloir comprendre. Ce qui a du sens pour moi, c'est le processus global : de la première idée à l'affiche finale, du déclenchement de l'appareil au montage vidéo.</p>
+        <p>Je crée des schémas mentaux où une simple image devient une texture, une ambiance. J'aime partir de "peu" pour construire un univers complet et transmettre une émotion brute. Ma plus grande force ? La soif d'apprendre et l'envie sincère de connecter avec les gens.</p>
       </div>
       <div>
         <div class="bar-wrap"><div class="bar-info"><span>Communication & Soft Skills</span><span>Expert</span></div><div class="bar"><div class="fill" style="width:95%"></div></div></div>
@@ -153,7 +200,7 @@
     </div>
   </section>
 
-  <section id="contact" class="section">
+  <section id="contact" class="contact">
     <div class="contact-form">
       <h2>Parlons Passion</h2>
       <form action="https://formspree.io/f/mblwgzve" method="POST">

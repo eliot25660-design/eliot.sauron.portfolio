@@ -15,7 +15,7 @@
       --shadow: 0 10px 40px rgba(0,0,0,0.05);
     }
     [data-theme="dark"] {
-      --bg-body: #080808; --text-main: #F5F5F7; --text-muted: #A1A1A6;
+      --bg-body: #0a0a0a; --text-main: #F5F5F7; --text-muted: #A1A1A6;
       --glass-bg: rgba(20, 20, 20, 0.8); --glass-border: rgba(255, 255, 255, 0.1);
       --shadow: 0 10px 40px rgba(0,0,0,0.5);
       --peach: #FF9E88; --blue: #7AB2E8;
@@ -23,11 +23,10 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Outfit', sans-serif; background: var(--bg-body); color: var(--text-main); min-height: 100vh; overflow-x: hidden; }
 
-    .noise-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E"); opacity: 0.4; mix-blend-mode: overlay; }
     .ambient-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
     .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4; }
-    .b1 { width: 80vw; height: 80vw; background: var(--peach); top: -20%; left: -20%; }
-    .b2 { width: 80vw; height: 80vw; background: var(--blue); bottom: -20%; right: -20%; }
+    .b1 { width: 70vw; height: 70vw; background: var(--peach); top: -20%; left: -20%; }
+    .b2 { width: 70vw; height: 70vw; background: var(--blue); bottom: -20%; right: -20%; }
 
     header { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 1000px; height: 60px; background: var(--glass-bg); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 100px; padding: 0 30px; z-index: 100; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow); }
     .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 24px; color: var(--text-main); text-decoration: none; }
@@ -38,7 +37,7 @@
     h1 { font-family: 'Syne'; font-size: clamp(40px, 6vw, 60px); font-weight: 800; margin-bottom: 20px; }
     
     .filters { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 50px; }
-    .filter-btn { padding: 10px 24px; border-radius: 30px; border: 1px solid var(--glass-border); background: var(--glass-bg); cursor: pointer; color: var(--text-muted); font-weight: 600; transition: 0.2s; }
+    .filter-btn { padding: 10px 20px; border-radius: 30px; border: 1px solid var(--glass-border); background: var(--glass-bg); cursor: pointer; color: var(--text-muted); font-weight: 600; transition: 0.2s; }
     .filter-btn:hover, .filter-btn.active { background: var(--text-main); color: var(--bg-body); }
 
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto 100px; padding: 0 20px; }
@@ -48,11 +47,9 @@
     .card.hidden { display: none; }
 
     /* CAROUSEL */
-    .carousel { width: 100%; aspect-ratio: 4/5; border-radius: 20px; overflow: hidden; margin-bottom: 20px; position: relative; background: #000; }
+    .carousel { width: 100%; aspect-ratio: 4/5; border-radius: 20px; overflow: hidden; margin-bottom: 20px; position: relative; background: #000; cursor: zoom-in; }
     .slides { display: flex; width: 100%; height: 100%; transition: transform 0.4s ease-out; }
     .slide { min-width: 100%; height: 100%; object-fit: cover; }
-    .video-slide { width: 100%; height: 100%; border: none; }
-    
     .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.9); border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #000; opacity: 0; transition: 0.2s; }
     .card:hover .nav-btn { opacity: 1; }
     .prev { left: 10px; } .next { right: 10px; }
@@ -62,14 +59,18 @@
     p { font-size: 16px; color: var(--text-muted); line-height: 1.6; }
     .pdf-btn { display: inline-block; margin-top: 15px; background: var(--text-main); color: var(--bg-body); padding: 10px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 700; }
 
+    /* LIGHTBOX */
+    .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); z-index: 20000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; }
+    .lightbox.active { opacity: 1; pointer-events: auto; }
+    .lightbox img { max-width: 90%; max-height: 90vh; border-radius: 8px; box-shadow: 0 0 50px rgba(0,0,0,0.5); }
+    .lb-close { position: absolute; top: 30px; right: 30px; color: white; background: none; border: none; font-size: 40px; cursor: pointer; }
+
     .theme-toggle { position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; background: var(--glass-bg); border-radius: 50%; border: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; z-index: 100; }
     footer { text-align: center; padding: 40px; color: var(--text-muted); font-size: 14px; }
-    @media (max-width: 768px) { .nav-btn { opacity: 1; } }
   </style>
 </head>
 <body>
 
-  <div class="noise-overlay"></div>
   <div class="ambient-bg"><div class="blob b1"></div><div class="blob b2"></div></div>
   <button class="theme-toggle" id="themeBtn">🌙</button>
 
@@ -93,8 +94,8 @@
     <div class="card" data-category="design">
       <div class="carousel">
         <div class="slides">
-          <img src="img/ajna-cover.jpg" class="slide" alt="Cover">
-          <img src="img/ajna-logo.jpg" class="slide" alt="Logo">
+          <img src="img/ajna-cover.jpg" class="slide lb-trigger" alt="Cover">
+          <img src="img/ajna-logo.jpg" class="slide lb-trigger" alt="Logo">
         </div>
         <button class="nav-btn prev">‹</button><button class="nav-btn next">›</button>
       </div>
@@ -106,9 +107,9 @@
     <div class="card" data-category="media">
       <div class="carousel">
         <div class="slides">
-          <img src="img/radio-1.jpg" class="slide" alt="Radio 1">
-          <img src="img/radio-2.jpg" class="slide" alt="Radio 2">
-          <img src="img/radio-3.jpg" class="slide" alt="Radio 3">
+          <img src="img/radio-1.jpg" class="slide lb-trigger" alt="Radio 1">
+          <img src="img/radio-2.jpg" class="slide lb-trigger" alt="Radio 2">
+          <img src="img/radio-3.jpg" class="slide lb-trigger" alt="Radio 3">
         </div>
         <button class="nav-btn prev">‹</button><button class="nav-btn next">›</button>
       </div>
@@ -120,7 +121,7 @@
     <div class="card" data-category="photo">
       <div class="carousel">
         <div class="slides">
-          <img src="img/rv-cover.jpg" class="slide" alt="Ville">
+          <img src="img/rv-cover.jpg" class="slide lb-trigger" alt="Ville">
         </div>
       </div>
       <span class="badge">Édition</span>
@@ -132,10 +133,10 @@
     <div class="card" data-category="photo">
       <div class="carousel">
         <div class="slides">
-          <img src="img/photo-nb-1.jpg" class="slide" alt="NB 1">
-          <img src="img/photo-nb-2.jpg" class="slide" alt="NB 2">
-          <img src="img/photo-nb-3.jpg" class="slide" alt="NB 3">
-          <img src="img/photo-nb-4.jpg" class="slide" alt="NB 4">
+          <img src="img/photo-nb-1.jpg" class="slide lb-trigger" alt="NB 1">
+          <img src="img/photo-nb-2.jpg" class="slide lb-trigger" alt="NB 2">
+          <img src="img/photo-nb-3.jpg" class="slide lb-trigger" alt="NB 3">
+          <img src="img/photo-nb-4.jpg" class="slide lb-trigger" alt="NB 4">
         </div>
         <button class="nav-btn prev">‹</button><button class="nav-btn next">›</button>
       </div>
@@ -147,11 +148,11 @@
     <div class="card" data-category="photo">
       <div class="carousel">
         <div class="slides">
-          <img src="img/photo-jacques-1.jpg" class="slide" alt="Studio 1">
-          <img src="img/photo-jacques-2.jpg" class="slide" alt="Studio 2">
-          <img src="img/photo-jacques-3.jpg" class="slide" alt="Studio 3">
-          <img src="img/photo-jacques-4.jpg" class="slide" alt="Studio 4">
-          <img src="img/photo-jacques-5.jpg" class="slide" alt="Studio 5">
+          <img src="img/photo-jacques-1.jpg" class="slide lb-trigger" alt="Studio 1">
+          <img src="img/photo-jacques-2.jpg" class="slide lb-trigger" alt="Studio 2">
+          <img src="img/photo-jacques-3.jpg" class="slide lb-trigger" alt="Studio 3">
+          <img src="img/photo-jacques-4.jpg" class="slide lb-trigger" alt="Studio 4">
+          <img src="img/photo-jacques-5.jpg" class="slide lb-trigger" alt="Studio 5">
         </div>
         <button class="nav-btn prev">‹</button><button class="nav-btn next">›</button>
       </div>
@@ -160,6 +161,11 @@
       <p>Travail sur les plans d'éclairage et la direction de modèle.</p>
     </div>
 
+  </div>
+
+  <div class="lightbox" id="lightbox">
+    <button class="lb-close">&times;</button>
+    <img src="" id="lbImg">
   </div>
 
   <footer>© 2025 Eliot SAURON.</footer>
@@ -171,21 +177,25 @@
     setT();
     btn.addEventListener('click', () => { isDark = !isDark; setT(); });
 
-    // CAROUSEL LOGIC
+    // CAROUSEL
     document.querySelectorAll('.card').forEach(card => {
-      const slides = card.querySelector('.slides');
-      if(!slides) return;
+      const slides = card.querySelector('.slides'); if(!slides) return;
       const count = slides.children.length;
-      if(count <= 1) { 
-        const btns = card.querySelectorAll('.nav-btn');
-        if(btns) btns.forEach(b => b.style.display='none');
-        return; 
-      }
+      if(count <= 1) { const btns = card.querySelectorAll('.nav-btn'); if(btns) btns.forEach(b => b.style.display='none'); return; }
       let idx = 0;
-      card.querySelector('.prev').addEventListener('click', () => { idx = (idx > 0) ? idx-1 : count-1; slides.style.transform = `translateX(-${idx*100}%)`; });
-      card.querySelector('.next').addEventListener('click', () => { idx = (idx < count-1) ? idx+1 : 0; slides.style.transform = `translateX(-${idx*100}%)`; });
+      card.querySelector('.prev').addEventListener('click', (e) => { e.stopPropagation(); idx = (idx > 0) ? idx-1 : count-1; slides.style.transform = `translateX(-${idx*100}%)`; });
+      card.querySelector('.next').addEventListener('click', (e) => { e.stopPropagation(); idx = (idx < count-1) ? idx+1 : 0; slides.style.transform = `translateX(-${idx*100}%)`; });
     });
 
+    // LIGHTBOX
+    const lb = document.getElementById('lightbox'); const lbImg = document.getElementById('lbImg');
+    document.querySelectorAll('.lb-trigger').forEach(img => {
+      img.addEventListener('click', () => { lbImg.src = img.src; lb.classList.add('active'); });
+    });
+    document.querySelector('.lb-close').addEventListener('click', () => lb.classList.remove('active'));
+    lb.addEventListener('click', (e) => { if(e.target===lb) lb.classList.remove('active'); });
+
+    // FILTERS
     const filters = document.querySelectorAll('.filter-btn'); const cards = document.querySelectorAll('.card');
     filters.forEach(btn => btn.addEventListener('click', () => {
       document.querySelector('.filter-btn.active').classList.remove('active'); btn.classList.add('active');

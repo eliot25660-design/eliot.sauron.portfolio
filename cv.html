@@ -11,45 +11,56 @@
     :root {
       --peach: #FFBEAC; --blue: #A4C8E6; 
       --bg-body: #F0F0F5; --text-main: #1D1D1F; --text-muted: #515154;
-      --glass-bg: rgba(255, 255, 255, 0.9);
+      --glass-bg: rgba(255, 255, 255, 0.85);
       --glass-border: rgba(255, 255, 255, 0.5);
       --shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
     }
     [data-theme="dark"] {
-      --bg-body: #080808; --text-main: #F5F5F7; --text-muted: #A1A1A6;
-      --glass-bg: rgba(25, 25, 25, 0.9); --glass-border: rgba(255, 255, 255, 0.1);
+      --bg-body: #0a0a0a; --text-main: #F5F5F7; --text-muted: #A1A1A6;
+      --glass-bg: rgba(25, 25, 25, 0.8); --glass-border: rgba(255, 255, 255, 0.1);
       --shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
       --peach: #FF9E88; --blue: #7AB2E8;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Outfit', sans-serif; background: var(--bg-body); color: var(--text-main); min-height: 100vh; padding: 100px 20px; transition: background 0.3s; perspective: 1000px; }
 
-    .noise-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E"); opacity: 0.4; mix-blend-mode: overlay; }
-    
+    /* FOND CLEAN */
+    .ambient-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+    .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4; }
+    .b1 { width: 80vw; height: 80vw; background: var(--peach); top: -20%; left: -20%; }
+    .b2 { width: 80vw; height: 80vw; background: var(--blue); bottom: -20%; right: -20%; }
+
     header { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 1000px; height: 60px; background: var(--glass-bg); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 100px; padding: 0 30px; z-index: 100; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow); }
     .logo { font-family: 'Syne'; font-weight: 800; font-size: 20px; text-decoration: none; color: var(--text-main); }
     .back-btn { text-decoration: none; font-weight: 600; font-size: 14px; color: var(--text-muted); transition: 0.2s; }
     .back-btn:hover { color: var(--text-main); }
 
-    .cv-grid {
-      display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px;
-      max-width: 1200px; margin: 20px auto;
-    }
+    .cv-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; max-width: 1200px; margin: 20px auto; }
 
-    /* 3D TILT CARDS */
+    /* LES CARTES "REAL GLASS" */
     .tile {
       background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 24px; padding: 30px;
       box-shadow: var(--shadow); position: relative; overflow: hidden;
-      transform-style: preserve-3d; will-change: transform; /* Optimisation */
+      transform-style: preserve-3d; transition: transform 0.1s ease-out;
     }
-    .tile-content { transform: translateZ(20px); } /* Le texte flotte */
     
-    /* Dispositions */
+    /* L'EFFET DE REFLET LUMINEUX (SHEEN) */
+    .tile::after {
+      content: ''; position: absolute; top: 0; left: -150%; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transform: skewX(-20deg); transition: 0.5s; pointer-events: none;
+    }
+    .tile:hover::after { left: 150%; transition: 0.7s; }
+    
+    .tile:hover { z-index: 2; border-color: var(--blue); }
+    .tile-content { transform: translateZ(20px); } 
+    
+    /* DISPOSITION */
     .t-profile { grid-column: span 4; grid-row: span 2; display: flex; flex-direction: column; align-items: center; text-align: center; justify-content: center; }
     .t-intro { grid-column: span 8; }
     .t-exp { grid-column: span 5; }
     .t-edu { grid-column: span 3; }
-    .t-skills { grid-column: span 12; display: flex; justify-content: space-between; align-items: center; }
+    .t-skills { grid-column: span 12; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
 
     .profile-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 20px; border: 3px solid var(--glass-border); }
     h1 { font-family: 'Syne'; font-weight: 800; font-size: 28px; line-height: 1; margin-bottom: 5px; }
@@ -75,7 +86,7 @@
 </head>
 <body>
 
-  <div class="noise-overlay"></div>
+  <div class="ambient-bg"><div class="blob b1"></div><div class="blob b2"></div></div>
   <button class="theme-toggle" id="themeBtn">🌙</button>
 
   <header>
@@ -127,7 +138,7 @@
       </div>
     </div>
 
-    <div class="tile t-exp" data-tilt>
+    <div class="tile t-edu" data-tilt>
       <div class="tile-content">
         <h2>Formation</h2>
         <div class="exp-item" style="border-color:var(--blue)">
@@ -161,33 +172,29 @@
   <a href="cv-eliot-sauron.pdf" download class="download-fab">Télécharger PDF</a>
 
   <script>
-    // THEME
     const btn = document.getElementById('themeBtn'); const html = document.documentElement;
     let isDark = localStorage.getItem('theme') === 'dark';
     const setT = () => { html.setAttribute('data-theme', isDark ? 'dark':'light'); btn.textContent = isDark ? '☀️':'🌙'; localStorage.setItem('theme', isDark ? 'dark':'light'); }
     setT();
     btn.addEventListener('click', () => { isDark = !isDark; setT(); });
 
-    // SCRIPT TILT 3D (Vanilla JS léger)
+    // TILT & REFLET (LEGER)
     const tiles = document.querySelectorAll('[data-tilt]');
-    tiles.forEach(tile => {
-      tile.addEventListener('mousemove', (e) => {
-        const rect = tile.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        const rotateX = ((y - centerY) / centerY) * -5; // Max 5 deg
-        const rotateY = ((x - centerX) / centerX) * 5;
-
-        tile.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+    if(window.matchMedia("(min-width: 900px)").matches) {
+      tiles.forEach(tile => {
+        tile.addEventListener('mousemove', (e) => {
+          const rect = tile.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const rotateX = ((y - rect.height/2) / rect.height) * -8;
+          const rotateY = ((x - rect.width/2) / rect.width) * 8;
+          tile.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+        });
+        tile.addEventListener('mouseleave', () => {
+          tile.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1)`;
+        });
       });
-
-      tile.addEventListener('mouseleave', () => {
-        tile.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1)`;
-      });
-    });
+    }
   </script>
 </body>
 </html>
