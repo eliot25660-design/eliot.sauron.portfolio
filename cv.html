@@ -20,27 +20,17 @@
       --card-shadow: 0 20px 40px rgba(0, 0, 0, 0.05); 
       --blob-opacity: 0.6;
     }
-
     [data-theme="dark"] {
       --bg-body: #151516; --text-main: #F5F5F7; --text-muted: #A1A1A6;
       --glass-bg: rgba(30, 30, 35, 0.6); --glass-border: rgba(255, 255, 255, 0.1);
       --card-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
       --peach: #FF9E88; --blue: #7AB2E8; --blob-opacity: 0.55; 
     }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
-    /* Config Lenis Scroll */
     html.lenis { height: auto; } 
     .lenis.lenis-smooth { scroll-behavior: auto; } 
-    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; } 
-    .lenis.lenis-stopped { overflow: hidden; } 
-    .lenis.lenis-scrolling iframe { pointer-events: none; }
-
-    body {
-      font-family: 'Outfit', sans-serif; background: var(--bg-body); color: var(--text-main);
-      overflow-x: hidden; transition: background 0.5s ease; min-height: 100vh;
-    }
+    body { font-family: 'Outfit', sans-serif; background: var(--bg-body); color: var(--text-main); transition: background 0.5s ease; min-height: 100vh; overflow-x: hidden; }
 
     /* MESH BACKGROUND */
     .ambient-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 0; pointer-events: none; }
@@ -51,13 +41,11 @@
     [data-theme="dark"] .mesh-3 { background: radial-gradient(circle, rgba(127, 166, 198, 0.25), transparent 70%); opacity: 0.4; }
     @keyframes float-mesh { from { transform: translate(0, 0) scale(1); } to { transform: translate(20px, -20px) scale(1.05); } }
 
-    /* LAYOUT */
-    header, .cv-section, footer { position: relative; z-index: 2; }
-    
+    /* HEADER */
     header {
       position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
       width: 90%; max-width: 1200px; height: 60px;
-      background: var(--glass-bg); backdrop-filter: blur(30px) saturate(180%);
+      background: var(--glass-bg); backdrop-filter: blur(30px);
       border: 1px solid var(--glass-border); border-radius: 100px; padding: 0 25px;
       z-index: 1000; display: flex; justify-content: space-between; align-items: center;
       box-shadow: var(--card-shadow);
@@ -66,94 +54,83 @@
     .logo-text-elem { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 24px; fill: var(--text-main); letter-spacing: -1px; }
     .nav-link { text-decoration: none; color: var(--text-muted); font-weight: 600; font-size: 14px; transition: 0.3s; }
     .nav-link:hover { color: var(--text-main); }
-    
     .theme-toggle-fixed { position: fixed; bottom: 25px; right: 25px; width: 50px; height: 50px; border-radius: 50%; background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 9999; font-size: 22px; box-shadow: var(--card-shadow); transition: transform 0.2s; }
     .theme-toggle-fixed:hover { transform: scale(1.1); }
 
-    /* === 3D CV CONTAINER === */
-    .cv-wrapper {
-      min-height: 100vh; display: flex; justify-content: center; align-items: center;
-      padding: 120px 20px 60px; perspective: 1500px;
+    /* === LE MONDE 3D === */
+    .scene-3d {
+      padding: 140px 20px 60px;
+      max-width: 1400px; margin: 0 auto;
+      perspective: 1000px; /* Le point de fuite */
     }
 
-    .cv-card-3d {
-      width: 100%; max-width: 1100px;
-      background: var(--glass-bg); backdrop-filter: blur(40px) saturate(150%);
-      border: 1px solid var(--glass-border); border-radius: 30px;
-      padding: 50px; box-shadow: 0 30px 60px rgba(0,0,0,0.1), 0 0 0 1px rgba(255,255,255,0.2);
-      transform-style: preserve-3d;
+    .world-container {
+      display: grid; grid-template-columns: 350px 1fr; gap: 60px;
+      transform-style: preserve-3d; /* Permet aux enfants de flotter */
       transition: transform 0.1s ease-out;
-      display: grid; grid-template-columns: 300px 1fr; gap: 50px;
     }
 
-    /* SIDEBAR */
-    .cv-sidebar { display: flex; flex-direction: column; gap: 30px; transform: translateZ(20px); }
-    .profile-pic-container { 
-      width: 150px; height: 150px; border-radius: 50%; overflow: hidden; margin: 0 auto; 
-      border: 4px solid rgba(255,255,255,0.5); box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    /* FLOATERS (Les éléments qui volent) */
+    .floater {
+      background: var(--glass-bg); backdrop-filter: blur(40px);
+      border: 1px solid var(--glass-border); border-radius: 30px;
+      padding: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+      margin-bottom: 40px;
+      transform-style: preserve-3d;
+      transition: transform 0.3s ease;
     }
-    .profile-pic { width: 100%; height: 100%; object-fit: cover; }
+    .floater:hover { transform: translateZ(20px) scale(1.02); border-color: var(--blue); }
+
+    /* SIDEBAR (Gauche) - Flotte plus près de l'écran */
+    .sidebar-zone { transform: translateZ(20px); }
     
-    .sidebar-block h3 { font-family: 'Syne', sans-serif; font-size: 18px; margin-bottom: 15px; color: var(--text-main); border-bottom: 2px solid var(--peach); padding-bottom: 5px; display: inline-block; }
-    .contact-item { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; font-size: 14px; color: var(--text-muted); text-decoration: none; transition: 0.2s; }
-    .contact-item:hover { color: var(--text-main); transform: translateX(5px); }
-    .contact-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .profile-card { text-align: center; }
+    .profile-pic { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 4px solid rgba(255,255,255,0.5); margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    .contact-line { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; color: var(--text-muted); margin-bottom: 8px; text-decoration: none; transition: 0.2s; }
+    .contact-line:hover { color: var(--text-main); }
+    .contact-line svg { width: 16px; height: 16px; opacity: 0.7; }
 
-    /* Cultural Shelf */
-    .cultural-shelf {
-      background: rgba(127, 166, 198, 0.1); padding: 20px; border-radius: 20px;
-      border: 1px solid var(--glass-border); transform: translateZ(30px);
+    .vibe-card { background: rgba(127, 166, 198, 0.1) !important; border: 1px solid var(--blue) !important; }
+    .vibe-title { font-family: 'Syne'; font-weight: 700; color: var(--blue); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px; }
+    .vibe-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 14px; border-bottom: 1px dashed rgba(0,0,0,0.1); padding-bottom: 5px; }
+    .vibe-row span:first-child { color: var(--text-muted); }
+    .vibe-row span:last-child { font-weight: 600; }
+
+    /* CONTENT (Droite) - Flotte un peu en retrait */
+    .content-zone { transform: translateZ(0px); }
+
+    h1 { font-family: 'Syne'; font-size: clamp(40px, 6vw, 70px); font-weight: 800; line-height: 0.9; margin-bottom: 10px; background: linear-gradient(135deg, var(--text-main), var(--text-muted)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .job-title { font-size: 20px; color: var(--blue); text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin-bottom: 30px; display: block; }
+    .intro-text { font-size: 18px; line-height: 1.6; color: var(--text-muted); margin-bottom: 40px; max-width: 600px; }
+
+    .section-title { font-family: 'Syne'; font-size: 28px; margin-bottom: 30px; display: flex; align-items: center; gap: 15px; }
+    .section-title::after { content:''; height: 1px; flex: 1; background: var(--glass-border); }
+
+    .timeline-item { padding-left: 20px; border-left: 2px solid var(--peach); margin-bottom: 40px; position: relative; }
+    .timeline-item::before { content:''; width: 12px; height: 12px; background: var(--peach); position: absolute; left: -7px; top: 0; border-radius: 50%; }
+    .t-date { font-size: 13px; font-weight: 700; color: var(--peach); text-transform: uppercase; margin-bottom: 5px; display: block; }
+    .t-role { font-size: 20px; font-weight: 700; margin-bottom: 5px; }
+    .t-place { font-size: 15px; font-style: italic; color: var(--text-muted); margin-bottom: 10px; display: block; }
+    .t-desc { font-size: 15px; line-height: 1.5; color: var(--text-muted); }
+
+    .skills-cloud { display: flex; flex-wrap: wrap; gap: 10px; }
+    .tag { padding: 8px 16px; background: var(--bg-body); border: 1px solid var(--glass-border); border-radius: 50px; font-size: 14px; font-weight: 600; }
+
+    .download-fab {
+      position: fixed; bottom: 40px; right: 40px; z-index: 100;
+      background: var(--text-main); color: var(--bg-body);
+      width: 60px; height: 60px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: 0.3s;
+      text-decoration: none;
     }
-    .vibe-item { margin-bottom: 10px; font-size: 13px; color: var(--text-muted); }
-    .vibe-item strong { display: block; color: var(--text-main); font-family: 'Syne'; margin-bottom: 2px; }
-
-    /* MAIN */
-    .cv-main { display: flex; flex-direction: column; gap: 40px; transform: translateZ(10px); }
-    
-    .cv-header h1 { font-family: 'Syne', sans-serif; font-size: 42px; font-weight: 800; line-height: 1; margin-bottom: 10px; background: linear-gradient(135deg, var(--text-main), var(--text-muted)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .cv-header h2 { font-size: 20px; color: var(--blue); text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin-bottom: 20px; }
-    .cv-intro { font-size: 16px; line-height: 1.6; color: var(--text-muted); max-width: 600px; }
-
-    .cv-section-title { 
-      font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 700; 
-      margin-bottom: 20px; display: flex; align-items: center; gap: 15px; 
-    }
-    .cv-section-title::after { content: ""; height: 1px; flex-grow: 1; background: var(--glass-border); }
-
-    .exp-card { 
-      background: rgba(255,255,255,0.05); border-left: 3px solid var(--peach); 
-      padding: 20px; margin-bottom: 20px; border-radius: 0 10px 10px 0; transition: 0.3s;
-    }
-    .exp-card:hover { background: rgba(255,255,255,0.1); transform: translateX(10px); }
-    .exp-date { font-size: 13px; font-weight: 600; color: var(--blue); text-transform: uppercase; margin-bottom: 5px; }
-    .exp-title { font-size: 18px; font-weight: 700; color: var(--text-main); margin-bottom: 5px; }
-    .exp-place { font-size: 14px; font-style: italic; color: var(--text-muted); margin-bottom: 10px; }
-    .exp-desc { font-size: 15px; line-height: 1.5; color: var(--text-muted); }
-
-    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 15px; }
-    .skill-tag { 
-      padding: 10px; text-align: center; border-radius: 12px; 
-      background: var(--bg-body); border: 1px solid var(--glass-border);
-      font-weight: 600; font-size: 14px; color: var(--text-main);
-    }
-
-    .download-section { margin-top: 20px; text-align: right; }
-    .btn-download {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 14px 28px; background: var(--text-main); color: var(--bg-body);
-      border-radius: 50px; font-weight: 700; text-decoration: none;
-      transition: 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    }
-    .btn-download:hover { transform: translateY(-3px) scale(1.05); opacity: 0.9; }
-
-    footer { text-align: center; padding: 40px; border-top: 1px solid var(--glass-border); background: transparent; margin-top: 60px; color: var(--text-muted); font-size: 14px; }
+    .download-fab:hover { transform: scale(1.1) rotate(-10deg); }
 
     @media (max-width: 900px) {
-      .cv-card-3d { grid-template-columns: 1fr; transform: none !important; }
-      .cv-sidebar { flex-direction: row; flex-wrap: wrap; justify-content: center; text-align: center; }
-      .sidebar-block { width: 100%; }
-      .contact-item { justify-content: center; }
-      .cv-wrapper { padding: 100px 20px 40px; }
+      .world-container { grid-template-columns: 1fr; transform: none !important; }
+      .sidebar-zone { transform: none; order: 2; }
+      .content-zone { order: 1; }
+      .scene-3d { padding-top: 100px; }
     }
   </style>
 </head>
@@ -172,184 +149,114 @@
     <a href="index.html" class="nav-link">← Retour Accueil</a>
   </header>
 
-  <div class="cv-wrapper">
-    <div class="cv-card-3d" id="cvCard">
+  <div class="scene-3d">
+    <div class="world-container" id="world">
       
-      <aside class="cv-sidebar">
-        <div class="profile-pic-container">
-          <img src="img/profil.jpg" alt="Eliot Sauron" class="profile-pic">
-        </div>
-
-        <div class="sidebar-block">
-          <h3>Contact</h3>
-          <a href="mailto:eliotsauron25@gmail.com" class="contact-item">
+      <aside class="sidebar-zone">
+        <div class="floater profile-card">
+          <img src="img/profil.jpg" alt="Eliot" class="profile-pic">
+          <a href="mailto:eliotsauron25@gmail.com" class="contact-line">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
             eliotsauron25@gmail.com
           </a>
-          <a href="tel:+33767223979" class="contact-item">
+          <a href="tel:+33767223979" class="contact-line">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.44-5.15-3.75-6.59-6.59l1.97-1.57c.27-.27.36-.66.25-1.01-.37-1.11-.56-2.3-.56-3.53 0-.55-.45-1-1-1H4.44c-.55 0-1 .45-1 1 3.96 16.02 16.02 3.96 16.02 3.96 1 .45 1 1 1h3.55c.55 0 1-.45 1-1z"/></svg>
             07 67 22 39 79
           </a>
-          <span class="contact-item">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-            25660 Saône, France
-          </span>
         </div>
 
-        <div class="sidebar-block">
-          <h3>Langues</h3>
-          <p class="contact-item">Anglais (C1 - Avancé)</p>
-          <p class="contact-item">Italien (B1 - Intermédiaire)</p>
+        <div class="floater vibe-card">
+          <div class="vibe-title">CULTURAL SHELF ⚡</div>
+          <div class="vibe-row"><span>En boucle</span><span>[AJOUTER MUSIQUE]</span></div>
+          <div class="vibe-row"><span>Jeu du moment</span><span>[AJOUTER JEU]</span></div>
+          <div class="vibe-row"><span>Sport</span><span>Escalade</span></div>
+          <div class="vibe-row"><span>Mood</span><span>Focus</span></div>
         </div>
 
-        <div class="sidebar-block">
-          <h3>Centres d'intérêt</h3>
-          <div class="skills-grid">
-            <span class="skill-tag">🧗 Escalade</span>
-            <span class="skill-tag">🎸 Guitare</span>
-            <span class="skill-tag">🏃 Course</span>
-            <span class="skill-tag">🎮 Gaming</span>
-          </div>
+        <div class="floater">
+          <div class="vibe-title">LANGUES</div>
+          <div class="vibe-row"><span>Anglais</span><span>C1 (Avancé)</span></div>
+          <div class="vibe-row"><span>Italien</span><span>B1 (Intermédiaire)</span></div>
         </div>
-
-        <div class="cultural-shelf">
-          <h3 style="font-size:14px; margin-bottom:10px; border:none; color:var(--blue);">CURRENT VIBE ⚡</h3>
-          <div class="vibe-item">
-            <strong>En boucle :</strong>
-            <span>[⚠️ AJOUTE TA MUSIQUE ICI]</span>
-          </div>
-          <div class="vibe-item">
-            <strong>Jeu du moment :</strong>
-            <span>[⚠️ AJOUTE TON JEU ICI]</span>
-          </div>
-          <div class="vibe-item">
-            <strong>Mood :</strong>
-            <span>Créatif & Déterminé</span>
-          </div>
-        </div>
-
       </aside>
 
-      <main class="cv-main">
-        <header class="cv-header">
+      <main class="content-zone">
+        <div class="floater">
           <h1>Eliot SAURON</h1>
-          <h2>Designer Créatif & Communication</h2>
-          <p class="cv-intro">
-            Étudiant en 2ème année de BUT Info-Com. Je ne cherche pas seulement à remplir des cases, je cherche à créer du sens. Passionné par la narration visuelle, je mets ma rigueur et ma créativité au service de projets qui marquent.
+          <span class="job-title">Designer Créatif & Front-End</span>
+          <p class="intro-text">
+            Je ne cherche pas seulement à remplir des cases, je cherche à créer du sens. Étudiant en 2ème année de BUT Info-Com, je fusionne rigueur technique et sensibilité artistique pour construire des univers numériques immersifs.
           </p>
-        </header>
+        </div>
 
-        <section>
-          <h3 class="cv-section-title">Expériences</h3>
+        <div class="floater">
+          <h2 class="section-title">Expériences</h2>
           
-          <div class="exp-card">
-            <div class="exp-date">Juillet 2024 - Aujourd'hui</div>
-            <div class="exp-title">Vente & Gestion</div>
-            <div class="exp-place">Boulangerie-Pâtisserie</div>
-            <p class="exp-desc">Gestion du carnet de commandes, relation client, autonomie et respect des normes d'hygiène.</p>
+          <div class="timeline-item">
+            <span class="t-date">Juillet 2024 - Aujourd'hui</span>
+            <div class="t-role">Vente & Gestion</div>
+            <span class="t-place">Boulangerie-Pâtisserie</span>
+            <p class="t-desc">Gestion autonome du carnet de commandes, relation client et respect strict des normes.</p>
           </div>
 
-          <div class="exp-card">
-            <div class="exp-date">Juillet 2022 - Nov 2023</div>
-            <div class="exp-title">Stages Communication & Admin</div>
-            <div class="exp-place">Mairie de Saône</div>
-            <p class="exp-desc">Découverte des métiers de l'administration. Observation des flux de communication institutionnelle et relation usagers.</p>
+          <div class="timeline-item">
+            <span class="t-date">2022 - 2023</span>
+            <div class="t-role">Stages Communication</div>
+            <span class="t-place">Mairie de Saône</span>
+            <p class="t-desc">Découverte de la communication institutionnelle et des flux administratifs.</p>
           </div>
-          
-           <div class="exp-card">
-            <div class="exp-date">Juillet 2025</div>
-            <div class="exp-title">Paysagisme</div>
-            <div class="exp-place">Espaces Verts</div>
-            <p class="exp-desc">Travail en autonomie, soin du détail et aménagement extérieur.</p>
-          </div>
-        </section>
+        </div>
 
-        <section>
-          <h3 class="cv-section-title">Formation</h3>
-          
-          <div class="exp-card">
-            <div class="exp-date">2024 - 2026</div>
-            <div class="exp-title">B.U.T. Information-Communication</div>
-            <div class="exp-place">IUT de Besançon</div>
-            <p class="exp-desc">Spécialité Communication des Organisations. Création de supports visuels, stratégie digitale et gestion de projet.</p>
+        <div class="floater">
+          <h2 class="section-title">Formation</h2>
+          <div class="timeline-item">
+            <span class="t-date">2024 - 2026</span>
+            <div class="t-role">B.U.T. Information-Communication</div>
+            <span class="t-place">IUT de Besançon</span>
+            <p class="t-desc">Spécialité Communication des Organisations. Stratégie, Design Graphique, Web.</p>
           </div>
+        </div>
 
-          <div class="exp-card">
-            <div class="exp-date">2024</div>
-            <div class="exp-title">Baccalauréat STMG</div>
-            <div class="exp-place">Lycée Louis-Pergaud, Besançon</div>
-            <p class="exp-desc">Mention Bien.</p>
+        <div class="floater">
+          <h2 class="section-title">Arsenal Créatif</h2>
+          <div class="skills-cloud">
+            <span class="tag">Photoshop</span>
+            <span class="tag">Illustrator</span>
+            <span class="tag">InDesign</span>
+            <span class="tag">Premiere Pro</span>
+            <span class="tag">HTML/CSS</span>
+            <span class="tag">Figma</span>
           </div>
-        </section>
-
-        <section>
-          <h3 class="cv-section-title">Outils Créatifs</h3>
-          <div class="skills-grid">
-            <span class="skill-tag">Photoshop</span>
-            <span class="skill-tag">Illustrator</span>
-            <span class="skill-tag">InDesign</span>
-            <span class="skill-tag">Premiere Pro</span>
-            <span class="skill-tag">Canva</span>
-            <span class="skill-tag">Office</span>
-          </div>
-        </section>
-
-        <div class="download-section">
-          <a href="cv-eliot-sauron.pdf" target="_blank" class="btn-download" download>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Télécharger le PDF
-          </a>
         </div>
 
       </main>
     </div>
   </div>
 
-  <footer>
-    <p>&copy; 2025 Eliot SAURON.</p>
-  </footer>
+  <a href="cv-eliot-sauron.pdf" download class="download-fab" title="Télécharger le CV PDF">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+  </a>
 
   <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
-  
   <script>
-    // 1. SETUP THEME
-    const themeBtn = document.getElementById('themeToggle'); 
-    const html = document.documentElement;
+    // THEME
+    const themeBtn = document.getElementById('themeToggle'); const html = document.documentElement;
     let isDark = localStorage.getItem('theme') === 'dark';
-    const updateTheme = () => { 
-        html.setAttribute('data-theme', isDark ? 'dark' : 'light'); 
-        themeBtn.textContent = isDark ? '☀️' : '🌙'; 
-        localStorage.setItem('theme', isDark ? 'dark' : 'light'); 
-    };
-    updateTheme(); 
-    themeBtn.addEventListener('click', () => { isDark = !isDark; updateTheme(); });
+    const updateTheme = () => { html.setAttribute('data-theme', isDark ? 'dark' : 'light'); themeBtn.textContent = isDark ? '☀️' : '🌙'; localStorage.setItem('theme', isDark ? 'dark' : 'light'); };
+    updateTheme(); themeBtn.addEventListener('click', () => { isDark = !isDark; updateTheme(); });
 
-    // 2. SMOOTH SCROLL (Lenis)
+    // SMOOTH SCROLL
     const lenis = new Lenis();
     function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
     requestAnimationFrame(raf);
 
-    // 3. EFFET 3D TILT
-    const card = document.getElementById('cvCard');
-    const container = document.querySelector('.cv-wrapper');
-
-    // Ne s'active que sur PC (pas mobile)
+    // PARALLAX EFFECT 3D
+    const world = document.getElementById('world');
     if (window.matchMedia("(min-width: 900px)").matches) {
-      container.addEventListener('mousemove', (e) => {
-        const xAxis = (window.innerWidth / 2 - e.pageX) / 25; 
-        const yAxis = (window.innerHeight / 2 - e.pageY) / 25; 
-        card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-      });
-
-      // Remet la carte à plat quand la souris sort
-      container.addEventListener('mouseleave', () => {
-        card.style.transform = `rotateY(0deg) rotateX(0deg)`;
-        card.style.transition = 'transform 0.5s ease';
-      });
-
-      // Enlève la transition quand on bouge pour que ce soit réactif
-      container.addEventListener('mouseenter', () => {
-        card.style.transition = 'none';
+      document.addEventListener('mousemove', (e) => {
+        const x = (window.innerWidth / 2 - e.pageX) / 40; // Sensibilité X
+        const y = (window.innerHeight / 2 - e.pageY) / 40; // Sensibilité Y
+        world.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
       });
     }
   </script>
