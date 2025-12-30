@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Politique de Confidentialité - Eliot SAURON</title>
+  <title>Mentions Légales - Eliot SAURON</title>
   <meta name="robots" content="noindex, nofollow">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23F2A18C'/%3E%3Ctext x='50' y='70' font-size='60' font-weight='800' text-anchor='middle' fill='white'%3EE%3C/text%3E%3C/svg%3E">
 
   <style>
@@ -34,9 +35,12 @@
     .lenis.lenis-stopped { overflow: hidden; } 
     .lenis.lenis-scrolling iframe { pointer-events: none; }
 
-    body { font-family: 'Outfit', sans-serif; background: var(--bg-body); color: var(--text-main); transition: background 0.5s ease; min-height: 100vh; position: relative; }
-    
-    /* MESH BG */
+    body {
+      font-family: 'Outfit', sans-serif; background: var(--bg-body); color: var(--text-main);
+      transition: background 0.5s ease; min-height: 100vh; position: relative;
+    }
+
+    /* MESH BACKGROUND */
     .ambient-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 0; pointer-events: none; }
     .mesh-blob { position: absolute; border-radius: 50%; filter: blur(90px); opacity: var(--blob-opacity); animation: float-mesh 10s infinite ease-in-out alternate; }
     .mesh-1 { width: 80vw; height: 80vw; background: radial-gradient(circle, var(--peach), transparent 70%); top: -20%; left: -20%; animation-duration: 12s; }
@@ -47,32 +51,50 @@
 
     header, main, footer, .theme-toggle-fixed { position: relative; z-index: 2; }
 
+    /* HEADER */
     header {
       position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
       width: 90%; max-width: 1200px; height: 60px;
-      background: var(--glass-bg); backdrop-filter: blur(30px) saturate(180%);
+      background: var(--glass-bg); backdrop-filter: blur(30px);
       border: 1px solid var(--glass-border); border-radius: 100px; padding: 0 25px;
       z-index: 1000; display: flex; justify-content: space-between; align-items: center;
       box-shadow: var(--card-shadow);
     }
-    .logo-container { height: 100%; width: 100px; display: flex; align-items: center; text-decoration: none; }
+    .logo-container { height: 100%; display: flex; align-items: center; text-decoration: none; }
     .logo-text-elem { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 24px; fill: var(--text-main); letter-spacing: -1px; }
     .nav-link { text-decoration: none; color: var(--text-muted); font-weight: 600; font-size: 14px; transition: 0.3s; }
     .nav-link:hover { color: var(--text-main); }
 
-    .legal-container { max-width: 800px; margin: 120px auto 60px; padding: 0 20px; }
-    .legal-card { background: var(--glass-bg); backdrop-filter: blur(30px) saturate(180%); border: 1px solid var(--glass-border); border-radius: 30px; box-shadow: var(--card-shadow); padding: 50px; }
-
-    h1 { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; margin-bottom: 30px; color: var(--text-main); text-align: center; }
-    h2 { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; margin: 30px 0 15px; color: var(--text-main); border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; }
-    p, li { font-size: 16px; line-height: 1.7; color: var(--text-muted); margin-bottom: 15px; }
-    ul { padding-left: 20px; }
-    
-    .theme-toggle-fixed { position: fixed; bottom: 25px; right: 25px; width: 50px; height: 50px; border-radius: 50%; background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 9999; font-size: 22px; transition: transform 0.2s; box-shadow: var(--card-shadow); }
+    .theme-toggle-fixed { position: fixed; bottom: 25px; right: 25px; width: 50px; height: 50px; border-radius: 50%; background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 9999; font-size: 22px; box-shadow: var(--card-shadow); transition: transform 0.2s; }
     .theme-toggle-fixed:hover { transform: scale(1.1); }
 
-    footer { text-align: center; padding: 40px; border-top: 1px solid var(--glass-border); margin-top: 60px; color: var(--text-muted); font-size: 14px; }
-    @media (max-width: 768px) { .legal-card { padding: 30px; } }
+    /* CONTENU LÉGAL */
+    .legal-container { max-width: 800px; margin: 140px auto 60px; padding: 0 20px; }
+    
+    .legal-card {
+      background: var(--glass-bg); backdrop-filter: blur(30px);
+      border: 1px solid var(--glass-border); border-radius: 30px;
+      padding: 50px; box-shadow: var(--card-shadow);
+    }
+
+    h1 { font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800; text-align: center; margin-bottom: 40px; color: var(--text-main); }
+    h2 { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; margin-top: 30px; margin-bottom: 15px; color: var(--text-main); padding-bottom: 10px; border-bottom: 1px solid var(--glass-border); }
+    
+    p, li { font-size: 16px; line-height: 1.7; color: var(--text-muted); margin-bottom: 15px; }
+    ul { padding-left: 20px; }
+    a { color: var(--text-main); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--blue); }
+    
+    .info-box { background: rgba(127, 166, 198, 0.1); padding: 20px; border-radius: 15px; margin-top: 10px; border: 1px solid var(--glass-border); }
+    .info-box p { margin-bottom: 5px; color: var(--text-main); }
+    .info-box strong { color: var(--blue); }
+
+    footer { text-align: center; padding: 40px; color: var(--text-muted); border-top: 1px solid var(--glass-border); margin-top: 60px; font-size: 14px; }
+
+    @media (max-width: 768px) {
+      .legal-card { padding: 30px; }
+      h1 { font-size: 28px; }
+    }
   </style>
 </head>
 <body>
@@ -92,29 +114,39 @@
 
   <main class="legal-container">
     <div class="legal-card">
-      <h1>Politique de Confidentialité</h1>
+      <h1>Mentions Légales</h1>
 
-      <h2>1. Collecte des données</h2>
-      <p>Les seules données collectées sur ce site sont celles que vous nous transmettez volontairement via le <strong>formulaire de contact</strong> (Nom, Email, Message).</p>
-      <p>Ces données ne sont utilisées que pour vous répondre et ne sont jamais cédées à des tiers.</p>
+      <h2>1. Éditeur du site</h2>
+      <p>Le présent site est édité par <strong>Eliot SAURON</strong>, agissant à titre personnel (Portfolio Étudiant).</p>
+      <div class="info-box">
+        <p><strong>Adresse :</strong> 25660 Saône, France</p>
+        <p><strong>Téléphone :</strong> <a href="tel:+33767223979">07 67 22 39 79</a></p>
+        <p><strong>Email :</strong> <a href="mailto:eliotsauron25@gmail.com">eliotsauron25@gmail.com</a></p>
+      </div>
 
-      <h2>2. Hébergement des données</h2>
-      <p>Les données transitent par les serveurs sécurisés de <strong>Formspree</strong> (gestionnaire du formulaire) et sont stockées temporairement dans la boîte mail du destinataire.</p>
+      <h2>2. Hébergement</h2>
+      <p>Ce site est hébergé par la société <strong>Vercel Inc.</strong></p>
+      <p>Siège social : 340 S Lemon Ave #4133 Walnut, CA 91789, USA.</p>
+      <p>Site web : <a href="https://vercel.com" target="_blank">https://vercel.com</a></p>
 
-      <h2>3. Cookies & Traceurs</h2>
-      <p>Nous respectons votre vie privée : ce site <strong>n'utilise pas de cookies publicitaires</strong>.</p>
-      <p>Aucun traceur Google Analytics ou Facebook Pixel n'est installé. Votre navigation est anonyme.</p>
+      <h2>3. Propriété intellectuelle</h2>
+      <p>L’ensemble de ce site (structure, textes, graphismes, images, logos) relève de la législation française et internationale sur le droit d’auteur et la propriété intellectuelle.</p>
+      <p>Toute reproduction, représentation, modification, publication, adaptation de tout ou partie des éléments du site, quel que soit le moyen ou le procédé utilisé, est interdite, sauf autorisation écrite préalable de l'auteur.</p>
 
-      <h2>4. Vos droits</h2>
-      <p>Vous avez le droit de demander la suppression de tout échange par email en nous contactant directement à : <a href="mailto:eliotsauron25@gmail.com" style="color:var(--text-main)">eliotsauron25@gmail.com</a>.</p>
+      <h2>4. Données personnelles</h2>
+      <p>Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez d’un droit d’accès, de rectification et de suppression des données vous concernant. Pour plus d'informations, veuillez consulter notre <a href="politique-confidentialite.html">Politique de Confidentialité</a>.</p>
 
-      <p style="margin-top: 40px; font-size: 14px; opacity: 0.7; text-align: center;">Dernière mise à jour : 30 Décembre 2025</p>
+      <h2>5. Cookies</h2>
+      <p>La navigation sur ce site est respectueuse de votre vie privée. <strong>Aucun cookie publicitaire ou de traçage tiers n'est utilisé.</strong> Seuls des cookies techniques essentiels au fonctionnement peuvent être déposés.</p>
+
+      <h2>6. Responsabilité</h2>
+      <p>L’éditeur ne pourra être tenu responsable des dommages directs et indirects causés au matériel de l’utilisateur, lors de l’accès au site.</p>
 
     </div>
   </main>
 
   <footer>
-    <p>&copy; 2025 Eliot SAURON.</p>
+    <p>&copy; 2025 Eliot SAURON. Tous droits réservés.</p>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>

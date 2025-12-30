@@ -7,162 +7,72 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
-  
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23F2A18C'/%3E%3Ctext x='50' y='70' font-size='60' font-weight='800' text-anchor='middle' fill='white'%3EE%3C/text%3E%3C/svg%3E">
 
   <style>
     :root {
-      /* Palette Commune Index */
       --peach: #FFBEAC; --blue: #A4C8E6; 
       --bg-body: #F5F5F7; --text-main: #1D1D1F; --text-muted: #515154;
       --glass-bg: rgba(255, 255, 255, 0.7); --glass-border: rgba(255, 255, 255, 0.6);
       --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.05); 
-      --blob-opacity: 0.6; --radius: 30px;
+      --blob-opacity: 0.6;
     }
     [data-theme="dark"] {
       --bg-body: #151516; --text-main: #F5F5F7; --text-muted: #A1A1A6;
       --glass-bg: rgba(30, 30, 35, 0.7); --glass-border: rgba(255, 255, 255, 0.1);
       --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-      --peach: #FF9E88; --blue: #7AB2E8; --blob-opacity: 0.55;
+      --peach: #FF9E88; --blue: #7AB2E8; --blob-opacity: 0.55; 
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    
-    html.lenis { height: auto; } 
-    .lenis.lenis-smooth { scroll-behavior: auto; } 
-    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; } 
-    .lenis.lenis-stopped { overflow: hidden; } 
-    .lenis.lenis-scrolling iframe { pointer-events: none; }
+    html.lenis { height: auto; } .lenis.lenis-smooth { scroll-behavior: auto; }
+    body { font-family: 'Outfit', sans-serif; background: var(--bg-body); color: var(--text-main); transition: background 0.5s ease; min-height: 100vh; overflow-x: hidden; }
 
-    body { font-family: 'Outfit', sans-serif; background: var(--bg-body); color: var(--text-main); transition: background 0.5s ease; min-height: 100vh; overflow-x: hidden; position: relative; }
-
-    /* MESH BACKGROUND */
-    .ambient-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 0; background: var(--bg-body); pointer-events: none; }
+    /* MESH BG */
+    .ambient-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 0; pointer-events: none; }
     .mesh-blob { position: absolute; border-radius: 50%; filter: blur(90px); opacity: var(--blob-opacity); animation: float-mesh 10s infinite ease-in-out alternate; }
-    .mesh-1 { width: 80vw; height: 80vw; background: radial-gradient(circle, var(--peach), transparent 70%); top: -20%; left: -20%; animation-duration: 12s; }
-    .mesh-2 { width: 80vw; height: 80vw; background: radial-gradient(circle, var(--blue), transparent 70%); bottom: -20%; right: -20%; animation-delay: -5s; animation-duration: 15s; }
-    .mesh-3 { width: 60vw; height: 60vw; background: radial-gradient(circle, rgba(255,255,255,0.8), transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.3; }
-    [data-theme="dark"] .mesh-3 { background: radial-gradient(circle, rgba(127, 166, 198, 0.25), transparent 70%); opacity: 0.4; }
+    .mesh-1 { width: 80vw; height: 80vw; background: radial-gradient(circle, var(--peach), transparent 70%); top: -20%; left: -20%; }
+    .mesh-2 { width: 80vw; height: 80vw; background: radial-gradient(circle, var(--blue), transparent 70%); bottom: -20%; right: -20%; }
     @keyframes float-mesh { from { transform: translate(0, 0) scale(1); } to { transform: translate(20px, -20px) scale(1.05); } }
 
-    header, section, footer, .theme-toggle-fixed, .lightbox { position: relative; z-index: 2; }
-
-    /* HEADER */
-    header {
-      position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-      width: 90%; max-width: 1200px; height: 60px;
-      background: var(--glass-bg); backdrop-filter: blur(30px) saturate(180%);
-      border: 1px solid var(--glass-border); border-radius: 100px; padding: 0 25px;
-      z-index: 1000; display: flex; justify-content: space-between; align-items: center;
-      box-shadow: var(--card-shadow);
-    }
-    .logo-container { height: 100%; width: 100px; display: flex; align-items: center; text-decoration: none; }
-    .logo-text-elem { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 24px; fill: var(--text-main); letter-spacing: -1px; }
+    header { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 1200px; height: 60px; background: var(--glass-bg); backdrop-filter: blur(30px); border: 1px solid var(--glass-border); border-radius: 100px; padding: 0 25px; z-index: 1000; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--card-shadow); }
+    .logo-text-elem { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 24px; fill: var(--text-main); }
     .nav-link { text-decoration: none; color: var(--text-muted); font-weight: 600; font-size: 14px; transition: 0.3s; }
     .nav-link:hover { color: var(--text-main); }
-    
-    .theme-toggle-fixed { position: fixed; bottom: 25px; right: 25px; width: 50px; height: 50px; border-radius: 50%; background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 9999; font-size: 22px; box-shadow: var(--card-shadow); transition: transform 0.2s; }
-    .theme-toggle-fixed:hover { transform: scale(1.1); }
+    .theme-toggle-fixed { position: fixed; bottom: 25px; right: 25px; width: 50px; height: 50px; border-radius: 50%; background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 9999; font-size: 22px; box-shadow: var(--card-shadow); }
 
-    /* GALLERIE */
-    .gallery-hero { text-align: center; padding: 140px 20px 40px; }
-    .gallery-hero h1 { 
-      font-family: 'Syne', sans-serif; font-size: clamp(36px, 8vw, 60px); font-weight: 800; 
-      background: linear-gradient(135deg, var(--text-main) 30%, var(--text-muted)); 
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
-      margin-bottom: 20px; letter-spacing: -2px;
-    }
+    .gallery-hero { text-align: center; padding: 140px 20px 40px; position: relative; z-index: 2; }
+    .gallery-hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(36px, 8vw, 60px); font-weight: 800; background: linear-gradient(135deg, var(--text-main), var(--text-muted)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 20px; }
     
-    .filters { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 50px; }
-    .filter-btn { 
-      padding: 10px 24px; border-radius: 50px; 
-      background: rgba(127, 166, 198, 0.1); border: 1px solid transparent; 
-      color: var(--text-muted); cursor: pointer; font-weight: 600; transition: 0.3s; font-family: 'Outfit', sans-serif;
-    }
-    .filter-btn:hover { background: rgba(127, 166, 198, 0.2); color: var(--text-main); }
-    .filter-btn.active { background: var(--text-main); color: var(--bg-body); }
+    .filters { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 50px; position: relative; z-index: 2; }
+    .filter-btn { padding: 10px 24px; border-radius: 50px; background: rgba(127, 166, 198, 0.1); border: 1px solid transparent; color: var(--text-muted); cursor: pointer; font-weight: 600; transition: 0.3s; font-family: 'Outfit', sans-serif; }
+    .filter-btn.active, .filter-btn:hover { background: var(--text-main); color: var(--bg-body); }
 
-    .gallery-container { max-width: 1200px; margin: 0 auto 80px; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 40px; }
+    .gallery-container { max-width: 1200px; margin: 0 auto 80px; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 40px; position: relative; z-index: 2; }
     
-    .creation-card { 
-      background: var(--glass-bg); backdrop-filter: blur(30px) saturate(180%);
-      border: 1px solid var(--glass-border); border-radius: var(--radius); 
-      padding: 24px; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-      min-width: 0; display: flex; flex-direction: column; box-shadow: var(--card-shadow);
-    }
-    .creation-card:hover { transform: translateY(-8px) scale(1.01); border-color: var(--peach); }
+    .creation-card { background: var(--glass-bg); backdrop-filter: blur(30px); border: 1px solid var(--glass-border); border-radius: 30px; padding: 24px; transition: 0.4s; display: flex; flex-direction: column; box-shadow: var(--card-shadow); }
+    .creation-card:hover { transform: translateY(-8px); border-color: var(--peach); }
     .creation-card.hidden { display: none; }
     
-    .category-badge { 
-      display: inline-block; padding: 6px 14px; 
-      background: rgba(127, 166, 198, 0.15); color: var(--blue); 
-      border-radius: 20px; font-size: 11px; font-weight: 700; 
-      margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; width: fit-content;
-    }
-    [data-theme="dark"] .category-badge { color: var(--peach); background: rgba(242, 161, 140, 0.15); }
+    .image-carousel { width: 100%; aspect-ratio: 4/5; border-radius: 16px; overflow: hidden; margin-bottom: 20px; position: relative; }
+    .carousel-image { width: 100%; height: 100%; object-fit: cover; }
+    .creation-title { font-family: 'Syne'; font-weight: 700; font-size: 24px; margin-bottom: 10px; }
+    .creation-desc { font-size: 16px; color: var(--text-muted); line-height: 1.6; }
+    .pdf-link { display: inline-block; margin-top: 15px; padding: 10px 20px; background: var(--text-main); color: var(--bg-body); border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 14px; }
 
-    /* CAROUSEL */
-    .image-carousel { position: relative; width: 100%; aspect-ratio: 4/5; border-radius: 16px; overflow: hidden; margin-bottom: 24px; cursor: zoom-in; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
-    .carousel-track { display: flex; height: 100%; transition: transform 0.5s ease; touch-action: pan-y; }
-    .carousel-image { min-width: 100%; height: 100%; object-fit: cover; }
-    
-    .video-slide-container { min-width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background: black; }
-    .video-slide-container iframe { width: 100%; height: 100%; border: none; }
-    .video-vertical iframe { aspect-ratio: 9/16; width: auto; height: 100%; }
-    .video-horizontal iframe { aspect-ratio: 16/9; width: 100%; height: auto; }
-
-    .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.9); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; opacity: 0; transition: 0.3s; z-index: 10; color: #000; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-    .prev { left: 15px; } .next { right: 15px; }
-    .creation-card:hover .carousel-arrow { opacity: 1; }
-    
-    .creation-title { font-family: 'Syne', sans-serif; font-size: 24px; margin-bottom: 10px; font-weight: 700; letter-spacing: -0.5px; }
-    .creation-desc { font-size: 16px; color: var(--text-muted); line-height: 1.6; font-weight: 300; }
-    
-    .pdf-link { 
-      display: inline-flex; align-items: center; justify-content: center;
-      margin-top: 15px; padding: 12px 20px;
-      background: var(--text-main); color: var(--bg-body);
-      border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 14px;
-      transition: 0.3s; width: fit-content;
-    }
-    .pdf-link:hover { opacity: 0.9; transform: translateY(-2px); }
-
-    /* LIGHTBOX */
-    .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); z-index: 20000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; }
-    .lightbox.active { opacity: 1; pointer-events: auto; }
-    .lightbox img { max-width: 90%; max-height: 90vh; border-radius: 8px; box-shadow: 0 0 50px rgba(0,0,0,0.5); }
-    .lightbox-close { position: absolute; top: 20px; right: 20px; color: white; background: none; border: none; font-size: 40px; cursor: pointer; z-index: 20002; transition: 0.2s; }
-    .lightbox-close:hover { transform: rotate(90deg); }
-    .lightbox-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.1); color: white; border: none; width: 60px; height: 60px; border-radius: 50%; font-size: 30px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; z-index: 20001; }
-    .lightbox-nav:hover { background: rgba(255,255,255,0.3); }
-    .lightbox-prev { left: 20px; } .lightbox-next { right: 20px; }
-
-    footer { text-align: center; padding: 40px; border-top: 1px solid var(--glass-border); background: transparent; margin-top: 60px; color: var(--text-muted); font-size: 14px; }
-    
-    @media (max-width: 768px) { .gallery-container { grid-template-columns: 1fr; } .carousel-arrow { opacity: 1; } }
+    footer { text-align: center; padding: 40px; border-top: 1px solid var(--glass-border); margin-top: 60px; color: var(--text-muted); font-size: 14px; position: relative; z-index: 2; }
   </style>
 </head>
 <body>
-
   <div class="ambient-background">
-    <div class="mesh-blob mesh-1"></div><div class="mesh-blob mesh-2"></div><div class="mesh-blob mesh-3"></div>
+    <div class="mesh-blob mesh-1"></div><div class="mesh-blob mesh-2"></div>
   </div>
-  
-  <div class="page-loader" id="pageLoader"><div class="loader-text" style="font-family:'Syne';font-weight:800;font-size:50px;background:linear-gradient(135deg,var(--blue),var(--peach));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">ES</div></div>
-  
   <button class="theme-toggle-fixed" id="themeToggle">🌙</button>
 
-  <div class="lightbox" id="lightbox">
-    <button class="lightbox-close">&times;</button>
-    <button class="lightbox-nav lightbox-prev">‹</button>
-    <img src="" alt="Zoom" id="lightboxImg">
-    <button class="lightbox-nav lightbox-next">›</button>
-  </div>
-
   <header>
-    <a href="index.html" class="logo-container">
-      <svg class="logo-svg" viewBox="0 0 100 40" fill="none"><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="logo-text-elem">Eliot</text></svg>
+    <a href="index.html" class="logo-container" style="text-decoration:none;">
+      <svg width="100" height="40" viewBox="0 0 100 40"><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="logo-text-elem">Eliot</text></svg>
     </a>
     <a href="index.html" class="nav-link">← Retour Accueil</a>
   </header>
@@ -178,160 +88,49 @@
   </section>
 
   <div class="gallery-container">
-    
     <article class="creation-card" data-category="design">
-      <span class="category-badge">Direction Artistique</span>
-      <div class="image-carousel">
-        <div class="carousel-track">
-          <div class="carousel-image video-slide-container video-horizontal">
-            <iframe src="https://www.youtube.com/embed/M5rh_6vJMfU?rel=0&modestbranding=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
-          <img src="img/ajna-cover.jpg" class="carousel-image lightbox-trigger" loading="lazy" alt="Cover AJNA">
-          <img src="img/ajna-logo.jpg" class="carousel-image lightbox-trigger" loading="lazy" alt="Logo AJNA">
-        </div>
-        <button class="carousel-arrow prev">‹</button>
-        <button class="carousel-arrow next">›</button>
-      </div>
+      <div class="image-carousel"><img src="img/ajna-cover.jpg" class="carousel-image" alt="AJNA"></div>
       <h3 class="creation-title">AJNA - Rivages Invisibles</h3>
-      <p class="creation-desc">Concept d'album fictif (Rap Introspectif). Création d'un univers visuel autour du troisième œil, de la dualité lune/océan.</p>
+      <p class="creation-desc">Concept d'album fictif. Création d'un univers visuel autour du troisième œil.</p>
     </article>
-
+    
     <article class="creation-card" data-category="media">
-      <span class="category-badge">Communication / Vidéo</span>
-      <div class="image-carousel">
-        <div class="carousel-track">
-          <div class="carousel-image video-slide-container video-vertical">
-            <iframe src="https://www.youtube.com/embed/aoIdUVLWA-I?rel=0&modestbranding=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
-          <img src="img/radio-1.jpg" class="carousel-image lightbox-trigger" loading="lazy" alt="Radio Campus 1">
-          <img src="img/radio-2.jpg" class="carousel-image lightbox-trigger" loading="lazy" alt="Radio Campus 2">
-          <img src="img/radio-3.jpg" class="carousel-image lightbox-trigger" loading="lazy" alt="Radio Campus 3">
-        </div>
-        <button class="carousel-arrow prev">‹</button>
-        <button class="carousel-arrow next">›</button>
-      </div>
+      <div class="image-carousel"><img src="img/radio-1.jpg" class="carousel-image" alt="Radio"></div>
       <h3 class="creation-title">Immersion Radio Campus</h3>
-      <p class="creation-desc">Un stage solaire au cœur de l'associatif. Interviews, ambiance festival, et création de lien humain à travers la caméra.</p>
+      <p class="creation-desc">Un stage solaire. Interviews et création de lien humain.</p>
     </article>
 
     <article class="creation-card" data-category="photo">
-      <span class="category-badge">Édition / Projet</span>
-      <div class="image-carousel">
-        <div class="carousel-track">
-          <img src="img/rv-cover.jpg" class="carousel-image lightbox-trigger" loading="lazy" alt="Couverture du projet Rendez-moi en ville">
-        </div>
-      </div>
+      <div class="image-carousel"><img src="img/rv-cover.jpg" class="carousel-image" alt="Rendez-vous"></div>
       <h3 class="creation-title">"Rendez-moi en ville"</h3>
-      <p class="creation-desc">Projet poétique avec Jacques Varlet. Un travail d'observation et d'écriture sur les croisements urbains.</p>
-      <a href="img/rendez-moi-en-ville.pdf" target="_blank" class="pdf-link">📄 Voir le dossier (PDF)</a>
+      <p class="creation-desc">Projet poétique sur les croisements urbains.</p>
+      <a href="img/rendez-moi-en-ville.pdf" target="_blank" class="pdf-link">Voir le PDF</a>
     </article>
-
-    <article class="creation-card" data-category="photo">
-      <span class="category-badge">Photographie N&B</span>
-      <div class="image-carousel">
-        <div class="carousel-track">
-          <img src="img/photo-nb-1.jpg" class="carousel-image lightbox-trigger" loading="lazy" alt="Portrait N&B">
-          <img src="img/photo-nb-2.jpg" class="carousel-image lightbox-trigger" loading="lazy" alt="Sourire N&B">
-          <img src="img/photo-nb-3.jpg" class="carousel-image lightbox-trigger" loading="lazy" alt="Regard N&B">
-          <img src="img/photo-nb-4.jpg" class="carousel-image lightbox-trigger" loading="lazy" alt="Portrait lunettes">
-        </div>
-        <button class="carousel-arrow prev">‹</button>
-        <button class="carousel-arrow next">›</button>
-      </div>
-      <h3 class="creation-title">Série Noire & Blanche</h3>
-      <p class="creation-desc">Portraits et instants de vie capturés sur le vif. Une recherche sur la lumière et l'expression spontanée.</p>
-    </article>
-
-    <article class="creation-card" data-category="photo">
-      <span class="category-badge">Studio / Expérimentation</span>
-      <div class="image-carousel">
-        <div class="carousel-track">
-          <img src="img/photo-jacques-1.jpg" class="carousel-image lightbox-trigger" loading="lazy" alt="Portrait en pied">
-          <img src="img/photo-jacques-2.jpg" class="carousel-image lightbox-trigger" loading="lazy" alt="Portrait buste">
-          <img src="img/photo-jacques-3.jpg" class="carousel-image lightbox-trigger" loading="lazy" alt="Portrait américain">
-          <img src="img/photo-jacques-4.jpg" class="carousel-image lightbox-trigger" loading="lazy" alt="Photo de groupe">
-          <img src="img/photo-jacques-5.jpg" class="carousel-image lightbox-trigger" loading="lazy" alt="Portrait sans visage">
-        </div>
-        <button class="carousel-arrow prev">‹</button>
-        <button class="carousel-arrow next">›</button>
-      </div>
-      <h3 class="creation-title">Initiation Studio</h3>
-      <p class="creation-desc">Découverte du studio, des plans (pied, buste, américain) et naissance d'une véritable passion pour l'image construite.</p>
-    </article>
-
   </div>
 
-  <footer>
-    <p>&copy; 2025 Eliot SAURON. Tous droits réservés.</p>
-  </footer>
+  <footer><p>&copy; 2025 Eliot SAURON.</p></footer>
 
   <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
   <script>
-    // LOADER
-    window.addEventListener('load', () => { setTimeout(() => { document.getElementById('pageLoader').style.opacity = '0'; setTimeout(() => document.getElementById('pageLoader').remove(), 800); }, 1000); });
-    
-    // THEME
     const themeBtn = document.getElementById('themeToggle'); const html = document.documentElement;
     let isDark = localStorage.getItem('theme') === 'dark';
     const updateTheme = () => { html.setAttribute('data-theme', isDark ? 'dark' : 'light'); themeBtn.textContent = isDark ? '☀️' : '🌙'; localStorage.setItem('theme', isDark ? 'dark' : 'light'); };
     updateTheme(); themeBtn.addEventListener('click', () => { isDark = !isDark; updateTheme(); });
 
-    // SMOOTH SCROLL LENIS
-    const lenis = new Lenis();
-    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-    requestAnimationFrame(raf);
-
-    // FILTRES
     const btns = document.querySelectorAll('.filter-btn'); const cards = document.querySelectorAll('.creation-card');
     btns.forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelector('.filter-btn.active').classList.remove('active'); btn.classList.add('active');
         const filter = btn.dataset.filter;
         cards.forEach(card => { 
-          if(filter === 'all' || card.dataset.category === filter) {
-             card.classList.remove('hidden'); 
-             card.style.opacity = '0'; setTimeout(()=>card.style.opacity='1', 50);
-          } else { 
-             card.classList.add('hidden'); 
-          } 
+          if(filter === 'all' || card.dataset.category === filter) { card.classList.remove('hidden'); } else { card.classList.add('hidden'); } 
         });
       });
     });
 
-    // CAROUSEL
-    document.querySelectorAll('.creation-card').forEach(card => {
-      const track = card.querySelector('.carousel-track'); const slides = card.querySelectorAll('.carousel-image, .video-slide-container');
-      if(slides.length <= 1) { card.querySelectorAll('.carousel-arrow').forEach(a => a.style.display='none'); return; }
-      let index = 0;
-      const update = () => track.style.transform = `translateX(-${index * 100}%)`;
-      card.querySelector('.prev').addEventListener('click', (e) => { e.stopPropagation(); index = (index > 0) ? index - 1 : slides.length - 1; update(); });
-      card.querySelector('.next').addEventListener('click', (e) => { e.stopPropagation(); index = (index < slides.length - 1) ? index + 1 : 0; update(); });
-    });
-
-    // LIGHTBOX
-    const lightbox = document.getElementById('lightbox');
-    const lbImg = document.getElementById('lightboxImg');
-    const lbPrev = document.querySelector('.lightbox-prev');
-    const lbNext = document.querySelector('.lightbox-next');
-    let currentGroupImages = [];
-    let currentLbIndex = 0;
-
-    document.querySelectorAll('.lightbox-trigger').forEach(trigger => {
-      trigger.addEventListener('click', (e) => {
-        const parentCard = trigger.closest('.creation-card');
-        const allImagesInCard = Array.from(parentCard.querySelectorAll('.lightbox-trigger'));
-        currentGroupImages = allImagesInCard.map(img => img.src);
-        currentLbIndex = allImagesInCard.indexOf(trigger);
-        updateLightboxImage();
-        lightbox.classList.add('active');
-      });
-    });
-
-    function updateLightboxImage() { lbImg.src = currentGroupImages[currentLbIndex]; }
-    lbPrev.addEventListener('click', (e) => { e.stopPropagation(); currentLbIndex = (currentLbIndex > 0) ? currentLbIndex - 1 : currentGroupImages.length - 1; updateLightboxImage(); });
-    lbNext.addEventListener('click', (e) => { e.stopPropagation(); currentLbIndex = (currentLbIndex < currentGroupImages.length - 1) ? currentLbIndex + 1 : 0; updateLightboxImage(); });
-    document.querySelector('.lightbox-close').addEventListener('click', () => lightbox.classList.remove('active'));
-    lightbox.addEventListener('click', (e) => { if(e.target === lightbox) lightbox.classList.remove('active'); });
+    const lenis = new Lenis();
+    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
   </script>
 </body>
 </html>
