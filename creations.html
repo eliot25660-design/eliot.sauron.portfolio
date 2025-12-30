@@ -28,7 +28,13 @@
       --peach: #FF9E88; --blue: #7AB2E8; --blob-opacity: 0.55;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    
+    html.lenis { height: auto; } 
+    .lenis.lenis-smooth { scroll-behavior: auto; } 
+    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; } 
+    .lenis.lenis-stopped { overflow: hidden; } 
+    .lenis.lenis-scrolling iframe { pointer-events: none; }
+
     body { font-family: 'Outfit', sans-serif; background: var(--bg-body); color: var(--text-main); transition: background 0.5s ease; min-height: 100vh; overflow-x: hidden; position: relative; }
 
     /* MESH BACKGROUND */
@@ -42,7 +48,7 @@
 
     header, section, footer, .theme-toggle-fixed, .lightbox { position: relative; z-index: 2; }
 
-    /* HEADER IDENTIQUE A L'INDEX */
+    /* HEADER */
     header {
       position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
       width: 90%; max-width: 1200px; height: 60px;
@@ -259,6 +265,7 @@
     <p>&copy; 2025 Eliot SAURON. Tous droits réservés.</p>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
   <script>
     // LOADER
     window.addEventListener('load', () => { setTimeout(() => { document.getElementById('pageLoader').style.opacity = '0'; setTimeout(() => document.getElementById('pageLoader').remove(), 800); }, 1000); });
@@ -269,6 +276,11 @@
     const updateTheme = () => { html.setAttribute('data-theme', isDark ? 'dark' : 'light'); themeBtn.textContent = isDark ? '☀️' : '🌙'; localStorage.setItem('theme', isDark ? 'dark' : 'light'); };
     updateTheme(); themeBtn.addEventListener('click', () => { isDark = !isDark; updateTheme(); });
 
+    // SMOOTH SCROLL LENIS
+    const lenis = new Lenis();
+    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+
     // FILTRES
     const btns = document.querySelectorAll('.filter-btn'); const cards = document.querySelectorAll('.creation-card');
     btns.forEach(btn => {
@@ -278,7 +290,6 @@
         cards.forEach(card => { 
           if(filter === 'all' || card.dataset.category === filter) {
              card.classList.remove('hidden'); 
-             // Petite animation de réapparition
              card.style.opacity = '0'; setTimeout(()=>card.style.opacity='1', 50);
           } else { 
              card.classList.add('hidden'); 

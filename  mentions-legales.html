@@ -1,220 +1,132 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mentions Légales - Eliot SAURON</title>
+  <title>Politique de Confidentialité - Eliot SAURON</title>
   <meta name="robots" content="noindex, nofollow">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23F2A18C'/%3E%3Ctext x='50' y='70' font-size='60' font-weight='800' text-anchor='middle' fill='white'%3EE%3C/text%3E%3C/svg%3E">
+
   <style>
     :root {
-      --peach: #F2A18C;
-      --blue: #7FA6C6;
-      --gray-dark: #2C2C2C;
-      --gray-medium: #666666;
+      --peach: #FFBEAC; --blue: #A4C8E6; 
+      --bg-body: #F5F5F7; --text-main: #1D1D1F; --text-muted: #515154;
+      --glass-bg: rgba(255, 255, 255, 0.7); --glass-border: rgba(255, 255, 255, 0.6);
+      --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.05); 
+      --blob-opacity: 0.6;
+    }
+    [data-theme="dark"] {
+      --bg-body: #151516; --text-main: #F5F5F7; --text-muted: #A1A1A6;
+      --glass-bg: rgba(30, 30, 35, 0.7); --glass-border: rgba(255, 255, 255, 0.1);
+      --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+      --peach: #FF9E88; --blue: #7AB2E8; --blob-opacity: 0.55; 
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-      background: linear-gradient(135deg, #F6F9FC 0%, #FFF5F0 100%);
-      color: var(--gray-dark);
-      line-height: 1.8;
-      padding: 40px 20px;
-      min-height: 100vh;
+    
+    html.lenis { height: auto; } 
+    .lenis.lenis-smooth { scroll-behavior: auto; } 
+    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; } 
+    .lenis.lenis-stopped { overflow: hidden; } 
+    .lenis.lenis-scrolling iframe { pointer-events: none; }
+
+    body { font-family: 'Outfit', sans-serif; background: var(--bg-body); color: var(--text-main); transition: background 0.5s ease; min-height: 100vh; position: relative; }
+    
+    /* MESH BG */
+    .ambient-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 0; pointer-events: none; }
+    .mesh-blob { position: absolute; border-radius: 50%; filter: blur(90px); opacity: var(--blob-opacity); animation: float-mesh 10s infinite ease-in-out alternate; }
+    .mesh-1 { width: 80vw; height: 80vw; background: radial-gradient(circle, var(--peach), transparent 70%); top: -20%; left: -20%; animation-duration: 12s; }
+    .mesh-2 { width: 80vw; height: 80vw; background: radial-gradient(circle, var(--blue), transparent 70%); bottom: -20%; right: -20%; animation-delay: -5s; animation-duration: 15s; }
+    .mesh-3 { width: 60vw; height: 60vw; background: radial-gradient(circle, rgba(255,255,255,0.8), transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.3; }
+    [data-theme="dark"] .mesh-3 { background: radial-gradient(circle, rgba(127, 166, 198, 0.25), transparent 70%); opacity: 0.4; }
+    @keyframes float-mesh { from { transform: translate(0, 0) scale(1); } to { transform: translate(20px, -20px) scale(1.05); } }
+
+    header, main, footer, .theme-toggle-fixed { position: relative; z-index: 2; }
+
+    header {
+      position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+      width: 90%; max-width: 1200px; height: 60px;
+      background: var(--glass-bg); backdrop-filter: blur(30px) saturate(180%);
+      border: 1px solid var(--glass-border); border-radius: 100px; padding: 0 25px;
+      z-index: 1000; display: flex; justify-content: space-between; align-items: center;
+      box-shadow: var(--card-shadow);
     }
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      background: white;
-      padding: 60px;
-      border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-    }
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--peach);
-      text-decoration: none;
-      font-weight: 600;
-      margin-bottom: 32px;
-      transition: all 0.3s ease;
-    }
-    .back-link:hover {
-      gap: 12px;
-      color: var(--blue);
-    }
-    h1 {
-      font-size: 42px;
-      font-weight: 800;
-      background: linear-gradient(135deg, var(--blue), var(--peach));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 16px;
-    }
-    .date {
-      color: var(--gray-medium);
-      font-size: 14px;
-      margin-bottom: 48px;
-    }
-    h2 {
-      font-size: 28px;
-      color: var(--blue);
-      margin: 48px 0 24px;
-      font-weight: 700;
-    }
-    h3 {
-      font-size: 20px;
-      color: var(--peach);
-      margin: 32px 0 16px;
-      font-weight: 700;
-    }
-    p, li {
-      color: var(--gray-medium);
-      font-size: 16px;
-      margin-bottom: 16px;
-    }
-    ul {
-      margin-left: 24px;
-      margin-bottom: 24px;
-    }
-    li {
-      margin-bottom: 12px;
-    }
-    strong {
-      color: var(--gray-dark);
-      font-weight: 600;
-    }
-    a {
-      color: var(--peach);
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-    a:hover {
-      color: var(--blue);
-      text-decoration: underline;
-    }
-    .info-box {
-      background: rgba(127, 166, 198, 0.1);
-      border-left: 4px solid var(--blue);
-      padding: 24px;
-      border-radius: 8px;
-      margin: 32px 0;
-    }
-    @media (max-width: 768px) {
-      .container { padding: 32px 24px; }
-      h1 { font-size: 32px; }
-      h2 { font-size: 24px; }
-    }
+    .logo-container { height: 100%; width: 100px; display: flex; align-items: center; text-decoration: none; }
+    .logo-text-elem { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 24px; fill: var(--text-main); letter-spacing: -1px; }
+    .nav-link { text-decoration: none; color: var(--text-muted); font-weight: 600; font-size: 14px; transition: 0.3s; }
+    .nav-link:hover { color: var(--text-main); }
+
+    .legal-container { max-width: 800px; margin: 120px auto 60px; padding: 0 20px; }
+    .legal-card { background: var(--glass-bg); backdrop-filter: blur(30px) saturate(180%); border: 1px solid var(--glass-border); border-radius: 30px; box-shadow: var(--card-shadow); padding: 50px; }
+
+    h1 { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; margin-bottom: 30px; color: var(--text-main); text-align: center; }
+    h2 { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; margin: 30px 0 15px; color: var(--text-main); border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; }
+    p, li { font-size: 16px; line-height: 1.7; color: var(--text-muted); margin-bottom: 15px; }
+    ul { padding-left: 20px; }
+    
+    .theme-toggle-fixed { position: fixed; bottom: 25px; right: 25px; width: 50px; height: 50px; border-radius: 50%; background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 9999; font-size: 22px; transition: transform 0.2s; box-shadow: var(--card-shadow); }
+    .theme-toggle-fixed:hover { transform: scale(1.1); }
+
+    footer { text-align: center; padding: 40px; border-top: 1px solid var(--glass-border); margin-top: 60px; color: var(--text-muted); font-size: 14px; }
+    @media (max-width: 768px) { .legal-card { padding: 30px; } }
   </style>
 </head>
 <body>
-  <div class="container">
-    <a href="index.html" class="back-link">← Retour au portfolio</a>
-    
-    <h1>Mentions Légales</h1>
-    <p class="date">Dernière mise à jour : Janvier 2025</p>
 
-    <h2>1. Informations légales</h2>
-    
-    <h3>Éditeur du site</h3>
-    <div class="info-box">
-      <p><strong>Nom :</strong> Eliot SAURON</p>
-      <p><strong>Statut :</strong> Étudiant - Portfolio professionnel</p>
-      <p><strong>Adresse :</strong> Besançon (25000), France</p>
-      <p><strong>Email :</strong> <a href="mailto:eliotsauron25@gmail.com">eliotsauron25@gmail.com</a></p>
-      <p><strong>Téléphone :</strong> <a href="tel:+33767223979">07 67 22 39 79</a></p>
-    </div>
-
-    <h3>Directeur de la publication</h3>
-    <p><strong>Eliot SAURON</strong>, en qualité de propriétaire et créateur du contenu présenté sur ce site.</p>
-
-    <h3>Hébergement du site</h3>
-    <p><strong>Hébergeur :</strong> Vercel Inc.</p>
-    <p><strong>Adresse :</strong> 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis</p>
-    <p><strong>Site web :</strong> <a href="https://vercel.com" target="_blank" rel="noopener">https://vercel.com</a></p>
-
-    <h3>Développement et code source</h3>
-    <p><strong>Dépôt de code :</strong> GitHub</p>
-    <p><strong>Développeur :</strong> Eliot SAURON</p>
-
-    <h2>2. Propriété intellectuelle</h2>
-    
-    <p>L'ensemble du contenu présent sur ce site (textes, photographies, créations graphiques, designs, logos, illustrations, vidéos) est la <strong>propriété exclusive d'Eliot SAURON</strong>, sauf mention contraire explicite.</p>
-
-    <h3>Protection des créations</h3>
-    <ul>
-      <li><strong>Photographies :</strong> Toutes les photographies présentées sont protégées par le droit d'auteur français (Code de la propriété intellectuelle).</li>
-      <li><strong>Créations graphiques :</strong> Les designs, logos, identités visuelles et compositions graphiques sont protégés.</li>
-      <li><strong>Code source :</strong> Le code du site est protégé par les droits d'auteur.</li>
-    </ul>
-
-    <h3>Utilisation du contenu</h3>
-    <p><strong>Toute reproduction, représentation, modification, publication ou adaptation totale ou partielle des éléments du site est strictement interdite sans autorisation écrite préalable d'Eliot SAURON.</strong></p>
-    
-    <p>Pour toute demande d'autorisation d'utilisation :</p>
-    <ul>
-      <li>Contactez-moi par email : <a href="mailto:eliotsauron25@gmail.com">eliotsauron25@gmail.com</a></li>
-      <li>Précisez l'usage prévu et le contexte d'utilisation</li>
-    </ul>
-
-    <h2>3. Données personnelles et RGPD</h2>
-    
-    <h3>Collecte de données</h3>
-    <p>Ce site ne collecte <strong>aucune donnée personnelle</strong> automatiquement lors de votre navigation. Il n'utilise pas de cookies de traçage ou d'outils d'analyse.</p>
-
-    <h3>Formulaire de contact</h3>
-    <p>Les données saisies dans le formulaire de contact (nom, email, message) sont utilisées <strong>uniquement</strong> pour :</p>
-    <ul>
-      <li>Répondre à votre demande</li>
-      <li>Établir un contact professionnel</li>
-    </ul>
-    <p>Ces données ne sont <strong>jamais</strong> :</p>
-    <ul>
-      <li>Vendues ou transmises à des tiers</li>
-      <li>Utilisées à des fins commerciales</li>
-      <li>Conservées au-delà de la durée nécessaire au traitement de votre demande</li>
-    </ul>
-
-    <h3>Vos droits (RGPD)</h3>
-    <p>Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez des droits suivants :</p>
-    <ul>
-      <li><strong>Droit d'accès :</strong> Vous pouvez demander une copie des données vous concernant</li>
-      <li><strong>Droit de rectification :</strong> Vous pouvez demander la correction de données inexactes</li>
-      <li><strong>Droit à l'effacement :</strong> Vous pouvez demander la suppression de vos données</li>
-      <li><strong>Droit d'opposition :</strong> Vous pouvez vous opposer au traitement de vos données</li>
-    </ul>
-    <p>Pour exercer ces droits, contactez : <a href="mailto:eliotsauron25@gmail.com">eliotsauron25@gmail.com</a></p>
-
-    <h2>4. Cookies</h2>
-    <p>Ce site <strong>n'utilise aucun cookie</strong> de traçage, publicitaire ou analytique.</p>
-
-    <h2>5. Liens hypertextes</h2>
-    <p>Ce site peut contenir des liens vers des sites externes. Eliot SAURON ne peut être tenu responsable du contenu de ces sites tiers.</p>
-
-    <h2>6. Responsabilité</h2>
-    <p>Eliot SAURON s'efforce d'assurer l'exactitude des informations diffusées sur ce site, mais ne peut garantir :</p>
-    <ul>
-      <li>L'absence d'erreurs ou d'omissions</li>
-      <li>La disponibilité continue du site</li>
-      <li>L'absence de bugs ou de problèmes techniques</li>
-    </ul>
-
-    <h2>7. Droit applicable</h2>
-    <p>Les présentes mentions légales sont régies par le <strong>droit français</strong>.</p>
-    <p>En cas de litige, et après tentative de résolution amiable, les tribunaux français seront seuls compétents.</p>
-
-    <h2>8. Contact</h2>
-    <p>Pour toute question concernant ces mentions légales :</p>
-    <div class="info-box">
-      <p><strong>Email :</strong> <a href="mailto:eliotsauron25@gmail.com">eliotsauron25@gmail.com</a></p>
-      <p><strong>Téléphone :</strong> <a href="tel:+33767223979">07 67 22 39 79</a></p>
-    </div>
-
-    <p style="margin-top: 48px; text-align: center; color: var(--gray-medium); font-size: 14px;">
-      <a href="index.html" class="back-link" style="display: inline-flex;">← Retour au portfolio</a>
-    </p>
+  <div class="ambient-background">
+    <div class="mesh-blob mesh-1"></div><div class="mesh-blob mesh-2"></div><div class="mesh-blob mesh-3"></div>
   </div>
+
+  <button class="theme-toggle-fixed" id="themeToggle">🌙</button>
+
+  <header>
+    <a href="index.html" class="logo-container">
+      <svg class="logo-svg" viewBox="0 0 100 40" fill="none"><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="logo-text-elem">Eliot</text></svg>
+    </a>
+    <a href="index.html" class="nav-link">← Retour Accueil</a>
+  </header>
+
+  <main class="legal-container">
+    <div class="legal-card">
+      <h1>Politique de Confidentialité</h1>
+
+      <h2>1. Collecte des données</h2>
+      <p>Les seules données collectées sur ce site sont celles que vous nous transmettez volontairement via le <strong>formulaire de contact</strong> (Nom, Email, Message).</p>
+      <p>Ces données ne sont utilisées que pour vous répondre et ne sont jamais cédées à des tiers.</p>
+
+      <h2>2. Hébergement des données</h2>
+      <p>Les données transitent par les serveurs sécurisés de <strong>Formspree</strong> (gestionnaire du formulaire) et sont stockées temporairement dans la boîte mail du destinataire.</p>
+
+      <h2>3. Cookies & Traceurs</h2>
+      <p>Nous respectons votre vie privée : ce site <strong>n'utilise pas de cookies publicitaires</strong>.</p>
+      <p>Aucun traceur Google Analytics ou Facebook Pixel n'est installé. Votre navigation est anonyme.</p>
+
+      <h2>4. Vos droits</h2>
+      <p>Vous avez le droit de demander la suppression de tout échange par email en nous contactant directement à : <a href="mailto:eliotsauron25@gmail.com" style="color:var(--text-main)">eliotsauron25@gmail.com</a>.</p>
+
+      <p style="margin-top: 40px; font-size: 14px; opacity: 0.7; text-align: center;">Dernière mise à jour : 30 Décembre 2025</p>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Eliot SAURON.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+  <script>
+    const themeBtn = document.getElementById('themeToggle'); const html = document.documentElement;
+    let isDark = localStorage.getItem('theme') === 'dark';
+    const updateTheme = () => { html.setAttribute('data-theme', isDark ? 'dark' : 'light'); themeBtn.textContent = isDark ? '☀️' : '🌙'; localStorage.setItem('theme', isDark ? 'dark' : 'light'); };
+    updateTheme(); themeBtn.addEventListener('click', () => { isDark = !isDark; updateTheme(); });
+
+    const lenis = new Lenis();
+    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+  </script>
 </body>
 </html>
