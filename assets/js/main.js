@@ -1,277 +1,228 @@
-console.log("🚀 Portfolio Eliot SAURON - V3 Ready");
+console.log("🚀 Portfolio Eliot SAURON - V4 Final");
 
-// --- 1. GESTION DU THÈME ---
-const updateTheme = () => {
-  const isDark = localStorage.getItem('theme') === 'dark';
-  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-  const btn = document.getElementById('themeBtn');
-  if(btn) btn.textContent = isDark ? '☀️' : '🌙';
-};
-
-// --- 2. ACTIVE THEORY LITE (Scene 3D + Parallaxe) ---
-class Scene3D {
+class App {
   constructor() {
-    this.scene = document.querySelector('.scene-wrapper');
-    this.blobs = document.querySelectorAll('.blob');
-    this.x = 0; this.y = 0;
-    this.targetX = 0; this.targetY = 0;
-    this.scrollY = 0;
-    
-    // Listeners
-    window.addEventListener('mousemove', (e) => {
-      this.targetX = (e.clientX / window.innerWidth) * 2 - 1;
-      this.targetY = (e.clientY / window.innerHeight) * 2 - 1;
-    });
-    window.addEventListener('scroll', () => this.scrollY = window.scrollY);
-
-    // Loop
-    this.raf();
+    this.initGlobals();
+    this.initBarba();
+    this.scene = new Scene3D(); // Active Theory Logic
   }
 
-  raf() {
-    // Lerp pour fluidité
-    this.x += (this.targetX - this.x) * 0.05;
-    this.y += (this.targetY - this.y) * 0.05;
+  initGlobals() {
+    // Lenis Smooth Scroll
+    this.lenis = new Lenis({ duration: 1.2 });
+    const raf = (time) => { this.lenis.raf(time); requestAnimationFrame(raf); };
+    requestAnimationFrame(raf);
 
-    // A. Parallaxe Blobs
-    if(this.blobs.length) {
-      this.blobs.forEach((blob, i) => {
-        const speed = (i + 1) * 15;
-        blob.style.transform = `translate(${this.x * speed}px, ${this.y * speed}px)`;
+    // Theme Manager
+    this.updateTheme();
+    const btn = document.getElementById('themeBtn');
+    if(btn) btn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      localStorage.setItem('theme', current === 'dark' ? 'light' : 'dark');
+      this.updateTheme();
+    });
+  }
+
+  updateTheme() {
+    const isDark = localStorage.getItem('theme') === 'dark';
+    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    const btn = document.getElementById('themeBtn');
+    if(btn) btn.textContent = isDark ? '☀️' : '🌙';
+  }
+
+  // --- BARBA.JS ---
+  initBarba() {
+    barba.init({
+      sync: true,
+      transitions: [{
+        name: 'fade',
+        leave: (data) => gsap.to(data.current.container, { opacity: 0, scale: 0.95, duration: 0.4 }),
+        enter: (data) => {
+          window.scrollTo(0,0);
+          this.handlePageLoad(data.next.namespace);
+          return gsap.from(data.next.container, { opacity: 0, scale: 1.05, duration: 0.5 });
+        }
+      }]
+    });
+    // First Load
+    this.handlePageLoad(document.querySelector('.page-view').dataset.namespace);
+  }
+
+  handlePageLoad(namespace) {
+    // Nav Update
+    document.querySelectorAll('.dock-link').forEach(link => {
+      link.classList.remove('active');
+      const href = link.getAttribute('href');
+      if(window.location.pathname.includes(href) || (window.location.pathname === '/' && href === 'index.html')) {
+        link.classList.add('active');
+      }
+    });
+
+    // Page Specifics
+    if (namespace === 'home') this.initAudio();
+    if (namespace === 'creations') this.initProjects();
+  }
+
+  // --- AUDIO LOGIC (Index) ---
+  initAudio() {
+    const container = document.getElementById('videoTrigger');
+    const video = document.getElementById('myVideo');
+    const badgeIcon = container?.querySelector('.icon');
+    const badgeText = container?.querySelector('.text');
+
+    if (video && container) {
+      // Autoplay muet
+      video.muted = true;
+      video.play().catch(() => console.log('Autoplay prevented'));
+
+      container.addEventListener('click', () => {
+        if (video.muted) {
+          // UNMUTE
+          video.muted = false;
+          video.play().then(() => {
+            badgeIcon.textContent = "🔊";
+            badgeText.textContent = "Son activé — Couper";
+            badgeText.parentElement.style.background = "var(--text-main)";
+          }).catch(err => console.error("Audio play failed", err));
+        } else {
+          // MUTE
+          video.muted = true;
+          badgeIcon.textContent = "🔇";
+          badgeText.textContent = "Vidéo muette — Activer";
+          badgeText.parentElement.style.background = "rgba(0,0,0,0.6)";
+        }
       });
     }
-
-    // B. Rotation Scene au scroll (Axe X)
-    // Rotation légère : max 3deg
-    if(this.scene) {
-      const rot = Math.min(3, Math.max(-3, this.scrollY * 0.002));
-      const lift = this.scrollY * -0.05;
-      this.scene.style.transform = `rotateX(${rot}deg) translateY(${lift}px)`;
-    }
-
-    requestAnimationFrame(this.raf.bind(this));
   }
-}
 
-// --- 3. PROJECT SYSTEM (Carousel + Lightbox + Filtres) ---
-class ProjectSystem {
-  constructor() {
-    this.initFilters();
-    this.initCarousels();
+  // --- CREATIONS LOGIC ---
+  initProjects() {
+    // 1. Filtres
+    const btns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.card');
+    btns.forEach(btn => btn.addEventListener('click', () => {
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      
+      cards.forEach(card => {
+        const match = filter === 'all' || card.dataset.category === filter;
+        if(match) {
+          card.classList.remove('hidden');
+          gsap.to(card, { display:'flex', autoAlpha:1, scale:1, duration:0.4 });
+        } else {
+          gsap.to(card, { autoAlpha:0, scale:0.9, duration:0.3, onComplete:() => card.classList.add('hidden') });
+        }
+      });
+    }));
+
+    // 2. Carousels
+    document.querySelectorAll('.carousel-wrapper').forEach(wrapper => {
+      const track = wrapper.querySelector('.track');
+      const slides = wrapper.querySelectorAll('.slide');
+      if(slides.length <= 1) return;
+
+      let idx = 0;
+      const indicator = wrapper.querySelector('.slide-indicator');
+      const update = () => {
+        track.style.transform = `translateX(-${idx * 100}%)`;
+        indicator.textContent = `${idx+1}/${slides.length}`;
+      };
+
+      wrapper.querySelector('.next').addEventListener('click', (e) => { e.stopPropagation(); idx = (idx+1)%slides.length; update(); });
+      wrapper.querySelector('.prev').addEventListener('click', (e) => { e.stopPropagation(); idx = (idx-1+slides.length)%slides.length; update(); });
+    });
+
+    // 3. Lightbox
     this.initLightbox();
   }
 
-  // A. FILTRES
-  initFilters() {
-    const btns = document.querySelectorAll('.filter-btn');
-    const cards = document.querySelectorAll('.card');
-    
-    btns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        // Active Class
-        btns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        btn.setAttribute('aria-selected', 'true');
-        
-        const filter = btn.dataset.filter;
-        
-        // GSAP Animation
-        cards.forEach(card => {
-          const match = filter === 'all' || card.dataset.category === filter;
-          
-          if(match) {
-            card.classList.remove('hidden');
-            gsap.to(card, { 
-              display: 'flex', autoAlpha: 1, scale: 1, duration: 0.4, ease: 'back.out(1.2)' 
-            });
-          } else {
-            gsap.to(card, { 
-              autoAlpha: 0, scale: 0.9, duration: 0.3, 
-              onComplete: () => { card.style.display = 'none'; card.classList.add('hidden'); }
-            });
-          }
-        });
-      });
-    });
-  }
-
-  // B. CAROUSELS (Logique par carte)
-  initCarousels() {
-    document.querySelectorAll('.carousel-wrapper').forEach(wrapper => {
-      const container = wrapper.querySelector('.slides-container');
-      const slides = wrapper.querySelectorAll('.slide');
-      const prevBtn = wrapper.querySelector('.prev');
-      const nextBtn = wrapper.querySelector('.next');
-      const indicator = wrapper.querySelector('.slide-indicator');
-      
-      if(slides.length <= 1) {
-        wrapper.classList.add('single');
-        return; 
-      }
-
-      let index = 0;
-      const update = () => {
-        container.style.transform = `translateX(-${index * 100}%)`;
-        if(indicator) indicator.textContent = `${index + 1}/${slides.length}`;
-      };
-
-      nextBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        index = (index + 1) % slides.length;
-        update();
-      });
-
-      prevBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        index = (index - 1 + slides.length) % slides.length;
-        update();
-      });
-    });
-  }
-
-  // C. LIGHTBOX (Globale mais contextuelle)
   initLightbox() {
-    // Créer la lightbox si elle n'existe pas
     if(!document.querySelector('.lightbox')) {
-      const lbHTML = `
+      document.body.insertAdjacentHTML('beforeend', `
         <div class="lightbox">
           <div class="lb-close">&times;</div>
           <div class="lb-nav lb-prev">&#10094;</div>
           <div class="lb-nav lb-next">&#10095;</div>
-          <img src="" alt="Zoom Projet">
-        </div>`;
-      document.body.insertAdjacentHTML('beforeend', lbHTML);
+          <img src="">
+        </div>`);
     }
-
     const lb = document.querySelector('.lightbox');
     const lbImg = lb.querySelector('img');
-    let currentImages = [];
-    let currentIndex = 0;
+    let currentSet = [];
+    let currentIdx = 0;
 
-    const openLb = (imgSrc, allImages) => {
-      currentImages = allImages;
-      currentIndex = currentImages.indexOf(imgSrc);
-      updateImage();
+    const open = (src, set) => {
+      currentSet = set; currentIdx = set.indexOf(src);
+      lbImg.src = currentSet[currentIdx];
       lb.classList.add('active');
-      document.body.style.overflow = 'hidden'; // Lock scroll
+      document.body.style.overflow = 'hidden';
     };
-
-    const closeLb = () => {
-      lb.classList.remove('active');
-      document.body.style.overflow = '';
-    };
-
-    const updateImage = () => {
-      lbImg.src = currentImages[currentIndex];
-    };
-
-    // Trigger au clic sur une slide
+    
+    // Bind Clicks
     document.querySelectorAll('.slide').forEach(img => {
       img.addEventListener('click', () => {
-        // Récupérer toutes les images de CE carousel spécifique
-        const wrapper = img.closest('.slides-container');
-        const allSlides = Array.from(wrapper.querySelectorAll('.slide')).map(el => el.src);
-        openLb(img.src, allSlides);
+        const wrapper = img.closest('.track');
+        const set = Array.from(wrapper.querySelectorAll('.slide')).map(el => el.src);
+        open(img.src, set);
       });
     });
 
-    // Events Navigation Lightbox
-    lb.querySelector('.lb-close').addEventListener('click', closeLb);
-    lb.querySelector('.lb-next').addEventListener('click', (e) => {
-      e.stopPropagation();
-      currentIndex = (currentIndex + 1) % currentImages.length;
-      updateImage();
-    });
-    lb.querySelector('.lb-prev').addEventListener('click', (e) => {
-      e.stopPropagation();
-      currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
-      updateImage();
-    });
+    // Controls
+    const close = () => { lb.classList.remove('active'); document.body.style.overflow = ''; };
+    lb.querySelector('.lb-close').addEventListener('click', close);
+    lb.addEventListener('click', (e) => { if(e.target === lb) close(); });
     
-    // Fermer si clic dehors
-    lb.addEventListener('click', (e) => { if(e.target === lb) closeLb(); });
-
-    // Clavier
+    const nav = (dir) => {
+      currentIdx = (currentIdx + dir + currentSet.length) % currentSet.length;
+      lbImg.src = currentSet[currentIdx];
+    };
+    lb.querySelector('.lb-next').addEventListener('click', (e) => { e.stopPropagation(); nav(1); });
+    lb.querySelector('.lb-prev').addEventListener('click', (e) => { e.stopPropagation(); nav(-1); });
+    
     document.addEventListener('keydown', (e) => {
       if(!lb.classList.contains('active')) return;
-      if(e.key === 'Escape') closeLb();
-      if(e.key === 'ArrowRight') lb.querySelector('.lb-next').click();
-      if(e.key === 'ArrowLeft') lb.querySelector('.lb-prev').click();
+      if(e.key === 'Escape') close();
+      if(e.key === 'ArrowRight') nav(1);
+      if(e.key === 'ArrowLeft') nav(-1);
     });
   }
 }
 
-// --- 4. GLOBAL INIT & BARBA ---
-document.addEventListener('DOMContentLoaded', () => {
-  // Init Globals
-  const lenis = new Lenis({ duration: 1.2 });
-  function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-  requestAnimationFrame(raf);
-
-  // Theme
-  const themeBtn = document.getElementById('themeBtn');
-  if(themeBtn) {
-    themeBtn.addEventListener('click', () => {
-      localStorage.setItem('theme', document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-      updateTheme();
-    });
-    updateTheme();
-  }
-
-  // Active Theory Effect
-  new Scene3D();
-
-  // Barba
-  initBarba();
-});
-
-function initBarba() {
-  barba.init({
-    sync: true,
-    transitions: [{
-      name: 'fade',
-      leave(data) {
-        return gsap.to(data.current.container, { opacity: 0, scale: 0.95, duration: 0.4 });
-      },
-      enter(data) {
-        window.scrollTo(0,0);
-        runPageScripts(data.next.namespace);
-        return gsap.from(data.next.container, { opacity: 0, scale: 1.05, duration: 0.5 });
-      }
-    }]
-  });
-  // Run scripts for the first load
-  runPageScripts(document.querySelector('.page-view').dataset.namespace);
-}
-
-// --- 5. LOGIQUE PAR PAGE ---
-function runPageScripts(namespace) {
-  // Update Nav Active State
-  document.querySelectorAll('.dock-link').forEach(link => {
-    link.classList.remove('active');
-    if(link.getAttribute('href') === window.location.pathname.split('/').pop() || (window.location.pathname === '/' && link.getAttribute('href') === 'index.html')) {
-      link.classList.add('active');
-    }
-  });
-
-  if(namespace === 'home') {
-    // Audio Manager
-    const video = document.getElementById('myVideo');
-    const trigger = document.getElementById('videoTrigger');
-    const label = document.getElementById('soundLabel');
+// --- ACTIVE THEORY LITE ---
+class Scene3D {
+  constructor() {
+    this.blobs = document.querySelectorAll('.blob');
+    this.scene = document.querySelector('.scene-wrapper');
+    this.mx = 0; this.my = 0;
+    this.sx = 0; this.sy = 0;
     
-    if(video && trigger) {
-      video.play().catch(()=> console.log('Autoplay blocked')); // Force play
-      trigger.addEventListener('click', () => {
-        video.muted = !video.muted;
-        if(video.paused) video.play(); // Fix iOS
-        label.textContent = video.muted ? "🔇 Muet" : "🔊 Son activé";
-        label.style.background = video.muted ? "rgba(0,0,0,0.6)" : "var(--text-main)";
-      });
-    }
+    window.addEventListener('mousemove', e => {
+      this.mx = (e.clientX / window.innerWidth) * 2 - 1;
+      this.my = (e.clientY / window.innerHeight) * 2 - 1;
+    });
+    
+    this.raf();
   }
+  
+  raf() {
+    this.sx += (this.mx - this.sx) * 0.05;
+    this.sy += (this.my - this.sy) * 0.05;
+    
+    // Parallaxe Blobs
+    this.blobs.forEach((b, i) => {
+      b.style.transform = `translate(${this.sx * (i+1) * 20}px, ${this.sy * (i+1) * 20}px)`;
+    });
 
-  if(namespace === 'creations') {
-    new ProjectSystem();
+    // Rotation Scene Scroll
+    if(this.scene) {
+      const scroll = window.scrollY;
+      this.scene.style.transform = `rotateX(${scroll * 0.005}deg) translateY(${-scroll * 0.05}px)`;
+    }
+    
+    requestAnimationFrame(this.raf.bind(this));
   }
 }
+
+// START
+new App();
