@@ -3,10 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mentions Légales - Eliot SAURON</title>
-  <meta name="robots" content="noindex, nofollow">
+  <title>Réalisations - Eliot SAURON</title>
   <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23F2A18C'/%3E%3Ctext x='50' y='70' font-size='60' font-weight='800' text-anchor='middle' fill='white'%3EE%3C/text%3E%3C/svg%3E">
 </head>
 <body>
   <div class="noise-overlay"></div>
@@ -14,7 +12,7 @@
   <button class="theme-toggle" id="themeBtn">🌙</button>
 
   <header class="site-header">
-     <a href="index.html" class="logo-container">
+    <a href="index.html" class="logo-container">
       <svg class="logo-svg" viewBox="0 0 200 80" fill="none">
         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="logo-text-elem">Eliot</text>
       </svg>
@@ -22,25 +20,73 @@
   </header>
 
   <nav class="dock-nav">
-    <a href="index.html" class="dock-link">Retour Accueil</a>
+    <a href="index.html" class="dock-link">Accueil</a>
+    <a href="creations.html" class="dock-link active">Projets</a>
+    <a href="cv.html" class="dock-link">Parcours</a>
+    <a href="mailto:eliotsauron25@gmail.com" class="dock-link">Contact</a>
   </nav>
 
   <div class="scene-wrapper">
     <main data-barba="wrapper">
-      <div class="page-view" data-barba="container" data-namespace="legal">
-        <div class="legal-container">
-          <h1>Mentions Légales & Confidentialité</h1>
-          
-          <h2>1. Éditeur</h2>
-          <p><strong>Eliot SAURON</strong> (Étudiant)<br>Adresse : 25660 Saône, France<br>Email : <a href="mailto:eliotsauron25@gmail.com">eliotsauron25@gmail.com</a></p>
-
-          <h2>2. Hébergement</h2>
-          <p>Hébergé par <strong>Vercel Inc.</strong><br>340 S Lemon Ave #4133 Walnut, CA 91789, USA.</p>
-
-          <h2>3. Données & Cookies</h2>
-          <p>Ce site respecte votre vie privée. Aucun traceur publicitaire n'est utilisé. Seul un cookie technique local est employé pour mémoriser votre préférence de thème (Mode Sombre/Clair).</p>
-          <p>Conformément au RGPD, vous disposez d'un droit d'accès et de suppression de vos données personnelles en me contactant par email.</p>
+      <div class="page-view" data-barba="container" data-namespace="creations">
+        
+        <div style="text-align: center; margin-bottom: 50px;">
+          <h1>Explorations</h1>
+          <div class="filters">
+            <button class="filter-btn active" data-filter="all">Tout</button>
+            <button class="filter-btn" data-filter="design">Design</button>
+            <button class="filter-btn" data-filter="media">Vidéo</button>
+            <button class="filter-btn" data-filter="photo">Photo</button>
+          </div>
         </div>
+
+        <div class="grid">
+          
+          <div class="card" data-category="design">
+            <div class="carousel-wrapper">
+              <div class="slides-container">
+                <img src="img/ajna-cover.jpg" class="slide" alt="Ajna Cover" onerror="this.src='https://placehold.co/600x800/FFBEAC/white?text=Cover'">
+                <img src="img/ajna-logo.jpg" class="slide" alt="Ajna Logo" onerror="this.src='https://placehold.co/600x800/A4C8E6/white?text=Logo'">
+              </div>
+              <div class="carousel-nav">
+                <button class="nav-btn prev">‹</button>
+                <button class="nav-btn next">›</button>
+              </div>
+              <div class="slide-indicator">1/2</div>
+            </div>
+            <span class="badge">Identité Visuelle</span>
+            <h3>AJNA - Rivages Invisibles</h3>
+            <p>Conception d'un univers graphique complet pour un album fictif. Du logo au storytelling visuel.</p>
+          </div>
+
+          <div class="card" data-category="media">
+            <div class="carousel-wrapper">
+              <div class="slides-container">
+                <img src="img/radio-1.jpg" class="slide" alt="Radio" onerror="this.src='https://placehold.co/600x800/1D1D1F/white?text=Video+Set'">
+              </div>
+            </div>
+            <span class="badge">Création de Contenu</span>
+            <h3>Radio Campus</h3>
+            <p>Production de formats courts pour les réseaux sociaux. Captation, montage et dynamisation.</p>
+          </div>
+
+           <div class="card" data-category="photo">
+            <div class="carousel-wrapper">
+              <div class="slides-container">
+                <img src="img/photo-nb-1.jpg" class="slide" alt="Photo 1" onerror="this.src='https://placehold.co/600x800/333/white?text=NB+1'">
+                <img src="img/photo-nb-2.jpg" class="slide" alt="Photo 2" onerror="this.src='https://placehold.co/600x800/444/white?text=NB+2'">
+                <img src="img/photo-nb-3.jpg" class="slide" alt="Photo 3" onerror="this.src='https://placehold.co/600x800/555/white?text=NB+3'">
+              </div>
+              <div class="carousel-nav"><button class="nav-btn prev">‹</button><button class="nav-btn next">›</button></div>
+              <div class="slide-indicator">1/3</div>
+            </div>
+            <span class="badge">Photographie</span>
+            <h3>Série Noir & Blanc</h3>
+            <p>Travail sur la texture et la lumière naturelle en milieu urbain.</p>
+          </div>
+
+        </div>
+
       </div>
     </main>
   </div>
