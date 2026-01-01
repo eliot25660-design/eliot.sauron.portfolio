@@ -1,57 +1,60 @@
 document.addEventListener('DOMContentLoaded', () => {
-  console.log("🚀 Initialisation Portfolio - Mode Strict");
+  console.log("🚀 Initialisation Portfolio - Mode Sécurisé");
 
-  // --- 1. GESTION DU THÈME ---
+  // ==========================================
+  // 1. GESTION DU THÈME (SOMBRE / CLAIR)
+  // ==========================================
   const themeBtn = document.querySelector('.theme-btn');
   const html = document.documentElement;
   
-  // Charge le thème ou 'dark' par défaut
+  // Récupération de la préférence ou 'dark' par défaut
   const savedTheme = localStorage.getItem('theme') || 'dark';
   html.setAttribute('data-theme', savedTheme);
-  if(themeBtn) themeBtn.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
-
+  
   if(themeBtn) {
+    themeBtn.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+    
     themeBtn.addEventListener('click', () => {
       const current = html.getAttribute('data-theme');
       const newTheme = current === 'dark' ? 'light' : 'dark';
+      
       html.setAttribute('data-theme', newTheme);
       themeBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
       localStorage.setItem('theme', newTheme);
     });
   }
 
-  // --- 2. VIDEO PLAYER (SOLIDE) ---
+  // ==========================================
+  // 2. LECTEUR VIDÉO (PAGE D'ACCUEIL)
+  // ==========================================
   const videoWrapper = document.querySelector('.video-wrapper');
   const video = document.getElementById('presentation-video');
   const soundBadge = document.querySelector('.sound-badge');
 
   if(video && videoWrapper && soundBadge) {
-    // Force la configuration initiale
+    // Configuration initiale
     video.muted = true;
     video.loop = true;
-    video.playsInline = true; // Vital pour iOS
+    video.playsInline = true;
 
-    // Tentative d'autoplay
+    // Tentative de lecture automatique
     const playPromise = video.play();
     if (playPromise !== undefined) {
-      playPromise.catch(error => {
-        console.warn("Autoplay bloqué par le navigateur (normal). Attente d'interaction.", error);
+      playPromise.catch(() => {
         soundBadge.textContent = "🔇 Cliquer pour lancer";
       });
     }
 
-    // Gestion du clic Mute/Unmute
+    // Gestion du clic pour le son
     videoWrapper.addEventListener('click', () => {
       if(video.muted) {
-        // On active le son
         video.muted = false;
-        video.currentTime = 0; // Restart pour l'effet
+        video.currentTime = 0;
         video.play().then(() => {
           soundBadge.textContent = "🔊 Son activé";
-          videoWrapper.style.borderColor = "var(--peach)";
-        }).catch(e => console.error("Erreur lecture", e));
+          videoWrapper.style.borderColor = "#FFBEAC"; // Couleur Peach
+        }).catch(console.error);
       } else {
-        // On coupe le son
         video.muted = true;
         soundBadge.textContent = "🔇 Vidéo muette";
         videoWrapper.style.borderColor = "rgba(255,255,255,0.1)";
@@ -59,152 +62,169 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- 3. EFFET PARALLAXE SOURIS (LÉGER) ---
+  // ==========================================
+  // 3. EFFET DE FOND (PARALLAXE)
+  // ==========================================
   const blobs = document.querySelectorAll('.blob');
-  let mouseX = 0, mouseY = 0;
-  
-  window.addEventListener('mousemove', (e) => {
-    // Normalise entre -1 et 1
-    mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-    mouseY = (e.clientY / window.innerHeight) * 2 - 1;
-    
-    blobs.forEach((blob, index) => {
-      const speed = (index + 1) * 20; // Vitesse différente par blob
-      const x = mouseX * speed;
-      const y = mouseY * speed;
-      blob.style.transform = `translate(${x}px, ${y}px)`;
+  if(blobs.length > 0) {
+    window.addEventListener('mousemove', (e) => {
+      const mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+      const mouseY = (e.clientY / window.innerHeight) * 2 - 1;
+      
+      blobs.forEach((blob, index) => {
+        const speed = (index + 1) * 20;
+        const x = mouseX * speed;
+        const y = mouseY * speed;
+        blob.style.transform = `translate(${x}px, ${y}px)`;
+      });
     });
-  });
+  }
 
-  // --- 4. SYSTÈME DE FILTRES ---
+  // ==========================================
+  // 4. SYSTÈME DE FILTRES (PAGE PROJETS)
+  // ==========================================
   const filterBtns = document.querySelectorAll('.filter-btn');
   const cards = document.querySelectorAll('.project-card');
 
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      // Gestion boutons
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      
-      const category = btn.getAttribute('data-filter');
+  if(filterBtns.length > 0 && cards.length > 0) {
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Boutons
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        const category = btn.getAttribute('data-filter');
 
-      // Gestion cartes
-      cards.forEach(card => {
-        const cardCat = card.getAttribute('data-category');
-        if(category === 'all' || cardCat === category) {
-          card.style.display = 'flex';
-          // Petit délai pour l'anim opacity
-          setTimeout(() => card.style.opacity = '1', 10);
-        } else {
-          card.style.display = 'none';
-          card.style.opacity = '0';
-        }
+        // Cartes
+        cards.forEach(card => {
+          const cardCat = card.getAttribute('data-category');
+          if(category === 'all' || cardCat === category) {
+            card.style.display = 'flex';
+            setTimeout(() => card.style.opacity = '1', 10);
+          } else {
+            card.style.display = 'none';
+            card.style.opacity = '0';
+          }
+        });
       });
     });
-  });
+  }
 
-  // --- 5. GESTION LIGHTBOX & CARROUSELS ---
+  // ==========================================
+  // 5. LIGHTBOX (GALERIE PLEIN ÉCRAN)
+  // ==========================================
   const lb = document.querySelector('.lightbox');
-  
-  // Variables globales pour la lightbox
-  let currentLbImages = [];
-  let currentLbIndex = 0;
-  let lbImg, lbCounter;
+  let openLightbox = null; // Variable pour stocker la fonction
 
-  // Initialisation de la Lightbox si elle existe dans le DOM
   if(lb) {
-    lbImg = lb.querySelector('img');
-    lbCounter = lb.querySelector('.lb-counter');
+    const lbImg = lb.querySelector('img');
+    const lbCounter = lb.querySelector('.lb-counter');
     const closeBtn = lb.querySelector('.lb-close');
     const nextBtn = lb.querySelector('.lb-next');
     const prevBtn = lb.querySelector('.lb-prev');
 
-    // Fonction d'ouverture accessible globalement
-    window.openLightbox = (imgArray, index) => {
-      currentLbImages = imgArray;
-      currentLbIndex = index;
+    let currentImages = [];
+    let currentIndex = 0;
+
+    const updateLbImage = () => {
+      if(lbImg && currentImages.length > 0) {
+        lbImg.src = currentImages[currentIndex];
+        if(lbCounter) lbCounter.textContent = `${currentIndex + 1} / ${currentImages.length}`;
+      }
+    };
+
+    // Fonction globale d'ouverture
+    openLightbox = (imgArray, index) => {
+      currentImages = imgArray;
+      currentIndex = index;
       updateLbImage();
       lb.classList.add('active');
     };
 
-    // Mise à jour de l'image de la lightbox
-    const updateLbImage = () => {
-      lbImg.src = currentLbImages[currentLbIndex];
-      if(lbCounter) {
-        lbCounter.textContent = `${currentLbIndex + 1} / ${currentLbImages.length}`;
-      }
-    };
-
     // Fermeture
     const closeLightbox = () => lb.classList.remove('active');
-    closeBtn.addEventListener('click', closeLightbox);
+    if(closeBtn) closeBtn.addEventListener('click', closeLightbox);
     lb.addEventListener('click', (e) => { if(e.target === lb) closeLightbox(); });
 
-    // Navigation Lightbox
-    nextBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      currentLbIndex = (currentLbIndex + 1) % currentLbImages.length;
-      updateLbImage();
-    });
+    // Navigation
+    if(nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if(currentImages.length > 0) {
+          currentIndex = (currentIndex + 1) % currentImages.length;
+          updateLbImage();
+        }
+      });
+    }
 
-    prevBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      currentLbIndex = (currentLbIndex - 1 + currentLbImages.length) % currentLbImages.length;
-      updateLbImage();
-    });
+    if(prevBtn) {
+      prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if(currentImages.length > 0) {
+          currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+          updateLbImage();
+        }
+      });
+    }
   }
 
-  // --- 6. LOGIQUE DES CARROUSELS (Cartes Projets) ---
+  // ==========================================
+  // 6. GESTION DES CARROUSELS (CARTES)
+  // ==========================================
   const carousels = document.querySelectorAll('.carousel');
 
   carousels.forEach(carousel => {
-    // Récupération sécurisée des données JSON
+    // 1. Récupération sécurisée des images
     let images = [];
     try {
-      images = JSON.parse(carousel.dataset.images || '[]');
+      if(carousel.dataset.images) {
+        images = JSON.parse(carousel.dataset.images);
+      }
     } catch (e) {
-      console.error("Erreur parsing JSON images", e);
-      return;
+      console.warn("Erreur JSON image", e);
+      return; // On saute ce carrousel s'il est mal formé
     }
 
-    if (images.length === 0) return;
+    if(images.length === 0) return;
 
+    // 2. Sélection des éléments internes (avec vérification)
     const slideImg = carousel.querySelector('.slide');
     const prevBtn = carousel.querySelector('.prev');
     const nextBtn = carousel.querySelector('.next');
     const indicator = carousel.querySelector('.slide-indicator');
-    let currentIndex = 0;
+    let index = 0;
 
-    // Fonction de mise à jour de la slide locale
-    const updateSlide = () => {
-      slideImg.src = images[currentIndex];
-      if (indicator) indicator.textContent = `${currentIndex + 1}/${images.length}`;
+    // S'il n'y a pas d'image affichée, on arrête pour éviter le crash
+    if(!slideImg) return;
+
+    const updateCard = () => {
+      slideImg.src = images[index];
+      if(indicator) indicator.textContent = `${index + 1}/${images.length}`;
     };
 
-    // Clic image -> Ouvre la Lightbox
-    slideImg.addEventListener('click', () => {
-      if(window.openLightbox) {
-        window.openLightbox(images, currentIndex);
-      }
-    });
-
-    // Bouton Suivant (Carte)
-    if(nextBtn) {
-      nextBtn.addEventListener('click', (e) => {
-        e.stopPropagation(); // Empêche l'ouverture de la lightbox
-        currentIndex = (currentIndex + 1) % images.length;
-        updateSlide();
-      });
-    }
-
-    // Bouton Précédent (Carte)
+    // 3. Navigation (seulement si les boutons existent)
     if(prevBtn) {
       prevBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-        updateSlide();
+        index = (index - 1 + images.length) % images.length;
+        updateCard();
       });
     }
+
+    if(nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        index = (index + 1) % images.length;
+        updateCard();
+      });
+    }
+
+    // 4. Ouverture Lightbox au clic sur l'image
+    slideImg.addEventListener('click', () => {
+      if(openLightbox) {
+        openLightbox(images, index);
+      }
+    });
   });
 
 });
