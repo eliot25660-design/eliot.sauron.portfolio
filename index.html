@@ -1,143 +1,31 @@
 <!DOCTYPE html>
-<html lang="fr" data-theme="light">
+<html lang="fr" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Eliot SAURON - Designer & Communication</title>
+  <title>Eliot SAURON – Communication • Design • Vidéo</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
   
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23F2A18C'/%3E%3Ctext x='50' y='70' font-size='60' font-weight='800' text-anchor='middle' fill='white'%3EE%3C/text%3E%3C/svg%3E">
-
-  <style>
-    :root {
-      --peach: #FFBEAC; --blue: #A4C8E6; 
-      --bg-body: #F0F0F5; --text-main: #1D1D1F; --text-muted: #515154;
-      --glass-bg: rgba(255, 255, 255, 0.75); 
-      --glass-border: rgba(255, 255, 255, 0.6);
-      --shadow: 0 15px 40px rgba(0,0,0,0.05);
-    }
-    [data-theme="dark"] {
-      --bg-body: #050505; --text-main: #F5F5F7; --text-muted: #A1A1A6;
-      --glass-bg: rgba(20, 20, 20, 0.75); --glass-border: rgba(255, 255, 255, 0.1);
-      --shadow: 0 15px 40px rgba(0,0,0,0.5);
-      --peach: #FF9E88; --blue: #7AB2E8;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Outfit', sans-serif; background: var(--bg-body); color: var(--text-main); transition: background 0.3s; overflow-x: hidden; }
-
-    /* GRAIN TEXTURE */
-    .noise { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 99; opacity: 0.05; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E"); }
-
-    /* FOND ANIMÉ */
-    .bg-blobs { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; pointer-events: none; }
-    .blob { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.5; animation: float 15s infinite ease-in-out alternate; }
-    .b1 { width: 70vw; height: 70vw; background: var(--peach); top: -20%; left: -10%; }
-    .b2 { width: 70vw; height: 70vw; background: var(--blue); bottom: -20%; right: -10%; animation-delay: -5s; }
-    @keyframes float { 0% { transform: translate(0,0) rotate(0deg); } 100% { transform: translate(30px, 50px) rotate(10deg); } }
-
-    /* HEADER */
-    header {
-      position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-      width: 90%; max-width: 1100px; height: 60px;
-      background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border); border-radius: 100px; padding: 0 25px;
-      z-index: 1000; display: flex; justify-content: space-between; align-items: center;
-      box-shadow: var(--shadow);
-    }
-    
-    .logo-container { height: 100%; display: flex; align-items: center; text-decoration: none; width: 140px; }
-    .logo-text { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 26px; fill: var(--text-main); letter-spacing: -1px; }
-    .cloud-path { stroke-dasharray: 600; stroke-dashoffset: 600; animation: drawCloud 4s ease-in-out infinite; }
-    @keyframes drawCloud { 0% { stroke-dashoffset: 600; opacity: 0; } 15% { opacity: 1; } 50% { stroke-dashoffset: 0; opacity: 1; } 80% { opacity: 0; } 100% { stroke-dashoffset: 0; opacity: 0; } }
-
-    .nav { display: flex; gap: 30px; align-items: center; }
-    .nav a { text-decoration: none; color: var(--text-muted); font-weight: 600; font-size: 15px; transition: 0.2s; }
-    .nav a:hover { color: var(--text-main); }
-    
-    .btn-cv {
-      background: var(--text-main); color: var(--bg-body) !important;
-      padding: 8px 20px; border-radius: 30px; font-weight: 700; font-size: 14px;
-      display: inline-flex; align-items: center; gap: 8px; transition: transform 0.2s;
-    }
-    .btn-cv:hover { transform: scale(1.05); }
-
-    /* HERO */
-    .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 120px 20px 60px; }
-    
-    .blob-video {
-      width: 280px; height: 280px; margin-bottom: 40px;
-      border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
-      overflow: hidden; border: 4px solid var(--glass-border);
-      box-shadow: var(--shadow); position: relative; 
-      animation: morph 8s ease-in-out infinite; cursor: pointer;
-    }
-    @keyframes morph { 0%, 100% { border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%; } 50% { border-radius: 58% 42% 30% 70% / 55% 55% 45% 45%; } }
-    
-    /* REGLAGE PRECIS VIDEO */
-    video { width: 100%; height: 100%; object-fit: cover; object-position: 50% 35% !important; }
-
-    h1 { font-family: 'Syne', sans-serif; font-size: clamp(48px, 10vw, 90px); font-weight: 800; line-height: 0.95; margin-bottom: 15px; background: linear-gradient(135deg, var(--text-main), var(--text-muted)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    h2 { font-family: 'Syne', sans-serif; font-size: clamp(18px, 4vw, 22px); color: var(--blue); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; font-weight: 700; }
-    p { font-size: clamp(18px, 4vw, 20px); color: var(--text-muted); max-width: 650px; margin-bottom: 50px; line-height: 1.6; }
-
-    .btns { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
-    .btn-main { padding: 16px 36px; background: var(--text-main); color: var(--bg-body); border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 18px; transition: 0.2s; }
-    .btn-sec { padding: 16px 36px; background: rgba(127,166,198,0.1); color: var(--text-main); border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 18px; transition: 0.2s; border: 1px solid var(--glass-border); }
-    .btn-main:hover { transform: translateY(-3px); }
-    .btn-sec:hover { background: rgba(127,166,198,0.2); }
-
-    /* SECTIONS */
-    .section { padding: 80px 20px; max-width: 1000px; margin: 0 auto; }
-    .section h2 { font-family: 'Syne'; font-size: 36px; margin-bottom: 50px; text-align: center; }
-    
-    .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-    .skills-text p { font-size: 18px; color: var(--text-muted); line-height: 1.8; margin-bottom: 20px; text-align: justify; }
-    
-    .bar-wrap { margin-bottom: 20px; }
-    .bar-info { display: flex; justify-content: space-between; font-weight: 600; color: var(--text-main); font-size: 16px; margin-bottom: 8px; }
-    .bar { height: 6px; background: rgba(127,166,198,0.15); border-radius: 10px; overflow: hidden; }
-    .fill { height: 100%; background: linear-gradient(90deg, var(--peach), var(--blue)); border-radius: 10px; }
-
-    /* CONTACT & FOOTER */
-    .contact-form { background: var(--glass-bg); padding: 50px; border-radius: 40px; border: 1px solid var(--glass-border); box-shadow: var(--shadow); max-width: 700px; margin: 0 auto; }
-    input, textarea { width: 100%; padding: 20px; margin-bottom: 20px; border-radius: 15px; border: 1px solid transparent; background: rgba(127,166,198,0.08); color: var(--text-main); font-family: inherit; font-size: 16px; transition: 0.3s; }
-    input:focus, textarea:focus { outline: none; border-color: var(--blue); background: var(--glass-bg); }
-    .submit-btn { width: 100%; padding: 20px; background: var(--text-main); color: var(--bg-body); border: none; border-radius: 15px; font-weight: 800; font-size: 18px; cursor: pointer; transition: 0.2s; }
-    .submit-btn:hover { transform: translateY(-2px); }
-
-    footer { text-align: center; padding: 20px 20px 40px; color: var(--text-muted); margin-top: 0; }
-    .socials { display: flex; justify-content: center; gap: 25px; margin-bottom: 20px; }
-    .socials a { color: var(--text-main); transition: 0.2s; }
-    .socials a:hover { color: var(--blue); transform: translateY(-3px); }
-    .socials svg { width: 28px; height: 28px; }
-    .legals a { color: var(--text-muted); font-size: 13px; text-decoration: none; margin: 0 10px; opacity: 0.7; }
-    .legals a:hover { opacity: 1; color: var(--text-main); }
-
-    .theme-toggle { position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; background: var(--glass-bg); border-radius: 50%; border: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; z-index: 100; box-shadow: var(--shadow); }
-    .menu-btn { display: none; background:none; border:none; font-size:24px; color:var(--text-main); cursor:pointer; }
-
-    @media (max-width: 768px) {
-      .nav { position: fixed; top: 0; right: -100%; width: 100%; height: 100vh; background: var(--bg-body); flex-direction: column; justify-content: center; transition: 0.4s; z-index: 99; }
-      .nav.active { right: 0; }
-      .menu-btn { display: block; z-index: 101; }
-      .skills-grid { grid-template-columns: 1fr; gap: 40px; }
-      .hero { padding-top: 140px; }
-    }
-  </style>
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
   <div class="noise"></div>
-  <div class="bg-blobs"><div class="blob b1"></div><div class="blob b2"></div></div>
-  <button class="theme-toggle" id="themeBtn">🌙</button>
+  <div class="bg-blobs">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+  </div>
+
+  <button class="theme-btn" aria-label="Changer de thème">🌙</button>
 
   <header>
     <a href="index.html" class="logo-container">
-      <svg class="logo-svg" viewBox="0 0 200 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 200 80" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <filter id="cloud-blur" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur in="SourceGraphic" stdDeviation="4" />
@@ -151,42 +39,42 @@
         <path class="cloud-path" d="M20,40 C20,20 50,-10 100,10 C150,30 180,20 180,40 C180,60 150,90 100,70 C50,50 20,60 20,40" stroke="url(#cloud-gradient)" stroke-width="5" fill="none" stroke-linecap="round" filter="url(#cloud-blur)" />
       </svg>
     </a>
-    <button class="menu-btn" id="menuBtn">☰</button>
-    <nav class="nav" id="nav">
+    <button class="menu-btn" aria-label="Menu">☰</button>
+    <nav class="nav">
       <a href="creations.html">Projets</a>
       <a href="#contact">Contact</a>
       <a href="cv.html" class="btn-cv">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/></svg>
-        Mon Parcours
+        Parcours
       </a>
     </nav>
   </header>
 
   <section class="hero">
-    <div class="blob-video" onclick="toggleSound()">
-      <video id="myVideo" src="img/video-presentation.mp4" autoplay muted loop playsinline></video>
-      <div id="soundLabel" style="position:absolute; bottom:20px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.5); color:white; padding:5px 12px; border-radius:20px; font-size:12px; font-weight:600; pointer-events:none;">🔇 Muet</div>
+    <div class="video-wrapper">
+      <video id="presentation-video" src="img/video-presentation.mp4" muted loop playsinline></video>
+      <div class="sound-badge">🔇 Vidéo muette — cliquer pour activer le son</div>
     </div>
 
     <h1>Eliot SAURON</h1>
-    <h2>Designer Créatif & Front-End</h2>
-    <p>Je ne capture pas seulement des images, je construis des univers. <br>Avec peu, j'imagine le tout. Une texture, une image, une émotion.</p>
+    <h2>Communication • Design visuel • Vidéo</h2>
+    <p>De l'idée au visuel final, je construis des univers cohérents.<br>Étudiant en BUT Info-Com, spécialisé en création et storytelling.</p>
 
     <div class="btns">
-      <a href="creations.html" class="btn-main">Découvrir mes projets</a>
+      <a href="creations.html" class="btn-main">Voir mes projets</a>
       <a href="#contact" class="btn-sec">Me contacter</a>
     </div>
   </section>
 
-  <section id="about" class="section">
-    <h2>Ma Vision</h2>
+  <section id="about" class="section reveal">
+    <h2>Ma démarche</h2>
     <div class="skills-grid">
       <div class="skills-text">
-        <p>Mon approche n'est pas de prétendre tout savoir, mais de tout vouloir comprendre. Ce qui a du sens pour moi, c'est le processus global : de la première idée à l'affiche finale, du déclenchement de l'appareil au montage vidéo.</p>
-        <p>Je crée des schémas mentaux où une simple image devient une texture, une ambiance. J'aime partir de "peu" pour construire un univers complet et transmettre une émotion brute. Ma plus grande force ? La soif d'apprendre et l'envie sincère de connecter avec les gens.</p>
+        <p>Mon approche repose sur la compréhension globale des projets : de la conception initiale à la réalisation finale. Je ne me limite pas à un seul outil ou domaine.</p>
+        <p>Ce qui me guide : construire du sens à travers l'image, la vidéo et le design. Créer des contenus qui résonnent, en alliant technique et sensibilité artistique.</p>
       </div>
       <div>
-        <div class="bar-wrap"><div class="bar-info"><span>Communication & Soft Skills</span><span>Expert</span></div><div class="bar"><div class="fill" style="width:95%"></div></div></div>
+        <div class="bar-wrap"><div class="bar-info"><span>Communication</span><span>Expert</span></div><div class="bar"><div class="fill" style="width:95%"></div></div></div>
         <div class="bar-wrap"><div class="bar-info"><span>Vidéo & Montage</span><span>Avancé</span></div><div class="bar"><div class="fill" style="width:80%"></div></div></div>
         <div class="bar-wrap"><div class="bar-info"><span>Design Graphique</span><span>Avancé</span></div><div class="bar"><div class="fill" style="width:75%"></div></div></div>
         <div class="bar-wrap"><div class="bar-info"><span>Intégration Web</span><span>Intermédiaire</span></div><div class="bar"><div class="fill" style="width:60%"></div></div></div>
@@ -194,22 +82,26 @@
     </div>
   </section>
 
-  <section id="contact" class="section" style="padding-bottom:20px;">
+  <section id="contact" class="section reveal">
     <div class="contact-form">
-      <h2>Parlons Passion</h2>
+      <h2>Échanger sur un projet</h2>
       <form action="https://formspree.io/f/mblwgzve" method="POST">
-        <input type="text" name="name" placeholder="Votre Nom" required>
-        <input type="email" name="email" placeholder="Votre Email" required>
-        <textarea name="message" rows="5" placeholder="Une idée ? Un projet ?..." required></textarea>
-        <button type="submit" class="submit-btn">Envoyer le message</button>
+        <input type="text" name="name" placeholder="Votre nom" required>
+        <input type="email" name="email" placeholder="Votre email" required>
+        <textarea name="message" rows="5" placeholder="Votre message..." required></textarea>
+        <button type="submit" class="submit-btn">Envoyer</button>
       </form>
     </div>
   </section>
 
   <footer>
     <div class="socials">
-      <a href="https://www.linkedin.com/in/eliot-sauron/" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
-      <a href="mailto:eliotsauron25@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12.713l-12-9.713h24l-12 9.713zm-12 5.287l6.932-6.932 5.068 4.793 5.068-4.793 6.932 6.932h-24z"/></svg></a>
+      <a href="https://www.linkedin.com/in/eliot-sauron/" target="_blank" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+      </a>
+      <a href="mailto:eliotsauron25@gmail.com" aria-label="Email">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12.713l-12-9.713h24l-12 9.713zm-12 5.287l6.932-6.932 5.068 4.793 5.068-4.793 6.932 6.932h-24z"/></svg>
+      </a>
     </div>
     <div class="legals">
       <a href="mentions-legales.html">Mentions Légales</a>
@@ -218,18 +110,6 @@
     <p style="margin-top:20px; font-size:12px; opacity:0.6;">© 2025 Eliot SAURON.</p>
   </footer>
 
-  <script>
-    const video = document.getElementById('myVideo'); const label = document.getElementById('soundLabel');
-    function toggleSound() { if(video.muted) { video.muted = false; label.textContent="🔊"; } else { video.muted = true; label.textContent="🔇"; } }
-    
-    const menuBtn = document.getElementById('menuBtn'); const nav = document.getElementById('nav');
-    menuBtn.addEventListener('click', () => nav.classList.toggle('active')); nav.addEventListener('click', () => nav.classList.remove('active'));
-
-    const btn = document.getElementById('themeBtn'); const html = document.documentElement;
-    let isDark = localStorage.getItem('theme') === 'dark';
-    const setT = () => { html.setAttribute('data-theme', isDark ? 'dark':'light'); btn.textContent = isDark ? '☀️':'🌙'; localStorage.setItem('theme', isDark ? 'dark':'light'); }
-    setT();
-    btn.addEventListener('click', () => { isDark = !isDark; setT(); });
-  </script>
+  <script src="assets/js/main.js"></script>
 </body>
 </html>

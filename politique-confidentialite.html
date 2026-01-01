@@ -3,36 +3,56 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Confidentialité - Eliot SAURON</title>
+  <title>Confidentialité – Eliot SAURON</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23F2A18C'/%3E%3Ctext x='50' y='70' font-size='60' font-weight='800' text-anchor='middle' fill='white'%3EE%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <div class="ambient-wrapper"><div class="blob b2"></div><div class="noise"></div></div>
-  
-  <header class="site-header">
-     <a href="index.html" class="logo">Eliot.</a>
+
+  <div class="noise"></div>
+  <div class="bg-blobs"><div class="blob b2"></div></div>
+
+  <button class="theme-btn" aria-label="Changer de thème">🌙</button>
+
+  <header>
+    <a href="index.html" class="logo-container">
+      <svg viewBox="0 0 200 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="logo-text">Eliot</text>
+      </svg>
+    </a>
+    <a href="index.html" class="back-btn">← Accueil</a>
   </header>
-  <nav class="dock-nav"><a href="index.html" class="nav-link">Retour Accueil</a></nav>
 
-  <main class="scene-container">
-    <div class="container" style="max-width: 800px;">
-      <h1 class="reveal" style="margin-bottom: 40px;">Politique de Confidentialité</h1>
+  <div class="legal-container">
+    <div class="legal-card">
+      <h1>Politique de Confidentialité</h1>
       
-      <div class="cv-section reveal">
+      <section class="legal-section">
         <h3>Données</h3>
-        <p>Ce site est un portfolio statique. Il ne possède pas de base de données, pas de formulaire de contact stocké en ligne, et pas de compte utilisateur.</p>
-      </div>
+        <p>
+          Ce site est un portfolio statique. Il ne possède pas de base de données, pas de formulaire de contact stocké en ligne, et pas de compte utilisateur.
+        </p>
+      </section>
 
-      <div class="cv-section reveal">
+      <section class="legal-section">
         <h3>Cookies</h3>
-        <p>Nous n'utilisons <strong>aucun cookie publicitaire</strong> ni traceur tiers.</p>
-        <p>Le seul stockage local ("localStorage") utilisé sert à mémoriser votre préférence de thème (Sombre/Clair) directement sur votre appareil.</p>
-      </div>
+        <p>
+          Nous n'utilisons <strong>aucun cookie publicitaire</strong> ni traceur tiers.
+        </p>
+        <p>
+          Le seul stockage local ("localStorage") utilisé sert à mémoriser votre préférence de thème (Sombre/Clair) directement sur votre appareil.
+        </p>
+      </section>
     </div>
-  </main>
-  
+  </div>
+
+  <footer>
+    <p style="text-align:center; padding:40px; color:var(--text-muted); font-size:14px;">© 2025 Eliot SAURON.</p>
+  </footer>
+
   <script src="assets/js/main.js"></script>
 </body>
 </html>
