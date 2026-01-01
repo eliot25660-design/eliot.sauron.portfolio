@@ -10,111 +10,98 @@
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <div class="noise-overlay"></div>
-  <div class="ambient-bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
-  <button class="theme-toggle" id="themeBtn">☀️</button>
+
+  <div class="ambient-wrapper">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="noise"></div>
+  </div>
 
   <header class="site-header">
-    <a href="index.html" class="logo-container">
-      <svg class="logo-svg" viewBox="0 0 200 80" fill="none">
-        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="logo-text-elem">Eliot</text>
-      </svg>
-    </a>
+    <a href="index.html" class="logo">Eliot.</a>
+    <button class="theme-toggle">☀️</button>
   </header>
 
   <nav class="dock-nav">
-    <a href="index.html" class="dock-link">Accueil</a>
-    <a href="creations.html" class="dock-link">Projets</a>
-    <a href="cv.html" class="dock-link active">Parcours</a>
-    <a href="mailto:eliotsauron25@gmail.com" class="dock-link">Contact</a>
+    <a href="index.html" class="nav-link">Accueil</a>
+    <a href="creations.html" class="nav-link">Projets</a>
+    <a href="cv.html" class="nav-link active">Parcours</a>
+    <a href="mailto:eliotsauron25@gmail.com" class="nav-link">Contact</a>
   </nav>
 
-  <div class="scene-wrapper">
-    <main data-barba="wrapper">
-      <div class="page-view" data-barba="container" data-namespace="cv">
-        
-        <div class="container">
-          <div class="cv-layout">
-            
-            <div class="cv-card profile-card">
-              <div class="profile-img-wrap">
-                <img src="img/profil.jpg" alt="Eliot Sauron" onerror="this.src='https://placehold.co/200x200/FFBEAC/white?text=ES'">
-              </div>
-              <h2>Eliot SAURON</h2>
-              <p class="role">Communication & Design</p>
-              <p class="loc">📍 Besançon, France</p>
-              <a href="cv-eliot-sauron.pdf" class="btn-sm" download>Télécharger CV</a>
-            </div>
+  <main class="scene-container">
+    <div class="container" style="max-width: 900px;">
+      
+      <div class="reveal" style="text-align: center; margin-bottom: 50px;">
+        <img src="img/profil.jpg" alt="Eliot Sauron" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 20px; border: 4px solid var(--glass-border);" onerror="this.src='https://placehold.co/200x200/FFBEAC/white?text=ES'">
+        <h1>Eliot SAURON</h1>
+        <p style="color: var(--accent); font-weight: 700;">Communication & Design Visuel</p>
+        <p>📍 Besançon, France</p>
+        <a href="cv-eliot-sauron.pdf" class="btn btn-primary" style="margin-top: 15px;" download>Télécharger CV (PDF)</a>
+      </div>
 
-            <div class="cv-card intro-card">
-              <h3>Ma Vision</h3>
-              <p>Étudiant en B.U.T. Info-Com, je ne cherche pas seulement à faire du "beau", mais du <strong>pertinent</strong>. J'allie maîtrise technique des outils Adobe et réflexion stratégique pour servir le message.</p>
-            </div>
+      <div class="cv-section reveal">
+        <h3>À Propos</h3>
+        <p style="margin-top: 15px;">
+          Étudiant curieux et créatif, je ne cherche pas seulement à faire du "beau", mais du pertinent. J'allie maîtrise technique des outils Adobe et réflexion stratégique pour servir le message, que ce soit par l'image, la vidéo ou le web.
+        </p>
+      </div>
 
-            <div class="cv-card edu-card">
-              <h3>Formation</h3>
-              <ul class="timeline">
-                <li>
-                  <span class="date">2024 — 2026</span>
-                  <strong>B.U.T. Information & Communication</strong>
-                  <span class="place">IUT Besançon</span>
-                  <p>Option Publicité et Stratégie Numérique.</p>
-                </li>
-                <li>
-                  <span class="date">2024</span>
-                  <strong>Baccalauréat STMG</strong>
-                  <span class="place">Lycée Louis-Pergaud</span>
-                  <p>Mention Bien.</p>
-                </li>
-              </ul>
-            </div>
-
-            <div class="cv-card exp-card">
-              <h3>Expériences</h3>
-              <ul class="timeline">
-                <li>
-                  <span class="date">En cours</span>
-                  <strong>Conseil & Vente</strong>
-                  <span class="place">Commerce de proximité</span>
-                  <p>Autonomie, gestion de caisse et relation client.</p>
-                </li>
-                <li>
-                  <span class="date">2022 — 2023</span>
-                  <strong>Communication Jr.</strong>
-                  <span class="place">Mairie de Saône</span>
-                  <p>Création d'affiches, supports institutionnels et gestion de l'affichage.</p>
-                </li>
-              </ul>
-            </div>
-
-            <div class="cv-card skills-card">
-              <h3>Compétences</h3>
-              <div class="skills-grid">
-                <div class="s-col">
-                  <h4>Design & Vidéo</h4>
-                  <div class="tags">
-                    <span>Photoshop</span><span>Illustrator</span><span>InDesign</span><span>Premiere Pro</span><span>Figma</span>
-                  </div>
-                </div>
-                <div class="s-col">
-                  <h4>Web & Stratégie</h4>
-                  <div class="tags">
-                    <span>HTML/CSS</span><span>Rédaction</span><span>Social Media</span><span>Marketing</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
+      <div class="cv-section reveal">
+        <h3>Formation</h3>
+        <div style="margin-top: 20px;">
+          <div class="timeline-item">
+            <span class="date">2024 — 2026</span>
+            <strong>B.U.T. Information & Communication</strong>
+            <p>IUT Besançon — Option Publicité et Stratégie Numérique.</p>
+          </div>
+          <div class="timeline-item">
+            <span class="date">2024</span>
+            <strong>Baccalauréat STMG</strong>
+            <p>Lycée Louis-Pergaud — Mention Bien.</p>
           </div>
         </div>
-
       </div>
-    </main>
-  </div>
 
-  <script src="https://unpkg.com/@barba/core"></script>
+      <div class="cv-section reveal">
+        <h3>Expériences</h3>
+        <div style="margin-top: 20px;">
+          <div class="timeline-item">
+            <span class="date">En cours</span>
+            <strong>Conseil & Vente</strong> — Commerce de proximité
+            <p>Autonomie, gestion de caisse et relation client.</p>
+          </div>
+          <div class="timeline-item">
+            <span class="date">2022 — 2023</span>
+            <strong>Communication Junior</strong> — Mairie de Saône
+            <p>Création d'affiches, supports institutionnels et gestion de l'affichage urbain.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cv-section reveal">
+        <h3>Compétences</h3>
+        <div class="skills-list">
+          <span class="skill-tag">Photoshop</span>
+          <span class="skill-tag">Illustrator</span>
+          <span class="skill-tag">InDesign</span>
+          <span class="skill-tag">Premiere Pro</span>
+          <span class="skill-tag">Figma</span>
+          <span class="skill-tag">HTML/CSS</span>
+          <span class="skill-tag">Rédaction</span>
+          <span class="skill-tag">Social Media</span>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Eliot Sauron. <a href="mentions-legales.html">Mentions Légales</a></p>
+  </footer>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/ScrollTrigger.min.js"></script>
   <script src="assets/js/main.js"></script>
 </body>
 </html>

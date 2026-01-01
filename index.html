@@ -13,74 +13,56 @@
 </head>
 <body>
 
-  <div class="noise-overlay"></div>
-  <div class="ambient-bg">
+  <div class="ambient-wrapper">
     <div class="blob b1"></div>
     <div class="blob b2"></div>
-    <div class="blob b3"></div>
+    <div class="noise"></div>
   </div>
 
-  <button class="theme-toggle" id="themeBtn" aria-label="Changer le thème">☀️</button>
-
   <header class="site-header">
-    <a href="index.html" class="logo-container">
-      <svg class="logo-svg" viewBox="0 0 200 80" fill="none">
-        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="logo-text-elem">Eliot</text>
-      </svg>
-    </a>
+    <a href="index.html" class="logo">Eliot.</a>
+    <button class="theme-toggle" aria-label="Changer thème">☀️</button>
   </header>
 
   <nav class="dock-nav">
-    <a href="index.html" class="dock-link active">Accueil</a>
-    <a href="creations.html" class="dock-link">Projets</a>
-    <a href="cv.html" class="dock-link">Parcours</a>
-    <a href="mailto:eliotsauron25@gmail.com" class="dock-link">Contact</a>
+    <a href="index.html" class="nav-link active">Accueil</a>
+    <a href="creations.html" class="nav-link">Projets</a>
+    <a href="cv.html" class="nav-link">Parcours</a>
+    <a href="mailto:eliotsauron25@gmail.com" class="nav-link">Contact</a>
   </nav>
 
-  <div class="scene-wrapper">
-    <main data-barba="wrapper">
-      <div class="page-view home-view" data-barba="container" data-namespace="home">
-        
-        <section class="hero-section">
-          <div class="hero-content">
-            
-            <div class="video-shape-wrapper" id="videoTrigger">
-              <video id="heroVideo" src="img/video-presentation.mp4" playsinline loop muted autoplay></video>
-              <div class="sound-badge">
-                <span class="sb-icon">🔇</span>
-                <span class="sb-text">Vidéo muette — Activer</span>
-              </div>
-            </div>
-
-            <h1 class="hero-title">
-              <span class="line reveal-text">Eliot SAURON</span>
-            </h1>
-            <h2 class="hero-subtitle reveal-text delay-1">Communication & Design Visuel</h2>
-            
-            <p class="hero-desc reveal-text delay-2">
-              Étudiant en Info-Com à Besançon.<br>
-              Je transforme des stratégies en expériences visuelles.
-            </p>
-
-            <div class="hero-actions reveal-text delay-3">
-              <a href="creations.html" class="btn-primary">Explorer mes projets</a>
-              <a href="cv.html" class="btn-secondary">Voir mon profil</a>
-            </div>
-
-          </div>
-
-          <footer class="legal-footer reveal-text delay-4">
-            <a href="mentions-legales.html">Mentions Légales</a> &bull; <a href="politique-confidentialite.html">Confidentialité</a>
-          </footer>
-        </section>
-
+  <main class="scene-container">
+    <section class="container hero">
+      
+      <div class="video-blob-wrapper reveal">
+        <video id="heroVideo" src="img/video-presentation.mp4" playsinline loop muted autoplay></video>
+        <div class="sound-badge">
+          <span class="sb-icon">🔇</span>
+          <span class="sb-text">Vidéo muette — Tap pour son</span>
+        </div>
       </div>
-    </main>
-  </div>
 
-  <script src="https://unpkg.com/@barba/core"></script>
+      <h1 class="reveal">Eliot SAURON</h1>
+      <p class="hero-sub reveal">Communication • Design • Stratégie</p>
+      
+      <p class="reveal" style="max-width: 500px; margin: 0 auto 40px;">
+        Étudiant en B.U.T. Info-Com à Besançon. Je conçois des identités visuelles et des stratégies numériques pertinentes pour faire résonner vos messages.
+      </p>
+
+      <div class="reveal" style="display: flex; gap: 15px;">
+        <a href="creations.html" class="btn btn-primary">Voir mes projets</a>
+        <a href="cv.html" class="btn btn-secondary">Mon parcours</a>
+      </div>
+
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Eliot Sauron. <a href="mentions-legales.html">Mentions Légales</a> &bull; <a href="politique-confidentialite.html">Confidentialité</a></p>
+  </footer>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/ScrollTrigger.min.js"></script>
   <script src="assets/js/main.js"></script>
 </body>
 </html>
