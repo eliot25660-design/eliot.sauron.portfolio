@@ -11,235 +11,309 @@
   
   <style>
     :root {
-      --bg: #050505;
-      --text: #EAEAEA;
+      --bg: #030303;
+      --text: #F0F0F0;
       --text-dim: #888888;
-      --accent: #FFBEAC; /* Peach */
-      --accent-2: #A4C8E6; /* Blue */
-      --line: rgba(255, 255, 255, 0.1);
+      --accent: #FFBEAC;
+      --accent-2: #A4C8E6;
+      --line: rgba(255, 255, 255, 0.08);
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; /* Curseur custom */ }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     
     body {
       background-color: var(--bg);
       color: var(--text);
       font-family: 'Outfit', sans-serif;
       overflow-x: hidden;
-      line-height: 1.6;
+      opacity: 0; /* Pour le loader */
+      transition: opacity 0.5s ease;
     }
+    
+    body.loaded { opacity: 1; }
 
-    /* --- CURSOR --- */
-    #cursor {
-      position: fixed; top: 0; left: 0; width: 20px; height: 20px;
-      border: 1px solid var(--text); border-radius: 50%;
-      pointer-events: none; z-index: 9999; transform: translate(-50%, -50%);
-      transition: transform 0.1s ease, width 0.3s, height 0.3s, background 0.3s;
-      mix-blend-mode: difference;
+    /* --- LOADER --- */
+    #loader {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: #000; z-index: 10000; display: flex; justify-content: center; align-items: center;
+      transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1);
     }
-    #cursor.hovered { width: 50px; height: 50px; background: rgba(255,255,255,0.1); border-color: transparent; }
+    .loader-content { text-align: center; }
+    .loader-text { font-family: 'Syne'; font-size: 24px; font-weight: 800; letter-spacing: 2px; margin-bottom: 10px; }
+    .loader-bar { width: 200px; height: 2px; background: rgba(255,255,255,0.2); overflow: hidden; margin: 0 auto; }
+    .loader-progress { width: 0%; height: 100%; background: var(--text); transition: width 0.1s; }
+    
+    body.loaded #loader { transform: translateY(-100%); }
 
     /* --- BACKGROUND --- */
-    .ambient-light {
+    .ambient-bg {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       z-index: -1; pointer-events: none; overflow: hidden;
+      background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #000 100%);
     }
     .orb {
-      position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.3;
-      animation: float 10s infinite alternate ease-in-out;
+      position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.4;
+      transition: transform 0.1s linear; will-change: transform;
     }
-    .o1 { width: 600px; height: 600px; background: var(--accent); top: -10%; left: -10%; }
-    .o2 { width: 500px; height: 500px; background: var(--accent-2); bottom: -10%; right: -10%; animation-delay: -5s; }
+    .o1 { width: 60vw; height: 60vw; background: var(--accent); top: -20%; left: -20%; }
+    .o2 { width: 50vw; height: 50vw; background: var(--accent-2); bottom: -20%; right: -20%; }
 
-    @keyframes float { 0% { transform: translate(0, 0); } 100% { transform: translate(30px, 50px); } }
-
-    /* --- UI NAVIGATION --- */
+    /* --- NAV --- */
     nav {
-      position: fixed; top: 0; left: 0; width: 100%; padding: 30px 50px;
+      position: fixed; top: 0; left: 0; width: 100%; padding: 25px 40px;
       display: flex; justify-content: space-between; align-items: center;
       z-index: 100; mix-blend-mode: exclusion;
     }
-    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
+    .logo svg { height: 40px; width: auto; overflow: visible; }
     .menu { display: flex; gap: 40px; }
     .menu a {
-      text-decoration: none; color: var(--text); font-size: 14px; text-transform: uppercase;
-      letter-spacing: 1px; position: relative; opacity: 0.7; transition: opacity 0.3s;
+      text-decoration: none; color: var(--text); font-size: 13px; text-transform: uppercase;
+      font-weight: 700; letter-spacing: 1px; position: relative; opacity: 0.7; transition: 0.3s;
     }
     .menu a:hover { opacity: 1; }
-    .menu a::after {
-      content: ''; position: absolute; bottom: -5px; left: 0; width: 0%; height: 1px;
-      background: var(--text); transition: width 0.3s;
-    }
-    .menu a:hover::after { width: 100%; }
 
-    /* --- HERO SECTION --- */
+    /* --- HERO --- */
     .hero {
-      height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
-      text-align: center; padding: 0 20px; position: relative;
+      min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; padding: 100px 20px; position: relative;
     }
     
-    .video-container {
-      width: 300px; height: 300px; border-radius: 10px; overflow: hidden;
-      margin-bottom: 40px; position: relative;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-      transition: transform 0.5s ease;
+    .video-frame {
+      width: 320px; height: 320px; border-radius: 12px; overflow: hidden;
+      margin-bottom: 50px; position: relative;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+      border: 1px solid rgba(255,255,255,0.1);
+      cursor: pointer; transition: transform 0.4s ease, border-color 0.4s;
     }
-    .video-container:hover { transform: scale(1.02); }
-    video { width: 100%; height: 100%; object-fit: cover; opacity: 0.9; }
-
+    .video-frame:hover { transform: scale(1.02); border-color: var(--accent); }
+    
+    video { width: 100%; height: 100%; object-fit: cover; transform: scale(1.05); }
+    
+    .sound-badge {
+      position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%);
+      background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+      padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px; pointer-events: none;
+      border: 1px solid rgba(255,255,255,0.2); transition: 0.3s;
+    }
+    
+    .hero-content { position: relative; z-index: 2; }
     h1 {
-      font-family: 'Syne', sans-serif; font-size: clamp(50px, 8vw, 100px);
-      line-height: 0.9; font-weight: 800; text-transform: uppercase;
-      margin-bottom: 20px; color: var(--text);
+      font-family: 'Syne', sans-serif; font-size: clamp(60px, 12vw, 140px);
+      line-height: 0.85; font-weight: 800; text-transform: uppercase;
+      margin-bottom: 30px; letter-spacing: -2px;
+      background: linear-gradient(to bottom, #fff, #aaa);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
     .subtitle {
       font-size: clamp(16px, 2vw, 20px); color: var(--text-dim);
-      max-width: 600px; margin-bottom: 50px; font-weight: 300;
+      max-width: 500px; margin: 0 auto 60px; font-weight: 300;
     }
 
     .cta-btn {
-      padding: 18px 40px; border: 1px solid var(--line); border-radius: 100px;
-      color: var(--text); text-decoration: none; text-transform: uppercase;
-      font-size: 14px; letter-spacing: 2px; transition: all 0.3s;
-      background: rgba(255,255,255,0.03); backdrop-filter: blur(5px);
+      padding: 20px 50px; background: var(--text); color: #000;
+      border-radius: 100px; text-decoration: none; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 1px; font-size: 14px;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: inline-block;
     }
-    .cta-btn:hover { background: var(--text); color: var(--bg); border-color: var(--text); }
+    .cta-btn:hover { transform: scale(1.05); }
 
     /* --- SECTIONS --- */
-    section { padding: 120px 50px; max-width: 1200px; margin: 0 auto; border-top: 1px solid var(--line); }
-    .sec-title { font-family: 'Syne'; font-size: 40px; margin-bottom: 60px; color: var(--accent-2); }
+    section { padding: 150px 5% 50px; max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--line); }
+    .sec-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 80px; flex-wrap: wrap; gap: 20px; }
+    h2 { font-family: 'Syne'; font-size: clamp(30px, 5vw, 60px); color: var(--text); text-transform: uppercase; font-weight: 800; }
+    .sec-desc { max-width: 400px; color: var(--text-dim); font-size: 16px; text-align: right; }
 
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
-    .skill-bar { margin-bottom: 25px; }
-    .skill-name { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
-    .progress { width: 100%; height: 2px; background: rgba(255,255,255,0.1); position: relative; }
-    .progress-fill { height: 100%; background: var(--accent); position: absolute; left: 0; top: 0; }
+    .skills-visu { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .big-statement { font-size: clamp(24px, 3vw, 40px); font-family: 'Syne'; line-height: 1.2; color: var(--text); }
+    .bar-group { display: flex; flex-direction: column; gap: 30px; }
+    .skill { display: flex; flex-direction: column; gap: 10px; }
+    .skill-meta { display: flex; justify-content: space-between; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-dim); }
+    .track { width: 100%; height: 1px; background: rgba(255,255,255,0.1); position: relative; }
+    .progress { height: 100%; background: var(--text); position: absolute; left: 0; }
 
-    /* --- CONTACT --- */
-    .contact-form { max-width: 600px; margin: 0 auto; }
+    /* --- CONTACT & FOOTER --- */
+    .contact-wrapper { max-width: 700px; margin: 0 auto; }
     input, textarea {
       width: 100%; background: transparent; border: none; border-bottom: 1px solid var(--line);
-      padding: 20px 0; color: var(--text); font-family: 'Outfit'; font-size: 18px; margin-bottom: 30px;
-      transition: border-color 0.3s;
+      padding: 25px 0; color: var(--text); font-family: 'Outfit'; font-size: 20px; margin-bottom: 10px;
+      transition: border-color 0.3s; resize: none;
     }
     input:focus, textarea:focus { outline: none; border-color: var(--accent); }
-    .submit-btn {
-      width: 100%; padding: 20px; background: var(--text); color: var(--bg);
-      border: none; font-size: 16px; text-transform: uppercase; font-weight: 700;
-      letter-spacing: 1px; transition: 0.3s;
+    .submit-simple {
+      margin-top: 40px; background: transparent; border: 1px solid var(--line); color: var(--text);
+      padding: 15px 40px; border-radius: 50px; cursor: pointer; text-transform: uppercase;
+      font-weight: 700; letter-spacing: 1px; transition: 0.3s;
     }
-    .submit-btn:hover { background: var(--accent); color: var(--bg); }
+    .submit-simple:hover { background: var(--text); color: #000; }
 
-    /* --- FOOTER --- */
     footer {
-      padding: 60px 50px; border-top: 1px solid var(--line);
+      border-top: 1px solid var(--line); padding: 50px; margin-top: 100px;
       display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 30px;
     }
-    .footer-links a {
-      color: var(--text-dim); text-decoration: none; font-size: 13px;
-      margin-right: 20px; transition: 0.3s;
-    }
-    .footer-links a:hover { color: var(--text); }
-    .copyright { color: var(--text-dim); font-size: 13px; }
-
+    .f-col a { display: block; color: var(--text-dim); text-decoration: none; font-size: 14px; margin-bottom: 10px; transition: 0.3s; }
+    .f-col a:hover { color: var(--text); }
+    
     @media (max-width: 768px) {
-      nav { padding: 20px; } .menu { display: none; } /* Mobile Menu à faire simple */
-      .about-grid { grid-template-columns: 1fr; }
-      footer { flex-direction: column; align-items: center; text-align: center; }
-      .footer-links a { display: block; margin: 10px 0; }
+      nav { padding: 20px; } .menu { display: none; }
+      .skills-visu { grid-template-columns: 1fr; gap: 40px; }
+      .sec-desc { text-align: left; }
+      h1 { font-size: 60px; }
     }
   </style>
 </head>
 <body>
 
-  <div id="cursor"></div>
+  <div id="loader">
+    <div class="loader-content">
+      <div class="loader-text">ELIOT SAURON</div>
+      <div class="loader-bar"><div class="loader-progress"></div></div>
+    </div>
+  </div>
 
-  <div class="ambient-light">
+  <div class="ambient-bg">
     <div class="orb o1"></div>
     <div class="orb o2"></div>
   </div>
 
   <nav>
-    <div class="logo">ELIOT.</div>
+    <a href="index.html" class="logo">
+      <svg viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:var(--accent)" />
+            <stop offset="100%" style="stop-color:var(--accent-2)" />
+          </linearGradient>
+        </defs>
+        <text x="0" y="30" font-family="Syne" font-weight="800" font-size="28" fill="url(#g1)">ELIOT.</text>
+      </svg>
+    </a>
     <div class="menu">
-      <a href="creations.html" class="hover-trigger">Projets</a>
-      <a href="cv.html" class="hover-trigger">Parcours</a>
-      <a href="#contact" class="hover-trigger">Contact</a>
+      <a href="creations.html">Projets</a>
+      <a href="cv.html">Parcours</a>
+      <a href="#contact">Contact</a>
     </div>
   </nav>
 
   <header class="hero">
-    <div class="video-container hover-trigger">
-      <video autoplay muted loop playsinline>
+    <div class="video-frame" id="v-frame">
+      <video id="showreel" autoplay muted loop playsinline>
         <source src="img/video-presentation.mp4" type="video/mp4">
       </video>
+      <div class="sound-badge" id="s-badge">🔇 Son désactivé</div>
     </div>
-    <h1>Eliot Sauron</h1>
-    <p class="subtitle">Communication • Design Visuel • Storytelling. <br>Je construis des univers numériques cohérents.</p>
-    <a href="creations.html" class="cta-btn hover-trigger">Explorer le Portfolio</a>
+    
+    <div class="hero-content">
+      <h1>Eliot<br>Sauron</h1>
+      <p class="subtitle">Communication • Design Visuel • Storytelling</p>
+      <a href="creations.html" class="cta-btn">Voir le portfolio</a>
+    </div>
   </header>
 
   <section id="about">
-    <h2 class="sec-title">Vision</h2>
-    <div class="about-grid">
-      <div>
-        <p style="font-size: 18px; margin-bottom: 20px; color: var(--text-dim);">
-          Mon approche dépasse la simple esthétique. Je cherche à créer une émotion, une structure, un sens. Chaque pixel compte, chaque transition raconte une histoire.
-        </p>
-        <p style="font-size: 18px; color: var(--text-dim);">
-          Étudiant en BUT Info-Com, je fusionne la rigueur de la communication avec la liberté du design visuel.
-        </p>
+    <div class="sec-head">
+      <h2>Vision</h2>
+      <p class="sec-desc">Je ne remplis pas des cases, je construis du sens. Une approche qui mêle rigueur technique et sensibilité artistique.</p>
+    </div>
+    <div class="skills-visu">
+      <div class="big-statement">
+        "Chaque pixel compte.<br>
+        Chaque transition raconte<br>
+        une histoire."
       </div>
-      <div>
-        <div class="skill-bar">
-          <div class="skill-name"><span>Communication</span><span>95%</span></div>
-          <div class="progress"><div class="progress-fill" style="width:95%"></div></div>
+      <div class="bar-group">
+        <div class="skill">
+          <div class="skill-meta"><span>Communication</span><span>95%</span></div>
+          <div class="track"><div class="progress" style="width:95%"></div></div>
         </div>
-        <div class="skill-bar">
-          <div class="skill-name"><span>Vidéo & Motion</span><span>80%</span></div>
-          <div class="progress"><div class="progress-fill" style="width:80%"></div></div>
+        <div class="skill">
+          <div class="skill-meta"><span>Vidéo & Motion</span><span>80%</span></div>
+          <div class="track"><div class="progress" style="width:80%"></div></div>
         </div>
-        <div class="skill-bar">
-          <div class="skill-name"><span>Design Graphique</span><span>85%</span></div>
-          <div class="progress"><div class="progress-fill" style="width:85%"></div></div>
+        <div class="skill">
+          <div class="skill-meta"><span>Design</span><span>85%</span></div>
+          <div class="track"><div class="progress" style="width:85%"></div></div>
         </div>
       </div>
     </div>
   </section>
 
   <section id="contact">
-    <h2 class="sec-title" style="text-align: center;">Démarrer un projet</h2>
-    <form class="contact-form" action="https://formspree.io/f/mblwgzve" method="POST">
-      <input type="text" name="name" placeholder="Votre nom" required class="hover-trigger">
-      <input type="email" name="email" placeholder="Votre email" required class="hover-trigger">
-      <textarea name="message" rows="4" placeholder="Parlez-moi de votre idée..." required class="hover-trigger"></textarea>
-      <button type="submit" class="submit-btn hover-trigger">Envoyer</button>
-    </form>
+    <div class="sec-head">
+      <h2>Contact</h2>
+      <p class="sec-desc">Un projet ? Une idée ?<br>Parlons-en.</p>
+    </div>
+    <div class="contact-wrapper">
+      <form action="https://formspree.io/f/mblwgzve" method="POST">
+        <input type="text" name="name" placeholder="Nom" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <textarea name="message" rows="4" placeholder="Votre message..." required></textarea>
+        <button type="submit" class="submit-simple">Envoyer</button>
+      </form>
+    </div>
   </section>
 
   <footer>
-    <div class="copyright">© 2025 Eliot Sauron. Tous droits réservés.</div>
-    <div class="footer-links">
-      <a href="https://linkedin.com/in/eliot-sauron" target="_blank" class="hover-trigger">LinkedIn</a>
-      <a href="mailto:eliotsauron25@gmail.com" class="hover-trigger">Email</a>
-      <a href="mentions-legales.html" class="hover-trigger">Mentions Légales</a>
-      <a href="politique-confidentialite.html" class="hover-trigger">Politique de Confidentialité</a>
+    <div class="f-col">
+      <a href="index.html" style="font-family:'Syne'; font-weight:800; font-size:20px; color:#FFF;">ELIOT.</a>
+      <span style="font-size:12px; opacity:0.5;">© 2025 Tous droits réservés.</span>
+    </div>
+    <div class="f-col">
+      <a href="creations.html">Projets</a>
+      <a href="cv.html">Parcours</a>
+    </div>
+    <div class="f-col">
+      <a href="https://linkedin.com/in/eliot-sauron" target="_blank">LinkedIn</a>
+      <a href="mailto:eliotsauron25@gmail.com">Email</a>
+    </div>
+    <div class="f-col">
+      <a href="mentions-legales.html">Mentions Légales</a>
+      <a href="politique-confidentialite.html">Confidentialité</a>
     </div>
   </footer>
 
   <script>
-    // CURSEUR MAGNÉTIQUE
-    const cursor = document.getElementById('cursor');
-    const triggers = document.querySelectorAll('.hover-trigger');
+    // --- LOADER ---
+    const loader = document.getElementById('loader');
+    const bar = document.querySelector('.loader-progress');
+    let width = 0;
+    const interval = setInterval(() => {
+      width += Math.random() * 10;
+      if(width > 100) width = 100;
+      bar.style.width = width + '%';
+      if(width === 100) {
+        clearInterval(interval);
+        setTimeout(() => document.body.classList.add('loaded'), 300);
+      }
+    }, 100);
 
-    document.addEventListener('mousemove', (e) => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
+    // --- VIDEO SOUND ---
+    const vFrame = document.getElementById('v-frame');
+    const video = document.getElementById('showreel');
+    const badge = document.getElementById('s-badge');
+
+    vFrame.addEventListener('click', () => {
+      video.muted = !video.muted;
+      if(!video.muted) {
+        video.currentTime = 0; // Restart for sync feel
+        video.play();
+        badge.textContent = "🔊 Son activé";
+        vFrame.style.borderColor = "var(--accent)";
+      } else {
+        badge.textContent = "🔇 Son désactivé";
+        vFrame.style.borderColor = "rgba(255,255,255,0.1)";
+      }
     });
 
-    triggers.forEach(trigger => {
-      trigger.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
-      trigger.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+    // --- PARALLAX BLOBS (No lag) ---
+    const orbs = document.querySelectorAll('.orb');
+    window.addEventListener('mousemove', (e) => {
+      const x = e.clientX / window.innerWidth;
+      const y = e.clientY / window.innerHeight;
+      
+      orbs[0].style.transform = `translate(${x * 30}px, ${y * 30}px)`; // Slow move
+      orbs[1].style.transform = `translate(${-x * 30}px, ${-y * 30}px)`; // Reverse move
     });
   </script>
 </body>

@@ -6,76 +6,72 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
   <style>
-    :root { --bg: #050505; --text: #EAEAEA; --accent: #A4C8E6; --line: rgba(255,255,255,0.1); }
-    * { margin:0; padding:0; box-sizing:border-box; cursor:none; }
-    body { background:var(--bg); color:var(--text); font-family:'Outfit'; padding:40px 20px; max-width:900px; margin:0 auto; }
-    
-    #cursor { position:fixed; width:20px; height:20px; border:1px solid #FFF; border-radius:50%; pointer-events:none; z-index:999; mix-blend-mode:difference; transform:translate(-50%,-50%); }
+    :root { --bg: #030303; --text: #F0F0F0; --accent: #A4C8E6; --line: rgba(255,255,255,0.08); }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:var(--bg); color:var(--text); font-family:'Outfit'; padding:40px 20px; opacity:0; transition:opacity 0.5s; }
+    body.loaded { opacity:1; }
 
-    header { display:flex; justify-content:space-between; margin-bottom:80px; align-items:center; border-bottom:1px solid var(--line); padding-bottom:20px; }
-    .logo { font-family:'Syne'; font-weight:800; font-size:24px; text-decoration:none; color:#FFF; }
-    .close { color:#888; text-decoration:none; text-transform:uppercase; letter-spacing:1px; font-size:12px; }
+    header { display:flex; justify-content:space-between; margin-bottom:80px; align-items:center; border-bottom:1px solid var(--line); padding-bottom:20px; max-width:900px; margin:0 auto 80px; }
+    .logo svg { height:24px; }
+    .close { color:#888; text-decoration:none; text-transform:uppercase; font-size:12px; font-weight:700; }
 
-    .cv-section { margin-bottom:60px; display:grid; grid-template-columns: 200px 1fr; gap:40px; }
-    h2 { font-family:'Syne'; font-size:16px; text-transform:uppercase; color:var(--accent); letter-spacing:1px; }
+    .cv-grid { max-width:900px; margin:0 auto; display:grid; grid-template-columns: 200px 1fr; gap:50px; margin-bottom:60px; }
+    .cv-label { font-family:'Syne'; font-size:14px; text-transform:uppercase; color:var(--accent); letter-spacing:1px; padding-top:5px; }
     
-    .item { margin-bottom:30px; }
-    .date { font-size:12px; opacity:0.6; display:block; margin-bottom:5px; font-family:'Courier New', monospace; }
+    .item { margin-bottom:40px; border-left:1px solid var(--line); padding-left:30px; position:relative; }
+    .item::before { content:''; position:absolute; left:-3px; top:8px; width:5px; height:5px; background:var(--accent); border-radius:50%; }
+    
+    .date { font-size:12px; opacity:0.5; font-family:'monospace'; margin-bottom:5px; display:block; }
     h3 { font-size:20px; font-weight:600; margin-bottom:5px; }
     .place { font-style:italic; opacity:0.8; font-size:14px; margin-bottom:10px; display:block; }
     p { color:#AAA; font-size:15px; line-height:1.6; }
 
-    .skills-list { display:flex; flex-wrap:wrap; gap:10px; }
-    .tag { border:1px solid var(--line); padding:8px 15px; border-radius:4px; font-size:13px; color:#CCC; }
+    .skills { display:flex; flex-wrap:wrap; gap:10px; }
+    .tag { border:1px solid var(--line); padding:8px 16px; border-radius:4px; font-size:13px; color:#CCC; }
 
-    .download { position:fixed; bottom:30px; right:30px; background:#FFF; color:#000; padding:15px 30px; border-radius:30px; text-decoration:none; font-weight:700; }
+    .fab { position:fixed; bottom:30px; right:30px; background:#FFF; color:#000; padding:15px 30px; border-radius:50px; text-decoration:none; font-weight:700; box-shadow:0 10px 30px rgba(0,0,0,0.5); }
 
-    footer { border-top:1px solid var(--line); padding-top:40px; text-align:center; font-size:12px; color:#555; display:flex; gap:20px; justify-content:center; }
-    footer a { color:#777; text-decoration:none; }
-
-    @media(max-width:700px) { .cv-section { grid-template-columns:1fr; gap:20px; } }
+    @media(max-width:700px) { .cv-grid { grid-template-columns:1fr; gap:20px; } .item { padding-left:20px; } }
   </style>
 </head>
 <body>
-  <div id="cursor"></div>
-  
   <header>
-    <div class="logo">ELIOT.</div>
-    <a href="index.html" class="close hover-trigger">Fermer</a>
+    <a href="index.html" class="logo">
+      <svg viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="30" font-family="Syne" font-weight="800" font-size="24" fill="#FFF">ELIOT.</text>
+      </svg>
+    </a>
+    <a href="index.html" class="close">Fermer</a>
   </header>
 
-  <section class="cv-section">
-    <h2>Profil</h2>
+  <div class="cv-grid">
+    <div class="cv-label">Profil</div>
     <div>
       <h3>Eliot Sauron</h3>
-      <p style="margin-bottom:20px;">Passionné par la narration visuelle. Je cherche à construire du sens là où il y a du chaos.</p>
-      <div style="display:flex; gap:20px;">
-        <a href="https://linkedin.com/in/eliot-sauron" style="color:#FFF;">LinkedIn</a>
-        <a href="mailto:eliotsauron25@gmail.com" style="color:#FFF;">Email</a>
-      </div>
+      <p>Étudiant en Info-Com. Je cherche à allier la structure à l'émotion visuelle.</p>
     </div>
-  </section>
+  </div>
 
-  <section class="cv-section">
-    <h2>Expérience</h2>
+  <div class="cv-grid">
+    <div class="cv-label">Expérience</div>
     <div>
       <div class="item">
         <span class="date">2024 - PRÉSENT</span>
         <h3>Vente & Gestion</h3>
         <span class="place">Boulangerie-Pâtisserie</span>
-        <p>Autonomie, rigueur et relation client en flux tendu.</p>
+        <p>Gestion client et autonomie en environnement rapide.</p>
       </div>
       <div class="item">
         <span class="date">2022 - 2023</span>
-        <h3>Assistant Communication</h3>
+        <h3>Assistant Com'</h3>
         <span class="place">Mairie de Saône</span>
-        <p>Création de supports visuels institutionnels.</p>
+        <p>Création de supports graphiques institutionnels.</p>
       </div>
     </div>
-  </section>
+  </div>
 
-  <section class="cv-section">
-    <h2>Formation</h2>
+  <div class="cv-grid">
+    <div class="cv-label">Formation</div>
     <div>
       <div class="item">
         <span class="date">2024 - 2026</span>
@@ -84,34 +80,24 @@
       </div>
       <div class="item">
         <span class="date">2024</span>
-        <h3>Baccalauréat STMG</h3>
-        <span class="place">Lycée Louis-Pergaud</span>
+        <h3>Bac STMG</h3>
+        <span class="place">Mention Bien</span>
       </div>
     </div>
-  </section>
+  </div>
 
-  <section class="cv-section">
-    <h2>Outils</h2>
-    <div class="skills-list">
-      <span class="tag">Photoshop</span>
-      <span class="tag">Illustrator</span>
-      <span class="tag">InDesign</span>
-      <span class="tag">Premiere Pro</span>
+  <div class="cv-grid">
+    <div class="cv-label">Stack</div>
+    <div class="skills">
+      <span class="tag">Adobe Suite</span>
       <span class="tag">Figma</span>
       <span class="tag">HTML/CSS</span>
+      <span class="tag">Storytelling</span>
     </div>
-  </section>
+  </div>
 
-  <footer>
-    <a href="mentions-legales.html" class="hover-trigger">Mentions Légales</a>
-    <a href="politique-confidentialite.html" class="hover-trigger">Politique de Confidentialité</a>
-  </footer>
+  <a href="cv-eliot-sauron.pdf" download class="fab">PDF ↓</a>
 
-  <a href="cv-eliot-sauron.pdf" download class="download hover-trigger">PDF ↓</a>
-
-  <script>
-    const cursor = document.getElementById('cursor');
-    document.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px';});
-  </script>
+  <script>window.onload = () => document.body.classList.add('loaded');</script>
 </body>
 </html>

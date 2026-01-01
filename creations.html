@@ -7,161 +7,126 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
   <style>
-    :root { --bg: #050505; --text: #EAEAEA; --accent: #FFBEAC; --line: rgba(255, 255, 255, 0.1); }
-    * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
-    body { background: var(--bg); color: var(--text); font-family: 'Outfit'; overflow-x: hidden; }
-
-    #cursor {
-      position: fixed; width: 20px; height: 20px; border: 1px solid var(--text); border-radius: 50%;
-      pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: transform 0.1s;
-      mix-blend-mode: difference;
-    }
-    #cursor.hovered { transform: translate(-50%, -50%) scale(2.5); background: rgba(255,255,255,0.2); border: none; }
-
-    /* NAV & HEADER */
-    nav { padding: 30px 50px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); }
-    .logo { font-family: 'Syne'; font-weight: 800; font-size: 20px; text-decoration: none; color: var(--text); }
-    .back { color: var(--text); text-decoration: none; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; }
+    :root { --bg: #030303; --text: #F0F0F0; --accent: #FFBEAC; --line: rgba(255, 255, 255, 0.08); }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     
-    .page-header { padding: 100px 50px 50px; text-align: center; }
-    h1 { font-family: 'Syne'; font-size: clamp(40px, 6vw, 80px); margin-bottom: 40px; text-transform: uppercase; }
-    
-    .filters { display: inline-flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
-    .filter-btn {
-      background: transparent; border: 1px solid var(--line); color: var(--text);
-      padding: 10px 25px; border-radius: 50px; font-family: inherit; cursor: none;
-      transition: 0.3s; text-transform: uppercase; font-size: 12px; letter-spacing: 1px;
+    body {
+      background: var(--bg); color: var(--text); font-family: 'Outfit';
+      opacity: 0; transition: opacity 0.5s ease;
     }
-    .filter-btn.active, .filter-btn:hover { background: var(--text); color: var(--bg); }
+    body.loaded { opacity: 1; }
 
-    /* GRID PROJETS */
+    /* LOADER COMPACT */
+    #loader { position: fixed; inset: 0; background: #000; z-index: 9999; transition: transform 0.6s ease-in-out; }
+    body.loaded #loader { transform: translateY(-100%); }
+
+    /* LAYOUT */
+    nav { padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); }
+    .logo svg { height: 30px; }
+    .back-link { color: var(--text); text-decoration: none; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; }
+    
+    .header-projets { padding: 120px 20px 60px; text-align: center; }
+    h1 { font-family: 'Syne'; font-size: clamp(50px, 8vw, 100px); text-transform: uppercase; font-weight: 800; margin-bottom: 40px; }
+    
+    .filters { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+    .f-btn {
+      background: transparent; border: 1px solid var(--line); color: #888;
+      padding: 10px 25px; border-radius: 50px; cursor: pointer; text-transform: uppercase;
+      font-size: 12px; font-weight: 700; letter-spacing: 1px; transition: 0.3s;
+    }
+    .f-btn:hover, .f-btn.active { background: var(--text); color: #000; border-color: var(--text); }
+
     .grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-      gap: 40px; padding: 0 50px 100px; max-width: 1400px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 40px; padding: 0 40px 100px; max-width: 1400px; margin: 0 auto;
     }
+    
     .card {
-      background: #0A0A0A; border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
-      transition: transform 0.4s ease, border-color 0.4s; position: relative;
+      group; cursor: pointer; position: relative;
     }
-    .card:hover { transform: translateY(-10px); border-color: var(--accent); }
+    .img-box {
+      width: 100%; aspect-ratio: 4/3; overflow: hidden; border-radius: 8px;
+      margin-bottom: 20px; border: 1px solid var(--line); transition: border-color 0.3s;
+    }
+    .img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s cubic-bezier(0.2, 1, 0.3, 1); opacity: 0.8; }
     
-    .media-box { width: 100%; aspect-ratio: 4/3; position: relative; overflow: hidden; background: #000; }
-    .media-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; opacity: 0.8; }
-    .card:hover .media-box img { transform: scale(1.05); opacity: 1; }
-    
-    .content { padding: 25px; }
-    .cat { color: var(--accent); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 10px; display: block; }
-    h3 { font-family: 'Syne'; font-size: 22px; margin-bottom: 10px; font-weight: 700; }
-    p { font-size: 14px; color: #888; line-height: 1.5; }
-    
+    .card:hover .img-box { border-color: var(--accent); }
+    .card:hover .img-box img { transform: scale(1.05); opacity: 1; }
+
+    .meta { display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid var(--line); padding-top: 15px; }
+    h3 { font-family: 'Syne'; font-size: 20px; font-weight: 700; }
+    .cat { font-size: 11px; text-transform: uppercase; color: var(--accent); letter-spacing: 1px; font-weight: 700; }
+
     /* LIGHTBOX */
     .lightbox {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95);
-      z-index: 2000; display: flex; align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none; transition: 0.3s; backdrop-filter: blur(10px);
+      position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 5000;
+      display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s;
     }
     .lightbox.active { opacity: 1; pointer-events: auto; }
     .lb-img { max-width: 90%; max-height: 85vh; object-fit: contain; }
-    .close-lb { position: absolute; top: 30px; right: 30px; color: #FFF; font-size: 40px; }
+    .close { position: absolute; top: 30px; right: 30px; font-size: 40px; color: #FFF; cursor: pointer; }
 
-    footer {
-      border-top: 1px solid var(--line); padding: 40px 50px; text-align: center;
-      color: #666; font-size: 12px; display: flex; flex-direction: column; gap: 20px;
-    }
-    .f-links a { color: #888; margin: 0 10px; text-decoration: none; transition:0.3s; }
-    .f-links a:hover { color: #FFF; }
+    footer { border-top: 1px solid var(--line); padding: 40px; text-align: center; color: #555; font-size: 12px; }
 
-    @media(max-width:768px) { .grid { padding: 0 20px 50px; grid-template-columns: 1fr; } nav { padding: 20px; } }
+    @media (max-width: 768px) { .grid { grid-template-columns: 1fr; padding: 0 20px 50px; } }
   </style>
 </head>
 <body>
-  <div id="cursor"></div>
+  <div id="loader"></div>
 
   <nav>
-    <a href="index.html" class="logo hover-trigger">ELIOT.</a>
-    <a href="index.html" class="back hover-trigger">Retour</a>
+    <a href="index.html" class="logo">
+      <svg viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="30" font-family="Syne" font-weight="800" font-size="24" fill="#FFF">ELIOT.</text>
+      </svg>
+    </a>
+    <a href="index.html" class="back-link">Retour</a>
   </nav>
 
-  <div class="page-header">
+  <div class="header-projets">
     <h1>Travaux</h1>
     <div class="filters">
-      <button class="filter-btn active hover-trigger" data-filter="all">Tout</button>
-      <button class="filter-btn hover-trigger" data-filter="design">Design</button>
-      <button class="filter-btn hover-trigger" data-filter="media">Vidéo</button>
-      <button class="filter-btn hover-trigger" data-filter="photo">Photo</button>
+      <button class="f-btn active" data-filter="all">Tous</button>
+      <button class="f-btn" data-filter="design">Design</button>
+      <button class="f-btn" data-filter="media">Vidéo</button>
+      <button class="f-btn" data-filter="photo">Photo</button>
     </div>
   </div>
 
   <div class="grid">
-    <div class="card" data-cat="design">
-      <div class="media-box hover-trigger" onclick="openLb(['img/ajna-cover.jpg'])">
-        <img src="img/ajna-cover.jpg" alt="AJNA">
-      </div>
-      <div class="content">
-        <span class="cat">Direction Artistique</span>
-        <h3>AJNA – Rivages Invisibles</h3>
-        <p>Identité visuelle complète pour un concept d'album fictif. Logo, cover art et storytelling.</p>
-      </div>
+    <div class="card" data-cat="design" onclick="openLb('img/ajna-cover.jpg')">
+      <div class="img-box"><img src="img/ajna-cover.jpg"></div>
+      <div class="meta"><h3>AJNA</h3><span class="cat">Art Direction</span></div>
     </div>
     
-    <div class="card" data-cat="media">
-      <div class="media-box hover-trigger" onclick="openLb(['img/radio-1.jpg'])">
-        <img src="img/radio-1.jpg" alt="Radio">
-      </div>
-      <div class="content">
-        <span class="cat">Vidéo & Social</span>
-        <h3>Radio Campus Besançon</h3>
-        <p>Création de contenus dynamiques (Reels) pour la promotion culturelle.</p>
-      </div>
+    <div class="card" data-cat="media" onclick="openLb('img/radio-1.jpg')">
+      <div class="img-box"><img src="img/radio-1.jpg"></div>
+      <div class="meta"><h3>Radio Campus</h3><span class="cat">Social Media</span></div>
     </div>
 
-    <div class="card" data-cat="photo">
-      <div class="media-box hover-trigger" onclick="openLb(['img/rv-cover.jpg'])">
-        <img src="img/rv-cover.jpg" alt="Edition">
-      </div>
-      <div class="content">
-        <span class="cat">Édition</span>
-        <h3>Rendez-moi en ville</h3>
-        <p>Projet éditorial poétique. <a href="img/rendez-moi-en-ville.pdf" target="_blank" style="color:white">Voir PDF</a></p>
-      </div>
+    <div class="card" data-cat="photo" onclick="window.open('img/rendez-moi-en-ville.pdf')">
+      <div class="img-box"><img src="img/rv-cover.jpg"></div>
+      <div class="meta"><h3>Rendez-moi en ville</h3><span class="cat">Édition (PDF)</span></div>
     </div>
 
-    <div class="card" data-cat="photo">
-      <div class="media-box hover-trigger" onclick="openLb(['img/photo-nb-1.jpg'])">
-        <img src="img/photo-nb-1.jpg" alt="NB">
-      </div>
-      <div class="content">
-        <span class="cat">Photographie</span>
-        <h3>Série Noir & Blanc</h3>
-        <p>Étude sur les textures et le contraste en lumière naturelle.</p>
-      </div>
+    <div class="card" data-cat="photo" onclick="openLb('img/photo-nb-1.jpg')">
+      <div class="img-box"><img src="img/photo-nb-1.jpg"></div>
+      <div class="meta"><h3>Noir & Blanc</h3><span class="cat">Photographie</span></div>
     </div>
   </div>
 
-  <div class="lightbox">
-    <div class="close-lb hover-trigger">×</div>
-    <img src="" class="lb-img">
+  <div class="lightbox" id="lb">
+    <div class="close" onclick="closeLb()">×</div>
+    <img src="" class="lb-img" id="lb-img">
   </div>
 
-  <footer>
-    <div class="f-links">
-      <a href="mentions-legales.html" class="hover-trigger">Mentions Légales</a>
-      <a href="politique-confidentialite.html" class="hover-trigger">Politique de Confidentialité</a>
-    </div>
-    <div>© 2025 Eliot Sauron</div>
-  </footer>
+  <footer>© 2025 Eliot Sauron • <a href="mentions-legales.html" style="color:#777;text-decoration:none">Mentions</a></footer>
 
   <script>
-    // CURSOR
-    const cursor = document.getElementById('cursor');
-    document.addEventListener('mousemove', e => { cursor.style.left=e.clientX+'px'; cursor.style.top=e.clientY+'px'; });
-    document.querySelectorAll('.hover-trigger').forEach(b => {
-      b.addEventListener('mouseenter',()=>cursor.classList.add('hovered'));
-      b.addEventListener('mouseleave',()=>cursor.classList.remove('hovered'));
-    });
+    window.onload = () => document.body.classList.add('loaded');
 
     // FILTRES
-    const btns = document.querySelectorAll('.filter-btn');
+    const btns = document.querySelectorAll('.f-btn');
     const cards = document.querySelectorAll('.card');
     btns.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -172,12 +137,11 @@
       });
     });
 
-    // LIGHTBOX SIMPLE
-    const lb = document.querySelector('.lightbox');
-    const lbImg = lb.querySelector('img');
-    window.openLb = (srcs) => { lbImg.src = srcs[0]; lb.classList.add('active'); };
-    lb.querySelector('.close-lb').onclick = () => lb.classList.remove('active');
-    lb.onclick = (e) => { if(e.target===lb) lb.classList.remove('active'); };
+    // LIGHTBOX
+    const lb = document.getElementById('lb');
+    const lbImg = document.getElementById('lb-img');
+    window.openLb = (src) => { lbImg.src = src; lb.classList.add('active'); };
+    window.closeLb = () => lb.classList.remove('active');
   </script>
 </body>
 </html>
