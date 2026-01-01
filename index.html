@@ -4,87 +4,96 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Eliot SAURON - Designer & Communication</title>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
-  
   <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23F2A18C'/><text x='50' y='70' font-size='60' fill='white' text-anchor='middle'>E</text></svg>">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23F2A18C'/%3E%3Ctext x='50' y='70' font-size='60' font-weight='800' text-anchor='middle' fill='white'%3EE%3C/text%3E%3C/svg%3E">
 </head>
 <body>
 
-  <div class="noise-overlay"></div>
-  <div class="background-layer">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-  </div>
+  <div class="noise"></div>
+  <div class="bg-blobs"><div class="blob b1"></div><div class="blob b2"></div></div>
+  <button class="theme-toggle" id="themeBtn">🌙</button>
 
-  <button class="theme-switch" id="themeToggle" aria-label="Changer le thème">🌙</button>
-
-  <header class="site-header">
-    <a href="index.html" class="logo-link">
+  <header>
+    <a href="index.html" class="logo-container">
       <svg class="logo-svg" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <linearGradient id="cloudGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+          <linearGradient id="cloud-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" style="stop-color:var(--peach)" />
             <stop offset="100%" style="stop-color:var(--blue)" />
           </linearGradient>
         </defs>
         <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" class="logo-text">Eliot</text>
-        <path class="cloud-path" d="M20,40 C20,20 50,-10 100,10 C150,30 180,20 180,40 C180,60 150,90 100,70 C50,50 20,60 20,40" />
+        <path class="cloud-path" d="M20,40 C20,20 50,-10 100,10 C150,30 180,20 180,40 C180,60 150,90 100,70 C50,50 20,60 20,40" stroke="url(#cloud-gradient)" stroke-width="3" fill="none" stroke-linecap="round" />
       </svg>
     </a>
-
-    <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
-
-    <nav class="nav-menu" id="navMenu">
-      <a href="creations.html" class="nav-link">Projets</a>
-      <a href="#about" class="nav-link">À propos</a>
-      <a href="#contact" class="nav-link">Contact</a>
-      <a href="cv.html" class="btn-cta">
-        Mon Parcours
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
+    <button class="menu-btn" id="menuBtn">☰</button>
+    <nav class="nav" id="nav">
+      <a href="creations.html">Projets</a>
+      <a href="#about">Infos</a>
+      <a href="#contact">Contact</a>
+      <a href="cv.html" class="btn-cv">Mon Parcours</a>
     </nav>
   </header>
 
-  <main class="main-wrapper">
-    <section class="hero-section">
-      <div class="video-container" id="videoWrapper">
-        <video class="video-player" id="heroVideo" src="img/video-presentation.mp4" playsinline muted loop autoplay></video>
-        <div class="sound-badge" id="soundBadge">🔇 Vidéo muette</div>
+  <main>
+    <section class="hero">
+      <div class="blob-video reveal">
+        <video id="myVideo" src="img/video-presentation.mp4" autoplay muted loop playsinline></video>
+        <div id="soundLabel" style="position:absolute; bottom:20px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.6); color:white; padding:5px 12px; border-radius:20px; font-size:12px; font-weight:600; pointer-events:none;">🔇 Muet</div>
       </div>
 
-      <h1>Eliot SAURON</h1>
-      <h2>Designer Créatif & Front-End</h2>
-      <p class="hero-text">Je ne capture pas seulement des images, je construis des univers. <br>Avec peu, j'imagine le tout. Une texture, une image, une émotion.</p>
+      <h1 class="reveal">Eliot SAURON</h1>
+      <h2 class="reveal">Designer Créatif & Front-End</h2>
+      <p class="reveal">Je ne capture pas seulement des images, je construis des univers. <br>Avec peu, j'imagine le tout. Une texture, une image, une émotion.</p>
 
-      <div class="action-buttons">
-        <a href="creations.html" class="btn-primary">Voir mes projets</a>
-        <a href="#contact" class="btn-secondary">Me contacter</a>
+      <div class="btns reveal">
+        <a href="creations.html" class="btn-main">Découvrir mes projets</a>
+        <a href="#contact" class="btn-sec">Me contacter</a>
       </div>
     </section>
 
-    <section id="contact" class="section-wrapper">
-      <div class="glass-card" style="padding: 50px; text-align: center; max-width: 700px; margin: 0 auto;">
-        <h2 style="margin-bottom: 30px;">Un projet en tête ?</h2>
-        <form action="https://formspree.io/f/mblwgzve" method="POST" style="display: flex; flex-direction: column; gap: 15px;">
-          <input type="text" name="name" placeholder="Votre Nom" required style="padding: 15px; border-radius: 12px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: var(--text-main);">
-          <input type="email" name="email" placeholder="Votre Email" required style="padding: 15px; border-radius: 12px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: var(--text-main);">
-          <textarea name="message" rows="4" placeholder="Votre message..." required style="padding: 15px; border-radius: 12px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: var(--text-main); font-family: inherit;"></textarea>
-          <button type="submit" class="btn-primary" style="margin-top: 10px;">Envoyer</button>
+    <section id="about" class="section">
+      <h2 class="reveal">Ma Vision</h2>
+      <div class="skills-grid reveal">
+        <div class="skills-text">
+          <p>Mon approche n'est pas de prétendre tout savoir, mais de tout vouloir comprendre. Je crée des schémas mentaux où une simple image devient une texture, une ambiance.</p>
+        </div>
+        <div>
+          <div class="bar-wrap"><div class="bar-info"><span>Communication</span><span>Expert</span></div><div class="bar"><div class="fill" style="width:95%"></div></div></div>
+          <div class="bar-wrap"><div class="bar-info"><span>Vidéo & Montage</span><span>Avancé</span></div><div class="bar"><div class="fill" style="width:80%"></div></div></div>
+          <div class="bar-wrap"><div class="bar-info"><span>Design Graphique</span><span>Avancé</span></div><div class="bar"><div class="fill" style="width:75%"></div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section reveal" style="padding-bottom:60px;">
+      <div class="contact-form">
+        <h2>Parlons Passion</h2>
+        <form action="https://formspree.io/f/mblwgzve" method="POST">
+          <input type="text" name="name" placeholder="Votre Nom" required>
+          <input type="email" name="email" placeholder="Votre Email" required>
+          <textarea name="message" rows="5" placeholder="Une idée ? Un projet ?..." required></textarea>
+          <button type="submit" class="submit-btn">Envoyer</button>
         </form>
       </div>
     </section>
   </main>
 
-  <footer style="text-align: center; padding: 40px; color: var(--text-muted); font-size: 14px; position: relative; z-index: 10;">
-    <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 20px;">
-      <a href="mentions-legales.html" style="color: inherit; text-decoration: none;">Mentions Légales</a>
-      <a href="politique-confidentialite.html" style="color: inherit; text-decoration: none;">Confidentialité</a>
+  <footer>
+    <div class="socials">
+      <a href="https://www.linkedin.com/in/eliot-sauron/" target="_blank" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+      </a>
+      <a href="mailto:eliotsauron25@gmail.com" aria-label="Email">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12.713l-12-9.713h24l-12 9.713zm-12 5.287l6.932-6.932 5.068 4.793 5.068-4.793 6.932 6.932h-24z"/></svg>
+      </a>
     </div>
-    <p>© 2025 Eliot SAURON.</p>
+    <div style="font-size:12px; margin-top:20px;">
+      <a href="mentions-legales.html" style="color:inherit; margin:0 10px;">Mentions Légales</a>
+      <a href="politique-confidentialite.html" style="color:inherit; margin:0 10px;">Confidentialité</a>
+    </div>
+    <p style="margin-top:20px; font-size:12px; opacity:0.6;">© 2025 Eliot SAURON.</p>
   </footer>
 
   <script src="assets/js/main.js"></script>

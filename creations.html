@@ -3,100 +3,67 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Projets - Eliot SAURON</title>
+  <title>Mes Projets - Eliot SAURON</title>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
-  <div class="noise-overlay"></div>
-  <div class="background-layer"><div class="blob blob-2"></div></div>
-  <button class="theme-switch" id="themeToggle">🌙</button>
+  <div class="noise"></div>
+  <div class="bg-blobs"><div class="blob b2"></div></div>
+  <button class="theme-toggle" id="themeBtn">🌙</button>
 
-  <header class="site-header">
-    <a href="index.html" class="logo-link"><span class="logo-text">Eliot.</span></a>
-    <nav class="nav-menu"><a href="index.html" class="nav-link">← Accueil</a></nav>
+  <header>
+    <a href="index.html" class="logo-container" style="color:var(--text-main); font-weight:800; font-size:20px;">Eliot.</a>
+    <nav class="nav"><a href="index.html">← Accueil</a></nav>
   </header>
 
-  <main class="main-wrapper section-wrapper">
-    <h1 class="section-title">Mes Créations</h1>
-    
-    <div class="filters-nav">
-      <button class="filter-pill active" data-filter="all">Tout</button>
-      <button class="filter-pill" data-filter="design">Design</button>
-      <button class="filter-pill" data-filter="media">Vidéo</button>
-      <button class="filter-pill" data-filter="photo">Photo</button>
+  <main class="section">
+    <div style="text-align:center; padding: 120px 0 40px;">
+      <h1 class="reveal">Mes Projets</h1>
+      <div class="filters reveal">
+        <button class="filter-btn active" data-filter="all">Tout</button>
+        <button class="filter-btn" data-filter="design">Design</button>
+        <button class="filter-btn" data-filter="media">Vidéo</button>
+        <button class="filter-btn" data-filter="photo">Photo</button>
+      </div>
     </div>
 
-    <div class="projects-grid">
+    <div class="projects-grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap:40px;">
       
-      <article class="project-item glass-card" data-category="design">
-        <div class="carousel-view">
-          <div class="carousel-track">
-            <img src="img/ajna-cover.jpg" class="carousel-img" alt="AJNA Cover" loading="lazy">
-            <img src="img/ajna-logo.jpg" class="carousel-img" alt="AJNA Logo" loading="lazy">
-          </div>
-          <button class="carousel-btn prev-btn">‹</button>
-          <button class="carousel-btn next-btn">›</button>
+      <div class="card reveal" style="background:var(--glass-bg); padding:20px; border-radius:24px; border:1px solid var(--glass-border);" data-category="design">
+        <img src="img/ajna-cover.jpg" class="lb-trigger" style="width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:12px; cursor:zoom-in;" alt="AJNA">
+        <div style="margin-top:20px;">
+          <span style="color:var(--blue); font-weight:700; font-size:12px; text-transform:uppercase;">DA</span>
+          <h3 style="font-size:20px; margin:5px 0;">AJNA</h3>
+          <p style="font-size:14px; opacity:0.8; margin-bottom:0;">Identité visuelle.</p>
         </div>
-        <div class="project-info">
-          <span class="project-cat">DA & Branding</span>
-          <h3 class="project-title">AJNA - Rivages Invisibles</h3>
-          <p style="font-size: 14px; opacity: 0.8;">Identité visuelle complète pour un album conceptuel fictif.</p>
-        </div>
-      </article>
+      </div>
 
-      <article class="project-item glass-card" data-category="media">
-        <div class="carousel-view">
-          <div class="carousel-track">
-            <img src="img/radio-1.jpg" class="carousel-img" alt="Radio Campus" loading="lazy">
-            <img src="img/radio-2.jpg" class="carousel-img" alt="Studio" loading="lazy">
-          </div>
-          <button class="carousel-btn prev-btn">‹</button>
-          <button class="carousel-btn next-btn">›</button>
+      <div class="card reveal" style="background:var(--glass-bg); padding:20px; border-radius:24px; border:1px solid var(--glass-border);" data-category="media">
+        <img src="img/radio-1.jpg" class="lb-trigger" style="width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:12px; cursor:zoom-in;" alt="Radio">
+        <div style="margin-top:20px;">
+          <span style="color:var(--blue); font-weight:700; font-size:12px; text-transform:uppercase;">Vidéo</span>
+          <h3 style="font-size:20px; margin:5px 0;">Radio Campus</h3>
+          <p style="font-size:14px; opacity:0.8; margin-bottom:0;">Contenu réseaux sociaux.</p>
         </div>
-        <div class="project-info">
-          <span class="project-cat">Vidéo</span>
-          <h3 class="project-title">Radio Campus</h3>
-          <p style="font-size: 14px; opacity: 0.8;">Réalisation de contenus dynamiques pour les réseaux sociaux.</p>
-        </div>
-      </article>
+      </div>
 
-      <article class="project-item glass-card" data-category="photo">
-        <div class="carousel-view">
-          <div class="carousel-track">
-            <img src="img/photo-nb-1.jpg" class="carousel-img" alt="Texture NB" loading="lazy">
-            <img src="img/photo-nb-2.jpg" class="carousel-img" alt="Architecture" loading="lazy">
-          </div>
-          <button class="carousel-btn prev-btn">‹</button>
-          <button class="carousel-btn next-btn">›</button>
+      <div class="card reveal" style="background:var(--glass-bg); padding:20px; border-radius:24px; border:1px solid var(--glass-border);" data-category="photo">
+        <img src="img/photo-nb-1.jpg" class="lb-trigger" style="width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:12px; cursor:zoom-in;" alt="Photo">
+        <div style="margin-top:20px;">
+          <span style="color:var(--blue); font-weight:700; font-size:12px; text-transform:uppercase;">Photo</span>
+          <h3 style="font-size:20px; margin:5px 0;">Série NB</h3>
+          <p style="font-size:14px; opacity:0.8; margin-bottom:0;">Textures urbaines.</p>
         </div>
-        <div class="project-info">
-          <span class="project-cat">Photographie</span>
-          <h3 class="project-title">Série Noire & Blanche</h3>
-          <p style="font-size: 14px; opacity: 0.8;">Exploration des textures et contrastes urbains.</p>
-        </div>
-      </article>
-
-      <article class="project-item glass-card" data-category="photo">
-        <div class="carousel-view">
-          <div class="carousel-track">
-             <img src="img/rv-cover.jpg" class="carousel-img" alt="Livre" loading="lazy">
-          </div>
-        </div>
-        <div class="project-info">
-          <span class="project-cat">Édition</span>
-          <h3 class="project-title">Rendez-moi en ville</h3>
-          <a href="img/rendez-moi-en-ville.pdf" target="_blank" style="font-size: 14px; font-weight: 700; color: var(--text-main);">Voir le PDF →</a>
-        </div>
-      </article>
+      </div>
 
     </div>
   </main>
 
-  <div class="lightbox-modal" id="lightboxModal">
-    <button class="lightbox-close" id="lightboxClose">✕</button>
-    <img src="" id="lightboxImg" class="lightbox-img" alt="Zoom">
+  <div class="lightbox" id="lightbox" style="position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:5000; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:0.3s;">
+    <button class="lb-close" style="position:absolute; top:30px; right:30px; background:none; border:none; color:white; font-size:40px; cursor:pointer;">&times;</button>
+    <img src="" id="lbImg" style="max-width:90vw; max-height:90vh; border-radius:4px;">
   </div>
 
   <script src="assets/js/main.js"></script>
