@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" data-theme="light">
+<html lang="fr" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +10,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23F2A18C'/%3E%3Ctext x='50' y='70' font-size='60' font-weight='800' text-anchor='middle' fill='white'%3EE%3C/text%3E%3C/svg%3E">
 </head>
 <body>
 
@@ -18,21 +17,15 @@
   <div class="ambient-bg">
     <div class="blob b1"></div>
     <div class="blob b2"></div>
+    <div class="blob b3"></div>
   </div>
 
-  <button class="theme-toggle" id="themeBtn" aria-label="Changer le thème">🌙</button>
+  <button class="theme-toggle" id="themeBtn" aria-label="Changer le thème">☀️</button>
 
   <header class="site-header">
-    <a href="index.html" class="logo-container" aria-label="Retour accueil">
+    <a href="index.html" class="logo-container">
       <svg class="logo-svg" viewBox="0 0 200 80" fill="none">
-        <defs>
-          <linearGradient id="cloud-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" style="stop-color:var(--peach);stop-opacity:0.8" />
-            <stop offset="100%" style="stop-color:var(--blue);stop-opacity:0.9" />
-          </linearGradient>
-        </defs>
         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="logo-text-elem">Eliot</text>
-        <path class="cloud-path" d="M20,40 C20,20 50,-10 100,10 C150,30 180,20 180,40 C180,60 150,90 100,70 C50,50 20,60 20,40" stroke="url(#cloud-gradient)" stroke-width="5" fill="none" stroke-linecap="round" />
       </svg>
     </a>
   </header>
@@ -46,30 +39,40 @@
 
   <div class="scene-wrapper">
     <main data-barba="wrapper">
-      <div class="page-view" data-barba="container" data-namespace="home">
+      <div class="page-view home-view" data-barba="container" data-namespace="home">
         
-        <section class="hero">
-          <div class="blob-video-container" id="videoTrigger" role="button" aria-label="Activer le son">
-            <video id="myVideo" src="img/video-presentation.mp4" autoplay muted loop playsinline></video>
-            <div class="sound-badge">
-              <span class="icon">🔇</span>
-              <span class="text">Vidéo muette — Activer</span>
+        <section class="hero-section">
+          <div class="hero-content">
+            
+            <div class="video-shape-wrapper" id="videoTrigger">
+              <video id="heroVideo" src="img/video-presentation.mp4" playsinline loop muted autoplay></video>
+              <div class="sound-badge">
+                <span class="sb-icon">🔇</span>
+                <span class="sb-text">Vidéo muette — Activer</span>
+              </div>
             </div>
+
+            <h1 class="hero-title">
+              <span class="line reveal-text">Eliot SAURON</span>
+            </h1>
+            <h2 class="hero-subtitle reveal-text delay-1">Communication & Design Visuel</h2>
+            
+            <p class="hero-desc reveal-text delay-2">
+              Étudiant en Info-Com à Besançon.<br>
+              Je transforme des stratégies en expériences visuelles.
+            </p>
+
+            <div class="hero-actions reveal-text delay-3">
+              <a href="creations.html" class="btn-primary">Explorer mes projets</a>
+              <a href="cv.html" class="btn-secondary">Voir mon profil</a>
+            </div>
+
           </div>
 
-          <h1>Eliot SAURON</h1>
-          <h2>Communication & Design Visuel</h2>
-          <p>Étudiant en Info-Com, je conçois des identités visuelles<br>et des stratégies digitales qui ont du sens.</p>
-
-          <div class="hero-btns">
-            <a href="creations.html" class="btn-main">Voir mes projets</a>
-            <a href="cv.html" class="btn-sec">Mon profil</a>
-          </div>
+          <footer class="legal-footer reveal-text delay-4">
+            <a href="mentions-legales.html">Mentions Légales</a> &bull; <a href="politique-confidentialite.html">Confidentialité</a>
+          </footer>
         </section>
-
-        <footer class="home-footer">
-          <a href="mentions-legales.html">Mentions Légales</a>
-        </footer>
 
       </div>
     </main>
