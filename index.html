@@ -3,14 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Eliot SAURON - Creative Developer</title>
-  
+  <title>Eliot SAURON - Communication & Design</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
-  
   <link rel="stylesheet" href="assets/css/style.css">
-  
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23F2A18C'/%3E%3Ctext x='50' y='70' font-size='60' font-weight='800' text-anchor='middle' fill='white'%3EE%3C/text%3E%3C/svg%3E">
 </head>
 <body>
@@ -27,7 +24,6 @@
     <a href="index.html" class="logo-container">
       <svg class="logo-svg" viewBox="0 0 200 80" fill="none">
         <defs>
-          <filter id="cloud-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur in="SourceGraphic" stdDeviation="4" /></filter>
           <linearGradient id="cloud-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" style="stop-color:var(--peach);stop-opacity:0.8" />
             <stop offset="100%" style="stop-color:var(--blue);stop-opacity:0.9" />
@@ -46,29 +42,33 @@
     <a href="mailto:eliotsauron25@gmail.com" class="dock-link">Contact</a>
   </nav>
 
-  <main data-barba="wrapper">
-    <div class="page-view" data-barba="container" data-namespace="home">
-      
-      <section class="hero">
-        <div class="blob-video">
-          <video id="myVideo" src="img/video-presentation.mp4" autoplay muted loop playsinline></video>
-        </div>
+  <div class="scene-wrapper">
+    <main data-barba="wrapper">
+      <div class="page-view" data-barba="container" data-namespace="home">
+        
+        <section class="hero">
+          <div class="blob-video" id="videoTrigger">
+            <video id="myVideo" src="img/video-presentation.mp4" autoplay muted loop playsinline></video>
+            <div id="soundLabel">🔇 Muet</div>
+          </div>
 
-        <h1>Eliot SAURON</h1>
-        <h2>Designer Créatif & Front-End</h2>
-        <p>Je ne capture pas seulement des images, je construis des univers. <br>Avec peu, j'imagine le tout.</p>
+          <h1>Eliot SAURON</h1>
+          <h2>Communication & Design Visuel</h2>
+          <p>Étudiant en Info-Com, j'explore la rencontre entre stratégie et création.<br>De la conception graphique à la vidéo, je donne forme aux idées.</p>
 
-        <div style="margin-top: 40px; display:flex; gap: 20px; justify-content: center;">
-          <a href="creations.html" class="btn-main">Voir mes travaux</a>
-        </div>
-      </section>
+          <div style="margin-top: 40px; display:flex; gap: 20px; justify-content: center;">
+            <a href="creations.html" class="btn-main">Mes réalisations</a>
+            <a href="cv.html" class="btn-sec">Mon profil</a>
+          </div>
+        </section>
 
-      <footer style="text-align: center; padding: 40px; opacity: 0.6; font-size: 12px;">
-        <a href="mentions-legales.html">Mentions Légales</a>
-      </footer>
+        <footer style="text-align: center; padding: 40px; opacity: 0.6; font-size: 12px; margin-top: 60px;">
+          <a href="mentions-legales.html">Mentions Légales & Confidentialité</a>
+        </footer>
 
-    </div>
-  </main>
+      </div>
+    </main>
+  </div>
 
   <script src="https://unpkg.com/@barba/core"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>

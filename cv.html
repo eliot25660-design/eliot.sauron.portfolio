@@ -14,14 +14,7 @@
   <header class="site-header">
     <a href="index.html" class="logo-container">
       <svg class="logo-svg" viewBox="0 0 200 80" fill="none">
-        <defs>
-            <linearGradient id="cloud-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" style="stop-color:var(--peach);stop-opacity:0.8" />
-                <stop offset="100%" style="stop-color:var(--blue);stop-opacity:0.9" />
-            </linearGradient>
-        </defs>
         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="logo-text-elem">Eliot</text>
-        <path class="cloud-path" d="M20,40 C20,20 50,-10 100,10 C150,30 180,20 180,40 C180,60 150,90 100,70 C50,50 20,60 20,40" stroke="url(#cloud-gradient)" stroke-width="5" fill="none" stroke-linecap="round" />
       </svg>
     </a>
   </header>
@@ -33,61 +26,79 @@
     <a href="mailto:eliotsauron25@gmail.com" class="dock-link">Contact</a>
   </nav>
 
-  <main data-barba="wrapper">
-    <div class="page-view" data-barba="container" data-namespace="cv">
-      
-      <div class="cv-grid">
-        <div class="tile t-profile">
-            <img src="img/profil.jpg" class="profile-pic" alt="Eliot" onerror="this.src='https://via.placeholder.com/150'">
-            <h1>Eliot SAURON</h1>
-            <p style="color:var(--blue); font-weight:700; text-transform:uppercase; font-size:12px;">Creative Developer</p>
+  <div class="scene-wrapper">
+    <main data-barba="wrapper">
+      <div class="page-view" data-barba="container" data-namespace="cv">
+        
+        <div class="cv-grid">
+          <div class="tile t-profile">
+              <img src="img/profil.jpg" class="profile-pic" alt="Eliot" onerror="this.src='https://placehold.co/200x200/FFBEAC/white?text=Moi'">
+              <h1>Eliot SAURON</h1>
+              <span class="role-tag">Étudiant Info-Com</span>
+              <p style="margin-top: 15px; font-size: 14px;">Besançon, France</p>
+          </div>
+
+          <div class="tile t-intro">
+              <h2>Ma démarche</h2>
+              <p>Passionné par l'impact de l'image, je construis mon profil à la croisée de la <strong>stratégie de communication</strong> et de la <strong>création technique</strong>. Je ne cherche pas seulement à "faire joli", mais à transmettre un message clair, que ce soit par le design, la vidéo ou le web.</p>
+          </div>
+
+          <div class="tile t-exp">
+              <h2>Trajectoire</h2>
+              <div class="exp-list">
+                <div class="exp-item">
+                    <span class="date">Depuis 2024</span>
+                    <div class="job-title">Conseil & Vente</div>
+                    <div class="job-place">Boulangerie-Pâtisserie</div>
+                    <p style="font-size: 13px; margin-top: 5px;">Développement de l'autonomie et de la relation client au quotidien.</p>
+                </div>
+                <div class="exp-item">
+                    <span class="date">2022 - 2023</span>
+                    <div class="job-title">Stage Communication</div>
+                    <div class="job-place">Mairie de Saône</div>
+                    <p style="font-size: 13px; margin-top: 5px;">Immersion en communication institutionnelle et création de supports visuels.</p>
+                </div>
+              </div>
+          </div>
+
+          <div class="tile t-edu">
+              <h2>Formation</h2>
+              <div class="exp-list">
+                <div class="exp-item">
+                    <span class="date" style="color:var(--blue)">2024 - 2026</span>
+                    <div class="job-title">B.U.T. Information-Communication</div>
+                    <div class="job-place">IUT Besançon</div>
+                    <p style="font-size: 13px; margin-top: 5px;">Parcours Publicité & Stratégie.</p>
+                </div>
+                <div class="exp-item">
+                    <span class="date" style="color:var(--blue)">2024</span>
+                    <div class="job-title">Baccalauréat STMG</div>
+                    <div class="job-place">Lycée Louis-Pergaud</div>
+                    <p style="font-size: 13px; margin-top: 5px;">Mention Bien.</p>
+                </div>
+              </div>
+          </div>
+
+          <div class="tile t-skills">
+              <h2 style="margin-bottom: 20px;">Boîte à outils</h2>
+              <div>
+                <span class="skill-tag">Suite Adobe</span>
+                <span class="skill-tag">Montage Vidéo</span>
+                <span class="skill-tag">Création Graphique</span>
+                <span class="skill-tag">HTML / CSS / JS</span>
+                <span class="skill-tag">Réseaux Sociaux</span>
+                <span class="skill-tag">Figma</span>
+              </div>
+          </div>
         </div>
 
-        <div class="tile t-intro">
-            <h2>À propos</h2>
-            <p>Je ne cherche pas seulement à remplir des cases, je cherche à créer du sens. Passionné par la narration visuelle, je mets ma rigueur technique au service de projets qui marquent.</p>
+        <div style="text-align: center; margin-top: 50px;">
+          <a href="cv-eliot-sauron.pdf" class="btn-main" download>Télécharger mon CV complet</a>
         </div>
 
-        <div class="tile t-exp">
-            <h2>Expériences</h2>
-            <div style="margin-bottom: 15px;">
-                <span style="color:var(--peach); font-weight:700; font-size:12px;">2024 - AJD</span>
-                <p><strong>Vente & Gestion</strong><br>Boulangerie-Pâtisserie (Autonomie, Rigueur)</p>
-            </div>
-            <div>
-                <span style="color:var(--peach); font-weight:700; font-size:12px;">2022 - 2023</span>
-                <p><strong>Stages Communication</strong><br>Mairie de Saône</p>
-            </div>
-        </div>
-
-        <div class="tile t-edu">
-            <h2>Formation</h2>
-            <div style="margin-bottom: 15px;">
-                <span style="color:var(--blue); font-weight:700; font-size:12px;">2024 - 2026</span>
-                <p><strong>B.U.T. Info-Com</strong><br>IUT Besançon</p>
-            </div>
-            <div>
-                <span style="color:var(--blue); font-weight:700; font-size:12px;">2024</span>
-                <p><strong>Baccalauréat STMG</strong><br>Mention Bien</p>
-            </div>
-        </div>
-
-        <div class="tile t-skills">
-            <span class="skill-tag">Photoshop</span>
-            <span class="skill-tag">Illustrator</span>
-            <span class="skill-tag">Figma</span>
-            <span class="skill-tag">HTML/CSS</span>
-            <span class="skill-tag">Premiere Pro</span>
-            <span class="skill-tag">GSAP</span>
-        </div>
       </div>
-
-      <div style="text-align: center; margin-top: 40px;">
-        <a href="cv-eliot-sauron.pdf" class="btn-main" download>Télécharger PDF</a>
-      </div>
-
-    </div>
-  </main>
+    </main>
+  </div>
 
   <script src="https://unpkg.com/@barba/core"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>

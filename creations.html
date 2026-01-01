@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mes Projets - Eliot SAURON</title>
+  <title>Mentions Légales - Eliot SAURON</title>
+  <meta name="robots" content="noindex, nofollow">
   <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23F2A18C'/%3E%3Ctext x='50' y='70' font-size='60' font-weight='800' text-anchor='middle' fill='white'%3EE%3C/text%3E%3C/svg%3E">
 </head>
 <body>
   <div class="noise-overlay"></div>
@@ -12,65 +14,36 @@
   <button class="theme-toggle" id="themeBtn">🌙</button>
 
   <header class="site-header">
-    <a href="index.html" class="logo-container">
+     <a href="index.html" class="logo-container">
       <svg class="logo-svg" viewBox="0 0 200 80" fill="none">
-        <defs>
-            <linearGradient id="cloud-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" style="stop-color:var(--peach);stop-opacity:0.8" />
-                <stop offset="100%" style="stop-color:var(--blue);stop-opacity:0.9" />
-            </linearGradient>
-        </defs>
         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="logo-text-elem">Eliot</text>
-        <path class="cloud-path" d="M20,40 C20,20 50,-10 100,10 C150,30 180,20 180,40 C180,60 150,90 100,70 C50,50 20,60 20,40" stroke="url(#cloud-gradient)" stroke-width="5" fill="none" stroke-linecap="round" />
       </svg>
     </a>
   </header>
 
   <nav class="dock-nav">
-    <a href="index.html" class="dock-link">Accueil</a>
-    <a href="creations.html" class="dock-link active">Projets</a>
-    <a href="cv.html" class="dock-link">Parcours</a>
-    <a href="mailto:eliotsauron25@gmail.com" class="dock-link">Contact</a>
+    <a href="index.html" class="dock-link">Retour Accueil</a>
   </nav>
 
-  <main data-barba="wrapper">
-    <div class="page-view" data-barba="container" data-namespace="creations">
-      
-      <div style="text-align: center; margin-bottom: 50px;">
-        <h1>Mes Projets</h1>
-        <div class="filters">
-          <button class="filter-btn active" data-filter="all">Tout</button>
-          <button class="filter-btn" data-filter="design">Design</button>
-          <button class="filter-btn" data-filter="media">Vidéo</button>
-          <button class="filter-btn" data-filter="photo">Photo</button>
+  <div class="scene-wrapper">
+    <main data-barba="wrapper">
+      <div class="page-view" data-barba="container" data-namespace="legal">
+        <div class="legal-container">
+          <h1>Mentions Légales & Confidentialité</h1>
+          
+          <h2>1. Éditeur</h2>
+          <p><strong>Eliot SAURON</strong> (Étudiant)<br>Adresse : 25660 Saône, France<br>Email : <a href="mailto:eliotsauron25@gmail.com">eliotsauron25@gmail.com</a></p>
+
+          <h2>2. Hébergement</h2>
+          <p>Hébergé par <strong>Vercel Inc.</strong><br>340 S Lemon Ave #4133 Walnut, CA 91789, USA.</p>
+
+          <h2>3. Données & Cookies</h2>
+          <p>Ce site respecte votre vie privée. Aucun traceur publicitaire n'est utilisé. Seul un cookie technique local est employé pour mémoriser votre préférence de thème (Mode Sombre/Clair).</p>
+          <p>Conformément au RGPD, vous disposez d'un droit d'accès et de suppression de vos données personnelles en me contactant par email.</p>
         </div>
       </div>
-
-      <div class="grid">
-        <div class="card" data-category="design">
-          <img src="img/ajna-cover.jpg" class="card-img" alt="Projet" onerror="this.src='https://via.placeholder.com/400x500'">
-          <span class="badge">Direction Artistique</span>
-          <h3>AJNA - Rivages Invisibles</h3>
-          <p>Identité visuelle, logo et storytelling.</p>
-        </div>
-
-        <div class="card" data-category="media">
-          <img src="img/radio-1.jpg" class="card-img" alt="Radio" onerror="this.src='https://via.placeholder.com/400x500'">
-          <span class="badge">Vidéo & Comm</span>
-          <h3>Radio Campus</h3>
-          <p>Réalisation de reels et contenu réseaux.</p>
-        </div>
-
-         <div class="card" data-category="photo">
-          <img src="img/rv-cover.jpg" class="card-img" alt="Livre" onerror="this.src='https://via.placeholder.com/400x500'">
-          <span class="badge">Édition</span>
-          <h3>Rendez-moi en ville</h3>
-          <p>Projet d'édition poétique urbain.</p>
-        </div>
-      </div>
-
-    </div>
-  </main>
+    </main>
+  </div>
 
   <script src="https://unpkg.com/@barba/core"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
