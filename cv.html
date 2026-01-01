@@ -8,11 +8,11 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23F2A18C'/%3E%3Ctext x='50' y='70' font-size='60' font-weight='800' text-anchor='middle' fill='white'%3EE%3C/text%3E%3C/svg%3E">
 
   <style>
-    /* --- STYLE PARTAGÉ --- */
+    /* --- STYLE --- */
     :root {
       --peach: #FFBEAC; --blue: #A4C8E6; --bg-body: #F0F0F5;
       --text-main: #1D1D1F; --text-muted: #515154;
-      --glass-bg: rgba(255, 255, 255, 0.85); --glass-border: rgba(255, 255, 255, 0.6);
+      --glass-bg: rgba(255, 255, 255, 0.9); --glass-border: rgba(255, 255, 255, 0.6);
       --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     }
     [data-theme="dark"] {
@@ -29,23 +29,22 @@
     .b1 { width: 60vw; height: 60vw; background: var(--peach); top: -20%; left: -10%; }
     .b2 { width: 60vw; height: 60vw; background: var(--blue); bottom: -20%; right: -10%; }
 
-    /* --- HEADER SPECIFIQUE CV --- */
+    /* --- HEADER --- */
     header {
       position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-      width: 90%; max-width: 1100px; height: 60px;
+      width: 90%; max-width: 1000px; height: 60px;
       background: var(--glass-bg); backdrop-filter: blur(12px);
       border: 1px solid var(--glass-border); border-radius: 100px;
-      padding: 0 25px; z-index: 1000;
-      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 25px; z-index: 1000; display: flex; justify-content: space-between; align-items: center;
       box-shadow: var(--shadow);
     }
     .logo-text { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 24px; color: var(--text-main); text-decoration: none; }
     .back-btn { text-decoration: none; font-weight: 700; color: var(--text-main); font-size: 14px; }
 
-    /* --- LAYOUT CV (BENTO GRID) --- */
+    /* --- GRID --- */
     .cv-container {
       display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px;
-      max-width: 1100px; margin: 0 auto; padding: 100px 20px 40px;
+      max-width: 1000px; margin: 0 auto; padding: 100px 20px 40px;
     }
     .cv-tile {
       background: var(--glass-bg); border: 1px solid var(--glass-border);
@@ -54,30 +53,31 @@
     }
     .cv-tile:hover { transform: translateY(-3px); border-color: var(--blue); }
     
-    .t-profile { grid-column: span 4; align-items: center; text-align: center; justify-content: center; }
+    /* Grid Placements */
+    .t-profile { grid-column: span 4; grid-row: span 2; align-items: center; text-align: center; justify-content: center; }
     .t-intro { grid-column: span 8; }
     .t-exp { grid-column: span 6; }
     .t-edu { grid-column: span 6; }
     .t-skills { grid-column: span 12; flex-direction: row; flex-wrap: wrap; gap: 10px; justify-content: center; align-items: center; }
 
-    /* --- CONTENU --- */
+    /* Content Styling */
     .profile-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid var(--peach); margin-bottom: 20px; }
-    h1 { font-family: 'Syne'; font-size: 28px; font-weight: 800; margin-bottom: 5px; line-height: 1.1; }
+    h1 { font-family: 'Syne'; font-size: 26px; font-weight: 800; margin-bottom: 5px; line-height: 1.1; }
     .role { color: var(--blue); font-weight: 700; text-transform: uppercase; font-size: 12px; letter-spacing: 1px; margin-bottom: 20px; }
     
-    h2 { font-family: 'Syne'; font-size: 22px; font-weight: 700; margin-bottom: 25px; border-bottom: 2px solid var(--glass-border); padding-bottom: 10px; }
+    h2 { font-family: 'Syne'; font-size: 20px; font-weight: 700; margin-bottom: 25px; border-bottom: 2px solid var(--glass-border); padding-bottom: 10px; }
     
     .exp-item { margin-bottom: 25px; position: relative; padding-left: 15px; border-left: 3px solid var(--peach); }
     .exp-item:last-child { margin-bottom: 0; }
-    .date { font-size: 12px; font-weight: 800; color: var(--peach); text-transform: uppercase; display: block; }
+    .date { font-size: 11px; font-weight: 800; color: var(--peach); text-transform: uppercase; display: block; margin-bottom: 4px; }
     .date.blue { color: var(--blue); border-color: var(--blue); }
-    .job { font-size: 16px; font-weight: 700; display: block; margin: 3px 0; }
-    .place { font-size: 13px; font-style: italic; opacity: 0.7; margin-bottom: 5px; display: block; }
-    p.desc { font-size: 14px; color: var(--text-muted); line-height: 1.5; }
+    .job { font-size: 16px; font-weight: 700; display: block; margin-bottom: 4px; }
+    .place { font-size: 13px; font-style: italic; opacity: 0.7; margin-bottom: 8px; display: block; }
+    p.desc { font-size: 14px; color: var(--text-muted); line-height: 1.5; margin: 0; }
 
     .skill-tag {
-      padding: 8px 18px; border-radius: 30px; background: rgba(127, 166, 198, 0.1);
-      font-weight: 600; font-size: 14px; border: 1px solid transparent; color: var(--text-main);
+      padding: 8px 16px; border-radius: 30px; background: rgba(127, 166, 198, 0.1);
+      font-weight: 600; font-size: 13px; border: 1px solid transparent; color: var(--text-main);
     }
     .skill-tag:hover { border-color: var(--blue); background: var(--glass-bg); }
 
@@ -86,12 +86,13 @@
       color: var(--bg-body); padding: 15px 30px; border-radius: 50px;
       text-decoration: none; font-weight: 700; box-shadow: var(--shadow); z-index: 100;
     }
-    .theme-btn { position: fixed; bottom: 30px; left: 30px; width: 50px; height: 50px; background: var(--glass-bg); border-radius: 50%; border: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; z-index: 100; box-shadow: var(--shadow); }
+    .theme-btn { position: fixed; bottom: 30px; left: 30px; width: 45px; height: 45px; background: var(--glass-bg); border-radius: 50%; border: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; z-index: 100; box-shadow: var(--shadow); }
 
-    /* --- RESPONSIVE --- */
+    /* Responsive: Stack everything on mobile */
     @media (max-width: 900px) {
       .cv-container { grid-template-columns: 1fr; }
-      .t-profile, .t-intro, .t-exp, .t-edu, .t-skills { grid-column: span 1; }
+      .t-profile, .t-intro, .t-exp, .t-edu, .t-skills { grid-column: span 1; grid-row: auto; }
+      .t-profile { padding: 40px 20px; }
     }
   </style>
 </head>
@@ -102,7 +103,7 @@
     <div class="blob b2"></div>
   </div>
 
-  <button class="theme-btn" aria-label="Theme">🌙</button>
+  <button class="theme-btn">🌙</button>
 
   <header>
     <a href="index.html" class="logo-text">Eliot</a>
@@ -180,16 +181,13 @@
     const html = document.documentElement;
     const savedTheme = localStorage.getItem('theme') || 'dark';
     html.setAttribute('data-theme', savedTheme);
-    if(themeBtn) {
-      themeBtn.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
-      themeBtn.addEventListener('click', () => {
-        const current = html.getAttribute('data-theme');
-        const newTheme = current === 'dark' ? 'light' : 'dark';
-        html.setAttribute('data-theme', newTheme);
-        themeBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
-        localStorage.setItem('theme', newTheme);
-      });
-    }
+    themeBtn.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+    themeBtn.addEventListener('click', () => {
+      const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', newTheme);
+      themeBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+      localStorage.setItem('theme', newTheme);
+    });
   </script>
 </body>
 </html>

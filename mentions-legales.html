@@ -4,62 +4,39 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mentions Légales – Eliot SAURON</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23F2A18C'/%3E%3Ctext x='50' y='70' font-size='60' font-weight='800' text-anchor='middle' fill='white'%3EE%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="assets/css/style.css">
+  
+  <style>
+    :root {
+      --bg-body: #F0F0F5; --text-main: #1D1D1F; --glass-bg: rgba(255, 255, 255, 0.9);
+      --glass-border: rgba(255, 255, 255, 0.6); --blue: #A4C8E6;
+    }
+    [data-theme="dark"] {
+      --bg-body: #050505; --text-main: #F5F5F7; --glass-bg: rgba(20, 20, 20, 0.85);
+      --glass-border: rgba(255, 255, 255, 0.15); --blue: #7AB2E8;
+    }
+    body { font-family: 'Outfit', sans-serif; background: var(--bg-body); color: var(--text-main); margin: 0; padding: 40px 20px; line-height: 1.6; }
+    
+    .legal-container { max-width: 800px; margin: 60px auto; background: var(--glass-bg); padding: 50px; border-radius: 30px; border: 1px solid var(--glass-border); }
+    h1 { font-family: 'Syne'; text-align: center; margin-bottom: 40px; }
+    h3 { font-family: 'Syne'; color: var(--blue); margin-bottom: 10px; }
+    p { margin-bottom: 20px; opacity: 0.8; }
+    .back-btn { display: block; text-align: center; margin-top: 40px; color: var(--text-main); text-decoration: none; font-weight: 700; }
+  </style>
 </head>
 <body>
-
-  <div class="noise"></div>
-  <div class="bg-blobs"><div class="blob b1"></div></div>
-
-  <button class="theme-btn" aria-label="Changer de thème">🌙</button>
-
-  <header>
-    <a href="index.html" class="logo-container">
-      <svg viewBox="0 0 200 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="logo-text">Eliot</text>
-      </svg>
-    </a>
-    <a href="index.html" class="back-btn">← Accueil</a>
-  </header>
-
   <div class="legal-container">
-    <div class="legal-card">
-      <h1>Mentions Légales</h1>
-      
-      <section class="legal-section">
-        <h3>Éditeur</h3>
-        <p>
-          Eliot SAURON<br>
-          25660 Saône, France<br>
-          Email : eliotsauron25@gmail.com
-        </p>
-      </section>
+    <h1>Mentions Légales</h1>
+    <h3>Éditeur</h3>
+    <p>Eliot SAURON<br>25660 Saône, France<br>Email : eliotsauron25@gmail.com</p>
+    
+    <h3>Hébergement</h3>
+    <p>Hébergé par Vercel Inc.<br>340 S Lemon Ave #4133 Walnut, CA 91789, USA.</p>
 
-      <section class="legal-section">
-        <h3>Hébergement</h3>
-        <p>
-          Ce site est hébergé par <strong>Vercel Inc.</strong><br>
-          340 S Lemon Ave #4133 Walnut, CA 91789, USA.
-        </p>
-      </section>
-
-      <section class="legal-section">
-        <h3>Propriété Intellectuelle</h3>
-        <p>
-          L'ensemble des visuels et textes présents sur ce site sont la propriété exclusive d'Eliot Sauron, sauf mention contraire.
-        </p>
-      </section>
-    </div>
+    <h3>Propriété Intellectuelle</h3>
+    <p>L'ensemble des contenus de ce site est la propriété exclusive d'Eliot Sauron.</p>
+    
+    <a href="index.html" class="back-btn">← Retour Accueil</a>
   </div>
-
-  <footer>
-    <p style="text-align:center; padding:40px; color:var(--text-muted); font-size:14px;">© 2025 Eliot SAURON.</p>
-  </footer>
-
-  <script src="assets/js/main.js"></script>
 </body>
 </html>
