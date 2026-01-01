@@ -11,75 +11,76 @@
 </head>
 <body>
 
-  <div class="ambient-wrapper">
-    <div class="blob b1"></div>
-    <div class="blob b2"></div>
-    <div class="noise"></div>
+  <div class="background-layer">
+    <div class="noise-overlay"></div>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
   </div>
 
   <header class="site-header">
     <a href="index.html" class="logo">Eliot.</a>
-    <button class="theme-toggle">☀️</button>
+    <button class="theme-btn">☀️</button>
   </header>
 
-  <nav class="dock-nav">
-    <a href="index.html" class="nav-link">Accueil</a>
-    <a href="creations.html" class="nav-link active">Projets</a>
-    <a href="cv.html" class="nav-link">Parcours</a>
-    <a href="mailto:eliotsauron25@gmail.com" class="nav-link">Contact</a>
-  </nav>
+  <div class="dock-wrapper">
+    <nav class="dock-nav">
+      <a href="index.html" class="nav-link">Accueil</a>
+      <a href="creations.html" class="nav-link active">Projets</a>
+      <a href="cv.html" class="nav-link">Parcours</a>
+      <a href="mailto:eliotsauron25@gmail.com" class="nav-link">Contact</a>
+    </nav>
+  </div>
 
-  <main class="scene-container">
-    <div class="container">
-      <div style="text-align: center; margin-bottom: 40px;">
-        <h1 class="reveal">Réalisations</h1>
-        <p class="reveal">Une sélection de travaux académiques et personnels.</p>
+  <main class="main-content">
+    <div class="container" style="padding-bottom: 100px;">
+      
+      <div style="text-align: center; margin-bottom: 50px;">
+        <h1>Réalisations</h1>
+        <p>Une sélection de mes travaux récents.</p>
       </div>
 
-      <div class="filter-bar reveal">
+      <div class="filters">
         <button class="filter-btn active" data-filter="all">Tout</button>
         <button class="filter-btn" data-filter="design">Design</button>
         <button class="filter-btn" data-filter="video">Vidéo</button>
         <button class="filter-btn" data-filter="photo">Photo</button>
       </div>
 
-      <div class="grid reveal">
+      <div class="projects-grid">
         
-        <article class="card" data-category="design">
-          <div class="card-media open-lb">
-            <img src="img/ajna-cover.jpg" alt="Ajna Cover" onerror="this.src='https://placehold.co/600x450/FFBEAC/white?text=Ajna+Cover'">
-            <img src="img/ajna-logo.jpg" style="display:none;" alt="Ajna Logo" onerror="this.src='https://placehold.co/600x450/A4C8E6/white?text=Logo'">
-            <div class="carousel-nav"><span class="c-btn">📷</span></div>
+        <article class="project-card" data-category="design">
+          <div class="card-image-box">
+            <img src="img/ajna-cover.jpg" alt="Projet Ajna" onerror="this.src='https://placehold.co/600x450/333/FFF?text=Image+Manquante'">
+            <span class="card-icon">🔍</span>
           </div>
-          <div class="card-content">
-            <span class="tag">Identité Visuelle</span>
-            <h3>AJNA - Rivages Invisibles</h3>
-            <p>Création d'un univers graphique complet, logo et déclinaisons print.</p>
+          <div class="card-info">
+            <span class="card-cat">Identité Visuelle</span>
+            <h3>AJNA - Rivages</h3>
+            <p>Conception graphique complète pour une marque de vêtements.</p>
           </div>
         </article>
 
-        <article class="card" data-category="video">
-          <div class="card-media open-lb">
-            <img src="img/radio-1.jpg" alt="Radio Campus" onerror="this.src='https://placehold.co/600x450/222/white?text=Radio+Campus'">
+        <article class="project-card" data-category="video">
+          <div class="card-image-box">
+            <img src="img/radio-1.jpg" alt="Projet Radio" onerror="this.src='https://placehold.co/600x450/333/FFF?text=Image+Manquante'">
+            <span class="card-icon">🔍</span>
           </div>
-          <div class="card-content">
-            <span class="tag">Création de Contenu</span>
+          <div class="card-info">
+            <span class="card-cat">Vidéo</span>
             <h3>Radio Campus</h3>
-            <p>Captation vidéo et montage format court pour les réseaux sociaux.</p>
+            <p>Montage dynamique format Reel pour Instagram.</p>
           </div>
         </article>
 
-        <article class="card" data-category="photo">
-          <div class="card-media open-lb">
-            <img src="img/photo-nb-1.jpg" alt="Photo 1" onerror="this.src='https://placehold.co/600x450/333/white?text=Photo+1'">
-            <img src="img/photo-nb-2.jpg" style="display:none;" alt="Photo 2" onerror="this.src='https://placehold.co/600x450/444/white?text=Photo+2'">
-            <img src="img/photo-nb-3.jpg" style="display:none;" alt="Photo 3" onerror="this.src='https://placehold.co/600x450/555/white?text=Photo+3'">
-            <div class="carousel-nav"><span class="c-btn">📷</span></div>
+        <article class="project-card" data-category="photo">
+          <div class="card-image-box">
+            <img src="img/photo-nb-1.jpg" alt="Projet Photo" onerror="this.src='https://placehold.co/600x450/333/FFF?text=Image+Manquante'">
+            <span class="card-icon">🔍</span>
           </div>
-          <div class="card-content">
-            <span class="tag">Photographie</span>
-            <h3>Série Noir & Blanc</h3>
-            <p>Exploration urbaine, travail sur les textures et la lumière naturelle.</p>
+          <div class="card-info">
+            <span class="card-cat">Photographie</span>
+            <h3>Urban Black & White</h3>
+            <p>Série photographique sur l'architecture de Besançon.</p>
           </div>
         </article>
 
@@ -88,18 +89,12 @@
   </main>
 
   <div class="lightbox">
-    <div class="lb-close">&times;</div>
-    <div class="lb-prev">&#10094;</div>
-    <div class="lb-next">&#10095;</div>
-    <img src="" class="lb-img" alt="Projet Zoom">
+    <button class="lb-control lb-close">&times;</button>
+    <button class="lb-control lb-prev">&#10094;</button>
+    <button class="lb-control lb-next">&#10095;</button>
+    <img src="" alt="Zoom Projet">
   </div>
 
-  <footer class="site-footer">
-    <p>&copy; 2026 Eliot Sauron. <a href="mentions-legales.html">Mentions Légales</a></p>
-  </footer>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/ScrollTrigger.min.js"></script>
   <script src="assets/js/main.js"></script>
 </body>
 </html>

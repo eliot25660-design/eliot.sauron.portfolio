@@ -11,97 +11,97 @@
 </head>
 <body>
 
-  <div class="ambient-wrapper">
-    <div class="blob b1"></div>
-    <div class="blob b2"></div>
-    <div class="noise"></div>
+  <div class="background-layer">
+    <div class="noise-overlay"></div>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
   </div>
 
   <header class="site-header">
     <a href="index.html" class="logo">Eliot.</a>
-    <button class="theme-toggle">☀️</button>
+    <button class="theme-btn">☀️</button>
   </header>
 
-  <nav class="dock-nav">
-    <a href="index.html" class="nav-link">Accueil</a>
-    <a href="creations.html" class="nav-link">Projets</a>
-    <a href="cv.html" class="nav-link active">Parcours</a>
-    <a href="mailto:eliotsauron25@gmail.com" class="nav-link">Contact</a>
-  </nav>
+  <div class="dock-wrapper">
+    <nav class="dock-nav">
+      <a href="index.html" class="nav-link">Accueil</a>
+      <a href="creations.html" class="nav-link">Projets</a>
+      <a href="cv.html" class="nav-link active">Parcours</a>
+      <a href="mailto:eliotsauron25@gmail.com" class="nav-link">Contact</a>
+    </nav>
+  </div>
 
-  <main class="scene-container">
-    <div class="container" style="max-width: 900px;">
+  <main class="main-content">
+    <div class="container cv-container" style="padding-bottom: 100px;">
       
-      <div class="reveal" style="text-align: center; margin-bottom: 50px;">
-        <img src="img/profil.jpg" alt="Eliot Sauron" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 20px; border: 4px solid var(--glass-border);" onerror="this.src='https://placehold.co/200x200/FFBEAC/white?text=ES'">
+      <div style="text-align: center; margin-bottom: 50px;">
+        <img src="img/profil.jpg" alt="Profil" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid var(--color-accent); margin-bottom: 20px;" onerror="this.src='https://placehold.co/200x200?text=ES'">
         <h1>Eliot SAURON</h1>
-        <p style="color: var(--accent); font-weight: 700;">Communication & Design Visuel</p>
-        <p>📍 Besançon, France</p>
-        <a href="cv-eliot-sauron.pdf" class="btn btn-primary" style="margin-top: 15px;" download>Télécharger CV (PDF)</a>
+        <p>25660 Saône, France &bull; eliotsauron25@gmail.com</p>
+        <a href="cv-eliot-sauron.pdf" download class="btn btn-primary">Télécharger CV (PDF)</a>
       </div>
 
-      <div class="cv-section reveal">
+      <section class="cv-block">
         <h3>À Propos</h3>
-        <p style="margin-top: 15px;">
-          Étudiant curieux et créatif, je ne cherche pas seulement à faire du "beau", mais du pertinent. J'allie maîtrise technique des outils Adobe et réflexion stratégique pour servir le message, que ce soit par l'image, la vidéo ou le web.
+        <p style="max-width: 100%;">
+          Passionné par l'image et la stratégie de marque, je conçois des supports de communication impactants. Mon approche mêle rigueur technique et créativité pour répondre aux enjeux actuels du numérique.
         </p>
-      </div>
+      </section>
 
-      <div class="cv-section reveal">
+      <section class="cv-block">
         <h3>Formation</h3>
-        <div style="margin-top: 20px;">
-          <div class="timeline-item">
-            <span class="date">2024 — 2026</span>
-            <strong>B.U.T. Information & Communication</strong>
+        
+        <div class="timeline-row">
+          <div class="t-date">2024 — 2026</div>
+          <div class="t-content">
+            <strong>B.U.T. Information-Communication</strong>
             <p>IUT Besançon — Option Publicité et Stratégie Numérique.</p>
           </div>
-          <div class="timeline-item">
-            <span class="date">2024</span>
+        </div>
+
+        <div class="timeline-row">
+          <div class="t-date">2024</div>
+          <div class="t-content">
             <strong>Baccalauréat STMG</strong>
             <p>Lycée Louis-Pergaud — Mention Bien.</p>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div class="cv-section reveal">
+      <section class="cv-block">
         <h3>Expériences</h3>
-        <div style="margin-top: 20px;">
-          <div class="timeline-item">
-            <span class="date">En cours</span>
-            <strong>Conseil & Vente</strong> — Commerce de proximité
-            <p>Autonomie, gestion de caisse et relation client.</p>
-          </div>
-          <div class="timeline-item">
-            <span class="date">2022 — 2023</span>
-            <strong>Communication Junior</strong> — Mairie de Saône
-            <p>Création d'affiches, supports institutionnels et gestion de l'affichage urbain.</p>
+        
+        <div class="timeline-row">
+          <div class="t-date">En cours</div>
+          <div class="t-content">
+            <strong>Conseil & Vente</strong>
+            <p>Commerce de proximité : Gestion autonome, relation client, encaissement.</p>
           </div>
         </div>
-      </div>
 
-      <div class="cv-section reveal">
-        <h3>Compétences</h3>
-        <div class="skills-list">
-          <span class="skill-tag">Photoshop</span>
-          <span class="skill-tag">Illustrator</span>
-          <span class="skill-tag">InDesign</span>
-          <span class="skill-tag">Premiere Pro</span>
-          <span class="skill-tag">Figma</span>
-          <span class="skill-tag">HTML/CSS</span>
-          <span class="skill-tag">Rédaction</span>
-          <span class="skill-tag">Social Media</span>
+        <div class="timeline-row">
+          <div class="t-date">2022 — 2023</div>
+          <div class="t-content">
+            <strong>Assistant Communication (Stage)</strong>
+            <p>Mairie de Saône : Création de supports print (affiches, flyers) et mise à jour site web.</p>
+          </div>
         </div>
-      </div>
+      </section>
+
+      <section class="cv-block">
+        <h3>Logiciels & Compétences</h3>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+          <span style="background: rgba(255,255,255,0.1); padding: 5px 15px; border-radius: 20px; font-size: 14px;">Suite Adobe</span>
+          <span style="background: rgba(255,255,255,0.1); padding: 5px 15px; border-radius: 20px; font-size: 14px;">Figma</span>
+          <span style="background: rgba(255,255,255,0.1); padding: 5px 15px; border-radius: 20px; font-size: 14px;">HTML/CSS</span>
+          <span style="background: rgba(255,255,255,0.1); padding: 5px 15px; border-radius: 20px; font-size: 14px;">Montage Vidéo</span>
+          <span style="background: rgba(255,255,255,0.1); padding: 5px 15px; border-radius: 20px; font-size: 14px;">Social Media</span>
+        </div>
+      </section>
 
     </div>
   </main>
 
-  <footer class="site-footer">
-    <p>&copy; 2026 Eliot Sauron. <a href="mentions-legales.html">Mentions Légales</a></p>
-  </footer>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/ScrollTrigger.min.js"></script>
   <script src="assets/js/main.js"></script>
 </body>
 </html>

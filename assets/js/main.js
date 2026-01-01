@@ -1,206 +1,149 @@
 document.addEventListener('DOMContentLoaded', () => {
-  console.log("⚡ Portfolio Eliot - Ready");
+  console.log("🚀 Initialisation Portfolio - Mode Strict");
 
-  // --- 1. THEME MANAGER ---
-  const initTheme = () => {
-    const toggle = document.querySelector('.theme-toggle');
-    const html = document.documentElement;
-    const saved = localStorage.getItem('theme') || 'dark'; // Dark default for premium feel
-    
-    html.setAttribute('data-theme', saved);
-    if(toggle) toggle.textContent = saved === 'dark' ? '☀️' : '🌙';
+  // --- 1. GESTION DU THÈME ---
+  const themeBtn = document.querySelector('.theme-btn');
+  const html = document.documentElement;
+  
+  // Charge le thème ou 'dark' par défaut
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  html.setAttribute('data-theme', savedTheme);
+  if(themeBtn) themeBtn.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
 
-    if(toggle) {
-      toggle.addEventListener('click', () => {
-        const current = html.getAttribute('data-theme');
-        const next = current === 'dark' ? 'light' : 'dark';
-        html.setAttribute('data-theme', next);
-        toggle.textContent = next === 'dark' ? '☀️' : '🌙';
-        localStorage.setItem('theme', next);
-      });
-    }
-  };
-
-  // --- 2. PARALLAX & TILT (Active Theory Style) ---
-  const initParallax = () => {
-    const blobs = document.querySelectorAll('.blob');
-    const scene = document.querySelector('.scene-container');
-    let mx = 0, my = 0; // Mouse coords
-    let cx = 0, cy = 0; // Current smooth coords
-
-    window.addEventListener('mousemove', (e) => {
-      mx = (e.clientX / window.innerWidth) - 0.5;
-      my = (e.clientY / window.innerHeight) - 0.5;
+  if(themeBtn) {
+    themeBtn.addEventListener('click', () => {
+      const current = html.getAttribute('data-theme');
+      const newTheme = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', newTheme);
+      themeBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+      localStorage.setItem('theme', newTheme);
     });
+  }
 
-    const loop = () => {
-      cx += (mx - cx) * 0.05; // Smooth lerp
-      cy += (my - cy) * 0.05;
+  // --- 2. VIDEO PLAYER (SOLIDE) ---
+  const videoWrapper = document.querySelector('.video-wrapper');
+  const video = document.getElementById('presentation-video');
+  const soundBadge = document.querySelector('.sound-badge');
 
-      // Move Blobs
-      blobs.forEach((b, i) => {
-        const speed = (i + 1) * 30;
-        b.style.transform = `translate(${cx * speed}px, ${cy * speed}px)`;
-      });
-
-      // Tilt Scene (Very subtle)
-      if(scene) {
-        scene.style.transform = `rotateY(${cx * 2}deg) rotateX(${-cy * 2}deg)`;
-      }
-
-      requestAnimationFrame(loop);
-    };
-    loop();
-  };
-
-  // --- 3. VIDEO BLOB (Home Only) ---
-  const initVideo = () => {
-    const wrapper = document.querySelector('.video-blob-wrapper');
-    const video = document.getElementById('heroVideo');
-    if(!wrapper || !video) return;
-
-    const badgeText = wrapper.querySelector('.sb-text');
-    const badgeIcon = wrapper.querySelector('.sb-icon');
-
-    // Attempt autoplay
+  if(video && videoWrapper && soundBadge) {
+    // Force la configuration initiale
     video.muted = true;
-    video.play().catch(() => console.log("Autoplay blocked"));
+    video.loop = true;
+    video.playsInline = true; // Vital pour iOS
 
-    wrapper.addEventListener('click', () => {
+    // Tentative d'autoplay
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(error => {
+        console.warn("Autoplay bloqué par le navigateur (normal). Attente d'interaction.", error);
+        soundBadge.textContent = "🔇 Cliquer pour lancer";
+      });
+    }
+
+    // Gestion du clic Mute/Unmute
+    videoWrapper.addEventListener('click', () => {
       if(video.muted) {
+        // On active le son
         video.muted = false;
-        video.currentTime = 0;
-        video.play();
-        badgeIcon.textContent = "🔊";
-        badgeText.textContent = "Son activé — Tap pour couper";
-        wrapper.style.borderColor = "var(--accent)";
+        video.currentTime = 0; // Restart pour l'effet
+        video.play().then(() => {
+          soundBadge.textContent = "🔊 Son activé";
+          videoWrapper.style.borderColor = "var(--color-accent)";
+        }).catch(e => console.error("Erreur lecture", e));
       } else {
+        // On coupe le son
         video.muted = true;
-        badgeIcon.textContent = "🔇";
-        badgeText.textContent = "Vidéo muette — Tap pour son";
-        wrapper.style.borderColor = "var(--glass-border)";
+        soundBadge.textContent = "🔇 Vidéo muette";
+        videoWrapper.style.borderColor = "rgba(255,255,255,0.1)";
       }
     });
-  };
+  }
 
-  // --- 4. PROJECTS (Filters & Lightbox) ---
-  const initProjects = () => {
-    // A. Filters
-    const btns = document.querySelectorAll('.filter-btn');
-    const cards = document.querySelectorAll('.card');
+  // --- 3. EFFET PARALLAXE SOURIS (LÉGER) ---
+  const blobs = document.querySelectorAll('.blob');
+  let mouseX = 0, mouseY = 0;
+  
+  window.addEventListener('mousemove', (e) => {
+    // Normalise entre -1 et 1
+    mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+    mouseY = (e.clientY / window.innerHeight) * 2 - 1;
     
-    if(btns.length > 0) {
-      btns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          btns.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          const filter = btn.dataset.filter;
-
-          cards.forEach(card => {
-            const cat = card.dataset.category;
-            // GSAP for smooth hiding/showing
-            if(filter === 'all' || cat === filter) {
-              card.style.display = 'flex';
-              gsap.to(card, { opacity: 1, scale: 1, duration: 0.4, clearProps: "all" });
-            } else {
-              gsap.to(card, { opacity: 0, scale: 0.9, duration: 0.3, onComplete: () => card.style.display = 'none' });
-            }
-          });
-        });
-      });
-    }
-
-    // B. Lightbox Logic
-    const lb = document.querySelector('.lightbox');
-    if(lb) {
-      const lbImg = lb.querySelector('.lb-img');
-      const lbPrev = lb.querySelector('.lb-prev');
-      const lbNext = lb.querySelector('.lb-next');
-      const lbClose = lb.querySelector('.lb-close');
-      
-      let currentSet = [];
-      let currentIndex = 0;
-
-      const openLb = (images, index) => {
-        currentSet = images;
-        currentIndex = index;
-        updateLb();
-        lb.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Lock scroll
-      };
-
-      const closeLb = () => {
-        lb.classList.remove('active');
-        document.body.style.overflow = '';
-      };
-
-      const updateLb = () => {
-        lbImg.style.opacity = 0.5;
-        setTimeout(() => {
-          lbImg.src = currentSet[currentIndex];
-          lbImg.style.opacity = 1;
-        }, 150);
-      };
-
-      // Event Listeners for Cards
-      document.querySelectorAll('.card').forEach(card => {
-        const triggers = card.querySelectorAll('.open-lb'); // Images inside card
-        // Collect all images in this card for the gallery
-        const images = Array.from(card.querySelectorAll('img')).map(img => img.src);
-        
-        triggers.forEach(trigger => {
-          trigger.addEventListener('click', (e) => {
-            e.preventDefault();
-            const clickedSrc = trigger.getAttribute('src') || trigger.querySelector('img').src;
-            const startIdx = images.indexOf(clickedSrc);
-            openLb(images, startIdx !== -1 ? startIdx : 0);
-          });
-        });
-      });
-
-      // Controls
-      lbClose.addEventListener('click', closeLb);
-      lb.addEventListener('click', (e) => { if(e.target === lb) closeLb(); });
-      
-      lbNext.addEventListener('click', (e) => {
-        e.stopPropagation();
-        currentIndex = (currentIndex + 1) % currentSet.length;
-        updateLb();
-      });
-      
-      lbPrev.addEventListener('click', (e) => {
-        e.stopPropagation();
-        currentIndex = (currentIndex - 1 + currentSet.length) % currentSet.length;
-        updateLb();
-      });
-
-      // Keyboard
-      document.addEventListener('keydown', (e) => {
-        if(!lb.classList.contains('active')) return;
-        if(e.key === 'Escape') closeLb();
-        if(e.key === 'ArrowRight') lbNext.click();
-        if(e.key === 'ArrowLeft') lbPrev.click();
-      });
-    }
-  };
-
-  // --- 5. SCROLL REVEAL ---
-  const initScroll = () => {
-    gsap.utils.toArray('.reveal').forEach(elem => {
-      gsap.fromTo(elem, 
-        { y: 50, opacity: 0 },
-        {
-          y: 0, opacity: 1, duration: 1, ease: 'power3.out',
-          scrollTrigger: { trigger: elem, start: 'top 85%' }
-        }
-      );
+    blobs.forEach((blob, index) => {
+      const speed = (index + 1) * 20; // Vitesse différente par blob
+      const x = mouseX * speed;
+      const y = mouseY * speed;
+      blob.style.transform = `translate(${x}px, ${y}px)`;
     });
-  };
+  });
 
-  // INIT
-  initTheme();
-  initParallax();
-  initVideo();
-  initProjects();
-  initScroll();
+  // --- 4. SYSTÈME DE FILTRES ---
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.project-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Gestion boutons
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      
+      const category = btn.getAttribute('data-filter');
+
+      // Gestion cartes
+      cards.forEach(card => {
+        const cardCat = card.getAttribute('data-category');
+        if(category === 'all' || cardCat === category) {
+          card.style.display = 'flex';
+          // Petit délai pour l'anim opacity si besoin, ici on fait simple
+          card.style.opacity = '1';
+        } else {
+          card.style.display = 'none';
+          card.style.opacity = '0';
+        }
+      });
+    });
+  });
+
+  // --- 5. LIGHTBOX (Galerie) ---
+  const lb = document.querySelector('.lightbox');
+  if(lb) {
+    const lbImg = lb.querySelector('img');
+    const closeBtn = lb.querySelector('.lb-close');
+    const nextBtn = lb.querySelector('.lb-next');
+    const prevBtn = lb.querySelector('.lb-prev');
+    
+    let currentImages = [];
+    let currentIndex = 0;
+
+    // Fonction d'ouverture
+    window.openLightbox = (imgArray, index) => {
+      currentImages = imgArray;
+      currentIndex = index;
+      lbImg.src = currentImages[currentIndex];
+      lb.classList.add('active');
+    };
+
+    // Fermeture
+    const closeLightbox = () => lb.classList.remove('active');
+    closeBtn.addEventListener('click', closeLightbox);
+    lb.addEventListener('click', (e) => { if(e.target === lb) closeLightbox(); });
+
+    // Navigation
+    const showImage = (idx) => {
+      currentIndex = (idx + currentImages.length) % currentImages.length;
+      lbImg.src = currentImages[currentIndex];
+    };
+
+    nextBtn.addEventListener('click', (e) => { e.stopPropagation(); showImage(currentIndex + 1); });
+    prevBtn.addEventListener('click', (e) => { e.stopPropagation(); showImage(currentIndex - 1); });
+    
+    // Attachement aux cartes
+    document.querySelectorAll('.card-image-box').forEach(box => {
+      box.addEventListener('click', () => {
+        // Récupérer l'image cliquée + les autres images cachées s'il y en a dans la carte (optionnel)
+        // Ici on prend simple : l'image cliquée
+        const src = box.querySelector('img').src;
+        openLightbox([src], 0); 
+      });
+    });
+  }
 });
