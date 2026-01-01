@@ -3,102 +3,71 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Projets - Eliot SAURON</title>
+  <title>Eliot SAURON - Création & Stratégie</title>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23F2A18C'/%3E%3Ctext x='50' y='70' font-size='60' font-weight='800' text-anchor='middle' fill='white'%3EE%3C/text%3E%3C/svg%3E">
 </head>
 <body>
 
   <div class="noise-overlay"></div>
-  <div class="ambient-bg"><div class="blob b1"></div><div class="blob b2"></div></div>
-  <button class="theme-toggle" id="themeBtn">🌙</button>
+  <div class="ambient-bg">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+  </div>
+
+  <button class="theme-toggle" id="themeBtn" aria-label="Changer le thème">🌙</button>
 
   <header class="site-header">
-    <a href="index.html" class="logo-container">
+    <a href="index.html" class="logo-container" aria-label="Retour accueil">
       <svg class="logo-svg" viewBox="0 0 200 80" fill="none">
+        <defs>
+          <linearGradient id="cloud-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:var(--peach);stop-opacity:0.8" />
+            <stop offset="100%" style="stop-color:var(--blue);stop-opacity:0.9" />
+          </linearGradient>
+        </defs>
         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="logo-text-elem">Eliot</text>
+        <path class="cloud-path" d="M20,40 C20,20 50,-10 100,10 C150,30 180,20 180,40 C180,60 150,90 100,70 C50,50 20,60 20,40" stroke="url(#cloud-gradient)" stroke-width="5" fill="none" stroke-linecap="round" />
       </svg>
     </a>
   </header>
 
   <nav class="dock-nav">
-    <a href="index.html" class="dock-link">Accueil</a>
-    <a href="creations.html" class="dock-link active">Projets</a>
+    <a href="index.html" class="dock-link active">Accueil</a>
+    <a href="creations.html" class="dock-link">Projets</a>
     <a href="cv.html" class="dock-link">Parcours</a>
     <a href="mailto:eliotsauron25@gmail.com" class="dock-link">Contact</a>
   </nav>
 
   <div class="scene-wrapper">
     <main data-barba="wrapper">
-      <div class="page-view" data-barba="container" data-namespace="creations">
+      <div class="page-view" data-barba="container" data-namespace="home">
         
-        <div class="projects-header">
-          <h1>Réalisations</h1>
-          <div class="filters" role="tablist">
-            <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">Tout</button>
-            <button class="filter-btn" data-filter="design" role="tab" aria-selected="false">Design</button>
-            <button class="filter-btn" data-filter="media" role="tab" aria-selected="false">Vidéo</button>
-            <button class="filter-btn" data-filter="photo" role="tab" aria-selected="false">Photo</button>
-          </div>
-        </div>
-
-        <div class="grid">
-          
-          <div class="card" data-category="design">
-            <div class="carousel-wrapper">
-              <div class="slides-container">
-                <img src="img/ajna-cover.jpg" class="slide" alt="Pochette album AJNA" onerror="this.src='https://placehold.co/600x800/FFBEAC/white?text=Cover'">
-                <img src="img/ajna-logo.jpg" class="slide" alt="Logotype AJNA" onerror="this.src='https://placehold.co/600x800/A4C8E6/white?text=Logo'">
-              </div>
-              <div class="carousel-ui">
-                <button class="nav-btn prev" aria-label="Image précédente">‹</button>
-                <button class="nav-btn next" aria-label="Image suivante">›</button>
-                <div class="slide-indicator">1/2</div>
-              </div>
-            </div>
-            <div class="card-content">
-              <span class="badge">Identité Visuelle</span>
-              <h3>AJNA - Rivages Invisibles</h3>
-              <p>Direction artistique complète pour un projet musical fictif. Du concept à la déclinaison graphique.</p>
-            </div>
+        <section class="hero">
+          <div class="blob-video" id="videoTrigger" role="button" aria-label="Activer le son">
+            <video id="myVideo" src="img/video-presentation.mp4" autoplay muted loop playsinline></video>
+            <div id="soundLabel">🔇 Muet</div>
           </div>
 
-          <div class="card" data-category="media">
-            <div class="carousel-wrapper single">
-              <div class="slides-container">
-                <img src="img/radio-1.jpg" class="slide" alt="Set vidéo Radio Campus" onerror="this.src='https://placehold.co/600x800/1D1D1F/white?text=Vidéo'">
-              </div>
-              </div>
-            <div class="card-content">
-              <span class="badge">Création de Contenu</span>
-              <h3>Radio Campus</h3>
-              <p>Production de formats courts (Reels/TikTok). Tournage, montage dynamique et habillage.</p>
-            </div>
-          </div>
+          <h1>Eliot SAURON</h1>
+          <h2>Création & Stratégie Digitale</h2>
+          <p>Étudiant en Info-Com, je fais le pont entre l'idée et l'image.<br>Je conçois des identités visuelles et des expériences web qui ont du sens.</p>
 
-          <div class="card" data-category="photo">
-            <div class="carousel-wrapper">
-              <div class="slides-container">
-                <img src="img/photo-nb-1.jpg" class="slide" alt="Photo N&B Urbaine 1" onerror="this.src='https://placehold.co/600x800/333/white?text=Photo+1'">
-                <img src="img/photo-nb-2.jpg" class="slide" alt="Photo N&B Urbaine 2" onerror="this.src='https://placehold.co/600x800/444/white?text=Photo+2'">
-                <img src="img/photo-nb-3.jpg" class="slide" alt="Photo N&B Urbaine 3" onerror="this.src='https://placehold.co/600x800/555/white?text=Photo+3'">
-              </div>
-              <div class="carousel-ui">
-                <button class="nav-btn prev">‹</button>
-                <button class="nav-btn next">›</button>
-                <div class="slide-indicator">1/3</div>
-              </div>
-            </div>
-            <div class="card-content">
-              <span class="badge">Photographie</span>
-              <h3>Textures Urbaines</h3>
-              <p>Série Noir & Blanc explorant la géométrie et la lumière naturelle en milieu urbain.</p>
-            </div>
+          <div class="hero-btns">
+            <a href="creations.html" class="btn-main">Explorer mes projets</a>
+            <a href="cv.html" class="btn-sec">Mon profil</a>
           </div>
+        </section>
 
-        </div>
+        <footer class="home-footer">
+          <a href="mentions-legales.html">Mentions Légales & Confidentialité</a>
+        </footer>
+
       </div>
     </main>
   </div>
