@@ -1,210 +1,252 @@
-// Initialisation
-console.log("🚀 Portfolio V2 Ready - Active Theory Lite Mode");
+console.log("🚀 Portfolio Eliot SAURON - V3 Ready");
 
-// --- UTILS ---
+// --- 1. GESTION DU THÈME ---
 const updateTheme = () => {
   const isDark = localStorage.getItem('theme') === 'dark';
   document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-  document.getElementById('themeBtn').textContent = isDark ? '☀️' : '🌙';
+  const btn = document.getElementById('themeBtn');
+  if(btn) btn.textContent = isDark ? '☀️' : '🌙';
 };
 
-// --- INTERACTIVE BACKGROUND (ACTIVE THEORY LITE) ---
-class InteractiveBg {
+// --- 2. ACTIVE THEORY LITE (Scene 3D + Parallaxe) ---
+class Scene3D {
   constructor() {
+    this.scene = document.querySelector('.scene-wrapper');
     this.blobs = document.querySelectorAll('.blob');
-    this.scene = document.querySelector('.scene-wrapper'); // Conteneur global
-    this.x = 0;
-    this.y = 0;
+    this.x = 0; this.y = 0;
+    this.targetX = 0; this.targetY = 0;
     this.scrollY = 0;
-    this.targetX = 0;
-    this.targetY = 0;
     
     // Listeners
     window.addEventListener('mousemove', (e) => {
-      // Normaliser entre -1 et 1
       this.targetX = (e.clientX / window.innerWidth) * 2 - 1;
       this.targetY = (e.clientY / window.innerHeight) * 2 - 1;
     });
-    
-    window.addEventListener('scroll', () => {
-      this.scrollY = window.scrollY;
-    });
+    window.addEventListener('scroll', () => this.scrollY = window.scrollY);
 
+    // Loop
     this.raf();
   }
 
   raf() {
-    // Lerp pour fluidité (Smooth easing)
+    // Lerp pour fluidité
     this.x += (this.targetX - this.x) * 0.05;
     this.y += (this.targetY - this.y) * 0.05;
 
-    // 1. Déplacer les blobs (Parallaxe Souris)
-    this.blobs.forEach((blob, i) => {
-      const speed = (i + 1) * 20; // Vitesse variable selon l'index
-      blob.style.transform = `translate(${this.x * speed}px, ${this.y * speed}px)`;
-    });
+    // A. Parallaxe Blobs
+    if(this.blobs.length) {
+      this.blobs.forEach((blob, i) => {
+        const speed = (i + 1) * 15;
+        blob.style.transform = `translate(${this.x * speed}px, ${this.y * speed}px)`;
+      });
+    }
 
-    // 2. Rotation subtile de la scène au scroll (Effet "Axe")
-    // On clamp la rotation pour éviter la nausée
-    const rotation = Math.max(-5, Math.min(5, this.scrollY * 0.005));
+    // B. Rotation Scene au scroll (Axe X)
+    // Rotation légère : max 3deg
     if(this.scene) {
-      this.scene.style.transform = `rotateX(${rotation}deg) translateY(${-this.scrollY * 0.1}px)`;
+      const rot = Math.min(3, Math.max(-3, this.scrollY * 0.002));
+      const lift = this.scrollY * -0.05;
+      this.scene.style.transform = `rotateX(${rot}deg) translateY(${lift}px)`;
     }
 
     requestAnimationFrame(this.raf.bind(this));
   }
 }
 
-// --- PROJECT MANAGER (Filters + Carousel + Lightbox) ---
-class ProjectManager {
+// --- 3. PROJECT SYSTEM (Carousel + Lightbox + Filtres) ---
+class ProjectSystem {
   constructor() {
     this.initFilters();
     this.initCarousels();
     this.initLightbox();
   }
 
+  // A. FILTRES
   initFilters() {
     const btns = document.querySelectorAll('.filter-btn');
     const cards = document.querySelectorAll('.card');
     
-    btns.forEach(btn => btn.addEventListener('click', () => {
-      document.querySelector('.filter-btn.active').classList.remove('active');
-      btn.classList.add('active');
-      const filter = btn.dataset.filter;
-      
-      // GSAP Animation fluide
-      cards.forEach(card => {
-        const match = filter === 'all' || card.dataset.category === filter;
-        if(match) {
-          card.classList.remove('hidden');
-          gsap.fromTo(card, { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, display: 'flex' });
-        } else {
-          gsap.to(card, { autoAlpha: 0, y: 20, duration: 0.3, onComplete: () => card.classList.add('hidden') });
-        }
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Active Class
+        btns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+        
+        const filter = btn.dataset.filter;
+        
+        // GSAP Animation
+        cards.forEach(card => {
+          const match = filter === 'all' || card.dataset.category === filter;
+          
+          if(match) {
+            card.classList.remove('hidden');
+            gsap.to(card, { 
+              display: 'flex', autoAlpha: 1, scale: 1, duration: 0.4, ease: 'back.out(1.2)' 
+            });
+          } else {
+            gsap.to(card, { 
+              autoAlpha: 0, scale: 0.9, duration: 0.3, 
+              onComplete: () => { card.style.display = 'none'; card.classList.add('hidden'); }
+            });
+          }
+        });
       });
-    }));
+    });
   }
 
+  // B. CAROUSELS (Logique par carte)
   initCarousels() {
     document.querySelectorAll('.carousel-wrapper').forEach(wrapper => {
-      const slides = wrapper.querySelector('.slides-container');
-      const imgs = wrapper.querySelectorAll('.slide');
-      const prev = wrapper.querySelector('.prev');
-      const next = wrapper.querySelector('.next');
+      const container = wrapper.querySelector('.slides-container');
+      const slides = wrapper.querySelectorAll('.slide');
+      const prevBtn = wrapper.querySelector('.prev');
+      const nextBtn = wrapper.querySelector('.next');
       const indicator = wrapper.querySelector('.slide-indicator');
-      let idx = 0;
-
-      const update = () => {
-        slides.style.transform = `translateX(-${idx * 100}%)`;
-        if(indicator) indicator.textContent = `${idx + 1}/${imgs.length}`;
-      };
-
-      if(imgs.length <= 1) {
-        if(wrapper.querySelector('.carousel-nav')) wrapper.querySelector('.carousel-nav').style.display = 'none';
-        if(indicator) indicator.style.display = 'none';
-        return;
+      
+      if(slides.length <= 1) {
+        wrapper.classList.add('single');
+        return; 
       }
 
-      // Buttons
-      if(next) next.addEventListener('click', (e) => { e.stopPropagation(); idx = (idx + 1) % imgs.length; update(); });
-      if(prev) prev.addEventListener('click', (e) => { e.stopPropagation(); idx = (idx - 1 + imgs.length) % imgs.length; update(); });
+      let index = 0;
+      const update = () => {
+        container.style.transform = `translateX(-${index * 100}%)`;
+        if(indicator) indicator.textContent = `${index + 1}/${slides.length}`;
+      };
 
-      // Swipe Mobile
-      let touchStartX = 0;
-      wrapper.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
-      wrapper.addEventListener('touchend', e => {
-        if (e.changedTouches[0].screenX < touchStartX - 50) next.click();
-        if (e.changedTouches[0].screenX > touchStartX + 50) prev.click();
+      nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        index = (index + 1) % slides.length;
+        update();
+      });
+
+      prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        index = (index - 1 + slides.length) % slides.length;
+        update();
       });
     });
   }
 
+  // C. LIGHTBOX (Globale mais contextuelle)
   initLightbox() {
-    const lightbox = document.createElement('div');
-    lightbox.className = 'lightbox';
-    lightbox.innerHTML = `
-      <div class="lb-close">&times;</div>
-      <div class="lb-nav lb-prev">&#10094;</div>
-      <div class="lb-nav lb-next">&#10095;</div>
-      <img src="" alt="Zoom">
-    `;
-    document.body.appendChild(lightbox);
+    // Créer la lightbox si elle n'existe pas
+    if(!document.querySelector('.lightbox')) {
+      const lbHTML = `
+        <div class="lightbox">
+          <div class="lb-close">&times;</div>
+          <div class="lb-nav lb-prev">&#10094;</div>
+          <div class="lb-nav lb-next">&#10095;</div>
+          <img src="" alt="Zoom Projet">
+        </div>`;
+      document.body.insertAdjacentHTML('beforeend', lbHTML);
+    }
 
-    const imgTag = lightbox.querySelector('img');
-    let currentGroup = [];
-    let currentIdx = 0;
+    const lb = document.querySelector('.lightbox');
+    const lbImg = lb.querySelector('img');
+    let currentImages = [];
+    let currentIndex = 0;
 
-    // Trigger open
+    const openLb = (imgSrc, allImages) => {
+      currentImages = allImages;
+      currentIndex = currentImages.indexOf(imgSrc);
+      updateImage();
+      lb.classList.add('active');
+      document.body.style.overflow = 'hidden'; // Lock scroll
+    };
+
+    const closeLb = () => {
+      lb.classList.remove('active');
+      document.body.style.overflow = '';
+    };
+
+    const updateImage = () => {
+      lbImg.src = currentImages[currentIndex];
+    };
+
+    // Trigger au clic sur une slide
     document.querySelectorAll('.slide').forEach(img => {
       img.addEventListener('click', () => {
-        // Find all images in THIS specific card
+        // Récupérer toutes les images de CE carousel spécifique
         const wrapper = img.closest('.slides-container');
-        currentGroup = Array.from(wrapper.querySelectorAll('.slide')).map(el => el.src);
-        // Find index of clicked image
-        currentIdx = currentGroup.indexOf(img.src);
-        
-        updateLb();
-        lightbox.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Scroll lock
+        const allSlides = Array.from(wrapper.querySelectorAll('.slide')).map(el => el.src);
+        openLb(img.src, allSlides);
       });
     });
 
-    const updateLb = () => { imgTag.src = currentGroup[currentIdx]; };
-
-    // Events
-    lightbox.querySelector('.lb-close').addEventListener('click', closeLb);
-    lightbox.addEventListener('click', (e) => { if(e.target === lightbox) closeLb(); });
+    // Events Navigation Lightbox
+    lb.querySelector('.lb-close').addEventListener('click', closeLb);
+    lb.querySelector('.lb-next').addEventListener('click', (e) => {
+      e.stopPropagation();
+      currentIndex = (currentIndex + 1) % currentImages.length;
+      updateImage();
+    });
+    lb.querySelector('.lb-prev').addEventListener('click', (e) => {
+      e.stopPropagation();
+      currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+      updateImage();
+    });
     
-    lightbox.querySelector('.lb-next').addEventListener('click', (e) => {
-      e.stopPropagation(); currentIdx = (currentIdx + 1) % currentGroup.length; updateLb();
-    });
-    lightbox.querySelector('.lb-prev').addEventListener('click', (e) => {
-      e.stopPropagation(); currentIdx = (currentIdx - 1 + currentGroup.length) % currentGroup.length; updateLb();
-    });
+    // Fermer si clic dehors
+    lb.addEventListener('click', (e) => { if(e.target === lb) closeLb(); });
 
-    function closeLb() {
-      lightbox.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    // Keyboard
+    // Clavier
     document.addEventListener('keydown', (e) => {
-      if(!lightbox.classList.contains('active')) return;
+      if(!lb.classList.contains('active')) return;
       if(e.key === 'Escape') closeLb();
-      if(e.key === 'ArrowRight') lightbox.querySelector('.lb-next').click();
-      if(e.key === 'ArrowLeft') lightbox.querySelector('.lb-prev').click();
+      if(e.key === 'ArrowRight') lb.querySelector('.lb-next').click();
+      if(e.key === 'ArrowLeft') lb.querySelector('.lb-prev').click();
     });
   }
 }
 
-// --- GLOBAL INIT ---
+// --- 4. GLOBAL INIT & BARBA ---
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Lenis Smooth Scroll
-  const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+  // Init Globals
+  const lenis = new Lenis({ duration: 1.2 });
   function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
   requestAnimationFrame(raf);
 
-  // 2. Theme
+  // Theme
   const themeBtn = document.getElementById('themeBtn');
   if(themeBtn) {
     themeBtn.addEventListener('click', () => {
-      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+      localStorage.setItem('theme', document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
       updateTheme();
     });
     updateTheme();
   }
 
-  // 3. Init Background Interaction
-  new InteractiveBg();
+  // Active Theory Effect
+  new Scene3D();
 
-  // 4. Init Barba
+  // Barba
   initBarba();
 });
 
-// --- PAGE SCRIPTS RE-INIT ---
-function initPageScripts(namespace) {
-  // Update Active Link
+function initBarba() {
+  barba.init({
+    sync: true,
+    transitions: [{
+      name: 'fade',
+      leave(data) {
+        return gsap.to(data.current.container, { opacity: 0, scale: 0.95, duration: 0.4 });
+      },
+      enter(data) {
+        window.scrollTo(0,0);
+        runPageScripts(data.next.namespace);
+        return gsap.from(data.next.container, { opacity: 0, scale: 1.05, duration: 0.5 });
+      }
+    }]
+  });
+  // Run scripts for the first load
+  runPageScripts(document.querySelector('.page-view').dataset.namespace);
+}
+
+// --- 5. LOGIQUE PAR PAGE ---
+function runPageScripts(namespace) {
+  // Update Nav Active State
   document.querySelectorAll('.dock-link').forEach(link => {
     link.classList.remove('active');
     if(link.getAttribute('href') === window.location.pathname.split('/').pop() || (window.location.pathname === '/' && link.getAttribute('href') === 'index.html')) {
@@ -212,38 +254,24 @@ function initPageScripts(namespace) {
     }
   });
 
-  if (namespace === 'home') {
+  if(namespace === 'home') {
+    // Audio Manager
     const video = document.getElementById('myVideo');
     const trigger = document.getElementById('videoTrigger');
     const label = document.getElementById('soundLabel');
-    if (video && trigger) {
-      video.play().catch(() => {});
+    
+    if(video && trigger) {
+      video.play().catch(()=> console.log('Autoplay blocked')); // Force play
       trigger.addEventListener('click', () => {
         video.muted = !video.muted;
+        if(video.paused) video.play(); // Fix iOS
         label.textContent = video.muted ? "🔇 Muet" : "🔊 Son activé";
         label.style.background = video.muted ? "rgba(0,0,0,0.6)" : "var(--text-main)";
       });
     }
-  } 
-  else if (namespace === 'creations') {
-    new ProjectManager();
   }
-}
 
-function initBarba() {
-  barba.init({
-    sync: true,
-    transitions: [{
-      name: 'zoom-transition',
-      leave(data) {
-        return gsap.to(data.current.container, { opacity: 0, scale: 0.95, filter: "blur(10px)", duration: 0.4 });
-      },
-      enter(data) {
-        window.scrollTo(0, 0);
-        initPageScripts(data.next.namespace);
-        return gsap.from(data.next.container, { opacity: 0, scale: 1.05, duration: 0.5, delay: 0.1 });
-      }
-    }]
-  });
-  initPageScripts(document.querySelector('[data-barba="container"]').dataset.namespace);
+  if(namespace === 'creations') {
+    new ProjectSystem();
+  }
 }

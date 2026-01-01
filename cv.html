@@ -3,7 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mon Parcours - Eliot SAURON</title>
+  <title>Mentions Légales - Eliot SAURON</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -12,7 +16,7 @@
   <button class="theme-toggle" id="themeBtn">🌙</button>
 
   <header class="site-header">
-    <a href="index.html" class="logo-container">
+     <a href="index.html" class="logo-container">
       <svg class="logo-svg" viewBox="0 0 200 80" fill="none">
         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="logo-text-elem">Eliot</text>
       </svg>
@@ -20,88 +24,45 @@
   </header>
 
   <nav class="dock-nav">
-    <a href="index.html" class="dock-link">Accueil</a>
-    <a href="creations.html" class="dock-link">Projets</a>
-    <a href="cv.html" class="dock-link active">Parcours</a>
-    <a href="mailto:eliotsauron25@gmail.com" class="dock-link">Contact</a>
+    <a href="index.html" class="dock-link">Retour Accueil</a>
   </nav>
 
   <div class="scene-wrapper">
     <main data-barba="wrapper">
-      <div class="page-view" data-barba="container" data-namespace="cv">
-        
-        <div class="cv-grid">
-          <div class="tile t-profile">
-              <img src="img/profil.jpg" class="profile-pic" alt="Eliot" onerror="this.src='https://placehold.co/200x200/FFBEAC/white?text=Moi'">
-              <h1>Eliot SAURON</h1>
-              <span class="role-tag">Étudiant Info-Com</span>
-              <p style="margin-top: 15px; font-size: 14px;">Besançon, France</p>
+      <div class="page-view" data-barba="container" data-namespace="legal">
+        <div class="legal-container">
+          <h1>Mentions Légales & Confidentialité</h1>
+          
+          <div class="legal-block">
+            <h2>1. Éditeur</h2>
+            <p><strong>Eliot SAURON</strong> (Étudiant)<br>
+            Adresse : 25660 Saône, France<br>
+            Email : <a href="mailto:eliotsauron25@gmail.com">eliotsauron25@gmail.com</a></p>
           </div>
 
-          <div class="tile t-intro">
-              <h2>Ma démarche</h2>
-              <p>Passionné par l'impact de l'image, je construis mon profil à la croisée de la <strong>stratégie de communication</strong> et de la <strong>création technique</strong>. Je ne cherche pas seulement à "faire joli", mais à transmettre un message clair, que ce soit par le design, la vidéo ou le web.</p>
+          <div class="legal-block">
+            <h2>2. Hébergement</h2>
+            <p>Ce site est hébergé par <strong>Vercel Inc.</strong><br>
+            Siège social : 340 S Lemon Ave #4133 Walnut, CA 91789, USA.</p>
           </div>
 
-          <div class="tile t-exp">
-              <h2>Trajectoire</h2>
-              <div class="exp-list">
-                <div class="exp-item">
-                    <span class="date">Depuis 2024</span>
-                    <div class="job-title">Conseil & Vente</div>
-                    <div class="job-place">Boulangerie-Pâtisserie</div>
-                    <p style="font-size: 13px; margin-top: 5px;">Développement de l'autonomie et de la relation client au quotidien.</p>
-                </div>
-                <div class="exp-item">
-                    <span class="date">2022 - 2023</span>
-                    <div class="job-title">Stage Communication</div>
-                    <div class="job-place">Mairie de Saône</div>
-                    <p style="font-size: 13px; margin-top: 5px;">Immersion en communication institutionnelle et création de supports visuels.</p>
-                </div>
-              </div>
+          <div class="legal-block">
+            <h2>3. Données Personnelles & Cookies</h2>
+            <p><strong>Cookies :</strong> Ce site n'utilise aucun traceur publicitaire. Un unique cookie technique ("localStorage") est utilisé pour mémoriser votre préférence d'affichage (Mode Sombre/Clair). Il n'est pas transmis à des tiers.</p>
+            <p><strong>Données :</strong> Les informations transmises par email ne sont utilisées que pour vous répondre. Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression de vos données sur simple demande par email.</p>
           </div>
 
-          <div class="tile t-edu">
-              <h2>Formation</h2>
-              <div class="exp-list">
-                <div class="exp-item">
-                    <span class="date" style="color:var(--blue)">2024 - 2026</span>
-                    <div class="job-title">B.U.T. Information-Communication</div>
-                    <div class="job-place">IUT Besançon</div>
-                    <p style="font-size: 13px; margin-top: 5px;">Parcours Publicité & Stratégie.</p>
-                </div>
-                <div class="exp-item">
-                    <span class="date" style="color:var(--blue)">2024</span>
-                    <div class="job-title">Baccalauréat STMG</div>
-                    <div class="job-place">Lycée Louis-Pergaud</div>
-                    <p style="font-size: 13px; margin-top: 5px;">Mention Bien.</p>
-                </div>
-              </div>
-          </div>
-
-          <div class="tile t-skills">
-              <h2 style="margin-bottom: 20px;">Boîte à outils</h2>
-              <div>
-                <span class="skill-tag">Suite Adobe</span>
-                <span class="skill-tag">Montage Vidéo</span>
-                <span class="skill-tag">Création Graphique</span>
-                <span class="skill-tag">HTML / CSS / JS</span>
-                <span class="skill-tag">Réseaux Sociaux</span>
-                <span class="skill-tag">Figma</span>
-              </div>
+          <div class="legal-block">
+            <h2>4. Propriété Intellectuelle</h2>
+            <p>L'ensemble des contenus (textes, images, vidéos, créations graphiques) présents sur ce site sont la propriété exclusive d'Eliot SAURON, sauf mention contraire. Toute reproduction est interdite sans autorisation.</p>
           </div>
         </div>
-
-        <div style="text-align: center; margin-top: 50px;">
-          <a href="cv-eliot-sauron.pdf" class="btn-main" download>Télécharger mon CV complet</a>
-        </div>
-
       </div>
     </main>
   </div>
 
   <script src="https://unpkg.com/@barba/core"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
   <script src="assets/js/main.js"></script>
 </body>
