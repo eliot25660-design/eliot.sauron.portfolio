@@ -6,100 +6,88 @@
   <title>Mon Parcours - Eliot SAURON</title>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23F2A18C'/%3E%3Ctext x='50' y='70' font-size='60' font-weight='800' text-anchor='middle' fill='white'%3EE%3C/text%3E%3C/svg%3E">
 </head>
-<body class="cv-page">
+<body>
 
-  <div class="noise"></div>
-  <div class="bg-blobs parallax-container">
-     <div class="blob b1" style="opacity:0.2;"></div>
-  </div>
-  
-  <button class="theme-toggle" id="themeBtn">🌙</button>
+  <div class="noise-overlay"></div>
+  <div class="background-layer"><div class="blob blob-1"></div></div>
+  <button class="theme-switch" id="themeToggle">🌙</button>
 
   <header class="site-header">
-    <a href="index.html" class="logo">Eliot</a>
-    <a href="index.html" class="back-btn">Fermer</a>
+    <a href="index.html" class="logo-link"><span class="logo-text">Eliot.</span></a>
+    <a href="index.html" style="font-weight: 700; text-decoration: none; color: var(--text-main);">Fermer ✕</a>
   </header>
 
-  <main class="cv-grid-container">
-    <div class="cv-grid">
+  <main class="cv-container">
+    
+    <div class="cv-tile cv-profile glass-card">
+      <img src="img/profil.jpg" class="avatar" alt="Eliot">
+      <h1 style="font-size: 32px; font-family: var(--font-display); line-height: 1.1; margin-bottom: 5px;">Eliot SAURON</h1>
+      <span style="color: var(--blue); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Communication • Design • Web</span>
       
-      <div class="tile t-profile glass-card tilt-element">
-        <div class="tile-content">
-          <img src="img/profil.jpg" class="profile-img" alt="Eliot Sauron">
-          <h1>Eliot SAURON</h1>
-          <span class="role-subtitle">Communication • Design visuel • Vidéo</span>
-          <div class="social-links">
-            <a href="mailto:eliotsauron25@gmail.com" aria-label="Email">📧</a>
-            <a href="https://linkedin.com/in/eliot-sauron" target="_blank" aria-label="LinkedIn">💼</a>
-          </div>
-        </div>
+      <div class="social-row">
+        <a href="mailto:eliotsauron25@gmail.com" class="social-icon" aria-label="Email">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        </a>
+        <a href="https://linkedin.com/in/eliot-sauron" target="_blank" class="social-icon" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+        </a>
       </div>
-
-      <div class="tile t-intro glass-card tilt-element">
-        <div class="tile-content">
-          <h2>À propos</h2>
-          <p class="intro-text">Je ne cherche pas seulement à remplir des cases, je cherche à créer du sens. Passionné par la narration visuelle, je mets ma rigueur technique et ma sensibilité artistique au service de projets qui marquent. Actuellement en 2ème année de BUT Info-Com à Besançon.</p>
-          <ul class="personal-stats">
-            <li><strong>Vibe :</strong> Créatif</li>
-            <li><strong>Sport :</strong> Escalade</li>
-            <li><strong>Langues :</strong> Anglais C1</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="tile t-exp glass-card tilt-element">
-        <div class="tile-content">
-          <h2>Expériences</h2>
-          <div class="timeline-item">
-            <span class="date">2024 - Aujourd'hui</span>
-            <span class="job">Vente & Gestion</span>
-            <span class="place">Boulangerie-Pâtisserie</span>
-            <p>Autonomie, gestion de la relation client, rigueur opérationnelle.</p>
-          </div>
-          <div class="timeline-item">
-            <span class="date">2022 - 2023</span>
-            <span class="job">Stages Communication</span>
-            <span class="place">Mairie de Saône</span>
-            <p>Découverte de la communication institutionnelle et création de supports.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="tile t-edu glass-card tilt-element">
-        <div class="tile-content">
-          <h2>Formation</h2>
-          <div class="timeline-item accent-border">
-            <span class="date accent">2024 - 2026</span>
-            <span class="job">B.U.T. Info-Com</span>
-            <span class="place">IUT Besançon</span>
-            <p>Stratégie numérique, Design, Développement Web.</p>
-          </div>
-          <div class="timeline-item accent-border">
-            <span class="date accent">2024</span>
-            <span class="job">Baccalauréat STMG</span>
-            <span class="place">Lycée Louis-Pergaud</span>
-            <p>Mention Bien.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="tile t-skills glass-card tilt-element">
-        <div class="tile-content skills-cloud">
-          <span class="skill-tag">Photoshop</span>
-          <span class="skill-tag">Illustrator</span>
-          <span class="skill-tag">InDesign</span>
-          <span class="skill-tag">Premiere Pro</span>
-          <span class="skill-tag">Figma</span>
-          <span class="skill-tag">HTML/CSS</span>
-          <span class="skill-tag">Canva</span>
-        </div>
-      </div>
-
     </div>
 
-    <a href="cv-eliot-sauron.pdf" download class="download-fab">Télécharger PDF</a>
+    <div class="cv-tile cv-about glass-card">
+      <h2 style="font-family: var(--font-display); font-size: 24px; margin-bottom: 20px;">À Propos</h2>
+      <p style="font-size: 18px; color: var(--text-muted);">
+        Je ne cherche pas seulement à remplir des cases, je cherche à créer du sens. Passionné par la narration visuelle, je mets ma rigueur technique et ma sensibilité artistique au service de projets qui marquent.
+      </p>
+      <div style="margin-top: 30px; display: flex; gap: 40px; font-size: 14px;">
+        <div><strong>Vibe:</strong> Créatif</div>
+        <div><strong>Sport:</strong> Escalade</div>
+        <div><strong>Langues:</strong> Anglais C1</div>
+      </div>
+    </div>
+
+    <div class="cv-tile cv-exp glass-card">
+      <h2 style="font-family: var(--font-display); font-size: 24px; margin-bottom: 30px;">Expériences</h2>
+      
+      <div style="margin-bottom: 30px; border-left: 2px solid var(--peach); padding-left: 20px;">
+        <span style="color: var(--peach); font-weight: 800; font-size: 12px; text-transform: uppercase;">2024 - Présent</span>
+        <h3 style="font-size: 18px; font-weight: 700;">Vente & Gestion</h3>
+        <p style="font-size: 14px; opacity: 0.7;">Boulangerie-Pâtisserie • Autonomie et relation client.</p>
+      </div>
+
+      <div style="border-left: 2px solid var(--peach); padding-left: 20px;">
+        <span style="color: var(--peach); font-weight: 800; font-size: 12px; text-transform: uppercase;">2022 - 2023</span>
+        <h3 style="font-size: 18px; font-weight: 700;">Stage Communication</h3>
+        <p style="font-size: 14px; opacity: 0.7;">Mairie de Saône • Création de supports institutionnels.</p>
+      </div>
+    </div>
+
+    <div class="cv-tile cv-edu glass-card">
+      <h2 style="font-family: var(--font-display); font-size: 24px; margin-bottom: 30px;">Formation</h2>
+      
+      <div style="margin-bottom: 30px; border-left: 2px solid var(--blue); padding-left: 20px;">
+        <span style="color: var(--blue); font-weight: 800; font-size: 12px; text-transform: uppercase;">2024 - 2026</span>
+        <h3 style="font-size: 18px; font-weight: 700;">B.U.T. Info-Com</h3>
+        <p style="font-size: 14px; opacity: 0.7;">IUT Besançon • Stratégie & Création numérique.</p>
+      </div>
+
+      <div style="border-left: 2px solid var(--blue); padding-left: 20px;">
+        <span style="color: var(--blue); font-weight: 800; font-size: 12px; text-transform: uppercase;">2024</span>
+        <h3 style="font-size: 18px; font-weight: 700;">Baccalauréat STMG</h3>
+        <p style="font-size: 14px; opacity: 0.7;">Lycée Louis-Pergaud • Mention Bien.</p>
+      </div>
+    </div>
+
+    <div class="cv-tile cv-skills glass-card">
+      <span class="skill-tag">Photoshop</span>
+      <span class="skill-tag">Illustrator</span>
+      <span class="skill-tag">Premiere Pro</span>
+      <span class="skill-tag">Figma</span>
+      <span class="skill-tag">HTML/CSS</span>
+      <span class="skill-tag">InDesign</span>
+    </div>
+
   </main>
 
   <script src="assets/js/main.js"></script>

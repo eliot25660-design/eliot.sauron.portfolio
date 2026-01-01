@@ -1,235 +1,276 @@
+/**
+ * ELIOT SAURON PORTFOLIO - CORE ENGINE
+ * Version: 2.0 (Stable & Robust)
+ */
+
 document.addEventListener('DOMContentLoaded', () => {
-  console.log("🚀 Portfolio Init - Safe Mode");
-
-  // --- 1. REVEAL SCROLL (PRIORITÉ ABSOLUE) ---
-  // On lance ça en premier pour que le contenu apparaisse quoi qu'il arrive
-  const reveals = document.querySelectorAll('.reveal-text');
+  console.log('✅ System Initialized');
   
-  if (reveals.length > 0) {
-    const revealObs = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          revealObs.unobserve(entry.target); // On arrête d'observer une fois affiché
-        }
-      });
-    }, { threshold: 0.1 });
+  initTheme();
+  initNavigation();
+  initParallax();
+  initVideoPlayer();
+  initFilters();
+  initCarousel();
+  initLightbox();
+  initScrollReveal();
+});
 
-    reveals.forEach(el => revealObs.observe(el));
-  }
-
-  // --- 2. GESTION DU THÈME ---
-  const themeBtn = document.getElementById('themeBtn');
+/* --- 1. THEME MANAGER --- */
+function initTheme() {
+  const toggleBtn = document.getElementById('themeToggle');
   const html = document.documentElement;
   
-  // Appliquer le thème sauvegardé immédiatement
-  const savedTheme = localStorage.getItem('theme') || 'dark';
-  html.setAttribute('data-theme', savedTheme);
+  // Load saved theme
+  const currentTheme = localStorage.getItem('theme') || 'dark';
+  html.setAttribute('data-theme', currentTheme);
   
-  if(themeBtn) {
-    themeBtn.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
-    themeBtn.addEventListener('click', () => {
-      const current = html.getAttribute('data-theme');
-      const newTheme = current === 'dark' ? 'light' : 'dark';
+  if (toggleBtn) {
+    toggleBtn.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+    
+    toggleBtn.addEventListener('click', () => {
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      const newTheme = isDark ? 'light' : 'dark';
+      
       html.setAttribute('data-theme', newTheme);
-      themeBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+      toggleBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
       localStorage.setItem('theme', newTheme);
     });
   }
+}
 
-  // --- 3. MENU MOBILE ---
-  const menuBtn = document.getElementById('menuBtn');
-  const nav = document.getElementById('nav');
+/* --- 2. NAVIGATION MOBILE --- */
+function initNavigation() {
+  const menuBtn = document.getElementById('menuToggle');
+  const nav = document.getElementById('navMenu');
   
-  if(menuBtn && nav) {
-    menuBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      nav.classList.toggle('active');
-    });
-    
-    // Fermer le menu si on clique ailleurs
-    document.addEventListener('click', (e) => {
-      if (nav.classList.contains('active') && !nav.contains(e.target) && e.target !== menuBtn) {
-        nav.classList.remove('active');
-      }
-    });
-  }
+  if (!menuBtn || !nav) return;
 
-  // --- 4. VIDEO PLAYER (Uniquement si présent) ---
-  const videoWrapper = document.getElementById('videoWrapper');
-  const video = document.getElementById('myVideo');
-  const soundLabel = document.getElementById('soundLabel');
+  const toggleMenu = () => {
+    const isOpen = nav.classList.contains('is-open');
+    nav.classList.toggle('is-open');
+    menuBtn.setAttribute('aria-expanded', !isOpen);
+    menuBtn.textContent = !isOpen ? '✕' : '☰';
+  };
 
-  if(video && videoWrapper && soundLabel) {
-    // Initialisation
-    video.muted = true; 
-    
-    // Gestionnaire de clic
-    videoWrapper.addEventListener('click', () => {
-      if(video.muted) {
-        video.muted = false;
-        soundLabel.textContent = "🔊 Son activé";
-        soundLabel.classList.add('active');
-        // Sécurité autoplay
-        if(video.paused) video.play().catch(e => console.warn("Autoplay prevent", e));
-      } else {
-        video.muted = true;
-        soundLabel.textContent = "🔇 Vidéo muette";
-        soundLabel.classList.remove('active');
-      }
+  menuBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleMenu();
+  });
+
+  // Close on link click
+  nav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      nav.classList.remove('is-open');
+      menuBtn.textContent = '☰';
     });
-  }
+  });
 
-  // --- 5. PARALLAX SOURIS (Optimisé) ---
+  // Close on outside click
+  document.addEventListener('click', (e) => {
+    if (nav.classList.contains('is-open') && !nav.contains(e.target) && e.target !== menuBtn) {
+      nav.classList.remove('is-open');
+      menuBtn.textContent = '☰';
+    }
+  });
+}
+
+/* --- 3. VIDEO PLAYER (ACCUEIL) --- */
+function initVideoPlayer() {
+  const wrapper = document.getElementById('videoWrapper');
+  const video = document.getElementById('heroVideo');
+  const badge = document.getElementById('soundBadge');
+
+  if (!wrapper || !video || !badge) return;
+
+  // Default state
+  video.muted = true;
+  video.loop = true;
+  video.playsInline = true;
+
+  // Safe Autoplay
+  const startPlay = async () => {
+    try {
+      await video.play();
+    } catch (err) {
+      console.warn('Autoplay prevented:', err);
+      badge.textContent = "Cliquer pour lancer";
+    }
+  };
+  startPlay();
+
+  // Interaction logic
+  wrapper.addEventListener('click', () => {
+    if (video.muted) {
+      video.muted = false;
+      badge.textContent = "🔊 Son activé";
+      badge.style.opacity = '1';
+      if(video.paused) video.play();
+    } else {
+      video.muted = true;
+      badge.textContent = "🔇 Muet";
+    }
+  });
+}
+
+/* --- 4. PARALLAX ENGINE (MOUSE) --- */
+function initParallax() {
   const blobs = document.querySelectorAll('.blob');
-  // On ne lance la boucle que s'il y a des blobs
-  if (blobs.length > 0 && window.matchMedia("(pointer: fine)").matches) {
-    let mouseX = 0, mouseY = 0;
-    let currentX = 0, currentY = 0;
+  if (blobs.length === 0 || window.matchMedia('(max-width: 768px)').matches) return;
 
-    window.addEventListener('mousemove', (e) => {
-      mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-      mouseY = (e.clientY / window.innerHeight) * 2 - 1;
+  let mouseX = 0, mouseY = 0;
+  let currentX = 0, currentY = 0;
+
+  window.addEventListener('mousemove', (e) => {
+    // Normalize coordinates (-1 to 1)
+    mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+    mouseY = (e.clientY / window.innerHeight) * 2 - 1;
+  });
+
+  const animate = () => {
+    // Linear Interpolation (Lerp) for smoothness
+    currentX += (mouseX - currentX) * 0.05;
+    currentY += (mouseY - currentY) * 0.05;
+
+    blobs.forEach((blob, i) => {
+      // Different speed per blob for depth effect
+      const speed = 20 + (i * 15);
+      const x = currentX * speed;
+      const y = currentY * speed;
+      
+      blob.style.transform = `translate(${x}px, ${y}px)`;
     });
 
-    const animateBlobs = () => {
-      currentX += (mouseX - currentX) * 0.05;
-      currentY += (mouseY - currentY) * 0.05;
+    requestAnimationFrame(animate);
+  };
+  animate();
+}
 
-      blobs.forEach((blob, i) => {
-        const speed = 0.05 + (i * 0.03); // Vitesse variable
-        const x = currentX * 50 * speed;
-        const y = currentY * 50 * speed;
-        blob.style.transform = `translate(${x}px, ${y}px)`;
-      });
-      requestAnimationFrame(animateBlobs);
-    };
-    animateBlobs();
-  }
+/* --- 5. FILTRES PROJETS --- */
+function initFilters() {
+  const buttons = document.querySelectorAll('.filter-pill');
+  const cards = document.querySelectorAll('.project-item');
 
-  // --- 6. TILT 3D (CV) ---
-  const tilts = document.querySelectorAll('.tilt-element');
-  if(tilts.length > 0 && window.matchMedia("(min-width: 900px)").matches) {
-    tilts.forEach(card => {
-      card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
+  if (!buttons.length || !cards.length) return;
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Active state
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filter = btn.dataset.filter;
+
+      cards.forEach(card => {
+        const category = card.dataset.category;
         
-        // Rotation limitée pour éviter les bugs visuels
-        const rotateX = ((y - centerY) / centerY) * -2;
-        const rotateY = ((x - centerX) / centerX) * 2;
-
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-      });
-
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = `perspective(1000px) rotateX(0) rotateY(0)`;
-      });
-    });
-  }
-
-  // --- 7. FILTRES PROJETS ---
-  const filters = document.querySelectorAll('.filter-btn');
-  const cards = document.querySelectorAll('.project-card');
-
-  if (filters.length > 0 && cards.length > 0) {
-    filters.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filters.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const cat = btn.getAttribute('data-filter');
-
-        cards.forEach(card => {
-          const cardCat = card.getAttribute('data-category');
-          if(cat === 'all' || cardCat === cat) {
-            card.style.display = 'flex';
-            // Petit délai pour permettre au display:flex de s'appliquer avant l'opacité
-            requestAnimationFrame(() => {
-                card.style.opacity = '1';
-                card.style.transform = 'translateY(0)';
-            });
-          } else {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(10px)';
-            setTimeout(() => card.style.display = 'none', 300);
-          }
-        });
+        if (filter === 'all' || category === filter) {
+          card.style.display = 'flex';
+          // Delay for transition
+          requestAnimationFrame(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+          });
+        } else {
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(20px)';
+          setTimeout(() => {
+            if(card.style.opacity === '0') card.style.display = 'none';
+          }, 300);
+        }
       });
     });
-  }
+  });
+}
 
-  // --- 8. CARROUSEL ---
-  document.querySelectorAll('.carousel-wrapper').forEach(wrapper => {
-    const slidesContainer = wrapper.querySelector('.carousel-slides');
-    const slides = wrapper.querySelectorAll('.c-slide');
-    const nextBtn = wrapper.querySelector('.c-next');
-    const prevBtn = wrapper.querySelector('.c-prev');
-    const dotsContainer = wrapper.querySelector('.c-dots');
+/* --- 6. CAROUSEL SYSTEM --- */
+function initCarousel() {
+  const carousels = document.querySelectorAll('.carousel-view');
 
-    if(!slidesContainer || slides.length <= 1) {
-        if(nextBtn) nextBtn.style.display = 'none';
-        if(prevBtn) prevBtn.style.display = 'none';
-        return;
+  carousels.forEach(view => {
+    const track = view.querySelector('.carousel-track');
+    const slides = view.querySelectorAll('.carousel-img');
+    const prev = view.querySelector('.prev-btn');
+    const next = view.querySelector('.next-btn');
+
+    // Hide controls if single image
+    if (slides.length <= 1) {
+      if(prev) prev.style.display = 'none';
+      if(next) next.style.display = 'none';
+      return;
     }
 
     let index = 0;
 
-    // Dots creation
-    if(dotsContainer) {
-        dotsContainer.innerHTML = ''; // Clean
-        slides.forEach((_, i) => {
-            const dot = document.createElement('span');
-            dot.className = i === 0 ? 'active' : '';
-            dotsContainer.appendChild(dot);
-        });
-    }
-
-    const updateCarousel = () => {
-      slidesContainer.style.transform = `translateX(-${index * 100}%)`;
-      if(dotsContainer) {
-          const allDots = dotsContainer.querySelectorAll('span');
-          allDots.forEach((d, i) => d.className = i === index ? 'active' : '');
-      }
+    const update = () => {
+      track.style.transform = `translateX(-${index * 100}%)`;
     };
 
-    if(nextBtn) nextBtn.addEventListener('click', (e) => {
+    next.addEventListener('click', (e) => {
       e.stopPropagation();
       index = (index + 1) % slides.length;
-      updateCarousel();
+      update();
     });
 
-    if(prevBtn) prevBtn.addEventListener('click', (e) => {
+    prev.addEventListener('click', (e) => {
       e.stopPropagation();
       index = (index - 1 + slides.length) % slides.length;
-      updateCarousel();
+      update();
     });
   });
+}
 
-  // --- 9. LIGHTBOX ---
-  const lb = document.getElementById('lightbox');
-  const lbImg = document.getElementById('lbImg');
-  const lbClose = document.querySelector('.lb-close');
+/* --- 7. LIGHTBOX SYSTEM --- */
+function initLightbox() {
+  const modal = document.getElementById('lightboxModal');
+  const modalImg = document.getElementById('lightboxImg');
+  const closeBtn = document.getElementById('lightboxClose');
+  const triggers = document.querySelectorAll('.carousel-img'); // Images triggers
 
-  if(lb && lbImg) {
-    document.querySelectorAll('.lb-trigger').forEach(img => {
-      img.addEventListener('click', (e) => {
-        e.stopPropagation();
-        lbImg.src = img.src;
-        lb.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      });
+  if (!modal || !triggers.length) return;
+
+  const open = (src) => {
+    modalImg.src = src;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Lock scroll
+  };
+
+  const close = () => {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  };
+
+  triggers.forEach(img => {
+    img.addEventListener('click', () => open(img.src));
+  });
+
+  if(closeBtn) closeBtn.addEventListener('click', close);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) close();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) close();
+  });
+}
+
+/* --- 8. SCROLL REVEAL --- */
+function initScrollReveal() {
+  const elements = document.querySelectorAll('.glass-card, h1, h2, .btns');
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        observer.unobserve(entry.target);
+      }
     });
+  }, { threshold: 0.1 });
 
-    const closeLb = () => {
-      lb.classList.remove('active');
-      document.body.style.overflow = '';
-    };
-
-    if(lbClose) lbClose.addEventListener('click', closeLb);
-    lb.addEventListener('click', (e) => { if(e.target === lb) closeLb(); });
-    document.addEventListener('keydown', (e) => { if(e.key === "Escape") closeLb(); });
-  }
-});
+  elements.forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(30px)';
+    el.style.transition = 'opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+    observer.observe(el);
+  });
+}

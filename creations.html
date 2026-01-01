@@ -3,135 +3,100 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mes Projets - Eliot SAURON</title>
+  <title>Projets - Eliot SAURON</title>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23F2A18C'/%3E%3Ctext x='50' y='70' font-size='60' font-weight='800' text-anchor='middle' fill='white'%3EE%3C/text%3E%3C/svg%3E">
 </head>
 <body>
 
-  <div class="noise"></div>
-  <div class="bg-blobs parallax-container">
-    <div class="blob b1" data-speed="0.05"></div>
-    <div class="blob b2" data-speed="0.08"></div>
-  </div>
-  
-  <button class="theme-toggle" id="themeBtn">🌙</button>
+  <div class="noise-overlay"></div>
+  <div class="background-layer"><div class="blob blob-2"></div></div>
+  <button class="theme-switch" id="themeToggle">🌙</button>
 
   <header class="site-header">
-    <a href="index.html" class="logo">Eliot</a>
-    <nav class="nav"><a href="index.html">← Accueil</a></nav>
+    <a href="index.html" class="logo-link"><span class="logo-text">Eliot.</span></a>
+    <nav class="nav-menu"><a href="index.html" class="nav-link">← Accueil</a></nav>
   </header>
 
-  <main class="page-content">
-    <div class="page-header">
-      <h1 class="reveal-text">Mes Projets</h1>
-      <div class="filters reveal-text delay-1">
-        <button class="filter-btn active" data-filter="all">Tout</button>
-        <button class="filter-btn" data-filter="design">Design</button>
-        <button class="filter-btn" data-filter="media">Vidéo</button>
-        <button class="filter-btn" data-filter="photo">Photo</button>
-      </div>
+  <main class="main-wrapper section-wrapper">
+    <h1 class="section-title">Mes Créations</h1>
+    
+    <div class="filters-nav">
+      <button class="filter-pill active" data-filter="all">Tout</button>
+      <button class="filter-pill" data-filter="design">Design</button>
+      <button class="filter-pill" data-filter="media">Vidéo</button>
+      <button class="filter-pill" data-filter="photo">Photo</button>
     </div>
 
     <div class="projects-grid">
       
-      <article class="project-card glass-card" data-category="design">
-        <div class="carousel-wrapper">
-          <div class="carousel-slides">
-            <img src="img/ajna-cover.jpg" class="c-slide lb-trigger" alt="Cover Album" loading="lazy">
-            <img src="img/ajna-logo.jpg" class="c-slide lb-trigger" alt="Logo Construction" loading="lazy">
+      <article class="project-item glass-card" data-category="design">
+        <div class="carousel-view">
+          <div class="carousel-track">
+            <img src="img/ajna-cover.jpg" class="carousel-img" alt="AJNA Cover" loading="lazy">
+            <img src="img/ajna-logo.jpg" class="carousel-img" alt="AJNA Logo" loading="lazy">
           </div>
-          <button class="c-prev" aria-label="Précédent">‹</button>
-          <button class="c-next" aria-label="Suivant">›</button>
-          <div class="c-dots"></div>
+          <button class="carousel-btn prev-btn">‹</button>
+          <button class="carousel-btn next-btn">›</button>
         </div>
-        <div class="card-content">
-          <span class="badge">Direction Artistique</span>
-          <h3>AJNA - Rivages Invisibles</h3>
-          <p>Concept d'album fictif. Identité visuelle, logo et storytelling graphique.</p>
+        <div class="project-info">
+          <span class="project-cat">DA & Branding</span>
+          <h3 class="project-title">AJNA - Rivages Invisibles</h3>
+          <p style="font-size: 14px; opacity: 0.8;">Identité visuelle complète pour un album conceptuel fictif.</p>
         </div>
       </article>
 
-      <article class="project-card glass-card" data-category="media">
-        <div class="carousel-wrapper">
-          <div class="carousel-slides">
-            <img src="img/radio-1.jpg" class="c-slide lb-trigger" alt="Radio Studio" loading="lazy">
-            <img src="img/radio-2.jpg" class="c-slide lb-trigger" alt="Interview" loading="lazy">
-            <img src="img/radio-3.jpg" class="c-slide lb-trigger" alt="Montage" loading="lazy">
+      <article class="project-item glass-card" data-category="media">
+        <div class="carousel-view">
+          <div class="carousel-track">
+            <img src="img/radio-1.jpg" class="carousel-img" alt="Radio Campus" loading="lazy">
+            <img src="img/radio-2.jpg" class="carousel-img" alt="Studio" loading="lazy">
           </div>
-          <button class="c-prev">‹</button>
-          <button class="c-next">›</button>
-          <div class="c-dots"></div>
+          <button class="carousel-btn prev-btn">‹</button>
+          <button class="carousel-btn next-btn">›</button>
         </div>
-        <div class="card-content">
-          <span class="badge">Vidéo & Comm</span>
-          <h3>Radio Campus Besançon</h3>
-          <p>Stage immersion : réalisation de reels dynamiques et contenu réseaux sociaux.</p>
+        <div class="project-info">
+          <span class="project-cat">Vidéo</span>
+          <h3 class="project-title">Radio Campus</h3>
+          <p style="font-size: 14px; opacity: 0.8;">Réalisation de contenus dynamiques pour les réseaux sociaux.</p>
         </div>
       </article>
 
-      <article class="project-card glass-card" data-category="photo">
-        <div class="carousel-wrapper">
-          <div class="carousel-slides">
-            <img src="img/rv-cover.jpg" class="c-slide lb-trigger" alt="Livre Photo" loading="lazy">
+      <article class="project-item glass-card" data-category="photo">
+        <div class="carousel-view">
+          <div class="carousel-track">
+            <img src="img/photo-nb-1.jpg" class="carousel-img" alt="Texture NB" loading="lazy">
+            <img src="img/photo-nb-2.jpg" class="carousel-img" alt="Architecture" loading="lazy">
           </div>
+          <button class="carousel-btn prev-btn">‹</button>
+          <button class="carousel-btn next-btn">›</button>
         </div>
-        <div class="card-content">
-          <span class="badge">Édition</span>
-          <h3>"Rendez-moi en ville"</h3>
-          <p>Projet d'édition poétique sur l'urbanisme et la solitude contemporaine.</p>
-          <a href="img/rendez-moi-en-ville.pdf" target="_blank" class="btn-small">Voir le PDF</a>
+        <div class="project-info">
+          <span class="project-cat">Photographie</span>
+          <h3 class="project-title">Série Noire & Blanche</h3>
+          <p style="font-size: 14px; opacity: 0.8;">Exploration des textures et contrastes urbains.</p>
         </div>
       </article>
 
-      <article class="project-card glass-card" data-category="photo">
-        <div class="carousel-wrapper">
-          <div class="carousel-slides">
-            <img src="img/photo-nb-1.jpg" class="c-slide lb-trigger" alt="NB Texture" loading="lazy">
-            <img src="img/photo-nb-2.jpg" class="c-slide lb-trigger" alt="NB Portrait" loading="lazy">
-            <img src="img/photo-nb-3.jpg" class="c-slide lb-trigger" alt="NB Architecture" loading="lazy">
-            <img src="img/photo-nb-4.jpg" class="c-slide lb-trigger" alt="NB Lumière" loading="lazy">
+      <article class="project-item glass-card" data-category="photo">
+        <div class="carousel-view">
+          <div class="carousel-track">
+             <img src="img/rv-cover.jpg" class="carousel-img" alt="Livre" loading="lazy">
           </div>
-          <button class="c-prev">‹</button>
-          <button class="c-next">›</button>
-          <div class="c-dots"></div>
         </div>
-        <div class="card-content">
-          <span class="badge">Photographie</span>
-          <h3>Série Noire & Blanche</h3>
-          <p>Exploration des textures brutes et du jeu de lumière naturelle.</p>
-        </div>
-      </article>
-
-      <article class="project-card glass-card" data-category="photo">
-        <div class="carousel-wrapper">
-          <div class="carousel-slides">
-            <img src="img/photo-jacques-1.jpg" class="c-slide lb-trigger" alt="Studio 1" loading="lazy">
-            <img src="img/photo-jacques-2.jpg" class="c-slide lb-trigger" alt="Studio 2" loading="lazy">
-            <img src="img/photo-jacques-3.jpg" class="c-slide lb-trigger" alt="Studio 3" loading="lazy">
-            <img src="img/photo-jacques-4.jpg" class="c-slide lb-trigger" alt="Studio 4" loading="lazy">
-            <img src="img/photo-jacques-5.jpg" class="c-slide lb-trigger" alt="Studio 5" loading="lazy">
-          </div>
-          <button class="c-prev">‹</button>
-          <button class="c-next">›</button>
-          <div class="c-dots"></div>
-        </div>
-        <div class="card-content">
-          <span class="badge">Studio</span>
-          <h3>Expérimentation Studio</h3>
-          <p>Travail sur les plans d'éclairage complexes et la direction de modèle.</p>
+        <div class="project-info">
+          <span class="project-cat">Édition</span>
+          <h3 class="project-title">Rendez-moi en ville</h3>
+          <a href="img/rendez-moi-en-ville.pdf" target="_blank" style="font-size: 14px; font-weight: 700; color: var(--text-main);">Voir le PDF →</a>
         </div>
       </article>
 
     </div>
   </main>
 
-  <div class="lightbox" id="lightbox">
-    <button class="lb-close" aria-label="Fermer">&times;</button>
-    <div class="lb-content">
-      <img src="" id="lbImg" alt="Plein écran">
-    </div>
+  <div class="lightbox-modal" id="lightboxModal">
+    <button class="lightbox-close" id="lightboxClose">✕</button>
+    <img src="" id="lightboxImg" class="lightbox-img" alt="Zoom">
   </div>
 
   <script src="assets/js/main.js"></script>
