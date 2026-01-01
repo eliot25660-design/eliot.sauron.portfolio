@@ -1,193 +1,117 @@
 <!DOCTYPE html>
-<html lang="fr" data-theme="dark">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Parcours – Eliot SAURON</title>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23F2A18C'/%3E%3Ctext x='50' y='70' font-size='60' font-weight='800' text-anchor='middle' fill='white'%3EE%3C/text%3E%3C/svg%3E">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
   <style>
-    /* --- STYLE --- */
-    :root {
-      --peach: #FFBEAC; --blue: #A4C8E6; --bg-body: #F0F0F5;
-      --text-main: #1D1D1F; --text-muted: #515154;
-      --glass-bg: rgba(255, 255, 255, 0.9); --glass-border: rgba(255, 255, 255, 0.6);
-      --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-    }
-    [data-theme="dark"] {
-      --bg-body: #050505; --text-main: #F5F5F7; --text-muted: #A1A1A6;
-      --glass-bg: rgba(20, 20, 20, 0.85); --glass-border: rgba(255, 255, 255, 0.15);
-      --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      --peach: #FF9E88; --blue: #7AB2E8;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Outfit', sans-serif; background: var(--bg-body); color: var(--text-main); line-height: 1.6; transition: background 0.3s; }
+    :root { --bg: #050505; --text: #EAEAEA; --accent: #A4C8E6; --line: rgba(255,255,255,0.1); }
+    * { margin:0; padding:0; box-sizing:border-box; cursor:none; }
+    body { background:var(--bg); color:var(--text); font-family:'Outfit'; padding:40px 20px; max-width:900px; margin:0 auto; }
     
-    .bg-blobs { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
-    .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4; }
-    .b1 { width: 60vw; height: 60vw; background: var(--peach); top: -20%; left: -10%; }
-    .b2 { width: 60vw; height: 60vw; background: var(--blue); bottom: -20%; right: -10%; }
+    #cursor { position:fixed; width:20px; height:20px; border:1px solid #FFF; border-radius:50%; pointer-events:none; z-index:999; mix-blend-mode:difference; transform:translate(-50%,-50%); }
 
-    /* --- HEADER --- */
-    header {
-      position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-      width: 90%; max-width: 1000px; height: 60px;
-      background: var(--glass-bg); backdrop-filter: blur(12px);
-      border: 1px solid var(--glass-border); border-radius: 100px;
-      padding: 0 25px; z-index: 1000; display: flex; justify-content: space-between; align-items: center;
-      box-shadow: var(--shadow);
-    }
-    .logo-text { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 24px; color: var(--text-main); text-decoration: none; }
-    .back-btn { text-decoration: none; font-weight: 700; color: var(--text-main); font-size: 14px; }
+    header { display:flex; justify-content:space-between; margin-bottom:80px; align-items:center; border-bottom:1px solid var(--line); padding-bottom:20px; }
+    .logo { font-family:'Syne'; font-weight:800; font-size:24px; text-decoration:none; color:#FFF; }
+    .close { color:#888; text-decoration:none; text-transform:uppercase; letter-spacing:1px; font-size:12px; }
 
-    /* --- GRID --- */
-    .cv-container {
-      display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px;
-      max-width: 1000px; margin: 0 auto; padding: 100px 20px 40px;
-    }
-    .cv-tile {
-      background: var(--glass-bg); border: 1px solid var(--glass-border);
-      border-radius: 24px; padding: 30px; box-shadow: var(--shadow);
-      display: flex; flex-direction: column; transition: transform 0.2s;
-    }
-    .cv-tile:hover { transform: translateY(-3px); border-color: var(--blue); }
+    .cv-section { margin-bottom:60px; display:grid; grid-template-columns: 200px 1fr; gap:40px; }
+    h2 { font-family:'Syne'; font-size:16px; text-transform:uppercase; color:var(--accent); letter-spacing:1px; }
     
-    /* Grid Placements */
-    .t-profile { grid-column: span 4; grid-row: span 2; align-items: center; text-align: center; justify-content: center; }
-    .t-intro { grid-column: span 8; }
-    .t-exp { grid-column: span 6; }
-    .t-edu { grid-column: span 6; }
-    .t-skills { grid-column: span 12; flex-direction: row; flex-wrap: wrap; gap: 10px; justify-content: center; align-items: center; }
+    .item { margin-bottom:30px; }
+    .date { font-size:12px; opacity:0.6; display:block; margin-bottom:5px; font-family:'Courier New', monospace; }
+    h3 { font-size:20px; font-weight:600; margin-bottom:5px; }
+    .place { font-style:italic; opacity:0.8; font-size:14px; margin-bottom:10px; display:block; }
+    p { color:#AAA; font-size:15px; line-height:1.6; }
 
-    /* Content Styling */
-    .profile-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid var(--peach); margin-bottom: 20px; }
-    h1 { font-family: 'Syne'; font-size: 26px; font-weight: 800; margin-bottom: 5px; line-height: 1.1; }
-    .role { color: var(--blue); font-weight: 700; text-transform: uppercase; font-size: 12px; letter-spacing: 1px; margin-bottom: 20px; }
-    
-    h2 { font-family: 'Syne'; font-size: 20px; font-weight: 700; margin-bottom: 25px; border-bottom: 2px solid var(--glass-border); padding-bottom: 10px; }
-    
-    .exp-item { margin-bottom: 25px; position: relative; padding-left: 15px; border-left: 3px solid var(--peach); }
-    .exp-item:last-child { margin-bottom: 0; }
-    .date { font-size: 11px; font-weight: 800; color: var(--peach); text-transform: uppercase; display: block; margin-bottom: 4px; }
-    .date.blue { color: var(--blue); border-color: var(--blue); }
-    .job { font-size: 16px; font-weight: 700; display: block; margin-bottom: 4px; }
-    .place { font-size: 13px; font-style: italic; opacity: 0.7; margin-bottom: 8px; display: block; }
-    p.desc { font-size: 14px; color: var(--text-muted); line-height: 1.5; margin: 0; }
+    .skills-list { display:flex; flex-wrap:wrap; gap:10px; }
+    .tag { border:1px solid var(--line); padding:8px 15px; border-radius:4px; font-size:13px; color:#CCC; }
 
-    .skill-tag {
-      padding: 8px 16px; border-radius: 30px; background: rgba(127, 166, 198, 0.1);
-      font-weight: 600; font-size: 13px; border: 1px solid transparent; color: var(--text-main);
-    }
-    .skill-tag:hover { border-color: var(--blue); background: var(--glass-bg); }
+    .download { position:fixed; bottom:30px; right:30px; background:#FFF; color:#000; padding:15px 30px; border-radius:30px; text-decoration:none; font-weight:700; }
 
-    .download-fab {
-      position: fixed; bottom: 30px; right: 30px; background: var(--text-main);
-      color: var(--bg-body); padding: 15px 30px; border-radius: 50px;
-      text-decoration: none; font-weight: 700; box-shadow: var(--shadow); z-index: 100;
-    }
-    .theme-btn { position: fixed; bottom: 30px; left: 30px; width: 45px; height: 45px; background: var(--glass-bg); border-radius: 50%; border: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; z-index: 100; box-shadow: var(--shadow); }
+    footer { border-top:1px solid var(--line); padding-top:40px; text-align:center; font-size:12px; color:#555; display:flex; gap:20px; justify-content:center; }
+    footer a { color:#777; text-decoration:none; }
 
-    /* Responsive: Stack everything on mobile */
-    @media (max-width: 900px) {
-      .cv-container { grid-template-columns: 1fr; }
-      .t-profile, .t-intro, .t-exp, .t-edu, .t-skills { grid-column: span 1; grid-row: auto; }
-      .t-profile { padding: 40px 20px; }
-    }
+    @media(max-width:700px) { .cv-section { grid-template-columns:1fr; gap:20px; } }
   </style>
 </head>
 <body>
-
-  <div class="bg-blobs">
-    <div class="blob b1"></div>
-    <div class="blob b2"></div>
-  </div>
-
-  <button class="theme-btn">🌙</button>
-
+  <div id="cursor"></div>
+  
   <header>
-    <a href="index.html" class="logo-text">Eliot</a>
-    <a href="index.html" class="back-btn">Fermer ✕</a>
+    <div class="logo">ELIOT.</div>
+    <a href="index.html" class="close hover-trigger">Fermer</a>
   </header>
 
-  <div class="cv-container">
-    
-    <div class="cv-tile t-profile">
-      <img src="img/profil.jpg" class="profile-img" alt="Eliot">
-      <h1>Eliot SAURON</h1>
-      <span class="role">Info-Com • Création</span>
-      <div style="font-size:24px; gap:15px; display:flex;">
-        <a href="mailto:eliotsauron25@gmail.com" style="text-decoration:none;">📧</a>
-        <a href="https://linkedin.com/in/eliot-sauron" target="_blank" style="text-decoration:none;">💼</a>
+  <section class="cv-section">
+    <h2>Profil</h2>
+    <div>
+      <h3>Eliot Sauron</h3>
+      <p style="margin-bottom:20px;">Passionné par la narration visuelle. Je cherche à construire du sens là où il y a du chaos.</p>
+      <div style="display:flex; gap:20px;">
+        <a href="https://linkedin.com/in/eliot-sauron" style="color:#FFF;">LinkedIn</a>
+        <a href="mailto:eliotsauron25@gmail.com" style="color:#FFF;">Email</a>
       </div>
     </div>
+  </section>
 
-    <div class="cv-tile t-intro">
-      <h2>À propos</h2>
-      <p class="desc">Je ne remplis pas des cases, je construis du sens. Passionné par la narration visuelle, j'allie rigueur technique et sensibilité artistique. Actuellement en 2ème année de BUT Info-Com à Besançon.</p>
-      <div style="margin-top:20px; font-size:14px; color:var(--text-muted); display:flex; gap:20px; flex-wrap:wrap;">
-        <span><strong>Sport :</strong> Escalade</span>
-        <span><strong>Langues :</strong> Anglais C1</span>
-      </div>
-    </div>
-
-    <div class="cv-tile t-exp">
-      <h2>Expériences</h2>
-      <div class="exp-item">
-        <span class="date">2024 - Aujourd'hui</span>
-        <span class="job">Vente & Gestion</span>
+  <section class="cv-section">
+    <h2>Expérience</h2>
+    <div>
+      <div class="item">
+        <span class="date">2024 - PRÉSENT</span>
+        <h3>Vente & Gestion</h3>
         <span class="place">Boulangerie-Pâtisserie</span>
-        <p class="desc">Autonomie, relation client, rigueur.</p>
+        <p>Autonomie, rigueur et relation client en flux tendu.</p>
       </div>
-      <div class="exp-item">
+      <div class="item">
         <span class="date">2022 - 2023</span>
-        <span class="job">Stages Communication</span>
+        <h3>Assistant Communication</h3>
         <span class="place">Mairie de Saône</span>
-        <p class="desc">Découverte de la communication institutionnelle.</p>
+        <p>Création de supports visuels institutionnels.</p>
       </div>
     </div>
+  </section>
 
-    <div class="cv-tile t-edu">
-      <h2>Formation</h2>
-      <div class="exp-item" style="border-left-color: var(--blue);">
-        <span class="date blue">2024 - 2026</span>
-        <span class="job">B.U.T. Info-Com</span>
+  <section class="cv-section">
+    <h2>Formation</h2>
+    <div>
+      <div class="item">
+        <span class="date">2024 - 2026</span>
+        <h3>B.U.T. Info-Com</h3>
         <span class="place">IUT Besançon</span>
-        <p class="desc">Stratégie, Design, Web.</p>
       </div>
-      <div class="exp-item" style="border-left-color: var(--blue);">
-        <span class="date blue">2024</span>
-        <span class="job">Baccalauréat STMG</span>
+      <div class="item">
+        <span class="date">2024</span>
+        <h3>Baccalauréat STMG</h3>
         <span class="place">Lycée Louis-Pergaud</span>
-        <p class="desc">Mention Bien.</p>
       </div>
     </div>
+  </section>
 
-    <div class="cv-tile t-skills">
-      <span class="skill-tag">Photoshop</span>
-      <span class="skill-tag">Illustrator</span>
-      <span class="skill-tag">InDesign</span>
-      <span class="skill-tag">Premiere Pro</span>
-      <span class="skill-tag">Figma</span>
-      <span class="skill-tag">HTML/CSS</span>
+  <section class="cv-section">
+    <h2>Outils</h2>
+    <div class="skills-list">
+      <span class="tag">Photoshop</span>
+      <span class="tag">Illustrator</span>
+      <span class="tag">InDesign</span>
+      <span class="tag">Premiere Pro</span>
+      <span class="tag">Figma</span>
+      <span class="tag">HTML/CSS</span>
     </div>
+  </section>
 
-  </div>
+  <footer>
+    <a href="mentions-legales.html" class="hover-trigger">Mentions Légales</a>
+    <a href="politique-confidentialite.html" class="hover-trigger">Politique de Confidentialité</a>
+  </footer>
 
-  <a href="cv-eliot-sauron.pdf" download class="download-fab">Télécharger PDF</a>
+  <a href="cv-eliot-sauron.pdf" download class="download hover-trigger">PDF ↓</a>
 
   <script>
-    const themeBtn = document.querySelector('.theme-btn');
-    const html = document.documentElement;
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    html.setAttribute('data-theme', savedTheme);
-    themeBtn.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
-    themeBtn.addEventListener('click', () => {
-      const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      html.setAttribute('data-theme', newTheme);
-      themeBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
-      localStorage.setItem('theme', newTheme);
-    });
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px';});
   </script>
 </body>
 </html>
