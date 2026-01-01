@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         video.currentTime = 0; // Restart pour l'effet
         video.play().then(() => {
           soundBadge.textContent = "🔊 Son activé";
-          videoWrapper.style.borderColor = "var(--color-accent)";
+          videoWrapper.style.borderColor = "var(--peach)";
         }).catch(e => console.error("Erreur lecture", e));
       } else {
         // On coupe le son
@@ -93,8 +93,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const cardCat = card.getAttribute('data-category');
         if(category === 'all' || cardCat === category) {
           card.style.display = 'flex';
-          // Petit délai pour l'anim opacity si besoin, ici on fait simple
-          card.style.opacity = '1';
+          // Petit délai pour l'anim opacity
+          setTimeout(() => card.style.opacity = '1', 10);
         } else {
           card.style.display = 'none';
           card.style.opacity = '0';
@@ -103,23 +103,36 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // --- 5. LIGHTBOX (Galerie) ---
+  // --- 5. GESTION LIGHTBOX & CARROUSELS ---
   const lb = document.querySelector('.lightbox');
+  
+  // Variables globales pour la lightbox
+  let currentLbImages = [];
+  let currentLbIndex = 0;
+  let lbImg, lbCounter;
+
+  // Initialisation de la Lightbox si elle existe dans le DOM
   if(lb) {
-    const lbImg = lb.querySelector('img');
+    lbImg = lb.querySelector('img');
+    lbCounter = lb.querySelector('.lb-counter');
     const closeBtn = lb.querySelector('.lb-close');
     const nextBtn = lb.querySelector('.lb-next');
     const prevBtn = lb.querySelector('.lb-prev');
-    
-    let currentImages = [];
-    let currentIndex = 0;
 
-    // Fonction d'ouverture
+    // Fonction d'ouverture accessible globalement
     window.openLightbox = (imgArray, index) => {
-      currentImages = imgArray;
-      currentIndex = index;
-      lbImg.src = currentImages[currentIndex];
+      currentLbImages = imgArray;
+      currentLbIndex = index;
+      updateLbImage();
       lb.classList.add('active');
+    };
+
+    // Mise à jour de l'image de la lightbox
+    const updateLbImage = () => {
+      lbImg.src = currentLbImages[currentLbIndex];
+      if(lbCounter) {
+        lbCounter.textContent = `${currentLbIndex + 1} / ${currentLbImages.length}`;
+      }
     };
 
     // Fermeture
@@ -127,23 +140,71 @@ document.addEventListener('DOMContentLoaded', () => {
     closeBtn.addEventListener('click', closeLightbox);
     lb.addEventListener('click', (e) => { if(e.target === lb) closeLightbox(); });
 
-    // Navigation
-    const showImage = (idx) => {
-      currentIndex = (idx + currentImages.length) % currentImages.length;
-      lbImg.src = currentImages[currentIndex];
-    };
+    // Navigation Lightbox
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      currentLbIndex = (currentLbIndex + 1) % currentLbImages.length;
+      updateLbImage();
+    });
 
-    nextBtn.addEventListener('click', (e) => { e.stopPropagation(); showImage(currentIndex + 1); });
-    prevBtn.addEventListener('click', (e) => { e.stopPropagation(); showImage(currentIndex - 1); });
-    
-    // Attachement aux cartes
-    document.querySelectorAll('.card-image-box').forEach(box => {
-      box.addEventListener('click', () => {
-        // Récupérer l'image cliquée + les autres images cachées s'il y en a dans la carte (optionnel)
-        // Ici on prend simple : l'image cliquée
-        const src = box.querySelector('img').src;
-        openLightbox([src], 0); 
-      });
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      currentLbIndex = (currentLbIndex - 1 + currentLbImages.length) % currentLbImages.length;
+      updateLbImage();
     });
   }
+
+  // --- 6. LOGIQUE DES CARROUSELS (Cartes Projets) ---
+  const carousels = document.querySelectorAll('.carousel');
+
+  carousels.forEach(carousel => {
+    // Récupération sécurisée des données JSON
+    let images = [];
+    try {
+      images = JSON.parse(carousel.dataset.images || '[]');
+    } catch (e) {
+      console.error("Erreur parsing JSON images", e);
+      return;
+    }
+
+    if (images.length === 0) return;
+
+    const slideImg = carousel.querySelector('.slide');
+    const prevBtn = carousel.querySelector('.prev');
+    const nextBtn = carousel.querySelector('.next');
+    const indicator = carousel.querySelector('.slide-indicator');
+    let currentIndex = 0;
+
+    // Fonction de mise à jour de la slide locale
+    const updateSlide = () => {
+      slideImg.src = images[currentIndex];
+      if (indicator) indicator.textContent = `${currentIndex + 1}/${images.length}`;
+    };
+
+    // Clic image -> Ouvre la Lightbox
+    slideImg.addEventListener('click', () => {
+      if(window.openLightbox) {
+        window.openLightbox(images, currentIndex);
+      }
+    });
+
+    // Bouton Suivant (Carte)
+    if(nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); // Empêche l'ouverture de la lightbox
+        currentIndex = (currentIndex + 1) % images.length;
+        updateSlide();
+      });
+    }
+
+    // Bouton Précédent (Carte)
+    if(prevBtn) {
+      prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        updateSlide();
+      });
+    }
+  });
+
 });
