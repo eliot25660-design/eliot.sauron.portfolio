@@ -1,103 +1,155 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Parcours – Eliot SAURON</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-  <style>
-    :root { --bg: #030303; --text: #F0F0F0; --accent: #A4C8E6; --line: rgba(255,255,255,0.08); }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { background:var(--bg); color:var(--text); font-family:'Outfit'; padding:40px 20px; opacity:0; transition:opacity 0.5s; }
-    body.loaded { opacity:1; }
-
-    header { display:flex; justify-content:space-between; margin-bottom:80px; align-items:center; border-bottom:1px solid var(--line); padding-bottom:20px; max-width:900px; margin:0 auto 80px; }
-    .logo svg { height:24px; }
-    .close { color:#888; text-decoration:none; text-transform:uppercase; font-size:12px; font-weight:700; }
-
-    .cv-grid { max-width:900px; margin:0 auto; display:grid; grid-template-columns: 200px 1fr; gap:50px; margin-bottom:60px; }
-    .cv-label { font-family:'Syne'; font-size:14px; text-transform:uppercase; color:var(--accent); letter-spacing:1px; padding-top:5px; }
-    
-    .item { margin-bottom:40px; border-left:1px solid var(--line); padding-left:30px; position:relative; }
-    .item::before { content:''; position:absolute; left:-3px; top:8px; width:5px; height:5px; background:var(--accent); border-radius:50%; }
-    
-    .date { font-size:12px; opacity:0.5; font-family:'monospace'; margin-bottom:5px; display:block; }
-    h3 { font-size:20px; font-weight:600; margin-bottom:5px; }
-    .place { font-style:italic; opacity:0.8; font-size:14px; margin-bottom:10px; display:block; }
-    p { color:#AAA; font-size:15px; line-height:1.6; }
-
-    .skills { display:flex; flex-wrap:wrap; gap:10px; }
-    .tag { border:1px solid var(--line); padding:8px 16px; border-radius:4px; font-size:13px; color:#CCC; }
-
-    .fab { position:fixed; bottom:30px; right:30px; background:#FFF; color:#000; padding:15px 30px; border-radius:50px; text-decoration:none; font-weight:700; box-shadow:0 10px 30px rgba(0,0,0,0.5); }
-
-    @media(max-width:700px) { .cv-grid { grid-template-columns:1fr; gap:20px; } .item { padding-left:20px; } }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parcours — Eliot SAURON</title>
+    <meta name="description" content="CV et Parcours d'Eliot Sauron. Expériences, formations et compétences.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
-<body>
-  <header>
-    <a href="index.html" class="logo">
-      <svg viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <text x="0" y="30" font-family="Syne" font-weight="800" font-size="24" fill="#FFF">ELIOT.</text>
-      </svg>
-    </a>
-    <a href="index.html" class="close">Fermer</a>
-  </header>
+<body class="theme-dark">
+    <div class="noise-overlay"></div>
 
-  <div class="cv-grid">
-    <div class="cv-label">Profil</div>
-    <div>
-      <h3>Eliot Sauron</h3>
-      <p>Étudiant en Info-Com. Je cherche à allier la structure à l'émotion visuelle.</p>
-    </div>
-  </div>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo" aria-label="Retour à l'accueil">
+                <span class="logo-text">ES.</span>
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="creations.html">Créations</a></li>
+                    <li><a href="cv.html" class="active">Parcours</a></li>
+                    <li><a href="index.html#contact" class="btn-nav">Contact</a></li>
+                </ul>
+                <button id="theme-toggle" aria-label="Changer le thème">
+                    <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+            </nav>
+        </div>
+    </header>
 
-  <div class="cv-grid">
-    <div class="cv-label">Expérience</div>
-    <div>
-      <div class="item">
-        <span class="date">2024 - PRÉSENT</span>
-        <h3>Vente & Gestion</h3>
-        <span class="place">Boulangerie-Pâtisserie</span>
-        <p>Gestion client et autonomie en environnement rapide.</p>
-      </div>
-      <div class="item">
-        <span class="date">2022 - 2023</span>
-        <h3>Assistant Com'</h3>
-        <span class="place">Mairie de Saône</span>
-        <p>Création de supports graphiques institutionnels.</p>
-      </div>
-    </div>
-  </div>
+    <main class="page-cv">
+        <div class="container cv-layout">
+            
+            <aside class="cv-sidebar scroll-reveal">
+                <div class="cv-header">
+                    <h1>Eliot<br>SAURON</h1>
+                    <p class="cv-subtitle">Communication &<br>Design Visuel</p>
+                </div>
 
-  <div class="cv-grid">
-    <div class="cv-label">Formation</div>
-    <div>
-      <div class="item">
-        <span class="date">2024 - 2026</span>
-        <h3>B.U.T. Info-Com</h3>
-        <span class="place">IUT Besançon</span>
-      </div>
-      <div class="item">
-        <span class="date">2024</span>
-        <h3>Bac STMG</h3>
-        <span class="place">Mention Bien</span>
-      </div>
-    </div>
-  </div>
+                <div class="cv-contact">
+                    <a href="mailto:eliotsauron25@gmail.com" class="cv-link">
+                        <span class="icon">✉</span> eliotsauron25@gmail.com
+                    </a>
+                    <a href="https://linkedin.com/in/eliot-sauron" target="_blank" class="cv-link">
+                        <span class="icon">in</span> LinkedIn
+                    </a>
+                </div>
 
-  <div class="cv-grid">
-    <div class="cv-label">Stack</div>
-    <div class="skills">
-      <span class="tag">Adobe Suite</span>
-      <span class="tag">Figma</span>
-      <span class="tag">HTML/CSS</span>
-      <span class="tag">Storytelling</span>
-    </div>
-  </div>
+                <div class="cv-section">
+                    <h3>Profil</h3>
+                    <p class="cv-bio">
+                        Je ne remplis pas des cases, je construis du sens. Passionné par l'image et l'interaction, 
+                        je cherche à concevoir des expériences utilisateurs fluides et esthétiques. 
+                        Actuellement en 2ème année de BUT Info-Com à Besançon.
+                    </p>
+                </div>
 
-  <a href="cv-eliot-sauron.pdf" download class="fab">PDF ↓</a>
+                <div class="cv-section">
+                    <h3>Infos Rapides</h3>
+                    <ul class="quick-list">
+                        <li><strong>Profil:</strong> Créatif</li>
+                        <li><strong>Sport:</strong> Escalade</li>
+                        <li><strong>Langues:</strong> Anglais C1</li>
+                    </ul>
+                </div>
 
-  <script>window.onload = () => document.body.classList.add('loaded');</script>
+                <div class="cv-section">
+                    <h3>Outils</h3>
+                    <div class="skills-chips">
+                        <span class="chip">Photoshop</span>
+                        <span class="chip">Illustrator</span>
+                        <span class="chip">InDesign</span>
+                        <span class="chip">Premiere Pro</span>
+                        <span class="chip">Figma</span>
+                        <span class="chip">HTML/CSS</span>
+                        <span class="chip">Canva</span>
+                    </div>
+                </div>
+
+                <div class="cv-actions">
+                    <a href="cv-eliot-sauron.pdf" target="_blank" class="btn btn-primary btn-full">Télécharger PDF</a>
+                    <a href="index.html" class="btn btn-secondary btn-full">Retour Accueil</a>
+                </div>
+            </aside>
+
+            <div class="cv-main-content">
+                
+                <section class="cv-block scroll-reveal delay-1">
+                    <h2 class="cv-block-title">Expériences</h2>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-date">2024 - Aujourd'hui</div>
+                        <div class="timeline-content">
+                            <h4>Vente & Gestion</h4>
+                            <span class="timeline-place">Boulangerie-Pâtisserie</span>
+                            <p>Autonomie, relation client, rigueur dans la gestion quotidienne.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">2022 - 2023</div>
+                        <div class="timeline-content">
+                            <h4>Stages Communication</h4>
+                            <span class="timeline-place">Mairie de Saône</span>
+                            <p>Découverte de la communication institutionnelle, création de supports visuels et rédaction web.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="cv-block scroll-reveal delay-2">
+                    <h2 class="cv-block-title">Formation</h2>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-date">2024 - 2026</div>
+                        <div class="timeline-content">
+                            <h4>B.U.T. Information-Communication</h4>
+                            <span class="timeline-place">IUT Besançon</span>
+                            <p>Parcours Publicité et Communication Numérique. Stratégie, Design, Intégration Web.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">2024</div>
+                        <div class="timeline-content">
+                            <h4>Baccalauréat STMG</h4>
+                            <span class="timeline-place">Lycée Louis-Pergaud</span>
+                            <p>Option Mercatique. Mention Bien.</p>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-col">
+                <span class="copyright">© 2025 Eliot SAURON</span>
+            </div>
+            <div class="footer-col links">
+                <a href="mentions-legales.html">Mentions Légales</a>
+                <a href="politique-confidentialite.html">Confidentialité</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
 </body>
 </html>

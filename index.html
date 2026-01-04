@@ -1,320 +1,166 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Eliot SAURON – Digital Designer</title>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-  
-  <style>
-    :root {
-      --bg: #030303;
-      --text: #F0F0F0;
-      --text-dim: #888888;
-      --accent: #FFBEAC;
-      --accent-2: #A4C8E6;
-      --line: rgba(255, 255, 255, 0.08);
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      font-family: 'Outfit', sans-serif;
-      overflow-x: hidden;
-      opacity: 0; /* Pour le loader */
-      transition: opacity 0.5s ease;
-    }
-    
-    body.loaded { opacity: 1; }
-
-    /* --- LOADER --- */
-    #loader {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: #000; z-index: 10000; display: flex; justify-content: center; align-items: center;
-      transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1);
-    }
-    .loader-content { text-align: center; }
-    .loader-text { font-family: 'Syne'; font-size: 24px; font-weight: 800; letter-spacing: 2px; margin-bottom: 10px; }
-    .loader-bar { width: 200px; height: 2px; background: rgba(255,255,255,0.2); overflow: hidden; margin: 0 auto; }
-    .loader-progress { width: 0%; height: 100%; background: var(--text); transition: width 0.1s; }
-    
-    body.loaded #loader { transform: translateY(-100%); }
-
-    /* --- BACKGROUND --- */
-    .ambient-bg {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      z-index: -1; pointer-events: none; overflow: hidden;
-      background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #000 100%);
-    }
-    .orb {
-      position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.4;
-      transition: transform 0.1s linear; will-change: transform;
-    }
-    .o1 { width: 60vw; height: 60vw; background: var(--accent); top: -20%; left: -20%; }
-    .o2 { width: 50vw; height: 50vw; background: var(--accent-2); bottom: -20%; right: -20%; }
-
-    /* --- NAV --- */
-    nav {
-      position: fixed; top: 0; left: 0; width: 100%; padding: 25px 40px;
-      display: flex; justify-content: space-between; align-items: center;
-      z-index: 100; mix-blend-mode: exclusion;
-    }
-    .logo svg { height: 40px; width: auto; overflow: visible; }
-    .menu { display: flex; gap: 40px; }
-    .menu a {
-      text-decoration: none; color: var(--text); font-size: 13px; text-transform: uppercase;
-      font-weight: 700; letter-spacing: 1px; position: relative; opacity: 0.7; transition: 0.3s;
-    }
-    .menu a:hover { opacity: 1; }
-
-    /* --- HERO --- */
-    .hero {
-      min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
-      text-align: center; padding: 100px 20px; position: relative;
-    }
-    
-    .video-frame {
-      width: 320px; height: 320px; border-radius: 12px; overflow: hidden;
-      margin-bottom: 50px; position: relative;
-      box-shadow: 0 40px 80px rgba(0,0,0,0.6);
-      border: 1px solid rgba(255,255,255,0.1);
-      cursor: pointer; transition: transform 0.4s ease, border-color 0.4s;
-    }
-    .video-frame:hover { transform: scale(1.02); border-color: var(--accent); }
-    
-    video { width: 100%; height: 100%; object-fit: cover; transform: scale(1.05); }
-    
-    .sound-badge {
-      position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%);
-      background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
-      padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 1px; pointer-events: none;
-      border: 1px solid rgba(255,255,255,0.2); transition: 0.3s;
-    }
-    
-    .hero-content { position: relative; z-index: 2; }
-    h1 {
-      font-family: 'Syne', sans-serif; font-size: clamp(60px, 12vw, 140px);
-      line-height: 0.85; font-weight: 800; text-transform: uppercase;
-      margin-bottom: 30px; letter-spacing: -2px;
-      background: linear-gradient(to bottom, #fff, #aaa);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
-    .subtitle {
-      font-size: clamp(16px, 2vw, 20px); color: var(--text-dim);
-      max-width: 500px; margin: 0 auto 60px; font-weight: 300;
-    }
-
-    .cta-btn {
-      padding: 20px 50px; background: var(--text); color: #000;
-      border-radius: 100px; text-decoration: none; font-weight: 800;
-      text-transform: uppercase; letter-spacing: 1px; font-size: 14px;
-      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      display: inline-block;
-    }
-    .cta-btn:hover { transform: scale(1.05); }
-
-    /* --- SECTIONS --- */
-    section { padding: 150px 5% 50px; max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--line); }
-    .sec-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 80px; flex-wrap: wrap; gap: 20px; }
-    h2 { font-family: 'Syne'; font-size: clamp(30px, 5vw, 60px); color: var(--text); text-transform: uppercase; font-weight: 800; }
-    .sec-desc { max-width: 400px; color: var(--text-dim); font-size: 16px; text-align: right; }
-
-    .skills-visu { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-    .big-statement { font-size: clamp(24px, 3vw, 40px); font-family: 'Syne'; line-height: 1.2; color: var(--text); }
-    .bar-group { display: flex; flex-direction: column; gap: 30px; }
-    .skill { display: flex; flex-direction: column; gap: 10px; }
-    .skill-meta { display: flex; justify-content: space-between; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-dim); }
-    .track { width: 100%; height: 1px; background: rgba(255,255,255,0.1); position: relative; }
-    .progress { height: 100%; background: var(--text); position: absolute; left: 0; }
-
-    /* --- CONTACT & FOOTER --- */
-    .contact-wrapper { max-width: 700px; margin: 0 auto; }
-    input, textarea {
-      width: 100%; background: transparent; border: none; border-bottom: 1px solid var(--line);
-      padding: 25px 0; color: var(--text); font-family: 'Outfit'; font-size: 20px; margin-bottom: 10px;
-      transition: border-color 0.3s; resize: none;
-    }
-    input:focus, textarea:focus { outline: none; border-color: var(--accent); }
-    .submit-simple {
-      margin-top: 40px; background: transparent; border: 1px solid var(--line); color: var(--text);
-      padding: 15px 40px; border-radius: 50px; cursor: pointer; text-transform: uppercase;
-      font-weight: 700; letter-spacing: 1px; transition: 0.3s;
-    }
-    .submit-simple:hover { background: var(--text); color: #000; }
-
-    footer {
-      border-top: 1px solid var(--line); padding: 50px; margin-top: 100px;
-      display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 30px;
-    }
-    .f-col a { display: block; color: var(--text-dim); text-decoration: none; font-size: 14px; margin-bottom: 10px; transition: 0.3s; }
-    .f-col a:hover { color: var(--text); }
-    
-    @media (max-width: 768px) {
-      nav { padding: 20px; } .menu { display: none; }
-      .skills-visu { grid-template-columns: 1fr; gap: 40px; }
-      .sec-desc { text-align: left; }
-      h1 { font-size: 60px; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliot SAURON — Communication & Design Visuel</title>
+    <meta name="description" content="Portfolio d'Eliot Sauron. Communication, Design graphique, Vidéo et Storytelling. Étudiant en BUT Info-Com à Besançon.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
-<body>
+<body class="theme-dark"> <div class="noise-overlay"></div>
 
-  <div id="loader">
-    <div class="loader-content">
-      <div class="loader-text">ELIOT SAURON</div>
-      <div class="loader-bar"><div class="loader-progress"></div></div>
-    </div>
-  </div>
-
-  <div class="ambient-bg">
-    <div class="orb o1"></div>
-    <div class="orb o2"></div>
-  </div>
-
-  <nav>
-    <a href="index.html" class="logo">
-      <svg viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" style="stop-color:var(--accent)" />
-            <stop offset="100%" style="stop-color:var(--accent-2)" />
-          </linearGradient>
-        </defs>
-        <text x="0" y="30" font-family="Syne" font-weight="800" font-size="28" fill="url(#g1)">ELIOT.</text>
-      </svg>
-    </a>
-    <div class="menu">
-      <a href="creations.html">Projets</a>
-      <a href="cv.html">Parcours</a>
-      <a href="#contact">Contact</a>
-    </div>
-  </nav>
-
-  <header class="hero">
-    <div class="video-frame" id="v-frame">
-      <video id="showreel" autoplay muted loop playsinline>
-        <source src="img/video-presentation.mp4" type="video/mp4">
-      </video>
-      <div class="sound-badge" id="s-badge">🔇 Son désactivé</div>
-    </div>
-    
-    <div class="hero-content">
-      <h1>Eliot<br>Sauron</h1>
-      <p class="subtitle">Communication • Design Visuel • Storytelling</p>
-      <a href="creations.html" class="cta-btn">Voir le portfolio</a>
-    </div>
-  </header>
-
-  <section id="about">
-    <div class="sec-head">
-      <h2>Vision</h2>
-      <p class="sec-desc">Je ne remplis pas des cases, je construis du sens. Une approche qui mêle rigueur technique et sensibilité artistique.</p>
-    </div>
-    <div class="skills-visu">
-      <div class="big-statement">
-        "Chaque pixel compte.<br>
-        Chaque transition raconte<br>
-        une histoire."
-      </div>
-      <div class="bar-group">
-        <div class="skill">
-          <div class="skill-meta"><span>Communication</span><span>95%</span></div>
-          <div class="track"><div class="progress" style="width:95%"></div></div>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo" aria-label="Retour à l'accueil">
+                <span class="logo-text">ES.</span>
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="creations.html">Créations</a></li>
+                    <li><a href="cv.html">Parcours</a></li>
+                    <li><a href="#contact" class="btn-nav">Contact</a></li>
+                </ul>
+                <button id="theme-toggle" aria-label="Changer le thème">
+                    <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+            </nav>
         </div>
-        <div class="skill">
-          <div class="skill-meta"><span>Vidéo & Motion</span><span>80%</span></div>
-          <div class="track"><div class="progress" style="width:80%"></div></div>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <div class="container hero-grid">
+                <div class="hero-content scroll-reveal">
+                    <h1>Eliot <br><span class="gradient-text">SAURON</span></h1>
+                    <h2 class="subtitle">Communication • Design visuel • Vidéo</h2>
+                    <p class="intro-text">
+                        Façonner des univers cohérents, de l'idée brute au pixel final. 
+                        J'allie stratégie de communication et narration visuelle pour donner du sens à chaque projet.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="creations.html" class="btn btn-primary">Voir mes projets</a>
+                        <a href="#contact" class="btn btn-secondary">Me contacter</a>
+                    </div>
+                </div>
+                
+                <div class="hero-visual scroll-reveal delay-1">
+                    <div class="video-blob-wrapper">
+                        <video id="hero-video" class="blob-video" autoplay loop muted playsinline poster="img/video-poster.jpg">
+                            <source src="img/video-presentation.mp4" type="video/mp4">
+                            Votre navigateur ne supporte pas la vidéo.
+                        </video>
+                        <button id="video-toggle" class="video-control" aria-label="Activer le son">
+                            <span class="icon-state">🔇</span>
+                            <span class="text-state">Vidéo muette — cliquer pour activer</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="approach-section">
+            <div class="container">
+                <div class="section-header scroll-reveal">
+                    <h2 class="section-title">Ma démarche</h2>
+                </div>
+                
+                <div class="approach-grid">
+                    <div class="approach-text scroll-reveal">
+                        <p>
+                            Dans un monde saturé d'images, je crois fermement que la forme ne doit jamais trahir le fond. 
+                            Mon approche consiste à décortiquer l'ADN d'un projet pour en extraire une identité visuelle forte et durable.
+                        </p>
+                        <p>
+                            Que ce soit par le mouvement de la vidéo, la rigueur du graphisme ou l'impact des mots, 
+                            je construis des ponts entre votre message et votre audience. Pas de superflu, juste de l'essentiel.
+                        </p>
+                    </div>
+
+                    <div class="skills-wrapper scroll-reveal delay-1">
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span>Communication</span>
+                                <span>Expert</span>
+                            </div>
+                            <div class="progress-bar"><div class="fill" style="width: 95%"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span>Vidéo & Montage</span>
+                                <span>Avancé</span>
+                            </div>
+                            <div class="progress-bar"><div class="fill" style="width: 80%"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span>Design Graphique</span>
+                                <span>Avancé</span>
+                            </div>
+                            <div class="progress-bar"><div class="fill" style="width: 75%"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span>Intégration Web</span>
+                                <span>Intermédiaire</span>
+                            </div>
+                            <div class="progress-bar"><div class="fill" style="width: 60%"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <div class="contact-card scroll-reveal">
+                    <div class="contact-info">
+                        <h2>Parlons de votre projet</h2>
+                        <p>Une idée ? Une collaboration ? Ou simplement envie de discuter ? N'hésitez pas.</p>
+                        <a href="mailto:eliotsauron25@gmail.com" class="contact-link">eliotsauron25@gmail.com</a>
+                        <div class="social-links">
+                            <a href="https://linkedin.com/in/eliot-sauron" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                            <a href="cv-eliot-sauron.pdf" target="_blank">Télécharger mon CV</a>
+                        </div>
+                    </div>
+                    
+                    <form id="contact-form" action="https://formspree.io/f/mblwgzve" method="POST" class="contact-form">
+                        <div class="form-group">
+                            <label for="name">Nom</label>
+                            <input type="text" id="name" name="name" required placeholder="Votre nom">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="votre@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="4" required placeholder="Bonjour Eliot..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">Envoyer le message</button>
+                        <p id="form-status" class="form-status"></p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-col">
+                <span class="copyright">© 2025 Eliot SAURON</span>
+            </div>
+            <div class="footer-col links">
+                <a href="mentions-legales.html">Mentions Légales</a>
+                <a href="politique-confidentialite.html">Confidentialité</a>
+            </div>
         </div>
-        <div class="skill">
-          <div class="skill-meta"><span>Design</span><span>85%</span></div>
-          <div class="track"><div class="progress" style="width:85%"></div></div>
-        </div>
-      </div>
-    </div>
-  </section>
+    </footer>
 
-  <section id="contact">
-    <div class="sec-head">
-      <h2>Contact</h2>
-      <p class="sec-desc">Un projet ? Une idée ?<br>Parlons-en.</p>
-    </div>
-    <div class="contact-wrapper">
-      <form action="https://formspree.io/f/mblwgzve" method="POST">
-        <input type="text" name="name" placeholder="Nom" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <textarea name="message" rows="4" placeholder="Votre message..." required></textarea>
-        <button type="submit" class="submit-simple">Envoyer</button>
-      </form>
-    </div>
-  </section>
-
-  <footer>
-    <div class="f-col">
-      <a href="index.html" style="font-family:'Syne'; font-weight:800; font-size:20px; color:#FFF;">ELIOT.</a>
-      <span style="font-size:12px; opacity:0.5;">© 2025 Tous droits réservés.</span>
-    </div>
-    <div class="f-col">
-      <a href="creations.html">Projets</a>
-      <a href="cv.html">Parcours</a>
-    </div>
-    <div class="f-col">
-      <a href="https://linkedin.com/in/eliot-sauron" target="_blank">LinkedIn</a>
-      <a href="mailto:eliotsauron25@gmail.com">Email</a>
-    </div>
-    <div class="f-col">
-      <a href="mentions-legales.html">Mentions Légales</a>
-      <a href="politique-confidentialite.html">Confidentialité</a>
-    </div>
-  </footer>
-
-  <script>
-    // --- LOADER ---
-    const loader = document.getElementById('loader');
-    const bar = document.querySelector('.loader-progress');
-    let width = 0;
-    const interval = setInterval(() => {
-      width += Math.random() * 10;
-      if(width > 100) width = 100;
-      bar.style.width = width + '%';
-      if(width === 100) {
-        clearInterval(interval);
-        setTimeout(() => document.body.classList.add('loaded'), 300);
-      }
-    }, 100);
-
-    // --- VIDEO SOUND ---
-    const vFrame = document.getElementById('v-frame');
-    const video = document.getElementById('showreel');
-    const badge = document.getElementById('s-badge');
-
-    vFrame.addEventListener('click', () => {
-      video.muted = !video.muted;
-      if(!video.muted) {
-        video.currentTime = 0; // Restart for sync feel
-        video.play();
-        badge.textContent = "🔊 Son activé";
-        vFrame.style.borderColor = "var(--accent)";
-      } else {
-        badge.textContent = "🔇 Son désactivé";
-        vFrame.style.borderColor = "rgba(255,255,255,0.1)";
-      }
-    });
-
-    // --- PARALLAX BLOBS (No lag) ---
-    const orbs = document.querySelectorAll('.orb');
-    window.addEventListener('mousemove', (e) => {
-      const x = e.clientX / window.innerWidth;
-      const y = e.clientY / window.innerHeight;
-      
-      orbs[0].style.transform = `translate(${x * 30}px, ${y * 30}px)`; // Slow move
-      orbs[1].style.transform = `translate(${-x * 30}px, ${-y * 30}px)`; // Reverse move
-    });
-  </script>
+    <script src="assets/js/main.js"></script>
 </body>
 </html>

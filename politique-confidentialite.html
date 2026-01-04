@@ -1,27 +1,71 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Confidentialité</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400&family=Syne:wght@700&display=swap" rel="stylesheet">
-  <style>
-    body { background:#030303; color:#EAEAEA; font-family:'Outfit'; padding:60px 20px; max-width:800px; margin:0 auto; line-height:1.8; }
-    h1 { font-family:'Syne'; font-size:32px; margin-bottom:40px; color:#FFF; }
-    h3 { font-family:'Syne'; font-size:16px; color:#A4C8E6; margin-top:30px; text-transform:uppercase; letter-spacing:1px; }
-    p { color:#AAA; }
-    a { color:#FFF; text-decoration:none; border-bottom:1px solid #333; padding-bottom:5px; margin-top:40px; display:inline-block; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confidentialité — Eliot SAURON</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
-<body>
-  <h1>Confidentialité</h1>
-  
-  <h3>Données</h3>
-  <p>Site statique. Aucune base de données. Formulaire via Formspree.</p>
+<body class="theme-dark">
+    <div class="noise-overlay"></div>
+    
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo">
+                <span class="logo-text">ES.</span>
+            </a>
+            <a href="index.html" class="btn-nav">Retour</a>
+        </div>
+    </header>
 
-  <h3>Cookies</h3>
-  <p>Aucun traceur publicitaire. Navigation privée respectée.</p>
+    <main class="page-legal">
+        <div class="container legal-content">
+            <h1>Politique de Confidentialité</h1>
+            
+            <section>
+                <h2>1. Collecte des données</h2>
+                <p>
+                    Ce site est un <strong>site statique</strong>. Il ne possède pas de base de données, pas de comptes utilisateurs et ne stocke aucune information personnelle directement sur ses serveurs.
+                </p>
+                <p>
+                    Le formulaire de contact utilise le service tiers <strong>Formspree</strong>. Les données que vous saisissez (nom, email, message) sont transmises directement par email à Eliot SAURON via ce service.
+                </p>
+            </section>
 
-  <a href="index.html">← Retour</a>
+            <section>
+                <h2>2. Cookies et Traceurs</h2>
+                <p>
+                    Nous n'utilisons <strong>aucun cookie publicitaire</strong> ni aucun traceur tiers (Google Analytics, Facebook Pixel, etc.).
+                </p>
+                <p>
+                    Le seul stockage local utilisé est le <code>localStorage</code> de votre navigateur, uniquement pour mémoriser votre préférence de thème (Mode Sombre / Mode Clair). Cette donnée reste sur votre appareil et n'est jamais transmise ailleurs.
+                </p>
+            </section>
+
+            <section>
+                <h2>3. Vos droits</h2>
+                <p>
+                    Bien que nous ne stockions pas de données, vous disposez d'un droit d'accès, de rectification et de suppression concernant les informations envoyées par email. Pour toute demande, contactez : eliotsauron25@gmail.com.
+                </p>
+            </section>
+
+            <section>
+                <p>© 2025 Eliot SAURON.</p>
+            </section>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-col">
+                <span class="copyright">© 2025 Eliot SAURON</span>
+            </div>
+        </div>
+    </footer>
+    <script src="assets/js/main.js"></script>
 </body>
 </html>

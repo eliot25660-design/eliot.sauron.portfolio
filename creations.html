@@ -1,147 +1,177 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Projets – Eliot SAURON</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-
-  <style>
-    :root { --bg: #030303; --text: #F0F0F0; --accent: #FFBEAC; --line: rgba(255, 255, 255, 0.08); }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    
-    body {
-      background: var(--bg); color: var(--text); font-family: 'Outfit';
-      opacity: 0; transition: opacity 0.5s ease;
-    }
-    body.loaded { opacity: 1; }
-
-    /* LOADER COMPACT */
-    #loader { position: fixed; inset: 0; background: #000; z-index: 9999; transition: transform 0.6s ease-in-out; }
-    body.loaded #loader { transform: translateY(-100%); }
-
-    /* LAYOUT */
-    nav { padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); }
-    .logo svg { height: 30px; }
-    .back-link { color: var(--text); text-decoration: none; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; }
-    
-    .header-projets { padding: 120px 20px 60px; text-align: center; }
-    h1 { font-family: 'Syne'; font-size: clamp(50px, 8vw, 100px); text-transform: uppercase; font-weight: 800; margin-bottom: 40px; }
-    
-    .filters { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
-    .f-btn {
-      background: transparent; border: 1px solid var(--line); color: #888;
-      padding: 10px 25px; border-radius: 50px; cursor: pointer; text-transform: uppercase;
-      font-size: 12px; font-weight: 700; letter-spacing: 1px; transition: 0.3s;
-    }
-    .f-btn:hover, .f-btn.active { background: var(--text); color: #000; border-color: var(--text); }
-
-    .grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-      gap: 40px; padding: 0 40px 100px; max-width: 1400px; margin: 0 auto;
-    }
-    
-    .card {
-      group; cursor: pointer; position: relative;
-    }
-    .img-box {
-      width: 100%; aspect-ratio: 4/3; overflow: hidden; border-radius: 8px;
-      margin-bottom: 20px; border: 1px solid var(--line); transition: border-color 0.3s;
-    }
-    .img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s cubic-bezier(0.2, 1, 0.3, 1); opacity: 0.8; }
-    
-    .card:hover .img-box { border-color: var(--accent); }
-    .card:hover .img-box img { transform: scale(1.05); opacity: 1; }
-
-    .meta { display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid var(--line); padding-top: 15px; }
-    h3 { font-family: 'Syne'; font-size: 20px; font-weight: 700; }
-    .cat { font-size: 11px; text-transform: uppercase; color: var(--accent); letter-spacing: 1px; font-weight: 700; }
-
-    /* LIGHTBOX */
-    .lightbox {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 5000;
-      display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s;
-    }
-    .lightbox.active { opacity: 1; pointer-events: auto; }
-    .lb-img { max-width: 90%; max-height: 85vh; object-fit: contain; }
-    .close { position: absolute; top: 30px; right: 30px; font-size: 40px; color: #FFF; cursor: pointer; }
-
-    footer { border-top: 1px solid var(--line); padding: 40px; text-align: center; color: #555; font-size: 12px; }
-
-    @media (max-width: 768px) { .grid { grid-template-columns: 1fr; padding: 0 20px 50px; } }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créations — Eliot SAURON</title>
+    <meta name="description" content="Portfolio créatif : Design, Vidéo, Photographie.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
-<body>
-  <div id="loader"></div>
+<body class="theme-dark">
+    <div class="noise-overlay"></div>
 
-  <nav>
-    <a href="index.html" class="logo">
-      <svg viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <text x="0" y="30" font-family="Syne" font-weight="800" font-size="24" fill="#FFF">ELIOT.</text>
-      </svg>
-    </a>
-    <a href="index.html" class="back-link">Retour</a>
-  </nav>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo" aria-label="Retour à l'accueil">
+                <span class="logo-text">ES.</span>
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="creations.html" class="active">Créations</a></li>
+                    <li><a href="cv.html">Parcours</a></li>
+                    <li><a href="index.html#contact" class="btn-nav">Contact</a></li>
+                </ul>
+                <button id="theme-toggle" aria-label="Changer le thème">
+                    <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+            </nav>
+        </div>
+    </header>
 
-  <div class="header-projets">
-    <h1>Travaux</h1>
-    <div class="filters">
-      <button class="f-btn active" data-filter="all">Tous</button>
-      <button class="f-btn" data-filter="design">Design</button>
-      <button class="f-btn" data-filter="media">Vidéo</button>
-      <button class="f-btn" data-filter="photo">Photo</button>
+    <main class="page-creations">
+        <section class="container">
+            <div class="page-header scroll-reveal">
+                <h1>Mes <span class="gradient-text">Projets</span></h1>
+                <p>Une sélection de travaux récents en design, vidéo et photographie.</p>
+            </div>
+
+            <div class="filters-container scroll-reveal delay-1">
+                <button class="filter-btn active" data-filter="all">Tout</button>
+                <button class="filter-btn" data-filter="design">Design</button>
+                <button class="filter-btn" data-filter="media">Vidéo</button>
+                <button class="filter-btn" data-filter="photo">Photo</button>
+            </div>
+
+            <div class="projects-grid">
+                
+                <article class="project-card scroll-reveal" data-category="design">
+                    <div class="card-media">
+                        <div class="carousel-wrapper">
+                            <div class="carousel-slides">
+                                <img src="img/ajna-cover.jpg" alt="AJNA Cover" loading="lazy" class="lightbox-trigger" data-group="ajna">
+                                <img src="img/ajna-logo.jpg" alt="AJNA Logo" loading="lazy" class="lightbox-trigger" data-group="ajna">
+                            </div>
+                            <button class="carousel-nav prev" aria-label="Image précédente">❮</button>
+                            <button class="carousel-nav next" aria-label="Image suivante">❯</button>
+                            <div class="carousel-indicators"></div>
+                        </div>
+                        <div class="card-badge">Direction Artistique</div>
+                    </div>
+                    <div class="card-content">
+                        <h3>AJNA – Rivages Invisibles</h3>
+                        <p>Concept d'album fictif. Identité visuelle, logo et storytelling.</p>
+                    </div>
+                </article>
+
+                <article class="project-card scroll-reveal" data-category="media">
+                    <div class="card-media">
+                        <div class="carousel-wrapper">
+                            <div class="carousel-slides">
+                                <img src="img/radio-1.jpg" alt="Radio Campus 1" loading="lazy" class="lightbox-trigger" data-group="radio">
+                                <img src="img/radio-2.jpg" alt="Radio Campus 2" loading="lazy" class="lightbox-trigger" data-group="radio">
+                                <img src="img/radio-3.jpg" alt="Radio Campus 3" loading="lazy" class="lightbox-trigger" data-group="radio">
+                            </div>
+                            <button class="carousel-nav prev" aria-label="Image précédente">❮</button>
+                            <button class="carousel-nav next" aria-label="Image suivante">❯</button>
+                            <div class="carousel-indicators"></div>
+                        </div>
+                        <div class="card-badge">Vidéo & Communication</div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Radio Campus Besançon</h3>
+                        <p>Stage immersion : réalisation de reels et contenu réseaux sociaux.</p>
+                    </div>
+                </article>
+
+                <article class="project-card scroll-reveal" data-category="photo">
+                    <div class="card-media">
+                        <div class="carousel-wrapper">
+                            <div class="carousel-slides">
+                                <img src="img/rv-cover.jpg" alt="Rendez-moi en ville Cover" loading="lazy" class="lightbox-trigger" data-group="rv">
+                            </div>
+                            <div class="carousel-indicators"></div>
+                        </div>
+                        <div class="card-badge">Édition</div>
+                    </div>
+                    <div class="card-content">
+                        <h3>"Rendez-moi en ville"</h3>
+                        <p>Projet d'édition poétique sur l'urbanisme.</p>
+                    </div>
+                </article>
+
+                <article class="project-card scroll-reveal" data-category="photo">
+                    <div class="card-media">
+                        <div class="carousel-wrapper">
+                            <div class="carousel-slides">
+                                <img src="img/photo-nb-1.jpg" alt="NB 1" loading="lazy" class="lightbox-trigger" data-group="nb">
+                                <img src="img/photo-nb-2.jpg" alt="NB 2" loading="lazy" class="lightbox-trigger" data-group="nb">
+                                <img src="img/photo-nb-3.jpg" alt="NB 3" loading="lazy" class="lightbox-trigger" data-group="nb">
+                                <img src="img/photo-nb-4.jpg" alt="NB 4" loading="lazy" class="lightbox-trigger" data-group="nb">
+                            </div>
+                            <button class="carousel-nav prev" aria-label="Image précédente">❮</button>
+                            <button class="carousel-nav next" aria-label="Image suivante">❯</button>
+                            <div class="carousel-indicators"></div>
+                        </div>
+                        <div class="card-badge">Photographie</div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Série Noire & Blanche</h3>
+                        <p>Exploration des textures et de la lumière naturelle.</p>
+                    </div>
+                </article>
+
+                <article class="project-card scroll-reveal" data-category="photo">
+                    <div class="card-media">
+                        <div class="carousel-wrapper">
+                            <div class="carousel-slides">
+                                <img src="img/photo-jacques-1.jpg" alt="Studio 1" loading="lazy" class="lightbox-trigger" data-group="studio">
+                                <img src="img/photo-jacques-2.jpg" alt="Studio 2" loading="lazy" class="lightbox-trigger" data-group="studio">
+                                <img src="img/photo-jacques-3.jpg" alt="Studio 3" loading="lazy" class="lightbox-trigger" data-group="studio">
+                                <img src="img/photo-jacques-4.jpg" alt="Studio 4" loading="lazy" class="lightbox-trigger" data-group="studio">
+                                <img src="img/photo-jacques-5.jpg" alt="Studio 5" loading="lazy" class="lightbox-trigger" data-group="studio">
+                            </div>
+                            <button class="carousel-nav prev" aria-label="Image précédente">❮</button>
+                            <button class="carousel-nav next" aria-label="Image suivante">❯</button>
+                            <div class="carousel-indicators"></div>
+                        </div>
+                        <div class="card-badge">Studio</div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Expérimentation Studio</h3>
+                        <p>Travail sur les plans d'éclairage et la direction de modèle.</p>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+    </main>
+
+    <div id="lightbox" class="lightbox" aria-hidden="true">
+        <button id="lightbox-close" aria-label="Fermer">✕</button>
+        <button id="lightbox-prev" aria-label="Précédent">❮</button>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="">
+        </div>
+        <button id="lightbox-next" aria-label="Suivant">❯</button>
     </div>
-  </div>
 
-  <div class="grid">
-    <div class="card" data-cat="design" onclick="openLb('img/ajna-cover.jpg')">
-      <div class="img-box"><img src="img/ajna-cover.jpg"></div>
-      <div class="meta"><h3>AJNA</h3><span class="cat">Art Direction</span></div>
-    </div>
-    
-    <div class="card" data-cat="media" onclick="openLb('img/radio-1.jpg')">
-      <div class="img-box"><img src="img/radio-1.jpg"></div>
-      <div class="meta"><h3>Radio Campus</h3><span class="cat">Social Media</span></div>
-    </div>
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-col">
+                <span class="copyright">© 2025 Eliot SAURON</span>
+            </div>
+            <div class="footer-col links">
+                <a href="mentions-legales.html">Mentions Légales</a>
+                <a href="politique-confidentialite.html">Confidentialité</a>
+            </div>
+        </div>
+    </footer>
 
-    <div class="card" data-cat="photo" onclick="window.open('img/rendez-moi-en-ville.pdf')">
-      <div class="img-box"><img src="img/rv-cover.jpg"></div>
-      <div class="meta"><h3>Rendez-moi en ville</h3><span class="cat">Édition (PDF)</span></div>
-    </div>
-
-    <div class="card" data-cat="photo" onclick="openLb('img/photo-nb-1.jpg')">
-      <div class="img-box"><img src="img/photo-nb-1.jpg"></div>
-      <div class="meta"><h3>Noir & Blanc</h3><span class="cat">Photographie</span></div>
-    </div>
-  </div>
-
-  <div class="lightbox" id="lb">
-    <div class="close" onclick="closeLb()">×</div>
-    <img src="" class="lb-img" id="lb-img">
-  </div>
-
-  <footer>© 2025 Eliot Sauron • <a href="mentions-legales.html" style="color:#777;text-decoration:none">Mentions</a></footer>
-
-  <script>
-    window.onload = () => document.body.classList.add('loaded');
-
-    // FILTRES
-    const btns = document.querySelectorAll('.f-btn');
-    const cards = document.querySelectorAll('.card');
-    btns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        btns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const f = btn.dataset.filter;
-        cards.forEach(c => c.style.display = (f==='all' || c.dataset.cat===f) ? 'block' : 'none');
-      });
-    });
-
-    // LIGHTBOX
-    const lb = document.getElementById('lb');
-    const lbImg = document.getElementById('lb-img');
-    window.openLb = (src) => { lbImg.src = src; lb.classList.add('active'); };
-    window.closeLb = () => lb.classList.remove('active');
-  </script>
+    <script src="assets/js/main.js"></script>
 </body>
 </html>
