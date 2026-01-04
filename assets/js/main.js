@@ -42,15 +42,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
 
-    // --- 4. Video Mute/Unmute Logic (Home Page) ---
+    // --- 4. Video Mute/Unmute Logic (CORRECTION: Global Click) ---
     const video = document.getElementById('hero-video');
     const videoBtn = document.getElementById('video-toggle');
     
     if (video && videoBtn) {
-        // Ensure video is playing on iOS (requires playsinline attribute, already in HTML)
-        video.play().catch(() => { /* Auto-play failed, waiting for user interaction */ });
+        // Ensure video is playing (mobile fallback)
+        video.play().catch(() => { /* Autoplay failed handled */ });
+        video.style.cursor = "pointer"; // Indique cliquable
 
-        videoBtn.addEventListener('click', () => {
+        const toggleSound = (e) => {
+            if(e) e.preventDefault();
             if (video.muted) {
                 video.muted = false;
                 videoBtn.innerHTML = '<span class="icon-state">🔊</span><span class="text-state">Son activé — cliquer pour couper</span>';
@@ -58,7 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 video.muted = true;
                 videoBtn.innerHTML = '<span class="icon-state">🔇</span><span class="text-state">Vidéo muette — cliquer pour activer</span>';
             }
-        });
+        };
+
+        videoBtn.addEventListener('click', toggleSound);
+        video.addEventListener('click', toggleSound);
     }
 
     // --- 5. Projects Filtering (Creations Page) ---

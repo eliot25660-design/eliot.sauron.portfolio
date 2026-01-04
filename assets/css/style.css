@@ -105,6 +105,8 @@ button {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    /* BONUS : Micro lueur pour effet premium */
+    filter: drop-shadow(0 0 15px rgba(255, 154, 139, 0.2));
 }
 
 /* =========================================
@@ -282,11 +284,13 @@ body.theme-light .icon-moon { display: none; }
     animation: blob-float 10s ease-in-out infinite alternate;
 }
 
+/* CORRECTION : Centrage Forcé sur le HAUT */
 .blob-video {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transform: scale(1.05); /* Avoid anti-aliasing edges */
+    object-position: 50% 10%; /* Force le haut (tête) */
+    transform: scale(1.05);
 }
 
 .video-control {
