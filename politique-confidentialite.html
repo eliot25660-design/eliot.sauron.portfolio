@@ -6,7 +6,7 @@
     <title>Confidentialité — Eliot SAURON</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
@@ -14,9 +14,18 @@
     <div class="noise-overlay"></div>
     
     <header class="site-header">
-        <div class="container header-inner">
-            <a href="index.html" class="logo">
-                <span class="logo-text">ES.</span>
+        <div class="header-inner">
+             <a href="index.html" class="logo" aria-label="Retour à l'accueil">
+                <svg class="logo-svg" viewBox="0 0 200 80" fill="none">
+                    <defs>
+                        <linearGradient id="cloud-gradient-p" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:var(--accent-peach);stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:var(--accent-blue);stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" class="logo-text-elem">Eliot</text>
+                    <path class="cloud-path" d="M30,40 C30,20 60,-10 100,10 C150,30 170,20 170,40 C170,60 150,90 100,70 C50,50 30,60 30,40" stroke="url(#cloud-gradient-p)" stroke-width="3" fill="none" stroke-linecap="round" />
+                </svg>
             </a>
             <a href="index.html" class="btn-nav">Retour</a>
         </div>

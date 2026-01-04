@@ -21,16 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 2. Header Scroll Effect ---
+    // --- 2. Header Scroll Effect (Not required with Floating Pill, but nice for safety) ---
+    // Le header est fixed par défaut avec le nouveau style "Pill", mais on peut garder ça pour compatibilité
     const header = document.querySelector('.site-header');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
-    });
-
+    
     // --- 3. Scroll Reveal Animation ---
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -42,14 +36,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
 
-    // --- 4. Video Mute/Unmute Logic (CORRECTION: Global Click) ---
+    // --- 4. Video Mute/Unmute Logic ---
     const video = document.getElementById('hero-video');
     const videoBtn = document.getElementById('video-toggle');
     
     if (video && videoBtn) {
-        // Ensure video is playing (mobile fallback)
-        video.play().catch(() => { /* Autoplay failed handled */ });
-        video.style.cursor = "pointer"; // Indique cliquable
+        video.play().catch(() => {});
+        video.style.cursor = "pointer"; 
 
         const toggleSound = (e) => {
             if(e) e.preventDefault();
@@ -66,14 +59,13 @@ document.addEventListener('DOMContentLoaded', () => {
         video.addEventListener('click', toggleSound);
     }
 
-    // --- 5. Projects Filtering (Creations Page) ---
+    // --- 5. Projects Filtering ---
     const filterBtns = document.querySelectorAll('.filter-btn');
     const projects = document.querySelectorAll('.project-card');
 
     if (filterBtns.length > 0) {
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                // Remove active class
                 filterBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
 
@@ -83,7 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     const category = project.getAttribute('data-category');
                     if (filter === 'all' || category === filter) {
                         project.style.display = 'block';
-                        // Trigger animation reset
                         setTimeout(() => project.style.opacity = '1', 10);
                     } else {
                         project.style.display = 'none';
@@ -95,8 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- 6. Carousel & Lightbox Logic ---
-    
-    // Inline Carousel
     document.querySelectorAll('.carousel-wrapper').forEach(wrapper => {
         const slides = wrapper.querySelector('.carousel-slides');
         const images = slides.querySelectorAll('img');
@@ -106,12 +95,10 @@ document.addEventListener('DOMContentLoaded', () => {
         
         let currentIndex = 0;
 
-        // Hide buttons if only 1 image
         if (images.length <= 1) {
             if(prevBtn) prevBtn.style.display = 'none';
             if(nextBtn) nextBtn.style.display = 'none';
         } else {
-            // Create indicators
             images.forEach((_, i) => {
                 const dot = document.createElement('span');
                 dot.style.cssText = `width: 6px; height: 6px; background: rgba(255,255,255,0.5); border-radius: 50%; display: inline-block; margin: 0 3px;`;
@@ -122,7 +109,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const updateCarousel = () => {
             slides.style.transform = `translateX(-${currentIndex * 100}%)`;
-            // Update dots
             if (indicators.children.length > 0) {
                 Array.from(indicators.children).forEach((dot, i) => {
                     dot.style.background = i === currentIndex ? 'white' : 'rgba(255,255,255,0.5)';
@@ -132,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if(prevBtn) {
             prevBtn.addEventListener('click', (e) => {
-                e.stopPropagation(); // Prevent lightbox opening
+                e.stopPropagation();
                 currentIndex = (currentIndex === 0) ? images.length - 1 : currentIndex - 1;
                 updateCarousel();
             });
@@ -140,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if(nextBtn) {
             nextBtn.addEventListener('click', (e) => {
-                e.stopPropagation(); // Prevent lightbox opening
+                e.stopPropagation();
                 currentIndex = (currentIndex === images.length - 1) ? 0 : currentIndex + 1;
                 updateCarousel();
             });
@@ -158,20 +144,16 @@ document.addEventListener('DOMContentLoaded', () => {
         let currentGroup = [];
         let currentGroupIndex = 0;
 
-        // Open Lightbox
         document.querySelectorAll('.lightbox-trigger').forEach(img => {
             img.addEventListener('click', () => {
                 const groupName = img.getAttribute('data-group');
-                // Collect all images in this group (across the DOM if needed, but usually within project)
                 currentGroup = Array.from(document.querySelectorAll(`.lightbox-trigger[data-group="${groupName}"]`));
-                
-                // Find index of clicked image
                 currentGroupIndex = currentGroup.indexOf(img);
                 
                 updateLightboxImage();
                 lightbox.classList.add('active');
                 lightbox.setAttribute('aria-hidden', 'false');
-                document.body.style.overflow = 'hidden'; // Stop scrolling
+                document.body.style.overflow = 'hidden';
             });
         });
 
@@ -199,17 +181,14 @@ document.addEventListener('DOMContentLoaded', () => {
             updateLightboxImage();
         };
 
-        // Events
         lbClose.addEventListener('click', closeLightbox);
         lbNext.addEventListener('click', nextImage);
         lbPrev.addEventListener('click', prevImage);
         
-        // Close on background click
         lightbox.addEventListener('click', (e) => {
             if (e.target === lightbox) closeLightbox();
         });
 
-        // Keyboard navigation
         document.addEventListener('keydown', (e) => {
             if (!lightbox.classList.contains('active')) return;
             if (e.key === 'Escape') closeLightbox();
@@ -237,9 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const response = await fetch(contactForm.action, {
                     method: 'POST',
                     body: formData,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
+                    headers: { 'Accept': 'application/json' }
                 });
 
                 if (response.ok) {
@@ -252,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } catch (error) {
                 formStatus.style.color = 'var(--accent-peach)';
-                formStatus.innerHTML = 'Une erreur est survenue. Veuillez réessayer.';
+                formStatus.innerHTML = 'Une erreur est survenue.';
                 btn.innerText = originalBtnText;
                 btn.disabled = false;
             }
