@@ -4,168 +4,134 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parcours — Eliot SAURON</title>
-    <meta name="description" content="CV et Parcours d'Eliot Sauron. Expériences, formations et compétences.">
+    <meta name="description" content="CV et Parcours d'Eliot Sauron.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico">
 </head>
 <body class="theme-dark">
-    <div class="noise-overlay"></div>
 
-    <header class="site-header">
-        <div class="header-inner">
-            <a href="index.html" class="logo" aria-label="Retour à l'accueil">
-                <svg class="logo-svg" viewBox="0 0 200 80" fill="none">
-                    <defs>
-                        <linearGradient id="cloud-gradient-cv" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" style="stop-color:var(--accent-peach);stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:var(--accent-blue);stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                    <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" class="logo-text-elem">Eliot</text>
-                    <path class="cloud-path" d="M30,40 C30,20 60,-10 100,10 C150,30 170,20 170,40 C170,60 150,90 100,70 C50,50 30,60 30,40" stroke="url(#cloud-gradient-cv)" stroke-width="3" fill="none" stroke-linecap="round" />
-                </svg>
-            </a>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="index.html">Accueil</a></li>
-                    <li><a href="creations.html">Créations</a></li>
-                    <li><a href="cv.html" class="active">Parcours</a></li>
-                    <li><a href="index.html#contact" class="btn-nav">Contact</a></li>
-                </ul>
-                <button id="theme-toggle" aria-label="Changer le thème">
-                    <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                    <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-                </button>
-            </nav>
-        </div>
-    </header>
+<header>
+    <div class="header-inner">
+        <a href="index.html" class="logo" aria-label="Accueil">
+            <svg viewBox="0 0 200 80" fill="none">
+                <defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%"><stop offset="0%" style="stop-color:var(--c-accent-1)"/><stop offset="100%" style="stop-color:var(--c-accent-2)"/></linearGradient></defs>
+                <text x="50%" y="55%" text-anchor="middle" dominant-baseline="middle">Eliot</text>
+                <path d="M30,40 C30,20 60,-10 100,10 C150,30 170,20 170,40 C170,60 150,90 100,70 C50,50 30,60 30,40" stroke="url(#g1)" stroke-width="3" fill="none" stroke-linecap="round"/>
+            </svg>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="creations.html">Créations</a></li>
+                <li><a href="cv.html" class="active">Parcours</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <button id="theme-toggle" aria-label="Changer le thème">
+            <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg>
+            <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+    </div>
+</header>
 
-    <main class="page-cv">
-        <div class="container cv-layout">
-            
-            <aside class="cv-sidebar scroll-reveal">
-                <div class="cv-header">
-                    <h1>Eliot<br>SAURON</h1>
-                    <p class="cv-subtitle">Communication &<br>Design Visuel</p>
+<main class="cv-page">
+    <div class="container cv-layout">
+        <aside class="cv-side" data-animate>
+            <h1>Eliot<br>SAURON</h1>
+            <p class="subtitle">Communication &<br>Design Visuel</p>
+
+            <div class="cv-section">
+                <h3>Contact</h3>
+                <a href="mailto:eliotsauron25@gmail.com" style="display:block;color:var(--c-text-sec);transition:all .2s;margin-bottom:10px" onmouseover="this.style.color='var(--c-accent-2)';this.style.transform='translateX(6px)'" onmouseout="this.style.color='var(--c-text-sec)';this.style.transform=''">✉ eliotsauron25@gmail.com</a>
+                <a href="https://linkedin.com/in/eliot-sauron" target="_blank" style="display:block;color:var(--c-text-sec);transition:all .2s" onmouseover="this.style.color='var(--c-accent-2)';this.style.transform='translateX(6px)'" onmouseout="this.style.color='var(--c-text-sec)';this.style.transform=''">🔗 LinkedIn</a>
+            </div>
+
+            <div class="cv-section">
+                <h3>Profil</h3>
+                <p class="cv-bio">Je crée du sens à partir du vide. Passionné par l'image, l'interaction et la cohérence visuelle, je conçois des expériences qui résonnent. Actuellement en 2ème année de BUT Info-Com à Besançon.</p>
+            </div>
+
+            <div class="cv-section">
+                <h3>Infos Rapides</h3>
+                <div style="font-size:.9rem;color:var(--c-text-sec);line-height:1.8">
+                    <div><strong>Profil:</strong> Créatif</div>
+                    <div><strong>Sport:</strong> Escalade</div>
+                    <div><strong>Passions:</strong> Jeux vidéos, Poésie, Auto</div>
+                    <div><strong>Langues:</strong> Anglais C1, Italien B1</div>
                 </div>
+            </div>
 
-                <div class="cv-contact">
-                    <a href="mailto:eliotsauron25@gmail.com" class="cv-link">
-                        <span class="icon">✉</span> eliotsauron25@gmail.com
-                    </a>
-                    <a href="https://linkedin.com/in/eliot-sauron" target="_blank" class="cv-link">
-                        <span class="icon">in</span> LinkedIn
-                    </a>
+            <div class="cv-section">
+                <h3>Outils</h3>
+                <div class="chips">
+                    <span class="chip">Photoshop</span>
+                    <span class="chip">Illustrator</span>
+                    <span class="chip">Premiere Pro</span>
+                    <span class="chip">Figma</span>
+                    <span class="chip">HTML/CSS</span>
+                    <span class="chip">Canva</span>
                 </div>
+            </div>
 
-                <div class="cv-section">
-                    <h3>Profil</h3>
-                    <p class="cv-bio">
-                        Je ne remplis pas des cases, je construis du sens. Passionné par l'image et l'interaction, 
-                        je cherche à concevoir des expériences utilisateurs fluides et esthétiques. 
-                        Actuellement en 2ème année de BUT Info-Com à Besançon.
-                    </p>
-                </div>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:30px">
+                <a href="/cv-eliot-sauron.pdf" target="_blank" class="btn btn-primary" style="width:100%;text-align:center">Télécharger PDF</a>
+                <a href="index.html" class="btn btn-secondary" style="width:100%;text-align:center">Retour</a>
+            </div>
+        </aside>
 
-                <div class="cv-section">
-                    <h3>Infos Rapides</h3>
-                    <ul class="quick-list">
-                        <li><strong>Profil:</strong> Créatif</li>
-                        <li><strong>Sport:</strong> Escalade</li>
-                        <li><strong>Passions:</strong> Jeux vidéos</li>
-                        <li><strong>        </strong> Écriture de poésie</li>
-                        <li><strong>        </strong> Automobile</li>
-                        <li><strong>        </strong> Sports automobiles</li>
-                        <li><strong>        </strong> Sport</li>
-                        <li><strong>Langues:</strong> Anglais C1</li>
-                        <li><strong>        </strong> Italien B1</li>
-                    </ul>
-                </div>
-
-                <div class="cv-section">
-                    <h3>Outils</h3>
-                    <div class="skills-chips">
-                        <span class="chip">Photoshop</span>
-                        <span class="chip">Illustrator</span>
-                        <span class="chip">InDesign</span>
-                        <span class="chip">Premiere Pro</span>
-                        <span class="chip">Figma</span>
-                        <span class="chip">HTML/CSS</span>
-                        <span class="chip">Canva</span>
-                    </div>
-                </div>
-
-                <div class="cv-actions">
-                    <a href="/cv-eliot-sauron.pdf" target="_blank" class="btn btn-primary btn-full">Télécharger PDF</a>
-                    <a href="index.html" class="btn btn-secondary btn-full">Retour Accueil</a>
-                </div>
-            </aside>
-
-            <div class="cv-main-content">
-                
-                <section class="cv-block scroll-reveal delay-1">
-                    <h2 class="cv-block-title">Expériences</h2>
-                    
+        <div style="flex:1">
+            <section data-animate>
+                <h2 style="font:700 1.8rem var(--ff-head);margin-bottom:40px;border-left:3px solid var(--c-accent-2);padding-left:20px">Expériences</h2>
+                <div class="timeline">
                     <div class="timeline-item">
                         <div class="timeline-date">2023 - 2025</div>
-                        <div class="timeline-content">
-                            <h4>Vente & Gestion</h4>
-                            <span class="timeline-place">Boulangerie-Pâtisserie</span>
-                            <p>Autonomie, relation client, rigueur dans la gestion quotidienne, gestion du stresse.</p>
-                        </div>
+                        <div class="timeline-h">Vente & Gestion</div>
+                        <span class="timeline-place">Boulangerie-Pâtisserie</span>
+                        <p class="timeline-p">Autonomie, relation client, rigueur dans la gestion quotidienne. Gestion du stress en environnement commercial.</p>
                     </div>
-
                     <div class="timeline-item">
-                        <div class="timeline-date"> Avril- 2022 - Juin - 2022</div>
-                        <div class="timeline-content">
-                            <h4>Stages Communication</h4>
-                            <span class="timeline-place">Radio Campus Besançon</span>
-                            <p>Participation à la communication et à la création de contenus : visuels, réseaux sociaux, rédaction web et contribution à des projets éditoriaux et événementiels.</p>
-                        </div>
+                        <div class="timeline-date">Avril - Juin 2022</div>
+                        <div class="timeline-h">Communication</div>
+                        <span class="timeline-place">Radio Campus Besançon</span>
+                        <p class="timeline-p">Participation à la création de contenus : visuels, réseaux sociaux, rédaction web et contribution à des projets éditoriaux et événementiels.</p>
                     </div>
-                </section>
+                </div>
+            </section>
 
-                <section class="cv-block scroll-reveal delay-2">
-                    <h2 class="cv-block-title">Formation</h2>
-                    
+            <section data-animate style="margin-top:80px">
+                <h2 style="font:700 1.8rem var(--ff-head);margin-bottom:40px;border-left:3px solid var(--c-accent-2);padding-left:20px">Formation</h2>
+                <div class="timeline">
                     <div class="timeline-item">
                         <div class="timeline-date">2024 - 2026</div>
-                        <div class="timeline-content">
-                            <h4>B.U.T. Information-Communication</h4>
-                            <span class="timeline-place">IUT Besançon</span>
-                            <p>Parcours Communication des organisations.</p>
-                        </div>
+                        <div class="timeline-h">B.U.T. Information-Communication</div>
+                        <span class="timeline-place">IUT Besançon</span>
+                        <p class="timeline-p">Parcours Communication des organisations. Études approfondies en design, stratégie de communication et création digitale.</p>
                     </div>
-
                     <div class="timeline-item">
                         <div class="timeline-date">2024</div>
-                        <div class="timeline-content">
-                            <h4>Baccalauréat STMG</h4>
-                            <span class="timeline-place">Lycée Louis-Pergaud</span>
-                            <p>Option Mercatique. Mention Bien.</p>
-                        </div>
+                        <div class="timeline-h">Baccalauréat STMG</div>
+                        <span class="timeline-place">Lycée Louis-Pergaud</span>
+                        <p class="timeline-p">Option Mercatique. Mention Bien.</p>
                     </div>
-                </section>
-
-            </div>
+                </div>
+            </section>
         </div>
-    </main>
+    </div>
+</main>
 
-    <footer class="site-footer">
-        <div class="container footer-inner">
-            <div class="footer-col">
-                <span class="copyright">© 2025 Eliot SAURON</span>
-            </div>
-            <div class="footer-col links">
-                <a href="mentions-legales.html">Mentions Légales</a>
-                <a href="politique-confidentialite.html">Confidentialité</a>
-            </div>
+<footer>
+    <div class="container" style="display:flex;justify-content:space-between;align-items:center;width:100%">
+        <span>© 2025 Eliot SAURON</span>
+        <div style="display:flex;gap:30px">
+            <a href="mentions-legales.html">Mentions Légales</a>
+            <a href="politique-confidentialite.html">Confidentialité</a>
         </div>
-    </footer>
+    </div>
+</footer>
 
-    <script src="assets/js/main.js"></script>
+<script src="assets/js/main.js"></script>
 </body>
 </html>

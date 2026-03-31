@@ -1,362 +1,234 @@
+// ===== ELIOT SAURON PORTFOLIO - MODERN JS =====
+
+// === INITIALIZATION ===
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // --- 1. Scroll Progress Bar ---
-    window.addEventListener('scroll', () => {
-        const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const scrollPercent = (scrollTop / docHeight) * 100;
-        document.body.style.setProperty('--scroll', scrollPercent + '%');
-        document.body.style.width = scrollPercent + '%';
-    });
+    initTheme();
+    initHeader();
+    initPageTransition();
+    initScrollAnimations();
+    initSkillBars();
+    initCarousels();
+    initForm();
+    initVideoToggle();
+    initMagneticButtons();
+});
 
-    // --- 2. Header Scroll Effect ---
-    const header = document.querySelector('.site-header');
-    let lastScroll = 0;
+// === THEME MANAGEMENT ===
+function initTheme() {
+    const toggle = document.getElementById('theme-toggle');
+    const saved = localStorage.getItem('theme') || 'theme-dark';
+    document.body.className = saved;
+    if (toggle) {
+        toggle.addEventListener('click', () => {
+            const newTheme = document.body.classList.contains('theme-dark') ? 'theme-light' : 'theme-dark';
+            document.body.className = newTheme;
+            localStorage.setItem('theme', newTheme);
+        });
+    }
+}
 
+// === HEADER SCROLL EFFECT ===
+function initHeader() {
+    const header = document.querySelector('header');
+    let lastY = 0;
     window.addEventListener('scroll', () => {
-        const currentScroll = window.scrollY;
-        if (currentScroll > 100) {
+        const y = window.scrollY;
+        if (y > 50) {
             header.classList.add('scrolled');
         } else {
             header.classList.remove('scrolled');
         }
-        lastScroll = currentScroll;
-    });
+        lastY = y;
+    }, { passive: true });
+}
 
-    // --- 3. Page Transition ---
-    document.body.classList.add('page-transition');
-    
-    document.querySelectorAll('a:not([target="_blank"]):not([href^="#"]):not([href*="formspree"])').forEach(link => {
+// === PAGE TRANSITIONS ===
+function initPageTransition() {
+    document.querySelectorAll('a:not([target]):not([href^="#"]):not([href*="mailto"]):not([href*="tel"])').forEach(link => {
         link.addEventListener('click', (e) => {
             const href = link.getAttribute('href');
-            if (!href.startsWith('http') && href !== '#') {
+            if (href && !href.startsWith('http') && !href.startsWith('javascript')) {
                 e.preventDefault();
                 document.body.style.opacity = '0';
-                setTimeout(() => {
-                    window.location.href = href;
-                }, 300);
+                setTimeout(() => window.location.href = href, 250);
             }
         });
     });
+}
 
-    // --- 4. Theme Toggle ---
-    const themeToggle = document.getElementById('theme-toggle');
-    const body = document.body;
-    const savedTheme = localStorage.getItem('theme') || 'theme-dark';
-
-    body.className = savedTheme;
-
-    if(themeToggle) {
-        themeToggle.addEventListener('click', () => {
-            if (body.classList.contains('theme-dark')) {
-                body.classList.replace('theme-dark', 'theme-light');
-                localStorage.setItem('theme', 'theme-light');
-            } else {
-                body.classList.replace('theme-light', 'theme-dark');
-                localStorage.setItem('theme', 'theme-dark');
-            }
-        });
-    }
-
-    // --- 5. Smooth Scroll Reveal avec Stagger ---
-    const observerOptions = {
-        threshold: 0.15,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
+// === SCROLL ANIMATIONS ===
+function initScrollAnimations() {
     const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
+        entries.forEach((entry, idx) => {
             if (entry.isIntersecting) {
                 setTimeout(() => {
-                    entry.target.classList.add('visible');
-                }, index * 100);
+                    entry.target.classList.add('fade-in');
+                }, idx * 80);
                 observer.unobserve(entry.target);
             }
         });
-    }, observerOptions);
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+    document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+}
 
-    // --- 6. Animated Progress Bars ---
-    const fillBars = document.querySelectorAll('.fill');
-    const progressObserver = new IntersectionObserver((entries) => {
+// === SKILL BARS ANIMATION ===
+function initSkillBars() {
+    const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
-                const width = entry.target.parentElement.parentElement.parentElement.textContent.match(/\d+/)?.[0] || '80';
-                entry.target.style.setProperty('--fill-width', width + '%');
-                entry.target.classList.add('animated');
-                progressObserver.unobserve(entry.target);
+            if (entry.isIntersecting) {
+                const bars = entry.target.querySelectorAll('.progress-bar');
+                bars.forEach(bar => {
+                    const fill = bar.parentElement.parentElement.querySelector('.skill-head span:last-child').textContent;
+                    const percent = parseInt(fill);
+                    bar.style.setProperty('--fill', percent + '%');
+                    bar.classList.add('animate');
+                });
+                observer.unobserve(entry.target);
             }
         });
     }, { threshold: 0.5 });
 
-    fillBars.forEach(bar => progressObserver.observe(bar));
+    const skillsContainer = document.querySelector('.skills');
+    if (skillsContainer) observer.observe(skillsContainer);
+}
 
-    // --- 7. Video Mute/Unmute Logic ---
+// === VIDEO TOGGLE ===
+function initVideoToggle() {
     const video = document.getElementById('hero-video');
-    const videoBtn = document.getElementById('video-toggle');
-    
-    if (video && videoBtn) {
-        video.play().catch(() => {});
-        video.style.cursor = "pointer"; 
+    const btn = document.querySelector('.video-btn');
+    if (!video || !btn) return;
 
-        const toggleSound = (e) => {
-            if(e) e.preventDefault();
-            if (video.muted) {
-                video.muted = false;
-                videoBtn.innerHTML = '<span class="icon-state">🔊</span><span class="text-state">Son activé — cliquer pour couper</span>';
-            } else {
-                video.muted = true;
-                videoBtn.innerHTML = '<span class="icon-state">🔇</span><span class="text-state">Vidéo muette — cliquer pour activer</span>';
-            }
-        };
+    const toggle = (e) => {
+        e?.preventDefault();
+        video.muted = !video.muted;
+        btn.textContent = video.muted ? '🔇 Vidéo muette' : '🔊 Son actif';
+    };
 
-        videoBtn.addEventListener('click', toggleSound);
-        video.addEventListener('click', toggleSound);
-    }
+    btn.addEventListener('click', toggle);
+    video.addEventListener('click', toggle);
+    video.play().catch(() => {});
+}
 
-    // --- 8. Projects Filtering avec Stagger Animation ---
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const projects = document.querySelectorAll('.project-card');
-
-    if (filterBtns.length > 0) {
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-
-                const filter = btn.getAttribute('data-filter');
-                let visibleIndex = 0;
-
-                projects.forEach((project) => {
-                    const category = project.getAttribute('data-category');
-                    const shouldShow = filter === 'all' || category === filter;
-                    
-                    if (shouldShow) {
-                        project.style.display = 'block';
-                        setTimeout(() => {
-                            project.style.opacity = '1';
-                            project.style.transform = 'translateY(0)';
-                        }, visibleIndex * 80);
-                        visibleIndex++;
-                    } else {
-                        project.style.opacity = '0';
-                        project.style.transform = 'translateY(20px)';
-                        setTimeout(() => {
-                            project.style.display = 'none';
-                        }, 200);
-                    }
-                });
-            });
+// === CAROUSELS ===
+function initCarousels() {
+    document.querySelectorAll('.creation-grid').forEach(grid => {
+        grid.addEventListener('click', () => {
+            window.location.href = 'creations.html';
         });
-    }
+    });
 
-    // --- 9. Carousel & Lightbox ---
+    // Carousel logic for creations page
     document.querySelectorAll('.carousel-wrapper').forEach(wrapper => {
         const slides = wrapper.querySelector('.carousel-slides');
-        const images = slides.querySelectorAll('img');
-        const prevBtn = wrapper.querySelector('.prev');
-        const nextBtn = wrapper.querySelector('.next');
+        const imgs = wrapper.querySelectorAll('img');
+        const prevBtn = wrapper.querySelector('.carousel-nav.prev');
+        const nextBtn = wrapper.querySelector('.carousel-nav.next');
         const indicators = wrapper.querySelector('.carousel-indicators');
-        
-        let currentIndex = 0;
 
-        if (images.length <= 1) {
-            if(prevBtn) prevBtn.style.display = 'none';
-            if(nextBtn) nextBtn.style.display = 'none';
-        } else {
-            images.forEach((_, i) => {
-                const dot = document.createElement('span');
-                dot.style.cssText = `
-                    width: 7px; 
-                    height: 7px; 
-                    background: rgba(255,255,255,0.4); 
-                    border-radius: 50%; 
-                    display: inline-block; 
-                    margin: 0 4px;
-                    transition: all 0.3s ease;
-                    cursor: pointer;
-                `;
-                if(i === 0) {
+        if (imgs.length <= 1) return;
+
+        let current = 0;
+
+        // Create indicators
+        imgs.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.style.cssText = 'width:7px;height:7px;bg:rgba(255,255,255,.4);border-radius:50%;cursor:pointer;transition:all .2s';
+            if (i === 0) {
+                dot.style.background = 'rgba(255,255,255,1)';
+                dot.style.width = '10px';
+            }
+            dot.addEventListener('click', () => goToSlide(i));
+            indicators?.appendChild(dot);
+        });
+
+        const goToSlide = (n) => {
+            current = n;
+            slides.style.transform = `translateX(-${current * 100}%)`;
+            updateIndicators();
+        };
+
+        const updateIndicators = () => {
+            indicators?.querySelectorAll('div').forEach((dot, i) => {
+                if (i === current) {
                     dot.style.background = 'rgba(255,255,255,1)';
                     dot.style.width = '10px';
+                } else {
+                    dot.style.background = 'rgba(255,255,255,.4)';
+                    dot.style.width = '7px';
                 }
-                dot.addEventListener('click', () => {
-                    currentIndex = i;
-                    updateCarousel();
-                });
-                indicators.appendChild(dot);
             });
-        }
-
-        const updateCarousel = () => {
-            slides.style.transform = `translateX(-${currentIndex * 100}%)`;
-            if (indicators.children.length > 0) {
-                Array.from(indicators.children).forEach((dot, i) => {
-                    if (i === currentIndex) {
-                        dot.style.background = 'rgba(255,255,255,1)';
-                        dot.style.width = '10px';
-                    } else {
-                        dot.style.background = 'rgba(255,255,255,0.4)';
-                        dot.style.width = '7px';
-                    }
-                });
-            }
         };
 
-        if(prevBtn) {
+        if (prevBtn) {
             prevBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                currentIndex = (currentIndex === 0) ? images.length - 1 : currentIndex - 1;
-                updateCarousel();
+                goToSlide((current - 1 + imgs.length) % imgs.length);
             });
         }
-
-        if(nextBtn) {
+        if (nextBtn) {
             nextBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                currentIndex = (currentIndex === images.length - 1) ? 0 : currentIndex + 1;
-                updateCarousel();
+                goToSlide((current + 1) % imgs.length);
             });
         }
     });
+}
 
-    // Lightbox
-    const lightbox = document.getElementById('lightbox');
-    const lbImg = document.getElementById('lightbox-img');
-    const lbPrev = document.getElementById('lightbox-prev');
-    const lbNext = document.getElementById('lightbox-next');
-    const lbClose = document.getElementById('lightbox-close');
+// === FORM HANDLING ===
+function initForm() {
+    const form = document.getElementById('contact-form');
+    if (!form) return;
 
-    if (lightbox) {
-        let currentGroup = [];
-        let currentGroupIndex = 0;
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = form.querySelector('button');
+        const status = document.getElementById('form-status');
+        const originalText = btn.textContent;
 
-        document.querySelectorAll('.lightbox-trigger').forEach(img => {
-            img.addEventListener('click', () => {
-                const groupName = img.getAttribute('data-group');
-                currentGroup = Array.from(document.querySelectorAll(`.lightbox-trigger[data-group="${groupName}"]`));
-                currentGroupIndex = currentGroup.indexOf(img);
-                
-                updateLightboxImage();
-                lightbox.classList.add('active');
-                lightbox.setAttribute('aria-hidden', 'false');
-                document.body.style.overflow = 'hidden';
+        btn.textContent = 'Envoi...';
+        btn.disabled = true;
+
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: { 'Accept': 'application/json' }
             });
-        });
 
-        const updateLightboxImage = () => {
-            const sourceImg = currentGroup[currentGroupIndex];
-            lbImg.src = sourceImg.src;
-            lbImg.alt = sourceImg.alt;
-        };
-
-        const closeLightbox = () => {
-            lightbox.classList.remove('active');
-            lightbox.setAttribute('aria-hidden', 'true');
-            document.body.style.overflow = '';
-        };
-
-        const nextImage = (e) => {
-            if(e) e.stopPropagation();
-            currentGroupIndex = (currentGroupIndex === currentGroup.length - 1) ? 0 : currentGroupIndex + 1;
-            updateLightboxImage();
-        };
-
-        const prevImage = (e) => {
-            if(e) e.stopPropagation();
-            currentGroupIndex = (currentGroupIndex === 0) ? currentGroup.length - 1 : currentGroupIndex - 1;
-            updateLightboxImage();
-        };
-
-        lbClose.addEventListener('click', closeLightbox);
-        lbNext.addEventListener('click', nextImage);
-        lbPrev.addEventListener('click', prevImage);
-        
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) closeLightbox();
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (!lightbox.classList.contains('active')) return;
-            if (e.key === 'Escape') closeLightbox();
-            if (e.key === 'ArrowRight') nextImage();
-            if (e.key === 'ArrowLeft') prevImage();
-        });
-    }
-
-    // --- 10. Form Handling ---
-    const contactForm = document.getElementById('contact-form');
-    const formStatus = document.getElementById('form-status');
-
-    if (contactForm) {
-        contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = contactForm.querySelector('button');
-            const originalBtnText = btn.innerText;
-            
-            btn.innerText = 'Envoi...';
-            btn.disabled = true;
-
-            const formData = new FormData(contactForm);
-            
-            try {
-                const response = await fetch(contactForm.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
-                });
-
-                if (response.ok) {
-                    contactForm.reset();
-                    formStatus.style.color = 'var(--accent-blue)';
-                    formStatus.innerHTML = 'Message envoyé avec succès ! Merci.';
-                    btn.innerText = 'Envoyé ✓';
-                    setTimeout(() => {
-                        btn.innerText = originalBtnText;
-                        btn.disabled = false;
-                        formStatus.innerHTML = '';
-                    }, 3000);
-                } else {
-                    throw new Error('Erreur Formspree');
-                }
-            } catch (error) {
-                formStatus.style.color = 'var(--accent-peach)';
-                formStatus.innerHTML = 'Une erreur est survenue. Réessayez.';
-                btn.innerText = originalBtnText;
-                btn.disabled = false;
+            if (response.ok) {
+                form.reset();
+                btn.textContent = 'Envoyé ✓';
+                status.textContent = 'Message reçu ! Merci.';
+                status.style.color = 'var(--c-accent-2)';
                 setTimeout(() => {
-                    formStatus.innerHTML = '';
-                }, 4000);
-            }
-        });
-    }
-
-    // --- 11. Smooth scroll for hash links ---
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            const href = this.getAttribute('href');
-            if (href === '#' || href === '#!') return;
-            
-            const target = document.querySelector(href);
-            if (target) {
-                e.preventDefault();
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        });
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                    status.textContent = '';
+                }, 3000);
+            } else throw new Error();
+        } catch {
+            btn.textContent = originalText;
+            btn.disabled = false;
+            status.textContent = 'Erreur. Réessayez.';
+            status.style.color = 'var(--c-accent-1)';
+            setTimeout(() => status.textContent = '', 4000);
+        }
     });
+}
 
-    // --- 12. Magnetic Button Effect (Optional hover follow) ---
+// === MAGNETIC BUTTONS ===
+function initMagneticButtons() {
     document.querySelectorAll('.btn').forEach(btn => {
         btn.addEventListener('mousemove', (e) => {
             const rect = btn.getBoundingClientRect();
             const x = e.clientX - rect.left - rect.width / 2;
             const y = e.clientY - rect.top - rect.height / 2;
-            const distance = Math.sqrt(x * x + y * y);
-            
-            if (distance < 100) {
+            const dist = Math.sqrt(x * x + y * y);
+
+            if (dist < 80) {
                 const angle = Math.atan2(y, x);
-                const pull = (100 - distance) * 0.05;
+                const pull = (80 - dist) * 0.08;
                 btn.style.transform = `translate(${Math.cos(angle) * pull}px, ${Math.sin(angle) * pull}px)`;
             }
         });
@@ -365,11 +237,17 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.style.transform = '';
         });
     });
+}
 
-    // --- 13. Creations Preview Click Navigation ---
-    document.querySelectorAll('.preview-card').forEach(card => {
-        card.addEventListener('click', () => {
-            window.location.href = 'creations.html';
-        });
+// === SMOOTH SCROLL FOR HASH LINKS ===
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', (e) => {
+        const href = anchor.getAttribute('href');
+        if (href === '#' || href === '#!') return;
+        const target = document.querySelector(href);
+        if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     });
 });
