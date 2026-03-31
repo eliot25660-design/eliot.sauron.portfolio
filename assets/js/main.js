@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initVideoToggle();
     initMagneticButtons();
     initFilters();
+    initCursorFollow();
+    initParallax();
 });
 
 // === THEME ===
@@ -57,11 +59,11 @@ function initScrollAnimations() {
             if (entry.isIntersecting) {
                 setTimeout(() => {
                     entry.target.classList.add('fade-in');
-                }, idx * 80);
+                }, idx * 100);
                 observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
 
     document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
 }
@@ -78,7 +80,7 @@ function initSkillBars() {
                     bar.style.setProperty('--fill', percent + '%');
                     setTimeout(() => {
                         bar.classList.add('animate');
-                    }, idx * 200);
+                    }, idx * 150);
                 });
                 observer.unobserve(entry.target);
             }
@@ -170,11 +172,15 @@ function initMagneticButtons() {
     });
 }
 
-// === FILTERS ===
+// === FILTERS - VRAIMENT FIXÉ ===
 function initFilters() {
-    document.querySelectorAll('.filter-btn').forEach(btn => {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.creation-card');
+
+    filterButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-            document.querySelectorAll('.filter-btn').forEach(b => {
+            // Mettre à jour style des boutons
+            filterButtons.forEach(b => {
                 b.style.background = 'transparent';
                 b.style.color = 'var(--c-text-sec)';
                 b.style.borderColor = 'var(--c-border)';
@@ -184,14 +190,89 @@ function initFilters() {
             btn.style.color = 'var(--c-bg)';
             btn.style.borderColor = 'transparent';
 
-            const filter = btn.dataset.filter;
-            document.querySelectorAll('.creation-card').forEach(card => {
-                const match = filter === 'all' || card.dataset.category === filter;
-                card.style.opacity = match ? '1' : '.3';
-                card.style.pointerEvents = match ? 'auto' : 'none';
+            // Filtrer les cartes
+            const filter = btn.getAttribute('data-filter');
+            cards.forEach((card, idx) => {
+                const category = card.getAttribute('data-category');
+                const shouldShow = filter === 'all' || category === filter;
+                
+                if (shouldShow) {
+                    card.style.display = 'block';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.pointerEvents = 'auto';
+                    }, idx * 50);
+                } else {
+                    card.style.opacity = '0';
+                    card.style.pointerEvents = 'none';
+                }
             });
         });
     });
+}
+
+// === CURSOR FOLLOW - INNOVATION ===
+function initCursorFollow() {
+    const createCursor = document.createElement('div');
+    createCursor.id = 'cursor-follow';
+    createCursor.style.cssText = `
+        position: fixed;
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--c-accent-2);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 10000;
+        opacity: 0.6;
+        mix-blend-mode: screen;
+        transform: translate(-50%, -50%);
+        transition: opacity 0.2s;
+    `;
+    document.body.appendChild(createCursor);
+
+    let mouseX = 0, mouseY = 0;
+    let cursorX = 0, cursorY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    function animate() {
+        cursorX += (mouseX - cursorX) * 0.15;
+        cursorY += (mouseY - cursorY) * 0.15;
+
+        createCursor.style.left = cursorX + 'px';
+        createCursor.style.top = cursorY + 'px';
+
+        requestAnimationFrame(animate);
+    }
+    animate();
+
+    // Masquer au mouseleave
+    document.addEventListener('mouseleave', () => {
+        createCursor.style.opacity = '0';
+    });
+    document.addEventListener('mouseenter', () => {
+        createCursor.style.opacity = '0.6';
+    });
+}
+
+// === PARALLAX - INNOVATION ===
+function initParallax() {
+    const parallaxElements = document.querySelectorAll('[data-animate]');
+    
+    window.addEventListener('scroll', () => {
+        parallaxElements.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            const scrollY = window.scrollY;
+            const distance = (rect.top + scrollY) * 0.02;
+            
+            if (rect.top < window.innerHeight) {
+                el.style.transform = `translateY(${distance}px)`;
+            }
+        });
+    }, { passive: true });
 }
 
 // === SMOOTH SCROLL HASH LINKS ===

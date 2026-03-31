@@ -42,14 +42,14 @@
         <h1 data-animate style="font:800 clamp(2.5rem,8vw,4rem)/1.1 var(--ff-head);margin-bottom:20px">Mes <span style="background:linear-gradient(135deg,var(--c-accent-1),var(--c-accent-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Projets</span></h1>
         <p data-animate style="color:var(--c-text-sec);font-size:1.1rem;margin-bottom:60px">Sélection de travaux en design, vidéo et photographie.</p>
 
-        <div style="display:flex;gap:12px;margin-bottom:60px;flex-wrap:wrap" data-animate>
+        <div style="display:flex;gap:12px;margin-bottom:60px;flex-wrap:wrap" data-animate id="filter-buttons">
             <button class="filter-btn active" data-filter="all" style="padding:10px 24px;border:1.5px solid var(--c-border);border-radius:50px;background:transparent;color:var(--c-text-sec);font-weight:600;transition:all .2s;cursor:pointer">Tout</button>
             <button class="filter-btn" data-filter="design" style="padding:10px 24px;border:1.5px solid var(--c-border);border-radius:50px;background:transparent;color:var(--c-text-sec);font-weight:600;transition:all .2s;cursor:pointer">Design</button>
             <button class="filter-btn" data-filter="media" style="padding:10px 24px;border:1.5px solid var(--c-border);border-radius:50px;background:transparent;color:var(--c-text-sec);font-weight:600;transition:all .2s;cursor:pointer">Vidéo</button>
             <button class="filter-btn" data-filter="photo" style="padding:10px 24px;border:1.5px solid var(--c-border);border-radius:50px;background:transparent;color:var(--c-text-sec);font-weight:600;transition:all .2s;cursor:pointer">Photo</button>
         </div>
 
-        <div class="creation-grid">
+        <div class="creation-grid" id="creation-grid">
             <article class="creation-card" data-category="design" data-animate>
                 <div class="creation-img"><img src="img/ajna-cover.jpg" alt="AJNA" loading="lazy"></div>
                 <div class="creation-content">
@@ -136,22 +136,5 @@
 </footer>
 
 <script src="assets/js/main.js"></script>
-<script>
-document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        document.querySelectorAll('.filter-btn').forEach(b => b.style.background = 'transparent');
-        btn.style.background = 'linear-gradient(135deg,var(--c-accent-1),var(--c-accent-2))';
-        btn.style.color = 'var(--c-bg)';
-        btn.style.borderColor = 'transparent';
-
-        const filter = btn.dataset.filter;
-        document.querySelectorAll('.creation-card').forEach(card => {
-            const match = filter === 'all' || card.dataset.category === filter;
-            card.style.opacity = match ? '1' : '.3';
-            card.style.pointerEvents = match ? 'auto' : 'none';
-        });
-    });
-});
-</script>
 </body>
 </html>
