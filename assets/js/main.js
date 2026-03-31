@@ -190,21 +190,16 @@ function initFilters() {
             btn.style.color = 'var(--c-bg)';
             btn.style.borderColor = 'transparent';
 
-            // Filtrer les cartes
+            // Filtrer les cartes - UTILISER .hidden au lieu de opacity
             const filter = btn.getAttribute('data-filter');
-            cards.forEach((card, idx) => {
+            cards.forEach((card) => {
                 const category = card.getAttribute('data-category');
                 const shouldShow = filter === 'all' || category === filter;
                 
                 if (shouldShow) {
-                    card.style.display = 'block';
-                    setTimeout(() => {
-                        card.style.opacity = '1';
-                        card.style.pointerEvents = 'auto';
-                    }, idx * 50);
+                    card.classList.remove('hidden');
                 } else {
-                    card.style.opacity = '0';
-                    card.style.pointerEvents = 'none';
+                    card.classList.add('hidden');
                 }
             });
         });
