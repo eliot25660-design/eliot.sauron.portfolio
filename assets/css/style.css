@@ -228,15 +228,27 @@ body.theme-light .header-inner {
     font-size: 0.95rem;
     font-weight: 600;
     color: var(--text-secondary);
+    position: relative;
+    transition: var(--transition-fast);
 }
 
 .main-nav a:hover, .main-nav a.active {
-    color: var(--text-primary);
+    background: var(--gradient-main);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
 }
 
 .main-nav .btn-nav {
     color: var(--text-primary);
     font-weight: 700;
+}
+
+.main-nav .btn-nav:hover {
+    background: none;
+    -webkit-text-fill-color: unset;
+    color: var(--text-primary);
 }
 
 /* Theme Toggle */
