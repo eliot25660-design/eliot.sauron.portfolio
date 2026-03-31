@@ -1,6 +1,45 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- 1. Theme Toggle ---
+    // --- 1. Scroll Progress Bar ---
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+        document.body.style.setProperty('--scroll', scrollPercent + '%');
+        document.body.style.width = scrollPercent + '%';
+    });
+
+    // --- 2. Header Scroll Effect ---
+    const header = document.querySelector('.site-header');
+    let lastScroll = 0;
+
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.scrollY;
+        if (currentScroll > 100) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+        lastScroll = currentScroll;
+    });
+
+    // --- 3. Page Transition ---
+    document.body.classList.add('page-transition');
+    
+    document.querySelectorAll('a:not([target="_blank"]):not([href^="#"]):not([href*="formspree"])').forEach(link => {
+        link.addEventListener('click', (e) => {
+            const href = link.getAttribute('href');
+            if (!href.startsWith('http') && href !== '#') {
+                e.preventDefault();
+                document.body.style.opacity = '0';
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 300);
+            }
+        });
+    });
+
+    // --- 4. Theme Toggle ---
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
     const savedTheme = localStorage.getItem('theme') || 'theme-dark';
@@ -19,16 +58,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 2. Scroll Reveal Animation (Improved) ---
+    // --- 5. Smooth Scroll Reveal avec Stagger ---
     const observerOptions = {
         threshold: 0.15,
         rootMargin: '0px 0px -50px 0px'
     };
 
     const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
+        entries.forEach((entry, index) => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
+                setTimeout(() => {
+                    entry.target.classList.add('visible');
+                }, index * 100);
                 observer.unobserve(entry.target);
             }
         });
@@ -36,7 +77,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
 
-    // --- 3. Video Mute/Unmute Logic ---
+    // --- 6. Animated Progress Bars ---
+    const fillBars = document.querySelectorAll('.fill');
+    const progressObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
+                const width = entry.target.parentElement.parentElement.parentElement.textContent.match(/\d+/)?.[0] || '80';
+                entry.target.style.setProperty('--fill-width', width + '%');
+                entry.target.classList.add('animated');
+                progressObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    fillBars.forEach(bar => progressObserver.observe(bar));
+
+    // --- 7. Video Mute/Unmute Logic ---
     const video = document.getElementById('hero-video');
     const videoBtn = document.getElementById('video-toggle');
     
@@ -59,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
         video.addEventListener('click', toggleSound);
     }
 
-    // --- 4. Projects Filtering (Improved) ---
+    // --- 8. Projects Filtering avec Stagger Animation ---
     const filterBtns = document.querySelectorAll('.filter-btn');
     const projects = document.querySelectorAll('.project-card');
 
@@ -70,20 +126,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.classList.add('active');
 
                 const filter = btn.getAttribute('data-filter');
-                let visibleCount = 0;
+                let visibleIndex = 0;
 
-                projects.forEach((project, index) => {
+                projects.forEach((project) => {
                     const category = project.getAttribute('data-category');
                     const shouldShow = filter === 'all' || category === filter;
                     
                     if (shouldShow) {
                         project.style.display = 'block';
                         setTimeout(() => {
-                            project.classList.add('visible');
-                        }, index * 50);
-                        visibleCount++;
+                            project.style.opacity = '1';
+                            project.style.transform = 'translateY(0)';
+                        }, visibleIndex * 80);
+                        visibleIndex++;
                     } else {
-                        project.classList.remove('visible');
+                        project.style.opacity = '0';
+                        project.style.transform = 'translateY(20px)';
                         setTimeout(() => {
                             project.style.display = 'none';
                         }, 200);
@@ -93,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 5. Carousel & Lightbox Logic (Enhanced) ---
+    // --- 9. Carousel & Lightbox ---
     document.querySelectorAll('.carousel-wrapper').forEach(wrapper => {
         const slides = wrapper.querySelector('.carousel-slides');
         const images = slides.querySelectorAll('img');
@@ -163,7 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Lightbox Global (Enhanced)
+    // Lightbox
     const lightbox = document.getElementById('lightbox');
     const lbImg = document.getElementById('lightbox-img');
     const lbPrev = document.getElementById('lightbox-prev');
@@ -227,7 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 6. Form Handling (Enhanced) ---
+    // --- 10. Form Handling ---
     const contactForm = document.getElementById('contact-form');
     const formStatus = document.getElementById('form-status');
 
@@ -274,7 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 7. Smooth scroll for hash links ---
+    // --- 11. Smooth scroll for hash links ---
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const href = this.getAttribute('href');
@@ -288,18 +346,30 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- 8. Animated counters for skills (Optional, but nice touch) ---
-    const fillBars = document.querySelectorAll('.fill');
-    if (fillBars.length > 0) {
-        const observerSkills = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
-                    entry.target.classList.add('animated');
-                    observerSkills.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.5 });
+    // --- 12. Magnetic Button Effect (Optional hover follow) ---
+    document.querySelectorAll('.btn').forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            const distance = Math.sqrt(x * x + y * y);
+            
+            if (distance < 100) {
+                const angle = Math.atan2(y, x);
+                const pull = (100 - distance) * 0.05;
+                btn.style.transform = `translate(${Math.cos(angle) * pull}px, ${Math.sin(angle) * pull}px)`;
+            }
+        });
 
-        fillBars.forEach(bar => observerSkills.observe(bar));
-    }
+        btn.addEventListener('mouseleave', () => {
+            btn.style.transform = '';
+        });
+    });
+
+    // --- 13. Creations Preview Click Navigation ---
+    document.querySelectorAll('.preview-card').forEach(card => {
+        card.addEventListener('click', () => {
+            window.location.href = 'creations.html';
+        });
+    });
 });

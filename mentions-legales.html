@@ -4,67 +4,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mentions Légales — Eliot SAURON</title>
+    <meta name="description" content="Mentions légales du portfolio d'Eliot Sauron.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
-<body class="theme-dark">
+<body class="theme-dark page-transition">
     <div class="noise-overlay"></div>
-    
+
     <header class="site-header">
         <div class="header-inner">
-             <a href="index.html" class="logo" aria-label="Retour à l'accueil">
+            <a href="index.html" class="logo" aria-label="Retour à l'accueil">
                 <svg class="logo-svg" viewBox="0 0 200 80" fill="none">
                     <defs>
-                        <linearGradient id="cloud-gradient-m" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <linearGradient id="cloud-gradient-legal" x1="0%" y1="0%" x2="100%" y2="0%">
                             <stop offset="0%" style="stop-color:var(--accent-peach);stop-opacity:1" />
                             <stop offset="100%" style="stop-color:var(--accent-blue);stop-opacity:1" />
                         </linearGradient>
                     </defs>
                     <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" class="logo-text-elem">Eliot</text>
-                    <path class="cloud-path" d="M30,40 C30,20 60,-10 100,10 C150,30 170,20 170,40 C170,60 150,90 100,70 C50,50 30,60 30,40" stroke="url(#cloud-gradient-m)" stroke-width="3" fill="none" stroke-linecap="round" />
+                    <path class="cloud-path" d="M30,40 C30,20 60,-10 100,10 C150,30 170,20 170,40 C170,60 150,90 100,70 C50,50 30,60 30,40" stroke="url(#cloud-gradient-legal)" stroke-width="3" fill="none" stroke-linecap="round" />
                 </svg>
             </a>
-            <a href="index.html" class="btn-nav">Retour</a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="creations.html">Créations</a></li>
+                    <li><a href="cv.html">Parcours</a></li>
+                    <li><a href="index.html#contact" class="btn-nav">Contact</a></li>
+                </ul>
+                <button id="theme-toggle" aria-label="Changer le thème">
+                    <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+            </nav>
         </div>
     </header>
 
     <main class="page-legal">
-        <div class="container legal-content">
+        <div class="container legal-content scroll-reveal">
             <h1>Mentions Légales</h1>
             
-            <section>
-                <h2>1. Éditeur du site</h2>
-                <p>
-                    Le site est édité par <strong>Eliot SAURON</strong>.<br>
-                    Domicilié à : 25660 Saône, France.<br>
-                    Email : <a href="mailto:eliotsauron25@gmail.com">eliotsauron25@gmail.com</a>
-                </p>
-            </section>
+            <h2>1. Identité du propriétaire du site</h2>
+            <p>
+                Eliot SAURON<br>
+                Saône (25660)<br>
+                Email : eliotsauron25@gmail.com<br>
+                Portfolio : https://eliot-sauron-portfolio.vercel.app
+            </p>
 
-            <section>
-                <h2>2. Hébergement</h2>
-                <p>
-                    Ce site est hébergé par <strong>Vercel Inc.</strong><br>
-                    Adresse : 340 S Lemon Ave #4133 Walnut, CA 91789, USA.<br>
-                    Site web : https://vercel.com
-                </p>
-            </section>
+            <h2>2. Statut et responsabilité</h2>
+            <p>
+                Ce site est un portfolio personnel. Il est fourni à titre informatif et à titre personnel. Eliot SAURON ne peut être tenu responsable des erreurs, omissions ou défaillances du contenu du site, ni de tout dommage ou perte qui en découlerait.
+            </p>
 
-            <section>
-                <h2>3. Propriété intellectuelle</h2>
-                <p>
-                    L'ensemble des visuels, textes, créations graphiques et vidéos présents sur ce site sont la propriété exclusive d'Eliot SAURON, sauf mention contraire. 
-                    Toute reproduction, distribution, modification, adaptation, retransmission ou publication, même partielle, de ces différents éléments est strictement interdite sans l'accord exprès par écrit d'Eliot SAURON.
-                </p>
-            </section>
+            <h2>3. Propriété intellectuelle</h2>
+            <p>
+                Tous les contenus présents sur ce site (textes, images, graphismes, logos, vidéos, etc.) sont la propriété exclusive d'Eliot SAURON ou sont utilisés avec autorisation. Toute reproduction, adaptation ou exploitation de ces contenus, en tout ou en partie, sans accord préalable, est strictement interdite.
+            </p>
 
-            <section>
-                <h2>4. Crédits</h2>
-                <p>© 2025 Eliot SAURON. Tous droits réservés.</p>
-            </section>
+            <h2>4. Hébergement</h2>
+            <p>
+                Ce site est hébergé par Vercel Inc.<br>
+                Adresse : 340 S. Lemon Ave #4133, Walnut, CA 91789, USA
+            </p>
+
+            <h2>5. Données personnelles et RGPD</h2>
+            <p>
+                Les données personnelles collectées via le formulaire de contact sont traitées conformément au Règlement Général sur la Protection des Données (RGPD). Elles ne seront utilisées que pour répondre à votre demande et ne seront pas transmises à des tiers. Vous disposez d'un droit d'accès, de rectification et de suppression de vos données.
+            </p>
+
+            <h2>6. Liens externes</h2>
+            <p>
+                Ce site peut contenir des liens vers des sites externes. Eliot SAURON n'est pas responsable du contenu de ces sites tiers. La consultation de ces sites se fait aux risques et périls de l'utilisateur.
+            </p>
+
+            <h2>7. Limitation de responsabilité</h2>
+            <p>
+                Le site est fourni « en l'état » sans garantie d'aucune sorte. Eliot SAURON ne peut être tenu responsable de tout dommage indirect, accidentel ou consécutif résultant de l'utilisation du site.
+            </p>
+
+            <h2>8. Mise à jour des mentions légales</h2>
+            <p>
+                Ces mentions légales peuvent être mises à jour à tout moment sans préavis. Nous vous recommandons de les consulter régulièrement.
+            </p>
+
+            <div style="margin-top: 60px; text-align: center;">
+                <a href="index.html" class="btn btn-secondary">Retour à l'accueil</a>
+            </div>
         </div>
     </main>
 
@@ -73,8 +102,13 @@
             <div class="footer-col">
                 <span class="copyright">© 2025 Eliot SAURON</span>
             </div>
+            <div class="footer-col links">
+                <a href="mentions-legales.html">Mentions Légales</a>
+                <a href="politique-confidentialite.html">Confidentialité</a>
+            </div>
         </div>
     </footer>
+
     <script src="assets/js/main.js"></script>
 </body>
 </html>
