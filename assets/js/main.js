@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initVideoToggle();
     initMagneticButtons();
     initFilters();
-    initCarouselArrows();
+    initLightbox();
     initCursorFollow();
 });
 
@@ -196,54 +196,232 @@ function initFilters() {
                 
                 if (shouldShow) {
                     card.classList.remove('hidden');
+                    card.style.display = 'block';
                 } else {
                     card.classList.add('hidden');
+                    card.style.display = 'none';
                 }
             });
         });
     });
 }
 
-// === CAROUSEL ARROWS ===
-function initCarouselArrows() {
-    const grid = document.getElementById('creation-grid');
-    if (!grid) return;
-
-    const container = grid.parentElement;
+// === LIGHTBOX / MODAL ===
+function initLightbox() {
+    const cards = document.querySelectorAll('.creation-card');
     
-    // Créer les flèches
-    const leftArrow = document.createElement('div');
-    leftArrow.className = 'carousel-arrow left';
-    leftArrow.textContent = '←';
-    leftArrow.style.cursor = 'pointer';
+    cards.forEach((card, idx) => {
+        card.addEventListener('click', () => {
+            openLightbox(idx);
+        });
+    });
+}
 
-    const rightArrow = document.createElement('div');
-    rightArrow.className = 'carousel-arrow right';
-    rightArrow.textContent = '→';
-    rightArrow.style.cursor = 'pointer';
-
-    // Wrapper
-    const wrapper = document.createElement('div');
-    wrapper.className = 'carousel-container';
+function openLightbox(index) {
+    const allCards = document.querySelectorAll('.creation-card');
+    const visibleCards = Array.from(allCards).filter(card => card.style.display !== 'none');
     
-    // Déplacer la grid dans le wrapper
-    grid.parentNode.insertBefore(wrapper, grid);
-    wrapper.appendChild(grid);
-    wrapper.appendChild(leftArrow);
-    wrapper.appendChild(rightArrow);
+    if (visibleCards.length === 0) return;
+    
+    // Trouver l'index dans les cartes visibles
+    const visibleIndex = visibleCards.findIndex(card => allCards[index] === card);
+    
+    // Créer le modal
+    const modal = document.createElement('div');
+    modal.className = 'lightbox-modal';
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        animation: fadeIn 0.3s ease-out;
+    `;
 
-    let scrollPosition = 0;
-    const scrollStep = 350; // Px à scroller
+    const content = document.createElement('div');
+    content.style.cssText = `
+        position: relative;
+        width: 90%;
+        max-width: 900px;
+        max-height: 90vh;
+        background: var(--c-bg-alt);
+        border: 1px solid var(--c-border);
+        border-radius: var(--rad);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    `;
 
-    leftArrow.addEventListener('click', () => {
-        scrollPosition = Math.max(0, scrollPosition - scrollStep);
-        grid.scrollLeft = scrollPosition;
+    // Bouton fermer
+    const closeBtn = document.createElement('button');
+    closeBtn.textContent = '✕';
+    closeBtn.style.cssText = `
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+        background: rgba(0, 0, 0, 0.5);
+        border: none;
+        border-radius: 50%;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        z-index: 10000;
+        transition: all 0.2s;
+        outline: none;
+    `;
+    closeBtn.addEventListener('mouseover', () => {
+        closeBtn.style.background = 'rgba(0, 0, 0, 0.8)';
+    });
+    closeBtn.addEventListener('mouseout', () => {
+        closeBtn.style.background = 'rgba(0, 0, 0, 0.5)';
     });
 
-    rightArrow.addEventListener('click', () => {
-        scrollPosition += scrollStep;
-        grid.scrollLeft = scrollPosition;
+    // Container pour l'image et la nav
+    const imageContainer = document.createElement('div');
+    imageContainer.style.cssText = `
+        position: relative;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #000;
+        overflow: hidden;
+    `;
+
+    const img = document.createElement('img');
+    img.src = visibleCards[visibleIndex].querySelector('img').src;
+    img.style.cssText = `
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    `;
+    imageContainer.appendChild(img);
+
+    // Flèches navigation
+    const prevBtn = document.createElement('button');
+    prevBtn.textContent = '←';
+    prevBtn.style.cssText = `
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 48px;
+        height: 48px;
+        background: rgba(164, 200, 230, 0.2);
+        border: 2px solid var(--c-accent-2);
+        border-radius: 50%;
+        color: var(--c-accent-2);
+        font-size: 24px;
+        cursor: pointer;
+        transition: all 0.2s;
+        outline: none;
+        z-index: 10001;
+    `;
+    prevBtn.addEventListener('click', () => {
+        const newIndex = (visibleIndex - 1 + visibleCards.length) % visibleCards.length;
+        modal.remove();
+        openLightbox(allCards.indexOf(visibleCards[newIndex]));
     });
+    prevBtn.addEventListener('mouseover', () => {
+        prevBtn.style.background = 'rgba(164, 200, 230, 0.4)';
+        prevBtn.style.boxShadow = '0 0 20px rgba(164, 200, 230, 0.5)';
+    });
+    prevBtn.addEventListener('mouseout', () => {
+        prevBtn.style.background = 'rgba(164, 200, 230, 0.2)';
+        prevBtn.style.boxShadow = 'none';
+    });
+    imageContainer.appendChild(prevBtn);
+
+    const nextBtn = document.createElement('button');
+    nextBtn.textContent = '→';
+    nextBtn.style.cssText = `
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 48px;
+        height: 48px;
+        background: rgba(164, 200, 230, 0.2);
+        border: 2px solid var(--c-accent-2);
+        border-radius: 50%;
+        color: var(--c-accent-2);
+        font-size: 24px;
+        cursor: pointer;
+        transition: all 0.2s;
+        outline: none;
+        z-index: 10001;
+    `;
+    nextBtn.addEventListener('click', () => {
+        const newIndex = (visibleIndex + 1) % visibleCards.length;
+        modal.remove();
+        openLightbox(allCards.indexOf(visibleCards[newIndex]));
+    });
+    nextBtn.addEventListener('mouseover', () => {
+        nextBtn.style.background = 'rgba(164, 200, 230, 0.4)';
+        nextBtn.style.boxShadow = '0 0 20px rgba(164, 200, 230, 0.5)';
+    });
+    nextBtn.addEventListener('mouseout', () => {
+        nextBtn.style.background = 'rgba(164, 200, 230, 0.2)';
+        nextBtn.style.boxShadow = 'none';
+    });
+    imageContainer.appendChild(nextBtn);
+
+    content.appendChild(imageContainer);
+
+    // Info carte
+    const infoDiv = document.createElement('div');
+    infoDiv.style.cssText = `
+        padding: 30px;
+        background: var(--c-bg-alt);
+    `;
+    infoDiv.innerHTML = `
+        <h2 style="font: 700 1.5rem var(--ff-head); margin-bottom: 10px;">${visibleCards[visibleIndex].querySelector('h3').textContent}</h2>
+        <p style="color: var(--c-text-sec); font-size: 0.95rem;">${visibleCards[visibleIndex].querySelector('p').textContent}</p>
+        <p style="color: var(--c-text-sec); font-size: 0.85rem; margin-top: 15px;">${visibleIndex + 1} / ${visibleCards.length}</p>
+    `;
+    content.appendChild(infoDiv);
+
+    modal.appendChild(content);
+    modal.appendChild(closeBtn);
+
+    // Fermer au clic sur le fond
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.remove();
+        }
+    });
+
+    closeBtn.addEventListener('click', () => {
+        modal.remove();
+    });
+
+    // Clavier
+    const handleKeydown = (e) => {
+        if (e.key === 'ArrowLeft') {
+            const newIndex = (visibleIndex - 1 + visibleCards.length) % visibleCards.length;
+            modal.remove();
+            document.removeEventListener('keydown', handleKeydown);
+            openLightbox(allCards.indexOf(visibleCards[newIndex]));
+        } else if (e.key === 'ArrowRight') {
+            const newIndex = (visibleIndex + 1) % visibleCards.length;
+            modal.remove();
+            document.removeEventListener('keydown', handleKeydown);
+            openLightbox(allCards.indexOf(visibleCards[newIndex]));
+        } else if (e.key === 'Escape') {
+            modal.remove();
+            document.removeEventListener('keydown', handleKeydown);
+        }
+    };
+
+    document.addEventListener('keydown', handleKeydown);
+    document.body.appendChild(modal);
 }
 
 // === CURSOR FOLLOW ===
