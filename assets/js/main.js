@@ -1,19 +1,16 @@
-// ===== ELIOT SAURON PORTFOLIO - MODERN JS =====
-
-// === INITIALIZATION ===
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     initHeader();
     initPageTransition();
     initScrollAnimations();
     initSkillBars();
-    initCarousels();
     initForm();
     initVideoToggle();
     initMagneticButtons();
+    initFilters();
 });
 
-// === THEME MANAGEMENT ===
+// === THEME ===
 function initTheme() {
     const toggle = document.getElementById('theme-toggle');
     const saved = localStorage.getItem('theme') || 'theme-dark';
@@ -27,18 +24,15 @@ function initTheme() {
     }
 }
 
-// === HEADER SCROLL EFFECT ===
+// === HEADER SCROLL ===
 function initHeader() {
     const header = document.querySelector('header');
-    let lastY = 0;
     window.addEventListener('scroll', () => {
-        const y = window.scrollY;
-        if (y > 50) {
+        if (window.scrollY > 50) {
             header.classList.add('scrolled');
         } else {
             header.classList.remove('scrolled');
         }
-        lastY = y;
     }, { passive: true });
 }
 
@@ -72,17 +66,19 @@ function initScrollAnimations() {
     document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
 }
 
-// === SKILL BARS ANIMATION ===
+// === SKILL BARS ===
 function initSkillBars() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const bars = entry.target.querySelectorAll('.progress-bar');
-                bars.forEach(bar => {
-                    const fill = bar.parentElement.parentElement.querySelector('.skill-head span:last-child').textContent;
-                    const percent = parseInt(fill);
+                bars.forEach((bar, idx) => {
+                    const skillHead = bar.parentElement.previousElementSibling;
+                    const percent = parseInt(skillHead.querySelector('span:last-child').textContent);
                     bar.style.setProperty('--fill', percent + '%');
-                    bar.classList.add('animate');
+                    setTimeout(() => {
+                        bar.classList.add('animate');
+                    }, idx * 200);
                 });
                 observer.unobserve(entry.target);
             }
@@ -110,72 +106,7 @@ function initVideoToggle() {
     video.play().catch(() => {});
 }
 
-// === CAROUSELS ===
-function initCarousels() {
-    document.querySelectorAll('.creation-grid').forEach(grid => {
-        grid.addEventListener('click', () => {
-            window.location.href = 'creations.html';
-        });
-    });
-
-    // Carousel logic for creations page
-    document.querySelectorAll('.carousel-wrapper').forEach(wrapper => {
-        const slides = wrapper.querySelector('.carousel-slides');
-        const imgs = wrapper.querySelectorAll('img');
-        const prevBtn = wrapper.querySelector('.carousel-nav.prev');
-        const nextBtn = wrapper.querySelector('.carousel-nav.next');
-        const indicators = wrapper.querySelector('.carousel-indicators');
-
-        if (imgs.length <= 1) return;
-
-        let current = 0;
-
-        // Create indicators
-        imgs.forEach((_, i) => {
-            const dot = document.createElement('div');
-            dot.style.cssText = 'width:7px;height:7px;bg:rgba(255,255,255,.4);border-radius:50%;cursor:pointer;transition:all .2s';
-            if (i === 0) {
-                dot.style.background = 'rgba(255,255,255,1)';
-                dot.style.width = '10px';
-            }
-            dot.addEventListener('click', () => goToSlide(i));
-            indicators?.appendChild(dot);
-        });
-
-        const goToSlide = (n) => {
-            current = n;
-            slides.style.transform = `translateX(-${current * 100}%)`;
-            updateIndicators();
-        };
-
-        const updateIndicators = () => {
-            indicators?.querySelectorAll('div').forEach((dot, i) => {
-                if (i === current) {
-                    dot.style.background = 'rgba(255,255,255,1)';
-                    dot.style.width = '10px';
-                } else {
-                    dot.style.background = 'rgba(255,255,255,.4)';
-                    dot.style.width = '7px';
-                }
-            });
-        };
-
-        if (prevBtn) {
-            prevBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                goToSlide((current - 1 + imgs.length) % imgs.length);
-            });
-        }
-        if (nextBtn) {
-            nextBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                goToSlide((current + 1) % imgs.length);
-            });
-        }
-    });
-}
-
-// === FORM HANDLING ===
+// === FORM ===
 function initForm() {
     const form = document.getElementById('contact-form');
     if (!form) return;
@@ -239,7 +170,31 @@ function initMagneticButtons() {
     });
 }
 
-// === SMOOTH SCROLL FOR HASH LINKS ===
+// === FILTERS ===
+function initFilters() {
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(b => {
+                b.style.background = 'transparent';
+                b.style.color = 'var(--c-text-sec)';
+                b.style.borderColor = 'var(--c-border)';
+            });
+
+            btn.style.background = 'linear-gradient(135deg, var(--c-accent-1), var(--c-accent-2))';
+            btn.style.color = 'var(--c-bg)';
+            btn.style.borderColor = 'transparent';
+
+            const filter = btn.dataset.filter;
+            document.querySelectorAll('.creation-card').forEach(card => {
+                const match = filter === 'all' || card.dataset.category === filter;
+                card.style.opacity = match ? '1' : '.3';
+                card.style.pointerEvents = match ? 'auto' : 'none';
+            });
+        });
+    });
+}
+
+// === SMOOTH SCROLL HASH LINKS ===
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', (e) => {
         const href = anchor.getAttribute('href');
