@@ -8,8 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initVideoToggle();
     initMagneticButtons();
     initFilters();
+    initCarouselArrows();
     initCursorFollow();
-    initParallax();
 });
 
 // === THEME ===
@@ -172,14 +172,13 @@ function initMagneticButtons() {
     });
 }
 
-// === FILTERS - VRAIMENT FIXÉ ===
+// === FILTERS ===
 function initFilters() {
     const filterButtons = document.querySelectorAll('.filter-btn');
     const cards = document.querySelectorAll('.creation-card');
 
     filterButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Mettre à jour style des boutons
             filterButtons.forEach(b => {
                 b.style.background = 'transparent';
                 b.style.color = 'var(--c-text-sec)';
@@ -190,7 +189,6 @@ function initFilters() {
             btn.style.color = 'var(--c-bg)';
             btn.style.borderColor = 'transparent';
 
-            // Filtrer les cartes - UTILISER .hidden au lieu de opacity
             const filter = btn.getAttribute('data-filter');
             cards.forEach((card) => {
                 const category = card.getAttribute('data-category');
@@ -206,7 +204,49 @@ function initFilters() {
     });
 }
 
-// === CURSOR FOLLOW - INNOVATION ===
+// === CAROUSEL ARROWS ===
+function initCarouselArrows() {
+    const grid = document.getElementById('creation-grid');
+    if (!grid) return;
+
+    const container = grid.parentElement;
+    
+    // Créer les flèches
+    const leftArrow = document.createElement('div');
+    leftArrow.className = 'carousel-arrow left';
+    leftArrow.textContent = '←';
+    leftArrow.style.cursor = 'pointer';
+
+    const rightArrow = document.createElement('div');
+    rightArrow.className = 'carousel-arrow right';
+    rightArrow.textContent = '→';
+    rightArrow.style.cursor = 'pointer';
+
+    // Wrapper
+    const wrapper = document.createElement('div');
+    wrapper.className = 'carousel-container';
+    
+    // Déplacer la grid dans le wrapper
+    grid.parentNode.insertBefore(wrapper, grid);
+    wrapper.appendChild(grid);
+    wrapper.appendChild(leftArrow);
+    wrapper.appendChild(rightArrow);
+
+    let scrollPosition = 0;
+    const scrollStep = 350; // Px à scroller
+
+    leftArrow.addEventListener('click', () => {
+        scrollPosition = Math.max(0, scrollPosition - scrollStep);
+        grid.scrollLeft = scrollPosition;
+    });
+
+    rightArrow.addEventListener('click', () => {
+        scrollPosition += scrollStep;
+        grid.scrollLeft = scrollPosition;
+    });
+}
+
+// === CURSOR FOLLOW ===
 function initCursorFollow() {
     const createCursor = document.createElement('div');
     createCursor.id = 'cursor-follow';
@@ -244,30 +284,12 @@ function initCursorFollow() {
     }
     animate();
 
-    // Masquer au mouseleave
     document.addEventListener('mouseleave', () => {
         createCursor.style.opacity = '0';
     });
     document.addEventListener('mouseenter', () => {
         createCursor.style.opacity = '0.6';
     });
-}
-
-// === PARALLAX - INNOVATION ===
-function initParallax() {
-    const parallaxElements = document.querySelectorAll('[data-animate]');
-    
-    window.addEventListener('scroll', () => {
-        parallaxElements.forEach(el => {
-            const rect = el.getBoundingClientRect();
-            const scrollY = window.scrollY;
-            const distance = (rect.top + scrollY) * 0.02;
-            
-            if (rect.top < window.innerHeight) {
-                el.style.transform = `translateY(${distance}px)`;
-            }
-        });
-    }, { passive: true });
 }
 
 // === SMOOTH SCROLL HASH LINKS ===

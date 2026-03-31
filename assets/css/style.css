@@ -52,6 +52,7 @@ img, video {
 a {
     text-decoration: none;
     color: inherit;
+    outline: none;
 }
 
 button {
@@ -59,6 +60,7 @@ button {
     background: none;
     font: inherit;
     cursor: pointer;
+    outline: none;
 }
 
 .container {
@@ -120,24 +122,23 @@ body.theme-light .header-inner {
     fill: var(--c-text);
 }
 
-.logo:hover {
-    opacity: .8;
-}
-
-/* === LOGO ANIMATION EN BOUCLE === */
-.cloud-path {
+.logo svg path {
     stroke-dasharray: 600;
     stroke-dashoffset: 600;
     animation: drawCloud 6s ease-in-out infinite;
 }
 
 @keyframes drawCloud {
-    0% { stroke-dashoffset: 600; opacity: 0; }
-    10% { opacity: 1; }
-    35% { stroke-dashoffset: 0; opacity: 1; }
-    65% { stroke-dashoffset: 0; opacity: 1; }
-    90% { opacity: 0; }
-    100% { stroke-dashoffset: 0; opacity: 0; }
+    0% { stroke-dashoffset: 600; opacity: 0.3; }
+    20% { opacity: 1; }
+    40% { stroke-dashoffset: 0; opacity: 1; }
+    60% { stroke-dashoffset: 0; opacity: 1; }
+    80% { opacity: 0.3; }
+    100% { stroke-dashoffset: 0; opacity: 0.3; }
+}
+
+.logo:hover {
+    opacity: .8;
 }
 
 nav ul {
@@ -151,11 +152,16 @@ nav a {
     font-size: .9rem;
     color: var(--c-text-sec);
     transition: all .2s;
+    outline: none;
 }
 
 nav a:hover {
     color: var(--c-accent-2);
     transform: translateY(-2px);
+}
+
+nav a:focus {
+    outline: none;
 }
 
 nav a.active {
@@ -478,6 +484,54 @@ nav a.active {
 .creation-content p {
     font-size: .95rem;
     color: var(--c-text-sec);
+}
+
+/* === CAROUSEL ARROWS === */
+.carousel-container {
+    position: relative;
+    margin: 0 -40px;
+}
+
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border: 2px solid var(--c-accent-2);
+    border-radius: 50%;
+    background: rgba(164, 200, 230, .1);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all .3s;
+    font-size: 20px;
+    color: var(--c-accent-2);
+    z-index: 10;
+}
+
+.carousel-arrow:hover {
+    background: rgba(164, 200, 230, .2);
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 8px 24px rgba(164, 200, 230, .3);
+}
+
+.carousel-arrow.left {
+    left: 10px;
+}
+
+.carousel-arrow.right {
+    right: 10px;
+}
+
+@media(max-width: 768px) {
+    .carousel-arrow {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
 }
 
 /* === CONTACT === */
