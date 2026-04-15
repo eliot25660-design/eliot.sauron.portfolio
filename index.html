@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eliot SAURON — Portfolio</title>
-    <meta name="description" content="Portfolio créatif : Design, Vidéo, Photographie.">
+    <title>Eliot SAURON — Portfolio Créatif</title>
+    <meta name="description" content="Portfolio d'Eliot Sauron — Communication Digitale & Design Visuel. Étudiant BUT Info-Com.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
@@ -17,7 +17,12 @@
     <div class="header-inner">
         <a href="index.html" class="logo" aria-label="Accueil">
             <svg viewBox="0 0 200 80" fill="none">
-                <defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%"><stop offset="0%" style="stop-color:var(--c-accent-1)"/><stop offset="100%" style="stop-color:var(--c-accent-2)"/></linearGradient></defs>
+                <defs>
+                    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#ff5470"/>
+                        <stop offset="100%" stop-color="#00c8ff"/>
+                    </linearGradient>
+                </defs>
                 <text x="50%" y="55%" text-anchor="middle" dominant-baseline="middle">Eliot</text>
                 <path d="M30,40 C30,20 60,-10 100,10 C150,30 170,20 170,40 C170,60 150,90 100,70 C50,50 30,60 30,40" stroke="url(#g1)" stroke-width="3" fill="none" stroke-linecap="round"/>
             </svg>
@@ -31,106 +36,115 @@
             </ul>
         </nav>
         <button id="theme-toggle" aria-label="Changer le thème">
-            <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg>
-            <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </button>
     </div>
 </header>
 
 <main>
+    <!-- HERO -->
     <section class="hero">
-        <div>
-            <h1 data-animate>Créatif & <span style="background:linear-gradient(135deg,var(--c-accent-1),var(--c-accent-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Designer</span></h1>
-            <p class="subtitle" data-animate>Communication Digitale & Création Visuelle</p>
-            <p data-animate style="color:var(--c-text-sec);font-size:1.1rem;margin-bottom:40px;max-width:520px;line-height:1.8">Étudiant en BUT Information-Communication. Je crée des expériences visuelles qui racontent des histoires, du design graphique à la vidéo.</p>
-            <div class="hero-buttons" data-animate>
+        <div class="hero-bg">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+        </div>
+
+        <div class="hero-content container">
+            <div class="hero-tag">
+                <span class="hero-tag-dot"></span>
+                Disponible — Stage &amp; Alternance 2026
+            </div>
+
+            <h1 class="hero-title">
+                <span class="line"><span class="line-inner">Eliot</span></span>
+                <span class="line"><span class="line-inner grad">SAURON</span></span>
+            </h1>
+
+            <p class="hero-role">Communication Digitale · Design Visuel</p>
+
+            <p class="hero-desc">
+                Étudiant créatif en 2ème année de BUT Info-Com à Besançon.<br>
+                Je conçois des visuels qui marquent les esprits.
+            </p>
+
+            <div class="hero-buttons">
                 <a href="creations.html" class="btn btn-primary">Voir mes créations</a>
-                <a href="cv.html" class="btn btn-secondary">Mon Parcours</a>
-                <a href="/img/CV%20-%20Eliot%20SAURON.pdf" download class="btn btn-secondary">⬇ Télécharger CV</a>
+                <a href="cv.html" class="btn btn-ghost">Mon Parcours</a>
+                <a href="/img/CV%20-%20Eliot%20SAURON.pdf" download class="btn btn-ghost">⬇ CV</a>
             </div>
         </div>
-        <div class="blob-container" data-animate>
-            <video id="hero-video" class="blob-video" autoplay muted loop playsinline>
-                <source src="/img/video-presentation.mp4" type="video/mp4">
-            </video>
-            <button class="video-btn">🔇 Vidéo muette</button>
-        </div>
+
+        <div class="hero-scroll">Défiler</div>
     </section>
 
-    <section class="approach">
+    <!-- APPROCHE -->
+    <section class="approach" id="approche">
+        <div class="section-sep"></div>
         <div class="container">
-            <h2 data-animate>Ma Démarche</h2>
+            <p class="section-label" data-animate>Ma démarche</p>
+            <h2 data-animate>Esthétique<br>&amp; stratégie</h2>
             <div class="approach-grid">
-                <div data-animate>
-                    <p>Je crois que le design efficace doit combiner <strong>esthétique et stratégie</strong>. Chaque projet commence par une écoute attentive pour comprendre les besoins réels.</p>
-                    <p>Mon approche privilégie la <strong>clarté, l'impact visuel et l'accessibilité</strong>. Je travaille sur du design graphique, de la production vidéo et de la photographie.</p>
+                <div class="approach-text" data-animate>
+                    <p>Je crois que le design efficace naît de la rencontre entre <strong>esthétique et intention</strong>. Chaque projet commence par une écoute attentive pour comprendre ce qui doit vraiment être dit.</p>
+                    <p>Mon approche privilégie la <strong>clarté, l'impact visuel et la cohérence</strong>. Du design graphique à la photographie, en passant par la communication digitale.</p>
                 </div>
                 <div class="skills" data-animate>
                     <div class="skill-item">
-                        <div class="skill-head">
-                            <span>Design & Stratégie</span>
-                            <span>85%</span>
-                        </div>
-                        <div class="progress">
-                            <div class="progress-bar" style="--fill:85%"></div>
-                        </div>
+                        <div class="skill-head"><span>Design & Stratégie</span><span>85%</span></div>
+                        <div class="progress"><div class="progress-bar" style="--fill:85%"></div></div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-head">
-                            <span>Vidéo & Production</span>
-                            <span>80%</span>
-                        </div>
-                        <div class="progress">
-                            <div class="progress-bar" style="--fill:80%"></div>
-                        </div>
+                        <div class="skill-head"><span>Communication Digitale</span><span>80%</span></div>
+                        <div class="progress"><div class="progress-bar" style="--fill:80%"></div></div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-head">
-                            <span>Photographie</span>
-                            <span>75%</span>
-                        </div>
-                        <div class="progress">
-                            <div class="progress-bar" style="--fill:75%"></div>
-                        </div>
+                        <div class="skill-head"><span>Photographie</span><span>75%</span></div>
+                        <div class="progress"><div class="progress-bar" style="--fill:75%"></div></div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-head">
-                            <span>Web & Digital</span>
-                            <span>70%</span>
-                        </div>
-                        <div class="progress">
-                            <div class="progress-bar" style="--fill:70%"></div>
-                        </div>
+                        <div class="skill-head"><span>Production Vidéo</span><span>70%</span></div>
+                        <div class="progress"><div class="progress-bar" style="--fill:70%"></div></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- CONTACT -->
     <section class="contact" id="contact">
+        <div class="section-sep"></div>
         <div class="container">
             <div class="contact-card">
                 <div class="contact-info" data-animate>
-                    <h2>Parlons de ton projet</h2>
-                    <p>Intéressé par une collaboration ? Je suis ouvert aux propositions en design, vidéo ou communication digitale.</p>
-                    <a href="mailto:eliotsauron25@gmail.com" class="contact-link">✉ eliotsauron25@gmail.com</a>
-                    <a href="https://linkedin.com/in/eliot-sauron" target="_blank" class="contact-link">🔗 LinkedIn</a>
+                    <p class="section-label">Me contacter</p>
+                    <h2>Parlons de<br>ton projet</h2>
+                    <p>Disponible pour une collaboration en design, communication ou création de contenu.</p>
+                    <a href="mailto:eliotsauron25@gmail.com" class="contact-link">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+                        eliotsauron25@gmail.com
+                    </a>
+                    <a href="https://linkedin.com/in/eliot-sauron" target="_blank" rel="noopener" class="contact-link">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                        LinkedIn
+                    </a>
                 </div>
                 <form id="contact-form" action="https://formspree.io/f/mblwgzve" method="POST" data-animate>
                     <div class="form-group">
                         <label for="name">Nom</label>
-                        <input type="text" id="name" name="name" required>
+                        <input type="text" id="name" name="name" placeholder="Votre nom" required>
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
+                        <input type="email" id="email" name="email" placeholder="votre@email.com" required>
                     </div>
                     <div class="form-group">
                         <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="5" required></textarea>
+                        <textarea id="message" name="message" rows="5" placeholder="Votre message..." required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary" style="width:100%;margin-top:16px">Envoyer</button>
-                    <div id="form-status" style="margin-top:12px;text-align:center;font-size:.9rem"></div>
+                    <button type="submit" class="btn btn-primary" style="width:100%;margin-top:8px;justify-content:center">Envoyer</button>
+                    <div id="form-status" style="margin-top:12px;text-align:center;font-size:.875rem"></div>
                 </form>
             </div>
         </div>
@@ -138,9 +152,9 @@
 </main>
 
 <footer>
-    <div class="container" style="display:flex;justify-content:space-between;align-items:center;width:100%">
+    <div class="container footer-inner">
         <span>© 2025 Eliot SAURON</span>
-        <div style="display:flex;gap:30px">
+        <div class="footer-links">
             <a href="mentions-legales.html">Mentions Légales</a>
             <a href="politique-confidentialite.html">Confidentialité</a>
         </div>
