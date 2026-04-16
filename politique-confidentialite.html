@@ -9,118 +9,101 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico">
 </head>
-<body class="theme-dark page-transition">
-    <div class="noise-overlay"></div>
+<body class="theme-dark">
 
-    <header class="site-header">
-        <div class="header-inner">
-            <a href="index.html" class="logo" aria-label="Retour à l'accueil">
-                <svg class="logo-svg" viewBox="0 0 200 80" fill="none">
-                    <defs>
-                        <linearGradient id="cloud-gradient-privacy" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" style="stop-color:var(--accent-peach);stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:var(--accent-blue);stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                    <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" class="logo-text-elem">Eliot</text>
-                    <path class="cloud-path" d="M30,40 C30,20 60,-10 100,10 C150,30 170,20 170,40 C170,60 150,90 100,70 C50,50 30,60 30,40" stroke="url(#cloud-gradient-privacy)" stroke-width="3" fill="none" stroke-linecap="round" />
-                </svg>
-            </a>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="index.html">Accueil</a></li>
-                    <li><a href="creations.html">Créations</a></li>
-                    <li><a href="cv.html">Parcours</a></li>
-                    <li><a href="index.html#contact" class="btn-nav">Contact</a></li>
-                </ul>
-                <button id="theme-toggle" aria-label="Changer le thème">
-                    <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                    <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-                </button>
-            </nav>
-        </div>
-    </header>
-
-    <main class="page-legal">
-        <div class="container legal-content scroll-reveal">
-            <h1>Politique de Confidentialité</h1>
-            
-            <h2>1. Introduction</h2>
-            <p>
-                Cette politique de confidentialité explique comment Eliot SAURON collecte, utilise et protège vos données personnelles lorsque vous visitez ce site ou utilisez ses services.
-            </p>
-
-            <h2>2. Données collectées</h2>
-            <p>
-                Les données personnelles collectées sont limitées à celles que vous nous fournissez volontairement via le formulaire de contact, notamment :
-            </p>
-            <ul style="margin: 15px 0; margin-left: 30px; color: var(--text-secondary);">
-                <li>Nom</li>
-                <li>Email</li>
-                <li>Message</li>
+<header>
+    <div class="header-inner">
+        <a href="index.html" class="logo" aria-label="Accueil">
+            <svg viewBox="0 0 200 80" fill="none">
+                <defs>
+                    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#ff5470"/>
+                        <stop offset="100%" stop-color="#00c8ff"/>
+                    </linearGradient>
+                </defs>
+                <text x="50%" y="55%" text-anchor="middle" dominant-baseline="middle">Eliot</text>
+                <path d="M30,40 C30,20 60,-10 100,10 C150,30 170,20 170,40 C170,60 150,90 100,70 C50,50 30,60 30,40" stroke="url(#g1)" stroke-width="3" fill="none" stroke-linecap="round"/>
+            </svg>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="creations.html">Créations</a></li>
+                <li><a href="cv.html">Parcours</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
             </ul>
-            <p style="margin-top: 15px;">
-                Nous collectons également des données techniques de navigation (adresse IP, navigateur, pages visitées) via Google Analytics, uniquement à des fins statistiques.
-            </p>
+        </nav>
+        <button id="theme-toggle" aria-label="Changer le thème">
+            <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+    </div>
+</header>
 
-            <h2>3. Utilisation des données</h2>
-            <p>
-                Vos données sont utilisées exclusivement pour :
-            </p>
-            <ul style="margin: 15px 0; margin-left: 30px; color: var(--text-secondary);">
-                <li>Répondre à vos demandes de contact</li>
-                <li>Analyser l'utilisation du site pour l'améliorer</li>
-            </ul>
+<main class="legal">
+    <div class="container legal-content">
+        <h1 data-animate>Politique de Confidentialité</h1>
 
-            <h2>4. Protection des données</h2>
-            <p>
-                Vos données sont traitées conformément au RGPD (Règlement Général sur la Protection des Données). Elles ne seront jamais transmises à des tiers sans votre consentement explicite.
-            </p>
+        <h2>1. Introduction</h2>
+        <p>
+            Cette politique explique comment Eliot SAURON collecte, utilise et protège vos données personnelles lorsque vous visitez ce site ou utilisez ses services.
+        </p>
 
-            <h2>5. Cookies</h2>
-            <p>
-                Ce site utilise des cookies pour améliorer votre expérience utilisateur. Vous pouvez contrôler les cookies via les paramètres de votre navigateur. Le consentement aux cookies statistiques est géré par Google Analytics.
-            </p>
+        <h2>2. Données collectées</h2>
+        <p>
+            Les données personnelles collectées sont limitées à celles que vous fournissez volontairement via le formulaire de contact :
+        </p>
+        <ul>
+            <li>Nom</li>
+            <li>Email</li>
+            <li>Message</li>
+        </ul>
 
-            <h2>6. Droits de l'utilisateur</h2>
-            <p>
-                Conformément au RGPD, vous disposez des droits suivants :
-            </p>
-            <ul style="margin: 15px 0; margin-left: 30px; color: var(--text-secondary);">
-                <li>Droit d'accès à vos données</li>
-                <li>Droit de rectification</li>
-                <li>Droit à l'oubli (suppression)</li>
-                <li>Droit à la portabilité des données</li>
-            </ul>
-            <p style="margin-top: 15px;">
-                Pour exercer ces droits, contactez-nous à l'adresse : eliotsauron25@gmail.com
-            </p>
+        <h2>3. Utilisation des données</h2>
+        <p>Vos données sont utilisées exclusivement pour répondre à vos demandes de contact. Elles ne sont jamais transmises à des tiers sans votre consentement explicite.</p>
 
-            <h2>7. Contact</h2>
-            <p>
-                Pour toute question concernant cette politique de confidentialité, veuillez nous contacter à eliotsauron25@gmail.com
-            </p>
+        <h2>4. Protection des données</h2>
+        <p>
+            Vos données sont traitées conformément au RGPD (Règlement Général sur la Protection des Données).
+        </p>
 
-            <div style="margin-top: 60px; text-align: center;">
-                <a href="index.html" class="btn btn-secondary">Retour à l'accueil</a>
-            </div>
+        <h2>5. Cookies</h2>
+        <p>
+            Ce site utilise des cookies fonctionnels (préférence de thème). Vous pouvez les contrôler via les paramètres de votre navigateur.
+        </p>
+
+        <h2>6. Droits de l'utilisateur</h2>
+        <p>Conformément au RGPD, vous disposez des droits suivants :</p>
+        <ul>
+            <li>Droit d'accès à vos données</li>
+            <li>Droit de rectification</li>
+            <li>Droit à l'oubli (suppression)</li>
+            <li>Droit à la portabilité des données</li>
+        </ul>
+
+        <h2>7. Contact</h2>
+        <p>
+            Pour toute question : <a href="mailto:eliotsauron25@gmail.com" style="color:var(--c-accent-2)">eliotsauron25@gmail.com</a>
+        </p>
+
+        <div style="margin-top:60px;text-align:center">
+            <a href="index.html" class="btn btn-ghost">← Retour à l'accueil</a>
         </div>
-    </main>
+    </div>
+</main>
 
-    <footer class="site-footer">
-        <div class="container footer-inner">
-            <div class="footer-col">
-                <span class="copyright">© 2025 Eliot SAURON</span>
-            </div>
-            <div class="footer-col links">
-                <a href="mentions-legales.html">Mentions Légales</a>
-                <a href="politique-confidentialite.html">Confidentialité</a>
-            </div>
+<footer>
+    <div class="container footer-inner">
+        <span>© 2025 Eliot SAURON</span>
+        <div class="footer-links">
+            <a href="mentions-legales.html">Mentions Légales</a>
+            <a href="politique-confidentialite.html">Confidentialité</a>
         </div>
-    </footer>
+    </div>
+</footer>
 
-    <script src="assets/js/main.js"></script>
+<script src="assets/js/main.js"></script>
 </body>
 </html>
